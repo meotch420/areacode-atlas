@@ -187,4 +187,4 @@ function searchArea() {
 document.getElementById("searchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   searchArea();
-}};
+});
