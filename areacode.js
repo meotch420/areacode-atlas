@@ -1,4 +1,4 @@
-const DATA_FILE = "area_code_data.json"; // change if your file is in /data/
+const DATA_FILE = "area_code_data.json";
 
 const northAmericaBounds = L.latLngBounds(
   [5, -170],
@@ -40,6 +40,23 @@ function getFillColor(timezone) {
   return colors[timezone] || "#64748b";
 }
 
+// ---------- BUSINESS HOURS ----------
+function getBusinessHoursStatus(tzid) {
+  if (!tzid) return "-";
+
+  const now = new Date();
+
+  const hourString = now.toLocaleString("en-US", {
+    timeZone: tzid,
+    hour: "numeric",
+    hour12: false
+  });
+
+  const hour = parseInt(hourString, 10);
+
+  return hour >= 9 && hour < 17 ? "Open" : "Closed";
+}
+
 // ---------- CLOCK ----------
 function startClock(tzid) {
   const clockEl = document.getElementById("clock");
@@ -62,7 +79,7 @@ function startClock(tzid) {
       hour12: true
     });
 
-    clockEl.innerHTML = `Local Time: ${time}`;
+    clockEl.innerHTML = `${time}`;
   }
 
   updateClock();
@@ -71,20 +88,28 @@ function startClock(tzid) {
 
 // ---------- INFO PANEL ----------
 function updateInfo(code, data) {
-  const info = document.getElementById("info");
+  const infoCity = document.getElementById("info-city");
+  const infoState = document.getElementById("info-state");
+  const infoAreaCode = document.getElementById("info-area-code");
+  const infoTimezone = document.getElementById("info-timezone");
+  const infoHours = document.getElementById("info-hours");
+  const clockEl = document.getElementById("clock");
 
   if (!data) {
-    info.innerHTML = "Click a region or search an area code.";
-    document.getElementById("clock").innerHTML = "";
+    infoCity.textContent = "-";
+    infoState.textContent = "-";
+    infoAreaCode.textContent = "-";
+    infoTimezone.textContent = "-";
+    infoHours.textContent = "-";
+    clockEl.innerHTML = "";
     return;
   }
 
-  info.innerHTML = `
-    <strong>Area Code:</strong> ${code}<br>
-    <strong>City:</strong> ${data.city}<br>
-    <strong>State:</strong> ${data.state}<br>
-    <strong>Timezone:</strong> ${data.timezone}
-  `;
+  infoCity.textContent = data.city || "-";
+  infoState.textContent = data.state || "-";
+  infoAreaCode.textContent = code || "-";
+  infoTimezone.textContent = data.timezone || "-";
+  infoHours.textContent = getBusinessHoursStatus(data.tzid);
 
   startClock(data.tzid);
 }
@@ -150,8 +175,17 @@ fetch(DATA_FILE)
   })
   .catch(err => {
     console.error(err);
-    document.getElementById("info").innerHTML =
-      "<strong>Error loading data file.</strong>";
+    const infoCity = document.getElementById("info-city");
+    const infoState = document.getElementById("info-state");
+    const infoAreaCode = document.getElementById("info-area-code");
+    const infoTimezone = document.getElementById("info-timezone");
+    const infoHours = document.getElementById("info-hours");
+
+    infoCity.textContent = "Error loading data";
+    infoState.textContent = "-";
+    infoAreaCode.textContent = "-";
+    infoTimezone.textContent = "-";
+    infoHours.textContent = "-";
   });
 
 // ---------- SEARCH ----------
