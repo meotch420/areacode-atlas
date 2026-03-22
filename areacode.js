@@ -18,6 +18,7 @@ const map = L.map("map", {
 L.maptilerLayer({
   apiKey: MAPTILER_KEY,
   style: "streets",
+  noWrap: true
 }).addTo(map);
 
 // ---------- STATE ----------
