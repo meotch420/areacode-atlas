@@ -1,14 +1,20 @@
 const DATA_FILE = "area_code_data.json";
 
+const worldBounds = L.latLngBounds(
+  [-85, -180],
+  [85, 180]
+);
+
 const map = L.map("map", {
-  worldCopyJump: true,
-  minZoom: 2
+  maxBounds: worldBounds,
+  maxBoundsViscosity: 1.0,
+  minZoom: 2,
+  maxZoom: 10
 }).setView([20, 0], 2);
-
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "© OpenStreetMap contributors"
+  attribution: "© OpenStreetMap contributors",
+  noWrap: true
 }).addTo(map);
-
 // ---------- STATE ----------
 let markers = [];
 let markersByCode = {};
