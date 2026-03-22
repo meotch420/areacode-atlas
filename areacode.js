@@ -14,7 +14,7 @@ const map = L.map("map", {
   maxZoom: 10
 }).setView([20, 0], 2);
 
-L.maptiler.maptilerLayer({
+L.maptilerLayer({
   apiKey: MAPTILER_KEY,
   style: maptilersdk.MapStyle.STREETS,
   language: maptilersdk.Language.ENGLISH,
