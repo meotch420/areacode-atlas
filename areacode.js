@@ -15,9 +15,9 @@ const map = L.map("map", {
   worldCopyJump: false
 }).setView([20, 0], 2);
 
-L.maptilerLayer({
+L.maptiler.maptilerLayer({
   apiKey: MAPTILER_KEY,
-  style: "streets",
+  style: maptilersdk.MapStyle.STREETS,
   noWrap: true
 }).addTo(map);
 
