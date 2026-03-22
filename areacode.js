@@ -11,10 +11,12 @@ const map = L.map("map", {
   minZoom: 2,
   maxZoom: 10
 }).setView([20, 0], 2);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "© OpenStreetMap contributors",
+
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  attribution: "© OpenStreetMap © CARTO",
   noWrap: true
 }).addTo(map);
+
 // ---------- STATE ----------
 let markers = [];
 let markersByCode = {};
