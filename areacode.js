@@ -5,6 +5,7 @@ const worldBounds = L.latLngBounds(
   [85, 180]
 );
 
+const MAPTILER_KEY = "YOUR_API_KEY";
 const map = L.map("map", {
   maxBounds: worldBounds,
   maxBoundsViscosity: 1.0,
