@@ -30,16 +30,21 @@
 
    <div id="map"></div>
 
-  <div id="infoPanel">
-  <h3>Area Information</h3>
-  <p><strong>City:</strong> <span id="info-city">-</span></p>
-  <p><strong>State:</strong> <span id="info-state">-</span></p>
-  <p><strong>Area Code:</strong> <span id="info-area-code">-</span></p>
-  <p><strong>Timezone:</strong> <span id="info-timezone">-</span></p>
-  <p><strong>Business Hours:</strong> <span id="info-hours">-</span></p>
-  <div id="clock"></div>
-</div>
+<div id="infoPanel">
+  <div class="info-title">Area Information</div>
 
+  <div class="info-row info-row-2">
+    <div><strong>Area Code:</strong> <span id="info-area-code">-</span></div>
+    <div><strong>City:</strong> <span id="info-city">-</span></div>
+    <div><strong>State:</strong> <span id="info-state">-</span></div>
+    <div><strong>Timezone:</strong> <span id="info-timezone">-</span></div>
+  </div>
+
+  <div class="info-row info-row-3">
+    <div><strong>Live Time:</strong> <span id="clock">--:--:--</span></div>
+    <div><strong>Business Hours:</strong> <span id="info-hours">-</span></div>
+  </div>
+</div>
    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
    <script src="areacode.js"></script>
  </body>
