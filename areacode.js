@@ -21,6 +21,7 @@ L.maptiler.maptilerLayer({
   noWrap: true
 }).addTo(map);
 
+
 // ---------- STATE ----------
 let markers = [];
 let markersByCode = {};
