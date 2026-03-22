@@ -1,5 +1,5 @@
 const DATA_FILE = "area_code_data.json";
-const MAPTILER_KEY = "YOUR_API_KEY";
+const MAPTILER_KEY = "x9Y4l8HNTbDkaAGphr9L";
 
 const worldBounds = L.latLngBounds(
   [-85, -180],
