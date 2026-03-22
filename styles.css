@@ -5,112 +5,104 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0b1a2b;
+  background: #0f172a;
   color: white;
 }
 
 .top-section {
-  padding: 16px;
-  background: #08121f;
+  padding: 20px;
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
 }
 
 header h1 {
-  margin: 0;
-  font-size: 28px;
+  margin: 0 0 6px 0;
+  font-size: 2rem;
 }
 
 header p {
-  margin: 4px 0 12px;
-  color: #aaa;
+  margin: 0 0 16px 0;
+  color: #cbd5e1;
 }
 
 .search {
   display: flex;
   gap: 10px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
 }
 
 .search input {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: none;
-  width: 200px;
+  padding: 10px 12px;
+  width: 220px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 .search button {
   padding: 10px 16px;
-  font-size: 16px;
-  background: #2a7fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  background: #2563eb;
   color: white;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .search button:hover {
-  background: #1d6be0;
-}
-
-.map-wrapper {
-  position: relative;
+  background: #1d4ed8;
 }
 
 #map {
-  height: 500px;
   width: 100%;
+  height: calc(100vh - 220px);
+  min-height: 500px;
 }
 
 #infoPanel {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
-  background: linear-gradient(180deg, #0f2747 0%, #16365c 100%);
-  padding: 22px 24px;
-  border-radius: 16px;
-  min-width: 280px;
-  max-width: 320px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  z-index: 1000;
+  background: #020617;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+  width: 260px;
+  z-index: 9999;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
 #infoPanel h3 {
-  margin: 0 0 18px 0;
-  text-align: center;
-  font-size: 30px;
-  font-weight: 800;
-}
-
-.info-row {
-  font-size: 20px;
-  font-weight: 700;
+  margin-top: 0;
   margin-bottom: 10px;
 }
 
-.label {
-  font-weight: 800;
-  margin-right: 6px;
+#info {
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 #clock {
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  text-align: center;
-  font-size: 26px;
-  font-weight: 800;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #1e293b;
+  color: #93c5fd;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {
   #infoPanel {
     position: static;
-    margin: 20px;
-    max-width: none;
-    min-width: auto;
+    width: auto;
+    margin-top: 12px;
   }
 
   #map {
-    height: 400px;
+    height: 70vh;
   }
 }
