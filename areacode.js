@@ -1,19 +1,12 @@
 const DATA_FILE = "area_code_data.json";
 
-const northAmericaBounds = L.latLngBounds(
-  [5, -170],
-  [85, -20]
-);
-
 const map = L.map("map", {
-  maxBounds: northAmericaBounds,
-  maxBoundsViscosity: 1.0,
-  minZoom: 3
-}).setView([45, -100], 4);
+  worldCopyJump: true,
+  minZoom: 2
+}).setView([20, 0], 2);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "© OpenStreetMap contributors",
-  noWrap: true
+  attribution: "© OpenStreetMap contributors"
 }).addTo(map);
 
 // ---------- STATE ----------
