@@ -1,11 +1,12 @@
 const DATA_FILE = "area_code_data.json";
+const MAPTILER_KEY = "YOUR_API_KEY";
 
 const worldBounds = L.latLngBounds(
   [-85, -180],
   [85, 180]
 );
 
-const MAPTILER_KEY = "YOUR_API_KEY";
+
 const map = L.map("map", {
   maxBounds: worldBounds,
   maxBoundsViscosity: 1.0,
