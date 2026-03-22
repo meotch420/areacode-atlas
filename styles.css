@@ -64,7 +64,7 @@ header p {
 #infoPanel {
   position: fixed;
   top: 20px;
-  right: 20px;
+  right: 5%px;
   background: #020617;
   color: white;
   padding: 15px;
