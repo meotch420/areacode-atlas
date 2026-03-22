@@ -75,24 +75,11 @@ header p {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
-#infoPanel h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-}
 
 #info {
   color: #e2e8f0;
   font-size: 14px;
   line-height: 1.5;
-}
-
-#clock {
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px solid #1e293b;
-  color: #93c5fd;
-  font-weight: bold;
-  font-size: 14px;
 }
 
 @media (max-width: 768px) {
@@ -105,4 +92,31 @@ header p {
   #map {
     height: 70vh;
   }
+}
+.info-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.info-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.info-row-2 {
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+
+.info-row-3 {
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 20px;
+}
+
+#clock {
+  font-weight: bold;
+  color: #9fd3ff;
 }
