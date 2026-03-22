@@ -1,52 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AreaCode Atlas</title>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AreaCode Atlas</title>
+
+    <link
+      rel="stylesheet"
+     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+   />
   <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="top-section">
-    <header>
-      <h1>AreaCode Atlas</h1>
-      <p>Search area codes and view location details</p>
-    </header>
+ </head>
+ <body>
+   <div class="top-section">
+     <header>
+       <h1>AreaCode Atlas</h1>
+       <p>Navigate North America by Area Code</p>
+     </header>
 
-    <div class="search">
-      <input type="text" id="areaCodeInput" placeholder="Enter area code" />
-      <button id="searchBtn">Search</button>
-    </div>
-  </div>
+     <form class="search" id="searchForm">
+       <input
+         id="areaSearch"
+         type="text"
+         placeholder="Enter Area Code (ex: 212)"
+       />
+     <button type="submit" id="searchBtn">Search</button>
+     </form>
+   </div>
 
-  <div class="map-wrapper">
-    <div id="map"></div>
+   <div id="map"></div>
 
-    <div id="infoPanel">
-      <h3>Area Info</h3>
+   <div id="infoPanel">
+     <h3>Area Information</h3>
+     <div id="info">Click a region or search an area code.</div>
+     <div id="clock"></div>
+   </div>
 
-      <div class="info-row">
-        <span class="label">Area Code:</span>
-        <span id="infoAreaCode">---</span>
-      </div>
-
-      <div class="info-row">
-        <span class="label">Region:</span>
-        <span id="infoRegion">---</span>
-      </div>
-
-      <div class="info-row">
-        <span class="label">State:</span>
-        <span id="infoState">---</span>
-      </div>
-
-      <div class="info-row">
-        <span class="label">Timezone:</span>
-        <span id="infoTimezone">---</span>
-      </div>
-
-      <div id="clock">--:--:--</div>
-    </div>
-  </div>
-</body>
-</html>
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+   <script src="script.js"></script>
+ </body>
+ </html>
