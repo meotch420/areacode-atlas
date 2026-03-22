@@ -67,7 +67,7 @@ function startClock(tzid) {
 
   function updateClock() {
     if (!currentTimezoneId) {
-      clockEl.innerHTML = "";
+      clockEl.textContent = time;
       return;
     }
 
