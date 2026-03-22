@@ -14,8 +14,10 @@ const map = L.map("map", {
   maxZoom: 10
 }).setView([20, 0], 2);
 
-L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-  attribution: "© OpenStreetMap © CARTO",
+L.maptiler.maptilerLayer({
+  apiKey: MAPTILER_KEY,
+  style: maptilersdk.MapStyle.STREETS,
+  language: maptilersdk.Language.ENGLISH,
   noWrap: true
 }).addTo(map);
 
