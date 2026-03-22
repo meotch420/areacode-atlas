@@ -64,15 +64,15 @@ header p {
 #infoPanel {
   position: fixed;
   top: 20px;
-  right: 5%;
-  background: #020617;
+  right: 20px;
+  z-index: 1000;
+  width: 760px;
+  max-width: calc(100% - 40px);
+  background: #12304a;
   color: white;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #1e293b;
-  width: 260px;
-  z-index: 9999;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 #infoPanel h3 {
