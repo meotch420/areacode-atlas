@@ -202,7 +202,6 @@ function searchArea() {
   }
 
   const input = document.getElementById("areaSearch").value.trim();
-  document.getElementById("areaSearch").value = input; // ✅ keeps value
 
   if (!input) {
     alert("Enter an area code.");
@@ -229,4 +228,4 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   searchArea();
 });
-
+232 document.getElementById("searchBtn").addEventListener("click", searchArea);
