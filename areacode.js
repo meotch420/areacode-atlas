@@ -228,4 +228,6 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   searchArea();
 });
-232 document.getElementById("searchBtn").addEventListener("click", searchArea);
+ document.getElementById("searchBtn").addEventListener("click", () => {
+   searchArea();
+ });
