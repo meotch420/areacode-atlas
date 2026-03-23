@@ -229,3 +229,6 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   searchArea();
 });
+
+// ✅ ADD THIS LINE RIGHT HERE
+document.getElementById("searchBtn").addEventListener("click", searchArea);
