@@ -221,6 +221,9 @@ function searchArea() {
   updateInfo(input, data);
   marker.openPopup();
   map.setView([data.lat, data.lng], 6);
+
+ // ✅ CLEAR INPUT
+document.getElementById("areaSearch").value = ""; 
 }
 
 // ---------- FORM ----------
