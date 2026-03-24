@@ -60,7 +60,7 @@ function getBusinessHoursStatus(tzid) {
 
   const hour = parseInt(hourString, 10);
 
-  return hour >= 9 && hour < 17 ? "Open" : "Closed";
+  return hour >= 8 && hour < 17 ? "Open" : "Closed";
 }
 
 // ---------- CLOCK ----------
