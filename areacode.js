@@ -2,8 +2,8 @@ const DATA_FILE = "area_code_data.json";
 const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
 const worldBounds = L.latLngBounds(
-  [-90, -180],
-  [90, 180]
+  [-85, -180],
+  [85, 180]
 );
 
 const map = L.map("map", {
