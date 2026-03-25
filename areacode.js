@@ -20,15 +20,12 @@ L.maptiler.maptilerLayer({
   noWrap: true
 }).addTo(map);
 
-// ---------- STATE ----------
 let areaCodesByCode = {};
 let currentPolygon = null;
-let currentCode = null;
 let clockInterval = null;
 let currentTimezoneId = null;
 let dataLoaded = false;
 
-// ---------- COLORS ----------
 function getFillColor(timezone) {
   const colors = {
     Eastern: "#2563eb",
@@ -43,7 +40,6 @@ function getFillColor(timezone) {
   return colors[timezone] || "#64748b";
 }
 
-// ---------- BUSINESS HOURS ----------
 function getBusinessHoursStatus(tzid) {
   if (!tzid) return "-";
 
@@ -57,7 +53,6 @@ function getBusinessHoursStatus(tzid) {
   return hour >= 8 && hour < 17 ? "Open" : "Closed";
 }
 
-// ---------- CLOCK ----------
 function startClock(tzid) {
   const clockEl = document.getElementById("clock");
 
@@ -85,7 +80,6 @@ function startClock(tzid) {
   clockInterval = setInterval(updateClock, 1000);
 }
 
-// ---------- INFO PANEL ----------
 function updateInfo(code, data) {
   const infoCity = document.getElementById("info-city");
   const infoState = document.getElementById("info-state");
@@ -112,7 +106,6 @@ function updateInfo(code, data) {
   startClock(data.tzid);
 }
 
-// ---------- POLYGON HELPERS ----------
 function getPolygonRadiusKm(item) {
   const state = (item.state || "").toUpperCase();
 
@@ -151,13 +144,11 @@ function createAreaPolygon(item) {
   return points;
 }
 
-// ---------- MAP DISPLAY ----------
 function clearCurrentPolygon() {
   if (currentPolygon) {
     map.removeLayer(currentPolygon);
     currentPolygon = null;
   }
-  currentCode = null;
 }
 
 function showAreaPolygon(code, item) {
@@ -174,19 +165,17 @@ function showAreaPolygon(code, item) {
     opacity: 1
   }).addTo(map);
 
+  map.fitBounds(currentPolygon.getBounds(), { padding: [40, 40] });
+
   currentPolygon.bindPopup(`
     <div style="font-weight:700;font-size:16px;">${code}</div>
     <div>${item.city}, ${item.state}</div>
     <div>${item.timezone}</div>
   `);
 
-  currentPolygon.openPopup(L.latLng(item.lat, item.lng));
-  map.fitBounds(currentPolygon.getBounds(), { padding: [40, 40] });
-
-  currentCode = code;
+  currentPolygon.openPopup();
 }
 
-// ---------- SELECT AREA ----------
 function selectArea(code) {
   const item = areaCodesByCode[String(code).trim()];
 
@@ -199,7 +188,6 @@ function selectArea(code) {
   updateInfo(code, item);
 }
 
-// ---------- LOAD DATA ----------
 fetch(DATA_FILE)
   .then((res) => {
     if (!res.ok) {
@@ -216,15 +204,12 @@ fetch(DATA_FILE)
 
     dataLoaded = true;
     document.getElementById("searchBtn").disabled = false;
-    console.log("Loaded area codes:", Object.keys(areaCodesByCode).length);
   })
   .catch((err) => {
     console.error(err);
-    updateInfo("-", null);
     document.getElementById("info-city").textContent = "Error loading data";
   });
 
-// ---------- SEARCH ----------
 function searchArea() {
   if (!dataLoaded) {
     alert("Map still loading. Try again in a second.");
@@ -243,7 +228,6 @@ function searchArea() {
   inputEl.value = "";
 }
 
-// ---------- EVENTS ----------
 document.getElementById("searchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   searchArea();
