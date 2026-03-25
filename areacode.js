@@ -6,14 +6,13 @@ const worldBounds = L.latLngBounds(
   [85, 180]
 );
 
-
 const map = L.map("map", {
   maxBounds: worldBounds,
   maxBoundsViscosity: 1.0,
   minZoom: 2,
   maxZoom: 10,
   worldCopyJump: false
-}).setView([20, 0], 2);
+}).setView([39, -98], 4);
 
 L.maptiler.maptilerLayer({
   apiKey: MAPTILER_KEY,
@@ -21,11 +20,10 @@ L.maptiler.maptilerLayer({
   noWrap: true
 }).addTo(map);
 
-
 // ---------- STATE ----------
-let markers = [];
-let markersByCode = {};
-let currentMarker = null;
+let areaCodesByCode = {};
+let currentPolygon = null;
+let currentCode = null;
 let clockInterval = null;
 let currentTimezoneId = null;
 let dataLoaded = false;
@@ -42,7 +40,6 @@ function getFillColor(timezone) {
     Atlantic: "#0ea5e9",
     Newfoundland: "#14b8a6"
   };
-
   return colors[timezone] || "#64748b";
 }
 
@@ -50,16 +47,13 @@ function getFillColor(timezone) {
 function getBusinessHoursStatus(tzid) {
   if (!tzid) return "-";
 
-  const now = new Date();
-
-  const hourString = now.toLocaleString("en-US", {
+  const hourString = new Date().toLocaleString("en-US", {
     timeZone: tzid,
     hour: "numeric",
     hour12: false
   });
 
   const hour = parseInt(hourString, 10);
-
   return hour >= 8 && hour < 17 ? "Open" : "Closed";
 }
 
@@ -68,12 +62,11 @@ function startClock(tzid) {
   const clockEl = document.getElementById("clock");
 
   if (clockInterval) clearInterval(clockInterval);
-
   currentTimezoneId = tzid;
 
   function updateClock() {
     if (!currentTimezoneId) {
-      clockEl.textContent = time;
+      clockEl.textContent = "--:--:--";
       return;
     }
 
@@ -85,7 +78,7 @@ function startClock(tzid) {
       hour12: true
     });
 
-    clockEl.innerHTML = `${time}`;
+    clockEl.textContent = time;
   }
 
   updateClock();
@@ -107,7 +100,7 @@ function updateInfo(code, data) {
     infoAreaCode.textContent = "-";
     infoTimezone.textContent = "-";
     infoHours.textContent = "-";
-    clockEl.innerHTML = "";
+    clockEl.textContent = "--:--:--";
     return;
   }
 
@@ -116,82 +109,119 @@ function updateInfo(code, data) {
   infoAreaCode.textContent = code || "-";
   infoTimezone.textContent = data.timezone || "-";
   infoHours.textContent = getBusinessHoursStatus(data.tzid);
-
   startClock(data.tzid);
 }
 
-// ---------- HIGHLIGHT ----------
-function highlightMarker(marker) {
-  if (currentMarker) {
-    currentMarker.setStyle({ radius: 8, weight: 1, color: "#000" });
+// ---------- POLYGON HELPERS ----------
+function getPolygonRadiusKm(item) {
+  const state = (item.state || "").toUpperCase();
+
+  const largerAreas = [
+    "TX", "CA", "AK", "BC", "AB", "SK", "MB", "ON", "QC", "NV", "AZ",
+    "CO", "NM", "ID", "MT", "WY", "UT"
+  ];
+
+  const smallerAreas = [
+    "DC", "DE", "RI", "CT", "NJ", "MD", "MA"
+  ];
+
+  if (smallerAreas.includes(state)) return 28;
+  if (largerAreas.includes(state)) return 55;
+  return 38;
+}
+
+function createAreaPolygon(item) {
+  const lat = Number(item.lat);
+  const lng = Number(item.lng);
+  const radiusKm = getPolygonRadiusKm(item);
+
+  const points = [];
+  const sides = 40;
+
+  for (let i = 0; i < sides; i++) {
+    const angle = (i / sides) * Math.PI * 2;
+
+    const latOffset = (radiusKm / 111) * Math.sin(angle);
+    const lngOffset =
+      (radiusKm / (111 * Math.cos((lat * Math.PI) / 180))) * Math.cos(angle);
+
+    points.push([lat + latOffset, lng + lngOffset]);
   }
 
-  marker.setStyle({
-    radius: 12,
-    weight: 3,
-    color: "#ffffff"
-  });
+  return points;
+}
 
-  currentMarker = marker;
+// ---------- MAP DISPLAY ----------
+function clearCurrentPolygon() {
+  if (currentPolygon) {
+    map.removeLayer(currentPolygon);
+    currentPolygon = null;
+  }
+  currentCode = null;
+}
+
+function showAreaPolygon(code, item) {
+  clearCurrentPolygon();
+
+  const fillColor = getFillColor(item.timezone);
+  const polygonCoords = createAreaPolygon(item);
+
+  currentPolygon = L.polygon(polygonCoords, {
+    color: "#ffffff",
+    weight: 2,
+    fillColor: fillColor,
+    fillOpacity: 0.45,
+    opacity: 1
+  }).addTo(map);
+
+  currentPolygon.bindPopup(`
+    <div style="font-weight:700;font-size:16px;">${code}</div>
+    <div>${item.city}, ${item.state}</div>
+    <div>${item.timezone}</div>
+  `);
+
+  currentPolygon.openPopup(L.latLng(item.lat, item.lng));
+  map.fitBounds(currentPolygon.getBounds(), { padding: [40, 40] });
+
+  currentCode = code;
+}
+
+// ---------- SELECT AREA ----------
+function selectArea(code) {
+  const item = areaCodesByCode[String(code).trim()];
+
+  if (!item) {
+    alert(`Area code ${code} not found.`);
+    return;
+  }
+
+  showAreaPolygon(code, item);
+  updateInfo(code, item);
 }
 
 // ---------- LOAD DATA ----------
 fetch(DATA_FILE)
-  .then(res => {
+  .then((res) => {
     if (!res.ok) {
       throw new Error(`Failed to load ${DATA_FILE}: ${res.status}`);
     }
     return res.json();
   })
-  .then(data => {
-    const codes = data.area_codes;
+  .then((data) => {
+    const codes = data.area_codes || {};
 
-    Object.keys(codes).forEach(code => {
-      const item = codes[code];
-
-      const marker = L.circleMarker([item.lat, item.lng], {
-        radius: 8,
-        fillColor: getFillColor(item.timezone),
-        color: "#000",
-        weight: 1,
-        fillOpacity: 0.8
-      }).addTo(map);
-
-      marker.bindPopup(`
-        <strong>${code}</strong><br>
-        ${item.city}, ${item.state}<br>
-        ${item.timezone}
-      `);
-
-      marker.on("click", () => {
-        highlightMarker(marker);
-        updateInfo(code, item);
-        marker.openPopup();
-        map.setView([item.lat, item.lng], 6);
-      });
-
-      markers.push(marker);
-      markersByCode[String(code).trim()] = { marker, data: item };
+    Object.keys(codes).forEach((code) => {
+      areaCodesByCode[String(code).trim()] = codes[code];
     });
 
     dataLoaded = true;
-    console.log("Loaded codes:", Object.keys(markersByCode).slice(0, 20));
-
     document.getElementById("searchBtn").disabled = false;
+    console.log("Loaded area codes:", Object.keys(areaCodesByCode).length);
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err);
-    const infoCity = document.getElementById("info-city");
-    const infoState = document.getElementById("info-state");
-    const infoAreaCode = document.getElementById("info-area-code");
-    const infoTimezone = document.getElementById("info-timezone");
-    const infoHours = document.getElementById("info-hours");
-
-    infoCity.textContent = "Error loading data";
-    infoState.textContent = "-";
-    infoAreaCode.textContent = "-";
-    infoTimezone.textContent = "-";
-    infoHours.textContent = "-";
+    updateInfo("-", null);
+    document.getElementById("info-city").textContent = "Error loading data";
   });
 
 // ---------- SEARCH ----------
@@ -201,36 +231,22 @@ function searchArea() {
     return;
   }
 
-  const input = document.getElementById("areaSearch").value.trim();
+  const inputEl = document.getElementById("areaSearch");
+  const input = inputEl.value.trim();
 
   if (!input) {
     alert("Enter an area code.");
     return;
   }
 
-  const result = markersByCode[input];
-
-  if (!result) {
-    alert(`Area code ${input} not found.`);
-    return;
-  }
-
-  const { marker, data } = result;
-
-  highlightMarker(marker);
-  updateInfo(input, data);
-  marker.openPopup();
-  map.setView([data.lat, data.lng], 6);
-
- // ✅ CLEAR INPUT
-document.getElementById("areaSearch").value = ""; 
+  selectArea(input);
+  inputEl.value = "";
 }
 
-// ---------- FORM ----------
+// ---------- EVENTS ----------
 document.getElementById("searchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   searchArea();
 });
- document.getElementById("searchBtn").addEventListener("click", () => {
-   searchArea();
- });
+
+document.getElementById("searchBtn").addEventListener("click", searchArea);
