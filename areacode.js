@@ -233,4 +233,3 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   searchArea();
 });
 
-document.getElementById("searchBtn").addEventListener("click", searchArea);
