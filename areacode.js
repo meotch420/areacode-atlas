@@ -12,7 +12,7 @@ const map = L.map("map", {
   minZoom: 2,
   maxZoom: 10,
   worldCopyJump: false
-}).setView([39, -98], 4);
+}).setView([20, 0], 2);
 
 L.maptiler.maptilerLayer({
   apiKey: MAPTILER_KEY,
