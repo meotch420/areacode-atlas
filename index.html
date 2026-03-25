@@ -1,54 +1,58 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AreaCode Atlas</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AreaCode Atlas</title>
 
-    <link
-      rel="stylesheet"
-     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-   />
-    <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css"
+  />
   <link rel="stylesheet" href="styles.css" />
- </head>
- <body>
-   <div class="top-section">
-     <header>
-       <h1>AreaCode Atlas</h1>
-       <p>Navigate North America by Area Code</p>
-     </header>
+</head>
+<body>
+  <div class="top-section">
+    <header>
+      <h1>AreaCode Atlas</h1>
+      <p>Navigate North America by Area Code</p>
+    </header>
 
-     <form class="search" id="searchForm">
-       <input
-         id="areaSearch"
-         type="text"
-         placeholder="Enter Area Code (ex: 212)"
-       />
-     <button type="button" id="searchBtn">Search</button>
-     </form>
-   </div>
-
-   <div id="map"></div>
-
-<div id="infoPanel">
-  <div class="info-title">Area Information</div>
-
-  <div class="info-row info-row-2">
-    <div><strong>Area Code:</strong> <span id="info-area-code">-</span></div>
-    <div><strong>City:</strong> <span id="info-city">-</span></div>
-    <div><strong>State:</strong> <span id="info-state">-</span></div>
-    <div><strong>Timezone:</strong> <span id="info-timezone">-</span></div>
+    <form class="search" id="searchForm">
+      <input
+        id="areaSearch"
+        type="text"
+        placeholder="Enter Area Code (ex: 212)"
+      />
+      <button type="submit" id="searchBtn">Search</button>
+    </form>
   </div>
 
-  <div class="info-row info-row-3">
-    <div><strong>Live Time:</strong> <span id="clock">--:--:--</span></div>
-    <div><strong>Business Hours:</strong> <span id="info-hours">-</span></div>
+  <div id="map"></div>
+
+  <div id="infoPanel">
+    <div class="info-title">Area Information</div>
+
+    <div class="info-row info-row-2">
+      <div><strong>Area Code:</strong> <span id="info-area-code">-</span></div>
+      <div><strong>City:</strong> <span id="info-city">-</span></div>
+      <div><strong>State:</strong> <span id="info-state">-</span></div>
+      <div><strong>Timezone:</strong> <span id="info-timezone">-</span></div>
+    </div>
+
+    <div class="info-row info-row-3">
+      <div><strong>Live Time:</strong> <span id="clock">--:--:--</span></div>
+      <div><strong>Business Hours:</strong> <span id="info-hours">-</span></div>
+    </div>
   </div>
-</div>
- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
-<script src="https://cdn.maptiler.com/leaflet-maptilersdk/latest/leaflet-maptilersdk.umd.min.js"></script>
-<script src="areacode.js"></script>
- </body>
- </html>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
+  <script src="https://cdn.maptiler.com/leaflet-maptilersdk/latest/leaflet-maptilersdk.umd.min.js"></script>
+  <script src="areacode.js"></script>
+</body>
+</html>
