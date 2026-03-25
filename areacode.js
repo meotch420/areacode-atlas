@@ -2,8 +2,8 @@ const DATA_FILE = "area_code_data.json";
 const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
 const worldBounds = L.latLngBounds(
-  [-85, -180],
-  [85, 180]
+  [-90, -180],
+  [90, 180]
 );
 
 const map = L.map("map", {
@@ -12,7 +12,7 @@ const map = L.map("map", {
   minZoom: 2,
   maxZoom: 10,
   worldCopyJump: false
-}).setView([39, -98], 4);
+}).setView([20, 0], 2);
 
 L.maptiler.maptilerLayer({
   apiKey: MAPTILER_KEY,
