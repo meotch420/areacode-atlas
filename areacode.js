@@ -18,6 +18,8 @@ const map = new maptilersdk.Map({
 map.addControl(new maptilersdk.NavigationControl(), "top-left");
 map.addControl(new maptilersdk.ProjectionControl(), "top-left");
 
+let mapReady = false;
+let currentPopup = null;
 let areaCodesByCode = {};
 let currentPolygonId = "area-highlight-fill";
 let currentPolygonLineId = "area-highlight-line";
@@ -25,6 +27,10 @@ let currentSourceId = "area-highlight-source";
 let clockInterval = null;
 let currentTimezoneId = null;
 let dataLoaded = false;
+
+map.on("load", () => {
+  mapReady = true;
+});
 
 function getFillColor(timezone) {
   const colors = {
@@ -163,6 +169,11 @@ function clearCurrentPolygon() {
   if (map.getSource(currentSourceId)) {
     map.removeSource(currentSourceId);
   }
+
+  if (currentPopup) {
+    currentPopup.remove();
+    currentPopup = null;
+  }
 }
 
 function showAreaPolygon(code, item) {
@@ -205,7 +216,7 @@ function showAreaPolygon(code, item) {
     duration: 1200
   });
 
-  new maptilersdk.Popup({ closeButton: false, closeOnClick: true })
+  currentPopup = new maptilersdk.Popup({ closeButton: false, closeOnClick: true })
     .setLngLat([Number(item.lng), Number(item.lat)])
     .setHTML(`
       <div style="font-weight:700;font-size:16px;">${code}</div>
@@ -250,8 +261,13 @@ fetch(DATA_FILE)
   });
 
 function searchArea() {
+  if (!mapReady) {
+    alert("Map is still loading. Try again.");
+    return;
+  }
+
   if (!dataLoaded) {
-    alert("Map still loading. Try again in a second.");
+    alert("Data is still loading. Try again in a second.");
     return;
   }
 
