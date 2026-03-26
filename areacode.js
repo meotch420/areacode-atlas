@@ -10,7 +10,7 @@ const map = L.map("map", {
   maxBounds: worldBounds,
   maxBoundsViscosity: 1.0,
   minZoom: 2,
-  maxZoom: 10,
+  maxZoom: 8,
   worldCopyJump: false
 }).setView([20, 0], 2);
 
