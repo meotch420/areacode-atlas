@@ -1,26 +1,27 @@
 const DATA_FILE = "area_code_data.json";
 const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
-const worldBounds = L.latLngBounds(
-  [-90, -180],
-  [90, 180]
-);
+maptilersdk.config.apiKey = MAPTILER_KEY;
 
-const map = L.map("map", {
-  minZoom: 2,
-  maxZoom: 10,
-  worldCopyJump: true
-}).setView([20, 0], 2);
+const map = new maptilersdk.Map({
+  container: "map",
+  style: maptilersdk.MapStyle.STREETS,
+  projection: "globe",
+  zoom: 1.6,
+  center: [-98.5795, 39.8283],
+  pitch: 0,
+  bearing: 0,
+  antialias: true,
+  hash: false
+});
 
-L.tileLayer(`https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`, {
-  tileSize: 512,
-  zoomOffset: -1,
-  noWrap: false,
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+map.addControl(new maptilersdk.NavigationControl(), "top-left");
+map.addControl(new maptilersdk.ProjectionControl(), "top-left");
 
 let areaCodesByCode = {};
-let currentPolygon = null;
+let currentPolygonId = "area-highlight-fill";
+let currentPolygonLineId = "area-highlight-line";
+let currentSourceId = "area-highlight-source";
 let clockInterval = null;
 let currentTimezoneId = null;
 let dataLoaded = false;
@@ -128,51 +129,90 @@ function createAreaPolygon(item) {
   const radiusKm = getPolygonRadiusKm(item);
 
   const points = [];
-  const sides = 40;
+  const sides = 60;
 
-  for (let i = 0; i < sides; i++) {
+  for (let i = 0; i <= sides; i++) {
     const angle = (i / sides) * Math.PI * 2;
 
     const latOffset = (radiusKm / 111) * Math.sin(angle);
     const lngOffset =
       (radiusKm / (111 * Math.cos((lat * Math.PI) / 180))) * Math.cos(angle);
 
-    points.push([lat + latOffset, lng + lngOffset]);
+    points.push([lng + lngOffset, lat + latOffset]);
   }
 
-  return points;
+  return {
+    type: "Feature",
+    geometry: {
+      type: "Polygon",
+      coordinates: [points]
+    },
+    properties: {}
+  };
 }
 
 function clearCurrentPolygon() {
-  if (currentPolygon) {
-    map.removeLayer(currentPolygon);
-    currentPolygon = null;
+  if (map.getLayer(currentPolygonId)) {
+    map.removeLayer(currentPolygonId);
+  }
+
+  if (map.getLayer(currentPolygonLineId)) {
+    map.removeLayer(currentPolygonLineId);
+  }
+
+  if (map.getSource(currentSourceId)) {
+    map.removeSource(currentSourceId);
   }
 }
 
 function showAreaPolygon(code, item) {
   clearCurrentPolygon();
 
+  const polygonGeoJSON = createAreaPolygon(item);
   const fillColor = getFillColor(item.timezone);
-  const polygonCoords = createAreaPolygon(item);
 
-  currentPolygon = L.polygon(polygonCoords, {
-    color: "#ffffff",
-    weight: 2,
-    fillColor: fillColor,
-    fillOpacity: 0.45,
-    opacity: 1
-  }).addTo(map);
+  map.addSource(currentSourceId, {
+    type: "geojson",
+    data: polygonGeoJSON
+  });
 
-  map.fitBounds(currentPolygon.getBounds(), { padding: [40, 40] });
+  map.addLayer({
+    id: currentPolygonId,
+    type: "fill",
+    source: currentSourceId,
+    paint: {
+      "fill-color": fillColor,
+      "fill-opacity": 0.45
+    }
+  });
 
-  currentPolygon.bindPopup(`
-    <div style="font-weight:700;font-size:16px;">${code}</div>
-    <div>${item.city}, ${item.state}</div>
-    <div>${item.timezone}</div>
-  `);
+  map.addLayer({
+    id: currentPolygonLineId,
+    type: "line",
+    source: currentSourceId,
+    paint: {
+      "line-color": "#ffffff",
+      "line-width": 2
+    }
+  });
 
-  currentPolygon.openPopup();
+  const bounds = new maptilersdk.LngLatBounds();
+  polygonGeoJSON.geometry.coordinates[0].forEach((coord) => bounds.extend(coord));
+
+  map.fitBounds(bounds, {
+    padding: 60,
+    maxZoom: 6,
+    duration: 1200
+  });
+
+  new maptilersdk.Popup({ closeButton: false, closeOnClick: true })
+    .setLngLat([Number(item.lng), Number(item.lat)])
+    .setHTML(`
+      <div style="font-weight:700;font-size:16px;">${code}</div>
+      <div>${item.city}, ${item.state}</div>
+      <div>${item.timezone}</div>
+    `)
+    .addTo(map);
 }
 
 function selectArea(code) {
@@ -231,4 +271,3 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   searchArea();
 });
-
