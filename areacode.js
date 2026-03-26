@@ -7,17 +7,16 @@ const worldBounds = L.latLngBounds(
 );
 
 const map = L.map("map", {
-  maxBounds: worldBounds,
-  maxBoundsViscosity: 1.0,
   minZoom: 2,
-  maxZoom: 16,
-  worldCopyJump: false
+  maxZoom: 10,
+  worldCopyJump: true
 }).setView([20, 0], 2);
 
-L.maptiler.maptilerLayer({
-  apiKey: MAPTILER_KEY,
-  style: maptilersdk.MapStyle.STREETS,
-  noWrap: true
+L.tileLayer(`https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`, {
+  tileSize: 512,
+  zoomOffset: -1,
+  noWrap: false,
+  attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
 let areaCodesByCode = {};
