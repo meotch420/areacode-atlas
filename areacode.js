@@ -30,6 +30,7 @@ let dataLoaded = false;
 
 map.on("load", () => {
   mapReady = true;
+  console.log("✅ map loaded");
 });
 
 function getFillColor(timezone) {
@@ -134,6 +135,8 @@ function createAreaPolygon(item) {
   const lng = Number(item.lng);
   const radiusKm = getPolygonRadiusKm(item);
 
+  console.log("lat/lng:", lat, lng);
+
   const points = [];
   const sides = 60;
 
@@ -158,17 +161,9 @@ function createAreaPolygon(item) {
 }
 
 function clearCurrentPolygon() {
-  if (map.getLayer(currentPolygonId)) {
-    map.removeLayer(currentPolygonId);
-  }
-
-  if (map.getLayer(currentPolygonLineId)) {
-    map.removeLayer(currentPolygonLineId);
-  }
-
-  if (map.getSource(currentSourceId)) {
-    map.removeSource(currentSourceId);
-  }
+  if (map.getLayer(currentPolygonId)) map.removeLayer(currentPolygonId);
+  if (map.getLayer(currentPolygonLineId)) map.removeLayer(currentPolygonLineId);
+  if (map.getSource(currentSourceId)) map.removeSource(currentSourceId);
 
   if (currentPopup) {
     currentPopup.remove();
@@ -177,6 +172,8 @@ function clearCurrentPolygon() {
 }
 
 function showAreaPolygon(code, item) {
+  console.log("showAreaPolygon:", code, item);
+
   clearCurrentPolygon();
 
   const polygonGeoJSON = createAreaPolygon(item);
@@ -227,40 +224,51 @@ function showAreaPolygon(code, item) {
 }
 
 function selectArea(code) {
-  const item = areaCodesByCode[String(code).trim()];
+  const cleanCode = String(code).trim();
+  const item = areaCodesByCode[cleanCode];
+
+  console.log("searching:", cleanCode);
+  console.log("found item:", item);
 
   if (!item) {
-    alert(`Area code ${code} not found.`);
+    alert(`Area code ${cleanCode} not found.`);
     return;
   }
 
-  showAreaPolygon(code, item);
-  updateInfo(code, item);
+  showAreaPolygon(cleanCode, item);
+  updateInfo(cleanCode, item);
 }
 
 fetch(DATA_FILE)
   .then((res) => {
+    console.log("data fetch status:", res.status);
     if (!res.ok) {
       throw new Error(`Failed to load ${DATA_FILE}: ${res.status}`);
     }
     return res.json();
   })
   .then((data) => {
-    const codes = data.area_codes || {};
+    console.log("json loaded:", data);
+
+    const codes = data.area_codes || data;
 
     Object.keys(codes).forEach((code) => {
       areaCodesByCode[String(code).trim()] = codes[code];
     });
 
+    console.log("loaded codes count:", Object.keys(areaCodesByCode).length);
+
     dataLoaded = true;
     document.getElementById("searchBtn").disabled = false;
   })
   .catch((err) => {
-    console.error(err);
+    console.error("fetch error:", err);
     document.getElementById("info-city").textContent = "Error loading data";
   });
 
 function searchArea() {
+  console.log("searchArea fired");
+
   if (!mapReady) {
     alert("Map is still loading. Try again.");
     return;
@@ -273,6 +281,8 @@ function searchArea() {
 
   const inputEl = document.getElementById("areaSearch");
   const input = inputEl.value.trim();
+
+  console.log("input:", input);
 
   if (!input) {
     alert("Enter an area code.");
