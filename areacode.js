@@ -9,8 +9,8 @@ const worldBounds = L.latLngBounds(
 const map = L.map("map", {
   maxBounds: worldBounds,
   maxBoundsViscosity: 1.0,
-  minZoom: 0,
-  maxZoom: 12,
+  minZoom: 2,
+  maxZoom: 16,
   worldCopyJump: false
 }).setView([20, 0], 2);
 
