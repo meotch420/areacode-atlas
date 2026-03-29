@@ -65,30 +65,67 @@ window.addEventListener("DOMContentLoaded", () => {
     console.error("Map initialization failed:", err);
     return;
   }
+map.on("load", () => {
+  mapReady = true;
+  console.log("✅ map loaded");
 
-  map.on("load", () => {
-    fetch("timezones.geojson")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Failed to load timezones.geojson: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Loaded timezone data:", data);
+  fetch("timezones.geojson")
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`Failed to load timezones.geojson: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
+        throw new Error("timezones.geojson is not valid GeoJSON FeatureCollection data");
+      }
 
-        if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
-          throw new Error("timezones.geojson is not a valid GeoJSON FeatureCollection");
-        }
-
-        if (map.getSource("timezones")) {
-          return;
-        }
-
+      if (!map.getSource("timezones")) {
         map.addSource("timezones", {
           type: "geojson",
           data: data
         });
+      }
+
+      if (!map.getLayer("timezones-fill")) {
+        map.addLayer({
+          id: "timezones-fill",
+          type: "fill",
+          source: "timezones",
+          paint: {
+            "fill-color": [
+              "match",
+              ["get", "name"],
+              "Eastern", "#2563eb",
+              "Central", "#16a34a",
+              "Mountain", "#f59e0b",
+              "Pacific", "#dc2626",
+              "Alaska", "#7c3aed",
+              "Hawaii", "#0891b2",
+              "#64748b"
+            ],
+            "fill-opacity": 0.28
+          }
+        });
+      }
+
+      if (!map.getLayer("timezones-line")) {
+        map.addLayer({
+          id: "timezones-line",
+          type: "line",
+          source: "timezones",
+          paint: {
+            "line-color": "#ffffff",
+            "line-width": 1
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      console.error("Timezone layer error:", err);
+    });
+});
 
         map.addLayer({
           id: "timezones-layer",
