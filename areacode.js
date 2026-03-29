@@ -154,8 +154,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
     map.flyTo({
       center: [lng, lat],
-      zoom: 5,
-      duration: 1500
+      zoom: 11,
+      duration: 1.5
     });
 
     currentPopup = new maptilersdk.Popup({
