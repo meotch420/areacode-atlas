@@ -34,14 +34,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
   maptilersdk.config.apiKey = MAPTILER_KEY;
 
-  // ✅ TIMEZONE COLORS
   const timezoneColors = {
-    "Eastern": "#3b82f6",
-    "Central": "#22c55e",
-    "Mountain": "#f59e0b",
-    "Pacific": "#ef4444",
-    "Alaska": "#8b5cf6",
-    "Hawaii": "#06b6d4"
+    Eastern: "#3b82f6",
+    Central: "#22c55e",
+    Mountain: "#f59e0b",
+    Pacific: "#ef4444",
+    Alaska: "#8b5cf6",
+    Hawaii: "#06b6d4"
   };
 
   let map;
@@ -67,33 +66,61 @@ window.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // ✅ ADD TIMEZONE LAYER
   map.on("load", () => {
     fetch("timezones.geojson")
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to load timezones.geojson: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Loaded timezone data:", data);
 
-        data.features.forEach(feature => {
-          const tz = feature.properties.name;
+        if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
+          throw new Error("timezones.geojson is not a valid GeoJSON FeatureCollection");
+        }
 
-          map.addSource(tz, {
-            type: "geojson",
-            data: feature
-          });
+        if (map.getSource("timezones")) {
+          return;
+        }
 
-          map.addLayer({
-            id: tz,
-            type: "fill",
-            source: tz,
-            paint: {
-              "fill-color": timezoneColors[tz] || "#888",
-              "fill-opacity": 0.35
-            }
-          });
+        map.addSource("timezones", {
+          type: "geojson",
+          data: data
         });
 
+        map.addLayer({
+          id: "timezones-layer",
+          type: "fill",
+          source: "timezones",
+          paint: {
+            "fill-color": [
+              "match",
+              ["get", "name"],
+              "Eastern", timezoneColors.Eastern,
+              "Central", timezoneColors.Central,
+              "Mountain", timezoneColors.Mountain,
+              "Pacific", timezoneColors.Pacific,
+              "Alaska", timezoneColors.Alaska,
+              "Hawaii", timezoneColors.Hawaii,
+              "#888"
+            ],
+            "fill-opacity": 0.35
+          }
+        });
+
+        map.addLayer({
+          id: "timezones-outline",
+          type: "line",
+          source: "timezones",
+          paint: {
+            "line-color": "#333",
+            "line-width": 1
+          }
+        });
       })
-      .catch(err => console.error("Timezone load error:", err));
+      .catch((err) => console.error("Timezone load error:", err));
   });
 
   function getBusinessHoursStatus(tzid) {
@@ -171,11 +198,16 @@ window.addEventListener("DOMContentLoaded", () => {
     const lat = Number(item.lat);
     const lng = Number(item.lng);
 
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      console.error(`Invalid coordinates for area code ${code}`);
+      return;
+    }
+
     clearMapSelection();
 
     map.flyTo({
       center: [lng, lat],
-      zoom: 1,
+      zoom: 5,
       duration: 1.5
     });
 
@@ -186,8 +218,8 @@ window.addEventListener("DOMContentLoaded", () => {
       .setLngLat([lng, lat])
       .setHTML(`
         <div style="font-weight:700;font-size:16px;">${code}</div>
-        <div>${item.city}, ${item.state}</div>
-        <div>${item.timezone}</div>
+        <div>${item.city || "-"}, ${item.state || "-"}</div>
+        <div>${item.timezone || "-"}</div>
       `);
 
     currentMarker = new maptilersdk.Marker()
@@ -196,17 +228,18 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function selectArea(code) {
-    const item = areaCodesByCode[code];
+    const cleanCode = String(code).trim();
+    const item = areaCodesByCode[cleanCode];
 
     if (!item) {
-      alert(`Area code ${code} not found.`);
+      alert(`Area code ${cleanCode} not found.`);
       clearInfo();
       clearMapSelection();
       return;
     }
 
-    updateInfo(code, item);
-    showAreaLocation(code, item);
+    updateInfo(cleanCode, item);
+    showAreaLocation(cleanCode, item);
   }
 
   function searchArea() {
@@ -216,29 +249,41 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     const input = inputEl.value.trim();
-    if (!input) return;
+    if (!input) {
+      alert("Enter an area code.");
+      return;
+    }
 
     selectArea(input);
   }
 
   fetch(DATA_FILE)
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`Failed to load ${DATA_FILE}: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then((data) => {
       const codes = data.area_codes || data;
 
-      Object.keys(codes).forEach(code => {
-        areaCodesByCode[code] = codes[code];
+      Object.keys(codes).forEach((code) => {
+        areaCodesByCode[String(code).trim()] = codes[code];
       });
 
       dataLoaded = true;
+      console.log("Loaded area codes:", Object.keys(areaCodesByCode).length);
+    })
+    .catch((err) => {
+      console.error("Area code data load error:", err);
     });
 
-  formEl.addEventListener("submit", e => {
+  formEl.addEventListener("submit", (e) => {
     e.preventDefault();
     searchArea();
   });
 
-  buttonEl.addEventListener("click", e => {
+  buttonEl.addEventListener("click", (e) => {
     e.preventDefault();
     searchArea();
   });
