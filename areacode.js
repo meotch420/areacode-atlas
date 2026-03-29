@@ -171,11 +171,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
     currentMarker = new maptilersdk.Marker()
       .setLngLat([lng, lat])
-      .setPopup(currentPopup)
       .addTo(map);
 
-    currentPopup.addTo(map);
-  }
+    }
 
   function selectArea(code) {
     const cleanCode = String(code).trim();
