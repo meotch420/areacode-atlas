@@ -32,13 +32,10 @@ window.addEventListener("DOMContentLoaded", () => {
   let mapReady = false;
   let dataLoaded = false;
   let currentPopup = null;
+  let currentMarker = null;
   let clockInterval = null;
   let currentTimezoneId = null;
   let areaCodesByCode = {};
-
-  const currentPolygonId = "area-highlight-fill";
-  const currentPolygonLineId = "area-highlight-line";
-  const currentSourceId = "area-highlight-source";
 
   map.on("load", () => {
     mapReady = true;
@@ -48,20 +45,6 @@ window.addEventListener("DOMContentLoaded", () => {
   map.on("error", (e) => {
     console.error("Map error:", e);
   });
-
-  function getFillColor(timezone) {
-    const colors = {
-      Eastern: "#2563eb",
-      Central: "#16a34a",
-      Mountain: "#f59e0b",
-      Pacific: "#dc2626",
-      Alaska: "#7c3aed",
-      Hawaii: "#0891b2",
-      Atlantic: "#0ea5e9",
-      Newfoundland: "#14b8a6"
-    };
-    return colors[timezone] || "#64748b";
-  }
 
   function getBusinessHoursStatus(tzid) {
     if (!tzid) return "-";
@@ -120,24 +103,21 @@ window.addEventListener("DOMContentLoaded", () => {
     startClock(data.tzid);
   }
 
-  function getPolygonRadiusKm(item) {
-    const state = (item.state || "").toUpperCase();
+  function clearMapSelection() {
+    if (currentPopup) {
+      currentPopup.remove();
+      currentPopup = null;
+    }
 
-    const largerAreas = [
-      "TX", "CA", "AK", "BC", "AB", "SK", "MB", "ON", "QC", "NV", "AZ",
-      "CO", "NM", "ID", "MT", "WY", "UT"
-    ];
-
-    const smallerAreas = [
-      "DC", "DE", "RI", "CT", "NJ", "MD", "MA"
-    ];
-
-    if (smallerAreas.includes(state)) return 28;
-    if (largerAreas.includes(state)) return 55;
-    return 38;
+    if (currentMarker) {
+      currentMarker.remove();
+      currentMarker = null;
+    }
   }
 
-  function createAreaPolygon(item) {
+  function showAreaLocation(code, item) {
+    clearMapSelection();
+
     const lat = Number(item.lat);
     const lng = Number(item.lng);
 
@@ -145,91 +125,29 @@ window.addEventListener("DOMContentLoaded", () => {
       throw new Error(`Invalid coordinates: lat=${item.lat}, lng=${item.lng}`);
     }
 
-    const radiusKm = getPolygonRadiusKm(item);
-    const points = [];
-    const sides = 60;
-
-    for (let i = 0; i <= sides; i++) {
-      const angle = (i / sides) * Math.PI * 2;
-      const latOffset = (radiusKm / 111) * Math.sin(angle);
-      const lngOffset =
-        (radiusKm / (111 * Math.cos((lat * Math.PI) / 180))) * Math.cos(angle);
-
-      points.push([lng + lngOffset, lat + latOffset]);
-    }
-
-    return {
-      type: "Feature",
-      geometry: {
-        type: "Polygon",
-        coordinates: [points]
-      },
-      properties: {}
-    };
-  }
-
-  function clearCurrentPolygon() {
-    if (map.getLayer(currentPolygonId)) map.removeLayer(currentPolygonId);
-    if (map.getLayer(currentPolygonLineId)) map.removeLayer(currentPolygonLineId);
-    if (map.getSource(currentSourceId)) map.removeSource(currentSourceId);
-
-    if (currentPopup) {
-      currentPopup.remove();
-      currentPopup = null;
-    }
-  }
-
-  function showAreaPolygon(code, item) {
-    clearCurrentPolygon();
-
-    const polygonGeoJSON = createAreaPolygon(item);
-    const fillColor = getFillColor(item.timezone);
-
-    map.addSource(currentSourceId, {
-      type: "geojson",
-      data: polygonGeoJSON
-    });
-
-    map.addLayer({
-      id: currentPolygonId,
-      type: "fill",
-      source: currentSourceId,
-      paint: {
-        "fill-color": fillColor,
-        "fill-opacity": 0.45
-      }
-    });
-
-    map.addLayer({
-      id: currentPolygonLineId,
-      type: "line",
-      source: currentSourceId,
-      paint: {
-        "line-color": "#ffffff",
-        "line-width": 2
-      }
-    });
-
-    const bounds = new maptilersdk.LngLatBounds();
-    polygonGeoJSON.geometry.coordinates[0].forEach((coord) => bounds.extend(coord));
-
-    map.fitBounds(bounds, {
-      padding: 60,
-      maxZoom: 6,
-      duration: 1200
+    map.flyTo({
+      center: [lng, lat],
+      zoom: 5,
+      duration: 2000
     });
 
     currentPopup = new maptilersdk.Popup({
       closeButton: false,
       closeOnClick: true
     })
-      .setLngLat([Number(item.lng), Number(item.lat)])
+      .setLngLat([lng, lat])
       .setHTML(`
         <div style="font-weight:700;font-size:16px;">${code}</div>
         <div>${item.city || "-"}, ${item.state || "-"}</div>
         <div>${item.timezone || "-"}</div>
-      `)
+      `);
+
+    currentMarker = new maptilersdk.Marker()
+      .setLngLat([lng, lat])
+      .setPopup(currentPopup)
       .addTo(map);
+
+    currentPopup.addTo(map);
   }
 
   function selectArea(code) {
@@ -248,9 +166,9 @@ window.addEventListener("DOMContentLoaded", () => {
     updateInfo(cleanCode, item);
 
     try {
-      showAreaPolygon(cleanCode, item);
+      showAreaLocation(cleanCode, item);
     } catch (err) {
-      console.error("showAreaPolygon error:", err);
+      console.error("showAreaLocation error:", err);
       alert(`Found area code ${cleanCode}, but map display failed. Check console.`);
     }
   }
