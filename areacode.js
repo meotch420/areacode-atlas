@@ -244,7 +244,7 @@ map.on("load", () => {
 
     map.flyTo({
       center: [lng, lat],
-      zoom: 10,
+      zoom: 8,
       duration: 1.5
     });
 
