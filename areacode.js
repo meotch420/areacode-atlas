@@ -214,7 +214,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     selectArea(input);
-    inputEl.value = "";
+    
   }
 
   fetch(DATA_FILE)
