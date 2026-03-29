@@ -2,23 +2,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const DATA_FILE = "area_code_data.json";
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
-  maptilersdk.config.apiKey = MAPTILER_KEY;
-
-  const map = new maptilersdk.Map({
-    container: "map",
-    style: maptilersdk.MapStyle.STREETS,
-    projection: "globe",
-    zoom: 1.6,
-    center: [-98.5795, 39.8283],
-    pitch: 0,
-    bearing: 0,
-    antialias: true,
-    hash: false
-  });
-
-  map.addControl(new maptilersdk.NavigationControl(), "top-left");
-  map.addControl(new maptilersdk.ProjectionControl(), "top-left");
-
   const formEl = document.getElementById("searchForm");
   const inputEl = document.getElementById("areaSearch");
   const buttonEl = document.getElementById("searchBtn");
@@ -29,17 +12,59 @@ window.addEventListener("DOMContentLoaded", () => {
   const infoHours = document.getElementById("info-hours");
   const clockEl = document.getElementById("clock");
 
+  if (
+    !formEl ||
+    !inputEl ||
+    !buttonEl ||
+    !infoCity ||
+    !infoState ||
+    !infoAreaCode ||
+    !infoTimezone ||
+    !infoHours ||
+    !clockEl
+  ) {
+    console.error("Missing required HTML elements.");
+    return;
+  }
+
+  if (!window.maptilersdk) {
+    console.error("MapTiler SDK did not load.");
+    return;
+  }
+
+  maptilersdk.config.apiKey = MAPTILER_KEY;
+
+  let map;
+  try {
+    map = new maptilersdk.Map({
+      container: "map",
+      style: maptilersdk.MapStyle.STREETS,
+      projection: "globe",
+      center: [-98.5795, 39.8283],
+      zoom: 1.6,
+      pitch: 0,
+      bearing: 0,
+      antialias: true,
+      hash: false
+    });
+
+    map.addControl(new maptilersdk.NavigationControl(), "top-left");
+  } catch (err) {
+    console.error("Map initialization failed:", err);
+    return;
+  }
+
   let mapReady = false;
   let dataLoaded = false;
-  let currentPopup = null;
+  let areaCodesByCode = {};
   let currentMarker = null;
+  let currentPopup = null;
   let clockInterval = null;
   let currentTimezoneId = null;
-  let areaCodesByCode = {};
 
   map.on("load", () => {
     mapReady = true;
-    console.log("✅ map loaded");
+    console.log("Map loaded");
   });
 
   map.on("error", (e) => {
@@ -69,35 +94,37 @@ window.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const time = new Date().toLocaleTimeString("en-US", {
+      clockEl.textContent = new Date().toLocaleTimeString("en-US", {
         timeZone: currentTimezoneId,
         hour: "numeric",
         minute: "2-digit",
         second: "2-digit",
         hour12: true
       });
-
-      clockEl.textContent = time;
     }
 
     updateClock();
     clockInterval = setInterval(updateClock, 1000);
   }
 
+  function clearInfo() {
+    infoAreaCode.textContent = "-";
+    infoCity.textContent = "-";
+    infoState.textContent = "-";
+    infoTimezone.textContent = "-";
+    infoHours.textContent = "-";
+    clockEl.textContent = "--:--:--";
+  }
+
   function updateInfo(code, data) {
     if (!data) {
-      infoCity.textContent = "-";
-      infoState.textContent = "-";
-      infoAreaCode.textContent = "-";
-      infoTimezone.textContent = "-";
-      infoHours.textContent = "-";
-      clockEl.textContent = "--:--:--";
+      clearInfo();
       return;
     }
 
+    infoAreaCode.textContent = code || "-";
     infoCity.textContent = data.city || "-";
     infoState.textContent = data.state || "-";
-    infoAreaCode.textContent = code || "-";
     infoTimezone.textContent = data.timezone || "-";
     infoHours.textContent = getBusinessHoursStatus(data.tzid);
     startClock(data.tzid);
@@ -116,19 +143,19 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function showAreaLocation(code, item) {
-    clearMapSelection();
-
     const lat = Number(item.lat);
     const lng = Number(item.lng);
 
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-      throw new Error(`Invalid coordinates: lat=${item.lat}, lng=${item.lng}`);
+      throw new Error(`Invalid coordinates for ${code}`);
     }
+
+    clearMapSelection();
 
     map.flyTo({
       center: [lng, lat],
       zoom: 5,
-      duration: 2000
+      duration: 1500
     });
 
     currentPopup = new maptilersdk.Popup({
@@ -154,72 +181,34 @@ window.addEventListener("DOMContentLoaded", () => {
     const cleanCode = String(code).trim();
     const item = areaCodesByCode[cleanCode];
 
-    console.log("searching:", cleanCode);
-    console.log("found item:", item);
-
     if (!item) {
       alert(`Area code ${cleanCode} not found.`);
-      updateInfo("-", null);
+      clearInfo();
+      clearMapSelection();
       return;
     }
 
     updateInfo(cleanCode, item);
 
-    try {
-      showAreaLocation(cleanCode, item);
-    } catch (err) {
-      console.error("showAreaLocation error:", err);
-      alert(`Found area code ${cleanCode}, but map display failed. Check console.`);
-    }
-  }
-
-  fetch(DATA_FILE)
-    .then((res) => {
-      console.log("data fetch status:", res.status);
-      if (!res.ok) {
-        throw new Error(`Failed to load ${DATA_FILE}: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then((data) => {
-      console.log("json loaded:", data);
-
-      const codes = data.area_codes || data;
-
-      Object.keys(codes).forEach((code) => {
-        areaCodesByCode[String(code).trim()] = codes[code];
-      });
-
-      console.log("loaded codes count:", Object.keys(areaCodesByCode).length);
-
-      dataLoaded = true;
-      if (buttonEl) buttonEl.disabled = false;
-    })
-    .catch((err) => {
-      console.error("fetch error:", err);
-      infoCity.textContent = "Error loading data";
-    });
-
-  function searchArea() {
-    console.log("searchArea fired");
-
     if (!mapReady) {
-      alert("Map is still loading. Try again.");
+      console.warn("Map not fully ready yet, but info updated.");
       return;
     }
 
+    try {
+      showAreaLocation(cleanCode, item);
+    } catch (err) {
+      console.error("showAreaLocation failed:", err);
+    }
+  }
+
+  function searchArea() {
     if (!dataLoaded) {
       alert("Data is still loading. Try again in a second.");
       return;
     }
 
-    if (!inputEl) {
-      alert("Search input not found.");
-      return;
-    }
-
     const input = inputEl.value.trim();
-    console.log("input:", input);
 
     if (!input) {
       alert("Enter an area code.");
@@ -230,17 +219,35 @@ window.addEventListener("DOMContentLoaded", () => {
     inputEl.value = "";
   }
 
-  if (formEl) {
-    formEl.addEventListener("submit", (e) => {
-      e.preventDefault();
-      searchArea();
-    });
-  }
+  fetch(DATA_FILE)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`Failed to load ${DATA_FILE}: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      const codes = data.area_codes || data;
 
-  if (buttonEl) {
-    buttonEl.addEventListener("click", (e) => {
-      e.preventDefault();
-      searchArea();
+      Object.keys(codes).forEach((code) => {
+        areaCodesByCode[String(code).trim()] = codes[code];
+      });
+
+      dataLoaded = true;
+      console.log("Loaded codes:", Object.keys(areaCodesByCode).length);
+    })
+    .catch((err) => {
+      console.error("JSON load failed:", err);
+      infoCity.textContent = "Error loading data";
     });
-  }
+
+  formEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    searchArea();
+  });
+
+  buttonEl.addEventListener("click", (e) => {
+    e.preventDefault();
+    searchArea();
+  });
 });
