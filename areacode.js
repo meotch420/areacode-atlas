@@ -35,61 +35,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   maptilersdk.config.apiKey = MAPTILER_KEY;
 
-  const stateNameToAbbr = {
-    Alabama: "AL",
-    Alaska: "AK",
-    Arizona: "AZ",
-    Arkansas: "AR",
-    California: "CA",
-    Colorado: "CO",
-    Connecticut: "CT",
-    Delaware: "DE",
-    Florida: "FL",
-    Georgia: "GA",
-    Hawaii: "HI",
-    Idaho: "ID",
-    Illinois: "IL",
-    Indiana: "IN",
-    Iowa: "IA",
-    Kansas: "KS",
-    Kentucky: "KY",
-    Louisiana: "LA",
-    Maine: "ME",
-    Maryland: "MD",
-    Massachusetts: "MA",
-    Michigan: "MI",
-    Minnesota: "MN",
-    Mississippi: "MS",
-    Missouri: "MO",
-    Montana: "MT",
-    Nebraska: "NE",
-    Nevada: "NV",
-    "New Hampshire": "NH",
-    "New Jersey": "NJ",
-    "New Mexico": "NM",
-    "New York": "NY",
-    "North Carolina": "NC",
-    "North Dakota": "ND",
-    Ohio: "OH",
-    Oklahoma: "OK",
-    Oregon: "OR",
-    Pennsylvania: "PA",
-    "Rhode Island": "RI",
-    "South Carolina": "SC",
-    "South Dakota": "SD",
-    Tennessee: "TN",
-    Texas: "TX",
-    Utah: "UT",
-    Vermont: "VT",
-    Virginia: "VA",
-    Washington: "WA",
-    "West Virginia": "WV",
-    Wisconsin: "WI",
-    Wyoming: "WY",
-    "District of Columbia": "DC",
-    "Puerto Rico": "PR"
-  };
-
   const timezoneColors = {
     Eastern: "#20c7d8",
     Central: "#e6c35a",
@@ -100,6 +45,51 @@ window.addEventListener("DOMContentLoaded", () => {
     Atlantic: "#ff9f43"
   };
 
+  const tzidToLabel = {
+    "America/New_York": "Eastern",
+    "America/Detroit": "Eastern",
+    "America/Kentucky/Louisville": "Eastern",
+    "America/Kentucky/Monticello": "Eastern",
+    "America/Indiana/Indianapolis": "Eastern",
+    "America/Indiana/Vincennes": "Eastern",
+    "America/Indiana/Winamac": "Eastern",
+    "America/Indiana/Marengo": "Eastern",
+    "America/Indiana/Petersburg": "Eastern",
+    "America/Indiana/Vevay": "Eastern",
+    "America/Toronto": "Eastern",
+    "America/Montreal": "Eastern",
+    "America/Nassau": "Eastern",
+
+    "America/Chicago": "Central",
+    "America/Winnipeg": "Central",
+    "America/Mexico_City": "Central",
+    "America/Matamoros": "Central",
+    "America/Monterrey": "Central",
+
+    "America/Denver": "Mountain",
+    "America/Edmonton": "Mountain",
+    "America/Phoenix": "Mountain",
+    "America/Chihuahua": "Mountain",
+
+    "America/Los_Angeles": "Pacific",
+    "America/Vancouver": "Pacific",
+    "America/Tijuana": "Pacific",
+
+    "America/Anchorage": "Alaska",
+    "America/Juneau": "Alaska",
+    "America/Nome": "Alaska",
+    "America/Sitka": "Alaska",
+    "America/Yakutat": "Alaska",
+
+    "Pacific/Honolulu": "Hawaii",
+
+    "America/Halifax": "Atlantic",
+    "America/Glace_Bay": "Atlantic",
+    "America/Moncton": "Atlantic",
+    "America/Barbados": "Atlantic",
+    "America/Puerto_Rico": "Atlantic"
+  };
+
   let map = null;
   let mapReady = false;
   let dataLoaded = false;
@@ -107,12 +97,28 @@ window.addEventListener("DOMContentLoaded", () => {
   let clockInterval = null;
   let currentTimezoneId = null;
   let areaCodesByCode = {};
-  let stateTimezoneMap = {};
-  let selectedFeatureState = null;
   let currentMarker = null;
 
-  function getTimezoneColor(tz) {
-    return timezoneColors[tz] || "#7f8c8d";
+  function getTimezoneColor(label) {
+    return timezoneColors[label] || "#7f8c8d";
+  }
+
+  function getTimezoneLabelFromTzid(tzid) {
+    return tzidToLabel[tzid] || null;
+  }
+
+  function getTimezoneLabelFromUtc(utcFormat) {
+    const mapByUtc = {
+      "UTC-04:00": "Atlantic",
+      "UTC-05:00": "Eastern",
+      "UTC-06:00": "Central",
+      "UTC-07:00": "Mountain",
+      "UTC-08:00": "Pacific",
+      "UTC-09:00": "Alaska",
+      "UTC-10:00": "Hawaii"
+    };
+
+    return mapByUtc[utcFormat] || null;
   }
 
   function getBusinessHoursStatus(tzid) {
@@ -185,51 +191,9 @@ window.addEventListener("DOMContentLoaded", () => {
     infoAreaCode.textContent = code || "-";
     infoCity.textContent = data.city || "-";
     infoState.textContent = data.state || "-";
-    infoTimezone.textContent = data.timezone || "-";
+    infoTimezone.textContent = data.timezone || getTimezoneLabelFromTzid(data.tzid) || "-";
     infoHours.textContent = getBusinessHoursStatus(data.tzid || null);
     startClock(data.tzid || null);
-  }
-
-  function getFeatureStateAbbr(feature) {
-    const props = feature.properties || {};
-
-    return (
-      feature.id ||
-      props.abbr ||
-      props.STUSPS ||
-      props.state_code ||
-      props.postal ||
-      stateNameToAbbr[props.name] ||
-      stateNameToAbbr[props.NAME] ||
-      null
-    );
-  }
-
-  function buildStateTimezoneMap() {
-    stateTimezoneMap = {};
-
-    Object.keys(areaCodesByCode).forEach((code) => {
-      const item = areaCodesByCode[code];
-      if (item && item.state && item.timezone && !stateTimezoneMap[item.state]) {
-        stateTimezoneMap[item.state] = item.timezone;
-      }
-    });
-  }
-
-  function setFeatureState(featureId, selected) {
-    if (!map || !map.getSource("states")) return;
-
-    map.setFeatureState(
-      { source: "states", id: featureId },
-      { selected: selected }
-    );
-  }
-
-  function clearMapSelection() {
-    if (selectedFeatureState !== null) {
-      setFeatureState(selectedFeatureState, false);
-      selectedFeatureState = null;
-    }
   }
 
   function clearMarker() {
@@ -249,62 +213,12 @@ window.addEventListener("DOMContentLoaded", () => {
       .addTo(map);
   }
 
-  function zoomToFeature(feature) {
-    const bounds = new maptilersdk.LngLatBounds();
-
-    function addCoords(coords) {
-      coords.forEach((coord) => bounds.extend(coord));
-    }
-
-    if (feature.geometry.type === "Polygon") {
-      feature.geometry.coordinates.forEach(addCoords);
-    } else if (feature.geometry.type === "MultiPolygon") {
-      feature.geometry.coordinates.forEach((polygon) => {
-        polygon.forEach(addCoords);
-      });
-    }
-
-    if (!bounds.isEmpty()) {
-      map.fitBounds(bounds, {
-        padding: 40,
-        duration: 1200
-      });
-      return true;
-    }
-
-    return false;
-  }
-
-  function selectStateByAbbr(stateAbbr) {
-    if (!mapReady || !statesLoaded || !stateAbbr) return false;
-
-    const source = map.getSource("states");
-    if (!source || !source._data || !Array.isArray(source._data.features)) {
-      return false;
-    }
-
-    const feature = source._data.features.find(
-      (f) => getFeatureStateAbbr(f) === stateAbbr
-    );
-
-    if (!feature) return false;
-
-    clearMapSelection();
-
-    if (feature.id !== undefined && feature.id !== null) {
-      selectedFeatureState = feature.id;
-      setFeatureState(feature.id, true);
-    }
-
-    return zoomToFeature(feature);
-  }
-
   function flyToCoordinates(lat, lng) {
     if (!mapReady || !Number.isFinite(lat) || !Number.isFinite(lng)) return false;
 
     map.flyTo({
       center: [lng, lat],
-      zoom: 5,
+      zoom: 4,
       duration: 1200
     });
 
@@ -319,7 +233,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!item) {
       alert(`Area code ${cleanCode} not found.`);
       clearInfo();
-      clearMapSelection();
       clearMarker();
       return;
     }
@@ -335,9 +248,6 @@ window.addEventListener("DOMContentLoaded", () => {
       clearMarker();
     }
 
-    selectStateByAbbr(item.state);
-
-    // keep the typed number in the box
     inputEl.value = cleanCode;
   }
 
@@ -367,22 +277,19 @@ window.addEventListener("DOMContentLoaded", () => {
     const normalized = {
       ...data,
       features: data.features.map((feature, index) => {
-        const stateAbbr =
-          feature.id ||
-          feature.properties?.abbr ||
-          feature.properties?.STUSPS ||
-          feature.properties?.postal ||
-          stateNameToAbbr[feature.properties?.name] ||
-          stateNameToAbbr[feature.properties?.NAME] ||
-          null;
+        const props = feature.properties || {};
+        const utcFormat = props.time_zone || props.utc_format || null;
+        const tzName = props.tz_name1st || null;
+        const tzLabel = getTimezoneLabelFromTzid(tzName) || getTimezoneLabelFromUtc(utcFormat);
 
         return {
           ...feature,
           id: feature.id ?? index,
           properties: {
-            ...(feature.properties || {}),
-            __abbr: stateAbbr,
-            __tz: stateTimezoneMap[stateAbbr] || null
+            ...props,
+            __utc: utcFormat,
+            __tz_name: tzName,
+            __tz_label: tzLabel
           }
         };
       })
@@ -404,7 +311,7 @@ window.addEventListener("DOMContentLoaded", () => {
       paint: {
         "fill-color": [
           "match",
-          ["get", "__name"],
+          ["get", "__tz_label"],
           "Eastern", getTimezoneColor("Eastern"),
           "Central", getTimezoneColor("Central"),
           "Mountain", getTimezoneColor("Mountain"),
@@ -414,12 +321,7 @@ window.addEventListener("DOMContentLoaded", () => {
           "Atlantic", getTimezoneColor("Atlantic"),
           "#7f8c8d"
         ],
-        "fill-opacity": [
-          "case",
-          ["boolean", ["feature-state", "selected"], false],
-          0.75,
-          0.35
-        ]
+        "fill-opacity": 0.35
       }
     });
 
@@ -428,18 +330,8 @@ window.addEventListener("DOMContentLoaded", () => {
       type: "line",
       source: "states",
       paint: {
-        "line-color": [
-          "case",
-          ["boolean", ["feature-state", "selected"], false],
-          "#ffffff",
-          "#475569"
-        ],
-        "line-width": [
-          "case",
-          ["boolean", ["feature-state", "selected"], false],
-          3,
-          1.2
-        ]
+        "line-color": "#475569",
+        "line-width": 1.2
       }
     });
 
@@ -475,7 +367,6 @@ window.addEventListener("DOMContentLoaded", () => {
         areaCodesByCode[String(code).trim()] = codes[code];
       });
 
-      buildStateTimezoneMap();
       dataLoaded = true;
       console.log("Loaded area codes:", Object.keys(areaCodesByCode).length);
 
