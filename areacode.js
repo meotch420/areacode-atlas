@@ -91,7 +91,7 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   const timezoneColors = {
-    Eastern: "#21c7d9",
+    Eastern: "#20c7d8",
     Central: "#e6c35a",
     Mountain: "#f48a7a",
     Pacific: "#11b5d9",
@@ -102,14 +102,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let map = null;
   let mapReady = false;
-  let clockInterval = null;
-  let currentTimezoneId = null;
   let dataLoaded = false;
   let statesLoaded = false;
-
+  let clockInterval = null;
+  let currentTimezoneId = null;
   let areaCodesByCode = {};
   let stateTimezoneMap = {};
   let selectedFeatureState = null;
+  let currentMarker = null;
 
   function getTimezoneColor(tz) {
     return timezoneColors[tz] || "#7f8c8d";
@@ -232,6 +232,23 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function clearMarker() {
+    if (currentMarker) {
+      currentMarker.remove();
+      currentMarker = null;
+    }
+  }
+
+  function addMarker(lat, lng) {
+    clearMarker();
+
+    currentMarker = new maptilersdk.Marker({
+      color: "#2563eb"
+    })
+      .setLngLat([lng, lat])
+      .addTo(map);
+  }
+
   function zoomToFeature(feature) {
     const bounds = new maptilersdk.LngLatBounds();
 
@@ -285,14 +302,13 @@ window.addEventListener("DOMContentLoaded", () => {
   function flyToCoordinates(lat, lng) {
     if (!mapReady || !Number.isFinite(lat) || !Number.isFinite(lng)) return false;
 
-    clearMapSelection();
-
     map.flyTo({
       center: [lng, lat],
-      zoom: 5,
+      zoom: 7,
       duration: 1200
     });
 
+    addMarker(lat, lng);
     return true;
   }
 
@@ -304,20 +320,25 @@ window.addEventListener("DOMContentLoaded", () => {
       alert(`Area code ${cleanCode} not found.`);
       clearInfo();
       clearMapSelection();
+      clearMarker();
       return;
     }
 
     updateInfo(cleanCode, item);
 
-    const didZoomToState = selectStateByAbbr(item.state);
+    const lat = Number(item.lat);
+    const lng = Number(item.lng);
 
-    if (!didZoomToState) {
-      const lat = Number(item.lat);
-      const lng = Number(item.lng);
+    if (Number.isFinite(lat) && Number.isFinite(lng)) {
       flyToCoordinates(lat, lng);
+    } else {
+      clearMarker();
     }
 
-    inputEl.value = "";
+    selectStateByAbbr(item.state);
+
+    // keep the typed number in the box
+    inputEl.value = cleanCode;
   }
 
   function searchArea() {
@@ -346,7 +367,6 @@ window.addEventListener("DOMContentLoaded", () => {
     const normalized = {
       ...data,
       features: data.features.map((feature, index) => {
-        const featureId = feature.id ?? index;
         const stateAbbr =
           feature.id ||
           feature.properties?.abbr ||
@@ -358,7 +378,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
         return {
           ...feature,
-          id: featureId,
+          id: feature.id ?? index,
           properties: {
             ...(feature.properties || {}),
             __abbr: stateAbbr,
@@ -397,8 +417,8 @@ window.addEventListener("DOMContentLoaded", () => {
         "fill-opacity": [
           "case",
           ["boolean", ["feature-state", "selected"], false],
-          0.85,
-          0.55
+          0.75,
+          0.35
         ]
       }
     });
@@ -471,9 +491,9 @@ window.addEventListener("DOMContentLoaded", () => {
     map = new maptilersdk.Map({
       container: "map",
       style: maptilersdk.MapStyle.STREETS,
-      projection: "globe",
+      projection: "mercator",
       center: [-98.5795, 39.8283],
-      zoom: 1.6
+      zoom: 3
     });
 
     map.addControl(new maptilersdk.NavigationControl(), "top-left");
