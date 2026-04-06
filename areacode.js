@@ -404,7 +404,7 @@ window.addEventListener("DOMContentLoaded", () => {
       paint: {
         "fill-color": [
           "match",
-          ["get", "__timezone"],
+          ["get", "__name"],
           "Eastern", getTimezoneColor("Eastern"),
           "Central", getTimezoneColor("Central"),
           "Mountain", getTimezoneColor("Mountain"),
