@@ -90,12 +90,21 @@ window.addEventListener("DOMContentLoaded", () => {
     "America/Puerto_Rico": "Atlantic"
   };
 
+  const utcToLabel = {
+    "UTC-04:00": "Atlantic",
+    "UTC-05:00": "Eastern",
+    "UTC-06:00": "Central",
+    "UTC-07:00": "Mountain",
+    "UTC-08:00": "Pacific",
+    "UTC-09:00": "Alaska",
+    "UTC-10:00": "Hawaii"
+  };
+
   let map = null;
   let mapReady = false;
   let dataLoaded = false;
-  let statesLoaded = false;
-  let clockInterval = null;
   let currentTimezoneId = null;
+  let clockInterval = null;
   let areaCodesByCode = {};
   let currentMarker = null;
 
@@ -107,18 +116,12 @@ window.addEventListener("DOMContentLoaded", () => {
     return tzidToLabel[tzid] || null;
   }
 
-  function getTimezoneLabelFromUtc(utcFormat) {
-    const mapByUtc = {
-      "UTC-04:00": "Atlantic",
-      "UTC-05:00": "Eastern",
-      "UTC-06:00": "Central",
-      "UTC-07:00": "Mountain",
-      "UTC-08:00": "Pacific",
-      "UTC-09:00": "Alaska",
-      "UTC-10:00": "Hawaii"
-    };
+  function getTimezoneLabelFromFeature(feature) {
+    const props = feature.properties || {};
+    const tzName = props.tz_name1st || null;
+    const utc = props.time_zone || props.utc_format || null;
 
-    return mapByUtc[utcFormat] || null;
+    return getTimezoneLabelFromTzid(tzName) || utcToLabel[utc] || null;
   }
 
   function getBusinessHoursStatus(tzid) {
@@ -267,47 +270,47 @@ window.addEventListener("DOMContentLoaded", () => {
     selectArea(input);
   }
 
-  function addStatesLayer(data) {
+  function addTimezonesLayer(data) {
     if (!map) return;
 
     if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
       throw new Error("us_states.geojson is not a valid GeoJSON FeatureCollection");
     }
 
-    const normalized = {
-      ...data,
-      features: data.features.map((feature, index) => {
-        const props = feature.properties || {};
-        const utcFormat = props.time_zone || props.utc_format || null;
-        const tzName = props.tz_name1st || null;
-        const tzLabel = getTimezoneLabelFromTzid(tzName) || getTimezoneLabelFromUtc(utcFormat);
+    const filteredFeatures = data.features
+      .map((feature, index) => {
+        const tzLabel = getTimezoneLabelFromFeature(feature);
+        if (!tzLabel) return null;
 
         return {
           ...feature,
           id: feature.id ?? index,
           properties: {
-            ...props,
-            __utc: utcFormat,
-            __tz_name: tzName,
+            ...(feature.properties || {}),
             __tz_label: tzLabel
           }
         };
       })
+      .filter(Boolean);
+
+    const normalized = {
+      type: "FeatureCollection",
+      features: filteredFeatures
     };
 
-    if (map.getLayer("states-outline")) map.removeLayer("states-outline");
-    if (map.getLayer("states-fill")) map.removeLayer("states-fill");
-    if (map.getSource("states")) map.removeSource("states");
+    if (map.getLayer("timezones-outline")) map.removeLayer("timezones-outline");
+    if (map.getLayer("timezones-fill")) map.removeLayer("timezones-fill");
+    if (map.getSource("timezones")) map.removeSource("timezones");
 
-    map.addSource("states", {
+    map.addSource("timezones", {
       type: "geojson",
       data: normalized
     });
 
     map.addLayer({
-      id: "states-fill",
+      id: "timezones-fill",
       type: "fill",
-      source: "states",
+      source: "timezones",
       paint: {
         "fill-color": [
           "match",
@@ -321,22 +324,11 @@ window.addEventListener("DOMContentLoaded", () => {
           "Atlantic", getTimezoneColor("Atlantic"),
           "#7f8c8d"
         ],
-        "fill-opacity": 0.35
+        "fill-opacity": 0.45
       }
     });
 
-    map.addLayer({
-      id: "states-outline",
-      type: "line",
-      source: "states",
-      paint: {
-        "line-color": "#475569",
-        "line-width": 1.2
-      }
-    });
-
-    statesLoaded = true;
-    console.log("States layer added successfully");
+    console.log("Timezone fill layer added successfully");
   }
 
   async function loadStatesData() {
@@ -347,7 +339,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
       const data = await res.json();
-      addStatesLayer(data);
+      addTimezonesLayer(data);
     } catch (err) {
       console.error("States load error:", err);
     }
