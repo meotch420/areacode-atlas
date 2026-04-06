@@ -304,7 +304,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     map.flyTo({
       center: [lng, lat],
-      zoom: 7,
+      zoom: 5,
       duration: 1200
     });
 
