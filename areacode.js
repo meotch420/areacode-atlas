@@ -91,33 +91,13 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   const timezoneColors = {
-    EST: "#21c7d9",
-    EDT: "#21c7d9",
-    CST: "#e6c35a",
-    CDT: "#e6c35a",
-    MST: "#f48a7a",
-    MDT: "#f48a7a",
-    PST: "#11b5d9",
-    PDT: "#11b5d9",
-    AKST: "#b58ad6",
-    AKDT: "#b58ad6",
-    HST: "#ff6fb7",
-    AST: "#ff9f43"
-  };
-
-  const timezoneIds = {
-    EST: "America/New_York",
-    EDT: "America/New_York",
-    CST: "America/Chicago",
-    CDT: "America/Chicago",
-    MST: "America/Denver",
-    MDT: "America/Denver",
-    PST: "America/Los_Angeles",
-    PDT: "America/Los_Angeles",
-    AKST: "America/Anchorage",
-    AKDT: "America/Anchorage",
-    HST: "Pacific/Honolulu",
-    AST: "America/Puerto_Rico"
+    Eastern: "#21c7d9",
+    Central: "#e6c35a",
+    Mountain: "#f48a7a",
+    Pacific: "#11b5d9",
+    Alaska: "#b58ad6",
+    Hawaii: "#ff6fb7",
+    Atlantic: "#ff9f43"
   };
 
   let map = null;
@@ -189,6 +169,7 @@ window.addEventListener("DOMContentLoaded", () => {
     infoHours.textContent = "-";
     clockEl.textContent = "--:--:--";
     currentTimezoneId = null;
+
     if (clockInterval) {
       clearInterval(clockInterval);
       clockInterval = null;
@@ -205,16 +186,15 @@ window.addEventListener("DOMContentLoaded", () => {
     infoCity.textContent = data.city || "-";
     infoState.textContent = data.state || "-";
     infoTimezone.textContent = data.timezone || "-";
-
-    const tzid = data.tzid || timezoneIds[data.timezone] || null;
-    infoHours.textContent = getBusinessHoursStatus(tzid);
-    startClock(tzid);
+    infoHours.textContent = getBusinessHoursStatus(data.tzid || null);
+    startClock(data.tzid || null);
   }
 
   function getFeatureStateAbbr(feature) {
     const props = feature.properties || {};
 
     return (
+      feature.id ||
       props.abbr ||
       props.STUSPS ||
       props.state_code ||
@@ -236,30 +216,6 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function getFillColorForFeature(feature) {
-    const abbr = getFeatureStateAbbr(feature);
-    const tz = stateTimezoneMap[abbr];
-    return getTimezoneColor(tz);
-  }
-
-  function featureBaseStyle(feature) {
-    return {
-      color: "#475569",
-      weight: 1.2,
-      fillColor: getFillColorForFeature(feature),
-      fillOpacity: 0.55
-    };
-  }
-
-  function featureSelectedStyle(feature) {
-    return {
-      color: "#ffffff",
-      weight: 3,
-      fillColor: getFillColorForFeature(feature),
-      fillOpacity: 0.85
-    };
-  }
-
   function setFeatureState(featureId, selected) {
     if (!map || !map.getSource("states")) return;
 
@@ -276,22 +232,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function selectStateByAbbr(stateAbbr) {
-    if (!mapReady || !statesLoaded || !stateAbbr) return;
-
-    const source = map.getSource("states");
-    if (!source || !source._data || !Array.isArray(source._data.features)) return;
-
-    const feature = source._data.features.find((f) => getFeatureStateAbbr(f) === stateAbbr);
-    if (!feature) return;
-
-    clearMapSelection();
-
-    if (feature.id !== undefined && feature.id !== null) {
-      selectedFeatureState = feature.id;
-      setFeatureState(feature.id, true);
-    }
-
+  function zoomToFeature(feature) {
     const bounds = new maptilersdk.LngLatBounds();
 
     function addCoords(coords) {
@@ -311,7 +252,48 @@ window.addEventListener("DOMContentLoaded", () => {
         padding: 40,
         duration: 1200
       });
+      return true;
     }
+
+    return false;
+  }
+
+  function selectStateByAbbr(stateAbbr) {
+    if (!mapReady || !statesLoaded || !stateAbbr) return false;
+
+    const source = map.getSource("states");
+    if (!source || !source._data || !Array.isArray(source._data.features)) {
+      return false;
+    }
+
+    const feature = source._data.features.find(
+      (f) => getFeatureStateAbbr(f) === stateAbbr
+    );
+
+    if (!feature) return false;
+
+    clearMapSelection();
+
+    if (feature.id !== undefined && feature.id !== null) {
+      selectedFeatureState = feature.id;
+      setFeatureState(feature.id, true);
+    }
+
+    return zoomToFeature(feature);
+  }
+
+  function flyToCoordinates(lat, lng) {
+    if (!mapReady || !Number.isFinite(lat) || !Number.isFinite(lng)) return false;
+
+    clearMapSelection();
+
+    map.flyTo({
+      center: [lng, lat],
+      zoom: 5,
+      duration: 1200
+    });
+
+    return true;
   }
 
   function selectArea(code) {
@@ -326,7 +308,15 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     updateInfo(cleanCode, item);
-    selectStateByAbbr(item.state);
+
+    const didZoomToState = selectStateByAbbr(item.state);
+
+    if (!didZoomToState) {
+      const lat = Number(item.lat);
+      const lng = Number(item.lng);
+      flyToCoordinates(lat, lng);
+    }
+
     inputEl.value = "";
   }
 
@@ -355,10 +345,27 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const normalized = {
       ...data,
-      features: data.features.map((feature, index) => ({
-        ...feature,
-        id: feature.id ?? index
-      }))
+      features: data.features.map((feature, index) => {
+        const featureId = feature.id ?? index;
+        const stateAbbr =
+          feature.id ||
+          feature.properties?.abbr ||
+          feature.properties?.STUSPS ||
+          feature.properties?.postal ||
+          stateNameToAbbr[feature.properties?.name] ||
+          stateNameToAbbr[feature.properties?.NAME] ||
+          null;
+
+        return {
+          ...feature,
+          id: featureId,
+          properties: {
+            ...(feature.properties || {}),
+            __abbr: stateAbbr,
+            __tz: stateTimezoneMap[stateAbbr] || null
+          }
+        };
+      })
     };
 
     if (map.getLayer("states-outline")) map.removeLayer("states-outline");
@@ -376,25 +383,15 @@ window.addEventListener("DOMContentLoaded", () => {
       source: "states",
       paint: {
         "fill-color": [
-          "case",
-          ["boolean", ["feature-state", "selected"], false],
-          [
-            "match",
-            ["coalesce", ["get", "abbr"], ["get", "STUSPS"], ["get", "postal"], ""],
-            "EST", getTimezoneColor("EST"),
-            "EDT", getTimezoneColor("EDT"),
-            "CST", getTimezoneColor("CST"),
-            "CDT", getTimezoneColor("CDT"),
-            "MST", getTimezoneColor("MST"),
-            "MDT", getTimezoneColor("MDT"),
-            "PST", getTimezoneColor("PST"),
-            "PDT", getTimezoneColor("PDT"),
-            "AKST", getTimezoneColor("AKST"),
-            "AKDT", getTimezoneColor("AKDT"),
-            "HST", getTimezoneColor("HST"),
-            "AST", getTimezoneColor("AST"),
-            "#7f8c8d"
-          ],
+          "match",
+          ["get", "__tz"],
+          "Eastern", getTimezoneColor("Eastern"),
+          "Central", getTimezoneColor("Central"),
+          "Mountain", getTimezoneColor("Mountain"),
+          "Pacific", getTimezoneColor("Pacific"),
+          "Alaska", getTimezoneColor("Alaska"),
+          "Hawaii", getTimezoneColor("Hawaii"),
+          "Atlantic", getTimezoneColor("Atlantic"),
           "#7f8c8d"
         ],
         "fill-opacity": [
@@ -425,55 +422,6 @@ window.addEventListener("DOMContentLoaded", () => {
         ]
       }
     });
-
-    const sourceData = map.getSource("states")._data;
-    sourceData.features.forEach((feature) => {
-      const abbr = getFeatureStateAbbr(feature);
-      const tz = stateTimezoneMap[abbr] || null;
-      feature.properties = feature.properties || {};
-      feature.properties.__tz = tz;
-    });
-
-    map.getSource("states").setData(sourceData);
-
-    map.setPaintProperty("states-fill", "fill-color", [
-      "case",
-      ["boolean", ["feature-state", "selected"], false],
-      [
-        "match",
-        ["get", "__tz"],
-        "EST", getTimezoneColor("EST"),
-        "EDT", getTimezoneColor("EDT"),
-        "CST", getTimezoneColor("CST"),
-        "CDT", getTimezoneColor("CDT"),
-        "MST", getTimezoneColor("MST"),
-        "MDT", getTimezoneColor("MDT"),
-        "PST", getTimezoneColor("PST"),
-        "PDT", getTimezoneColor("PDT"),
-        "AKST", getTimezoneColor("AKST"),
-        "AKDT", getTimezoneColor("AKDT"),
-        "HST", getTimezoneColor("HST"),
-        "AST", getTimezoneColor("AST"),
-        "#7f8c8d"
-      ],
-      [
-        "match",
-        ["get", "__tz"],
-        "EST", getTimezoneColor("EST"),
-        "EDT", getTimezoneColor("EDT"),
-        "CST", getTimezoneColor("CST"),
-        "CDT", getTimezoneColor("CDT"),
-        "MST", getTimezoneColor("MST"),
-        "MDT", getTimezoneColor("MDT"),
-        "PST", getTimezoneColor("PST"),
-        "PDT", getTimezoneColor("PDT"),
-        "AKST", getTimezoneColor("AKST"),
-        "AKDT", getTimezoneColor("AKDT"),
-        "HST", getTimezoneColor("HST"),
-        "AST", getTimezoneColor("AST"),
-        "#7f8c8d"
-      ]
-    ]);
 
     statesLoaded = true;
     console.log("States layer added successfully");
