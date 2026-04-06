@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
   const DATA_FILE = "area_code_data.json";
-  const TIMEZONE_FILE = "timezones.geojson";
+  const STATES_FILE = "us_states.geojson";
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
   const formEl = document.getElementById("searchForm");
@@ -35,22 +35,105 @@ window.addEventListener("DOMContentLoaded", () => {
 
   maptilersdk.config.apiKey = MAPTILER_KEY;
 
+  const stateNameToAbbr = {
+    Alabama: "AL",
+    Alaska: "AK",
+    Arizona: "AZ",
+    Arkansas: "AR",
+    California: "CA",
+    Colorado: "CO",
+    Connecticut: "CT",
+    Delaware: "DE",
+    Florida: "FL",
+    Georgia: "GA",
+    Hawaii: "HI",
+    Idaho: "ID",
+    Illinois: "IL",
+    Indiana: "IN",
+    Iowa: "IA",
+    Kansas: "KS",
+    Kentucky: "KY",
+    Louisiana: "LA",
+    Maine: "ME",
+    Maryland: "MD",
+    Massachusetts: "MA",
+    Michigan: "MI",
+    Minnesota: "MN",
+    Mississippi: "MS",
+    Missouri: "MO",
+    Montana: "MT",
+    Nebraska: "NE",
+    Nevada: "NV",
+    "New Hampshire": "NH",
+    "New Jersey": "NJ",
+    "New Mexico": "NM",
+    "New York": "NY",
+    "North Carolina": "NC",
+    "North Dakota": "ND",
+    Ohio: "OH",
+    Oklahoma: "OK",
+    Oregon: "OR",
+    Pennsylvania: "PA",
+    "Rhode Island": "RI",
+    "South Carolina": "SC",
+    "South Dakota": "SD",
+    Tennessee: "TN",
+    Texas: "TX",
+    Utah: "UT",
+    Vermont: "VT",
+    Virginia: "VA",
+    Washington: "WA",
+    "West Virginia": "WV",
+    Wisconsin: "WI",
+    Wyoming: "WY",
+    "District of Columbia": "DC",
+    "Puerto Rico": "PR"
+  };
+
   const timezoneColors = {
-    Eastern: "#3b82f6",
-    Central: "#22c55e",
-    Mountain: "#f59e0b",
-    Pacific: "#ef4444",
-    Alaska: "#8b5cf6",
-    Hawaii: "#06b6d4"
+    EST: "#21c7d9",
+    EDT: "#21c7d9",
+    CST: "#e6c35a",
+    CDT: "#e6c35a",
+    MST: "#f48a7a",
+    MDT: "#f48a7a",
+    PST: "#11b5d9",
+    PDT: "#11b5d9",
+    AKST: "#b58ad6",
+    AKDT: "#b58ad6",
+    HST: "#ff6fb7",
+    AST: "#ff9f43"
+  };
+
+  const timezoneIds = {
+    EST: "America/New_York",
+    EDT: "America/New_York",
+    CST: "America/Chicago",
+    CDT: "America/Chicago",
+    MST: "America/Denver",
+    MDT: "America/Denver",
+    PST: "America/Los_Angeles",
+    PDT: "America/Los_Angeles",
+    AKST: "America/Anchorage",
+    AKDT: "America/Anchorage",
+    HST: "Pacific/Honolulu",
+    AST: "America/Puerto_Rico"
   };
 
   let map = null;
-  let currentMarker = null;
+  let mapReady = false;
   let clockInterval = null;
   let currentTimezoneId = null;
-  let areaCodesByCode = {};
   let dataLoaded = false;
-  let mapReady = false;
+  let statesLoaded = false;
+
+  let areaCodesByCode = {};
+  let stateTimezoneMap = {};
+  let selectedFeatureState = null;
+
+  function getTimezoneColor(tz) {
+    return timezoneColors[tz] || "#7f8c8d";
+  }
 
   function getBusinessHoursStatus(tzid) {
     if (!tzid) return "-";
@@ -63,7 +146,7 @@ window.addEventListener("DOMContentLoaded", () => {
       });
 
       const hour = parseInt(hourString, 10);
-      return hour >= 8 && hour < 17 ? "Open" : "Closed";
+      return hour >= 9 && hour < 17 ? "Open Now" : "Closed";
     } catch (err) {
       console.error("Business hours error:", err);
       return "-";
@@ -105,6 +188,11 @@ window.addEventListener("DOMContentLoaded", () => {
     infoTimezone.textContent = "-";
     infoHours.textContent = "-";
     clockEl.textContent = "--:--:--";
+    currentTimezoneId = null;
+    if (clockInterval) {
+      clearInterval(clockInterval);
+      clockInterval = null;
+    }
   }
 
   function updateInfo(code, data) {
@@ -117,39 +205,113 @@ window.addEventListener("DOMContentLoaded", () => {
     infoCity.textContent = data.city || "-";
     infoState.textContent = data.state || "-";
     infoTimezone.textContent = data.timezone || "-";
-    infoHours.textContent = getBusinessHoursStatus(data.tzid);
-    startClock(data.tzid);
+
+    const tzid = data.tzid || timezoneIds[data.timezone] || null;
+    infoHours.textContent = getBusinessHoursStatus(tzid);
+    startClock(tzid);
+  }
+
+  function getFeatureStateAbbr(feature) {
+    const props = feature.properties || {};
+
+    return (
+      props.abbr ||
+      props.STUSPS ||
+      props.state_code ||
+      props.postal ||
+      stateNameToAbbr[props.name] ||
+      stateNameToAbbr[props.NAME] ||
+      null
+    );
+  }
+
+  function buildStateTimezoneMap() {
+    stateTimezoneMap = {};
+
+    Object.keys(areaCodesByCode).forEach((code) => {
+      const item = areaCodesByCode[code];
+      if (item && item.state && item.timezone && !stateTimezoneMap[item.state]) {
+        stateTimezoneMap[item.state] = item.timezone;
+      }
+    });
+  }
+
+  function getFillColorForFeature(feature) {
+    const abbr = getFeatureStateAbbr(feature);
+    const tz = stateTimezoneMap[abbr];
+    return getTimezoneColor(tz);
+  }
+
+  function featureBaseStyle(feature) {
+    return {
+      color: "#475569",
+      weight: 1.2,
+      fillColor: getFillColorForFeature(feature),
+      fillOpacity: 0.55
+    };
+  }
+
+  function featureSelectedStyle(feature) {
+    return {
+      color: "#ffffff",
+      weight: 3,
+      fillColor: getFillColorForFeature(feature),
+      fillOpacity: 0.85
+    };
+  }
+
+  function setFeatureState(featureId, selected) {
+    if (!map || !map.getSource("states")) return;
+
+    map.setFeatureState(
+      { source: "states", id: featureId },
+      { selected: selected }
+    );
   }
 
   function clearMapSelection() {
-    if (currentMarker) {
-      currentMarker.remove();
-      currentMarker = null;
+    if (selectedFeatureState !== null) {
+      setFeatureState(selectedFeatureState, false);
+      selectedFeatureState = null;
     }
   }
 
-  function showAreaLocation(code, item) {
-    if (!mapReady || !map) return;
+  function selectStateByAbbr(stateAbbr) {
+    if (!mapReady || !statesLoaded || !stateAbbr) return;
 
-    const lat = Number(item.lat);
-    const lng = Number(item.lng);
+    const source = map.getSource("states");
+    if (!source || !source._data || !Array.isArray(source._data.features)) return;
 
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-      console.error(`Invalid coordinates for area code ${code}`);
-      return;
-    }
+    const feature = source._data.features.find((f) => getFeatureStateAbbr(f) === stateAbbr);
+    if (!feature) return;
 
     clearMapSelection();
 
-    map.flyTo({
-      center: [lng, lat],
-      zoom: 5,
-      duration: 1500
-    });
+    if (feature.id !== undefined && feature.id !== null) {
+      selectedFeatureState = feature.id;
+      setFeatureState(feature.id, true);
+    }
 
-    currentMarker = new maptilersdk.Marker()
-      .setLngLat([lng, lat])
-      .addTo(map);
+    const bounds = new maptilersdk.LngLatBounds();
+
+    function addCoords(coords) {
+      coords.forEach((coord) => bounds.extend(coord));
+    }
+
+    if (feature.geometry.type === "Polygon") {
+      feature.geometry.coordinates.forEach(addCoords);
+    } else if (feature.geometry.type === "MultiPolygon") {
+      feature.geometry.coordinates.forEach((polygon) => {
+        polygon.forEach(addCoords);
+      });
+    }
+
+    if (!bounds.isEmpty()) {
+      map.fitBounds(bounds, {
+        padding: 40,
+        duration: 1200
+      });
+    }
   }
 
   function selectArea(code) {
@@ -164,7 +326,8 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     updateInfo(cleanCode, item);
-    showAreaLocation(cleanCode, item);
+    selectStateByAbbr(item.state);
+    inputEl.value = "";
   }
 
   function searchArea() {
@@ -183,75 +346,150 @@ window.addEventListener("DOMContentLoaded", () => {
     selectArea(input);
   }
 
-  function addTimezoneLayer(data) {
+  function addStatesLayer(data) {
     if (!map) return;
 
     if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
-      throw new Error("timezones.geojson is not a valid GeoJSON FeatureCollection");
+      throw new Error("us_states.geojson is not a valid GeoJSON FeatureCollection");
     }
 
-    if (map.getLayer("timezones-outline")) {
-      map.removeLayer("timezones-outline");
-    }
+    const normalized = {
+      ...data,
+      features: data.features.map((feature, index) => ({
+        ...feature,
+        id: feature.id ?? index
+      }))
+    };
 
-    if (map.getLayer("timezones-layer")) {
-      map.removeLayer("timezones-layer");
-    }
+    if (map.getLayer("states-outline")) map.removeLayer("states-outline");
+    if (map.getLayer("states-fill")) map.removeLayer("states-fill");
+    if (map.getSource("states")) map.removeSource("states");
 
-    if (map.getSource("timezones")) {
-      map.removeSource("timezones");
-    }
-
-    map.addSource("timezones", {
+    map.addSource("states", {
       type: "geojson",
-      data: data
+      data: normalized
     });
 
     map.addLayer({
-      id: "timezones-layer",
+      id: "states-fill",
       type: "fill",
-      source: "timezones",
+      source: "states",
       paint: {
         "fill-color": [
-          "match",
-          ["get", "name"],
-          "Eastern", timezoneColors.Eastern,
-          "Central", timezoneColors.Central,
-          "Mountain", timezoneColors.Mountain,
-          "Pacific", timezoneColors.Pacific,
-          "Alaska", timezoneColors.Alaska,
-          "Hawaii", timezoneColors.Hawaii,
-          "#888"
+          "case",
+          ["boolean", ["feature-state", "selected"], false],
+          [
+            "match",
+            ["coalesce", ["get", "abbr"], ["get", "STUSPS"], ["get", "postal"], ""],
+            "EST", getTimezoneColor("EST"),
+            "EDT", getTimezoneColor("EDT"),
+            "CST", getTimezoneColor("CST"),
+            "CDT", getTimezoneColor("CDT"),
+            "MST", getTimezoneColor("MST"),
+            "MDT", getTimezoneColor("MDT"),
+            "PST", getTimezoneColor("PST"),
+            "PDT", getTimezoneColor("PDT"),
+            "AKST", getTimezoneColor("AKST"),
+            "AKDT", getTimezoneColor("AKDT"),
+            "HST", getTimezoneColor("HST"),
+            "AST", getTimezoneColor("AST"),
+            "#7f8c8d"
+          ],
+          "#7f8c8d"
         ],
-        "fill-opacity": 0.35
+        "fill-opacity": [
+          "case",
+          ["boolean", ["feature-state", "selected"], false],
+          0.85,
+          0.55
+        ]
       }
     });
 
     map.addLayer({
-      id: "timezones-outline",
+      id: "states-outline",
       type: "line",
-      source: "timezones",
+      source: "states",
       paint: {
-        "line-color": "#333",
-        "line-width": 1
+        "line-color": [
+          "case",
+          ["boolean", ["feature-state", "selected"], false],
+          "#ffffff",
+          "#475569"
+        ],
+        "line-width": [
+          "case",
+          ["boolean", ["feature-state", "selected"], false],
+          3,
+          1.2
+        ]
       }
     });
 
-    console.log("Timezone layer added successfully");
+    const sourceData = map.getSource("states")._data;
+    sourceData.features.forEach((feature) => {
+      const abbr = getFeatureStateAbbr(feature);
+      const tz = stateTimezoneMap[abbr] || null;
+      feature.properties = feature.properties || {};
+      feature.properties.__tz = tz;
+    });
+
+    map.getSource("states").setData(sourceData);
+
+    map.setPaintProperty("states-fill", "fill-color", [
+      "case",
+      ["boolean", ["feature-state", "selected"], false],
+      [
+        "match",
+        ["get", "__tz"],
+        "EST", getTimezoneColor("EST"),
+        "EDT", getTimezoneColor("EDT"),
+        "CST", getTimezoneColor("CST"),
+        "CDT", getTimezoneColor("CDT"),
+        "MST", getTimezoneColor("MST"),
+        "MDT", getTimezoneColor("MDT"),
+        "PST", getTimezoneColor("PST"),
+        "PDT", getTimezoneColor("PDT"),
+        "AKST", getTimezoneColor("AKST"),
+        "AKDT", getTimezoneColor("AKDT"),
+        "HST", getTimezoneColor("HST"),
+        "AST", getTimezoneColor("AST"),
+        "#7f8c8d"
+      ],
+      [
+        "match",
+        ["get", "__tz"],
+        "EST", getTimezoneColor("EST"),
+        "EDT", getTimezoneColor("EDT"),
+        "CST", getTimezoneColor("CST"),
+        "CDT", getTimezoneColor("CDT"),
+        "MST", getTimezoneColor("MST"),
+        "MDT", getTimezoneColor("MDT"),
+        "PST", getTimezoneColor("PST"),
+        "PDT", getTimezoneColor("PDT"),
+        "AKST", getTimezoneColor("AKST"),
+        "AKDT", getTimezoneColor("AKDT"),
+        "HST", getTimezoneColor("HST"),
+        "AST", getTimezoneColor("AST"),
+        "#7f8c8d"
+      ]
+    ]);
+
+    statesLoaded = true;
+    console.log("States layer added successfully");
   }
 
-  async function loadTimezoneData() {
+  async function loadStatesData() {
     try {
-      const res = await fetch(TIMEZONE_FILE);
+      const res = await fetch(STATES_FILE);
       if (!res.ok) {
-        throw new Error(`Failed to load ${TIMEZONE_FILE}: ${res.status}`);
+        throw new Error(`Failed to load ${STATES_FILE}: ${res.status}`);
       }
 
       const data = await res.json();
-      console.log("Loaded timezone data:", data);
-      addTimezoneLayer(data);
+      addStatesLayer(data);
     } catch (err) {
-      console.error("Timezone load error:", err);
+      console.error("States load error:", err);
     }
   }
 
@@ -269,8 +507,13 @@ window.addEventListener("DOMContentLoaded", () => {
         areaCodesByCode[String(code).trim()] = codes[code];
       });
 
+      buildStateTimezoneMap();
       dataLoaded = true;
       console.log("Loaded area codes:", Object.keys(areaCodesByCode).length);
+
+      if (mapReady) {
+        await loadStatesData();
+      }
     } catch (err) {
       console.error("Area code data load error:", err);
     }
@@ -290,7 +533,10 @@ window.addEventListener("DOMContentLoaded", () => {
     map.on("load", async () => {
       mapReady = true;
       console.log("Map loaded successfully");
-      await loadTimezoneData();
+
+      if (dataLoaded) {
+        await loadStatesData();
+      }
     });
 
     map.on("error", (err) => {
