@@ -126,7 +126,7 @@ window.addEventListener("DOMContentLoaded", () => {
       });
 
       const hour = parseInt(hourString, 10);
-      return hour >= 9 && hour < 17 ? "Open Now" : "Closed";
+      return hour >= 8 && hour < 17 ? "Open Now" : "Closed";
     } catch (err) {
       console.error("Business hours error:", err);
       return "-";
