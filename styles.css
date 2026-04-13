@@ -10,9 +10,19 @@ body {
 }
 
 .top-section {
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr 1.1fr;
+  align-items: stretch;
+  gap: 18px;
   padding: 20px;
   background: #020617;
   border-bottom: 1px solid #1e293b;
+}
+
+.top-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 header h1 {
@@ -28,7 +38,6 @@ header p {
 .search {
   display: flex;
   gap: 10px;
-  margin-bottom: 16px;
   flex-wrap: wrap;
 }
 
@@ -55,44 +64,46 @@ header p {
   background: #1d4ed8;
 }
 
-#map {
-  width: 100%;
-  height: calc(100vh - 220px);
-  min-height: 500px;
+.timezone-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.timezone-card {
+  min-width: 110px;
+  padding: 12px 14px;
+  background: #12304a;
+  color: white;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.tz-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #cfe8ff;
+  margin-bottom: 6px;
+}
+
+.tz-time {
+  font-size: 20px;
+  font-weight: 700;
+  color: #9fd3ff;
 }
 
 #infoPanel {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  width: 760px;
-  max-width: calc(100% - 40px);
   background: #12304a;
   color: white;
   border-radius: 14px;
   padding: 18px 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  width: 100%;
 }
 
-
-#info {
-  color: #e2e8f0;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-@media (max-width: 768px) {
-  #infoPanel {
-    position: static;
-    width: auto;
-    margin-top: 12px;
-  }
-
-  #map {
-    height: 70vh;
-  }
-}
 .info-title {
   font-size: 28px;
   font-weight: 700;
@@ -119,4 +130,60 @@ header p {
 #clock {
   font-weight: bold;
   color: #9fd3ff;
+}
+
+#map {
+  width: 100%;
+  height: calc(100vh - 190px);
+  min-height: 500px;
+}
+
+#info {
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+  .top-section {
+    grid-template-columns: 1fr;
+  }
+
+  .timezone-bar {
+    justify-content: flex-start;
+  }
+
+  #map {
+    height: 70vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-section {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .timezone-card {
+    min-width: 95px;
+    padding: 10px 12px;
+  }
+
+  .tz-time {
+    font-size: 18px;
+  }
+
+  .info-title {
+    font-size: 24px;
+  }
+
+  .info-row-2,
+  .info-row-3 {
+    font-size: 18px;
+  }
+
+  #map {
+    height: 65vh;
+    min-height: 420px;
+  }
 }
