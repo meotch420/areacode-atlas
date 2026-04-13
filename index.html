@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,41 +13,68 @@
 </head>
 <body>
   <div class="top-section">
-    <header>
-      <h1>Area Code Atlas</h1>
-      <p>Navigate North America by Area Code</p>
-    </header>
+    <div class="top-left">
+      <header>
+        <h1>Area Code Atlas</h1>
+        <p>Navigate North America by Area Code</p>
+      </header>
 
-    <form class="search" id="searchForm">
-      <input
-        id="areaSearch"
-        type="text"
-        placeholder="Enter Area Code (ex: 212)"
-      />
-      <button type="submit" id="searchBtn">Search</button>
-    </form>
+      <form class="search" id="searchForm">
+        <input
+          id="areaSearch"
+          type="text"
+          placeholder="Enter Area Code (ex: 212)"
+        />
+        <button type="submit" id="searchBtn">Search</button>
+      </form>
+    </div>
+
+    <div class="timezone-bar">
+      <div class="timezone-card">
+        <div class="tz-label">Local Time</div>
+        <div class="tz-time" id="localTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card">
+        <div class="tz-label">Pacific</div>
+        <div class="tz-time" id="pacificTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card">
+        <div class="tz-label">Mountain</div>
+        <div class="tz-time" id="mountainTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card">
+        <div class="tz-label">Central</div>
+        <div class="tz-time" id="centralTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card">
+        <div class="tz-label">Eastern</div>
+        <div class="tz-time" id="easternTime">--:--:--</div>
+      </div>
+    </div>
+
+    <div id="infoPanel">
+      <div class="info-title">Area Information</div>
+
+      <div class="info-row info-row-2">
+        <div><strong>Area Code:</strong> <span id="info-area-code">-</span></div>
+        <div><strong>City:</strong> <span id="info-city">-</span></div>
+        <div><strong>State:</strong> <span id="info-state">-</span></div>
+        <div><strong>Timezone:</strong> <span id="info-timezone">-</span></div>
+      </div>
+
+      <div class="info-row info-row-3">
+        <div><strong>Live Time:</strong> <span id="clock">--:--:--</span></div>
+      </div>
+    </div>
   </div>
 
   <div id="map"></div>
-
-  <div id="infoPanel">
-    <div class="info-title">Area Information</div>
-
-    <div class="info-row info-row-2">
-      <div><strong>Area Code:</strong> <span id="info-area-code">-</span></div>
-      <div><strong>City:</strong> <span id="info-city">-</span></div>
-      <div><strong>State:</strong> <span id="info-state">-</span></div>
-      <div><strong>Timezone:</strong> <span id="info-timezone">-</span></div>
-    </div>
-
-    <div class="info-row info-row-3">
-      <div><strong>Live Time:</strong> <span id="clock">--:--:--</span></div>
-      <div><strong>Business Hours:</strong> <span id="info-hours">-</span></div>
-    </div>
-  </div>
 
   <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
   <script src="areacode.js"></script>
 </body>
 </html>
-```
