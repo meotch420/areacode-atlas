@@ -3,27 +3,40 @@ window.addEventListener("DOMContentLoaded", () => {
   const STATES_FILE = "us_states.geojson";
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
-  const formEl = document.getElementById("searchForm");
-  const inputEl = document.getElementById("areaSearch");
-  const buttonEl = document.getElementById("searchBtn");
-  const infoCity = document.getElementById("info-city");
-  const infoState = document.getElementById("info-state");
-  const infoAreaCode = document.getElementById("info-area-code");
-  const infoTimezone = document.getElementById("info-timezone");
-  const infoHours = document.getElementById("info-hours");
-  const clockEl = document.getElementById("clock");
+  function getEl(...ids) {
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el) return el;
+    }
+    return null;
+  }
 
-  if (
-    !formEl ||
-    !inputEl ||
-    !buttonEl ||
-    !infoCity ||
-    !infoState ||
-    !infoAreaCode ||
-    !infoTimezone ||
-    !infoHours ||
-    !clockEl
-  ) {
+  function setText(el, value) {
+    if (el) el.textContent = value;
+  }
+
+  const formEl = getEl("searchForm");
+  const inputEl = getEl("areaSearch");
+  const buttonEl = getEl("searchBtn");
+  const mapEl = getEl("map");
+
+  const infoCity = getEl("info-city", "infoCity");
+  const infoState = getEl("info-state", "infoState");
+  const infoAreaCode = getEl("info-area-code", "infoAreaCode");
+  const infoTimezone = getEl("info-timezone", "infoTimezone");
+
+  const liveTimeEl = getEl("clock", "infoTime");
+
+  const localTimeEl = getEl("localTime");
+  const pacificTimeEl = getEl("pacificTime");
+  const mountainTimeEl = getEl("mountainTime");
+  const centralTimeEl = getEl("centralTime");
+  const easternTimeEl = getEl("easternTime");
+  const alaskaTimeEl = getEl("alaskaTime");
+  const hawaiiTimeEl = getEl("hawaiiTime");
+  const atlanticTimeEl = getEl("atlanticTime");
+
+  if (!inputEl || !mapEl) {
     console.error("Missing required HTML elements.");
     return;
   }
@@ -103,10 +116,48 @@ window.addEventListener("DOMContentLoaded", () => {
   let map = null;
   let mapReady = false;
   let dataLoaded = false;
-  let currentTimezoneId = null;
-  let clockInterval = null;
   let areaCodesByCode = {};
   let currentMarker = null;
+
+  function formatLocalTime() {
+    return new Date().toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true
+    });
+  }
+
+  function formatTimeForZone(timeZone) {
+    try {
+      return new Date().toLocaleTimeString("en-US", {
+        timeZone,
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      });
+    } catch (err) {
+      console.error("Time zone clock error:", err);
+      return "--:--:--";
+    }
+  }
+
+  function updateAllClocks() {
+    const localNow = formatLocalTime();
+
+    setText(liveTimeEl, localNow);
+    setText(localTimeEl, localNow);
+
+    setText(pacificTimeEl, formatTimeForZone("America/Los_Angeles"));
+    setText(mountainTimeEl, formatTimeForZone("America/Denver"));
+    setText(centralTimeEl, formatTimeForZone("America/Chicago"));
+    setText(easternTimeEl, formatTimeForZone("America/New_York"));
+
+    setText(alaskaTimeEl, formatTimeForZone("America/Anchorage"));
+    setText(hawaiiTimeEl, formatTimeForZone("Pacific/Honolulu"));
+    setText(atlanticTimeEl, formatTimeForZone("America/Halifax"));
+  }
 
   function getTimezoneColor(label) {
     return timezoneColors[label] || "#7f8c8d";
@@ -124,65 +175,11 @@ window.addEventListener("DOMContentLoaded", () => {
     return getTimezoneLabelFromTzid(tzName) || utcToLabel[utc] || null;
   }
 
-  function getBusinessHoursStatus(tzid) {
-    if (!tzid) return "-";
-
-    try {
-      const hourString = new Date().toLocaleString("en-US", {
-        timeZone: tzid,
-        hour: "numeric",
-        hour12: false
-      });
-
-      const hour = parseInt(hourString, 10);
-      return hour >= 8 && hour < 17 ? "Open Now" : "Closed";
-    } catch (err) {
-      console.error("Business hours error:", err);
-      return "-";
-    }
-  }
-
-  function startClock(tzid) {
-    if (clockInterval) clearInterval(clockInterval);
-    currentTimezoneId = tzid;
-
-    function updateClock() {
-      if (!currentTimezoneId) {
-        clockEl.textContent = "--:--:--";
-        return;
-      }
-
-      try {
-        clockEl.textContent = new Date().toLocaleTimeString("en-US", {
-          timeZone: currentTimezoneId,
-          hour: "numeric",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: true
-        });
-      } catch (err) {
-        console.error("Clock update error:", err);
-        clockEl.textContent = "--:--:--";
-      }
-    }
-
-    updateClock();
-    clockInterval = setInterval(updateClock, 1000);
-  }
-
   function clearInfo() {
-    infoAreaCode.textContent = "-";
-    infoCity.textContent = "-";
-    infoState.textContent = "-";
-    infoTimezone.textContent = "-";
-    infoHours.textContent = "-";
-    clockEl.textContent = "--:--:--";
-    currentTimezoneId = null;
-
-    if (clockInterval) {
-      clearInterval(clockInterval);
-      clockInterval = null;
-    }
+    setText(infoAreaCode, "-");
+    setText(infoCity, "-");
+    setText(infoState, "-");
+    setText(infoTimezone, "-");
   }
 
   function updateInfo(code, data) {
@@ -191,12 +188,10 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    infoAreaCode.textContent = code || "-";
-    infoCity.textContent = data.city || "-";
-    infoState.textContent = data.state || "-";
-    infoTimezone.textContent = data.timezone || getTimezoneLabelFromTzid(data.tzid) || "-";
-    infoHours.textContent = getBusinessHoursStatus(data.tzid || null);
-    startClock(data.tzid || null);
+    setText(infoAreaCode, code || "-");
+    setText(infoCity, data.city || "-");
+    setText(infoState, data.state || "-");
+    setText(infoTimezone, data.timezone || getTimezoneLabelFromTzid(data.tzid) || "-");
   }
 
   function clearMarker() {
@@ -429,14 +424,20 @@ window.addEventListener("DOMContentLoaded", () => {
 
   loadAreaCodeData();
   clearInfo();
+  updateAllClocks();
+  setInterval(updateAllClocks, 1000);
 
-  formEl.addEventListener("submit", (e) => {
-    e.preventDefault();
-    searchArea();
-  });
+  if (formEl) {
+    formEl.addEventListener("submit", (e) => {
+      e.preventDefault();
+      searchArea();
+    });
+  }
 
-  buttonEl.addEventListener("click", (e) => {
-    e.preventDefault();
-    searchArea();
-  });
+  if (!formEl && buttonEl) {
+    buttonEl.addEventListener("click", (e) => {
+      e.preventDefault();
+      searchArea();
+    });
+  }
 });
