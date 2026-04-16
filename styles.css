@@ -88,6 +88,11 @@ header p {
   background: #12304a;
 }
 
+.hawaii-card {
+  border: 2px solid #a78bfa;
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.35);
+}
+
 .pacific-card {
   border-color: #11b5d9;
   background: rgba(17, 181, 217, 0.16);
