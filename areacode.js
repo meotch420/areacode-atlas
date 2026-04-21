@@ -55,7 +55,11 @@ window.addEventListener("DOMContentLoaded", () => {
     Pacific: "#11b5d9",
     Alaska: "#b58ad6",
     Hawaii: "#ff6fb7",
-    Atlantic: "#ff9f43"
+    Atlantic: "#ff9f43",
+    Newfoundland: "#ec4899",
+    Chamorro: "#06b6d4",
+    Samoa: "#eab308",
+    Various: "#64748b"
   };
 
   const tzidToLabel = {
@@ -72,16 +76,19 @@ window.addEventListener("DOMContentLoaded", () => {
     "America/Toronto": "Eastern",
     "America/Montreal": "Eastern",
     "America/Nassau": "Eastern",
+    "America/Cayman": "Eastern",
 
     "America/Chicago": "Central",
     "America/Winnipeg": "Central",
     "America/Mexico_City": "Central",
     "America/Matamoros": "Central",
     "America/Monterrey": "Central",
+    "America/Regina": "Central",
 
     "America/Denver": "Mountain",
     "America/Edmonton": "Mountain",
     "America/Phoenix": "Mountain",
+    "America/Boise": "Mountain",
     "America/Chihuahua": "Mountain",
 
     "America/Los_Angeles": "Pacific",
@@ -100,17 +107,32 @@ window.addEventListener("DOMContentLoaded", () => {
     "America/Glace_Bay": "Atlantic",
     "America/Moncton": "Atlantic",
     "America/Barbados": "Atlantic",
-    "America/Puerto_Rico": "Atlantic"
+    "America/Puerto_Rico": "Atlantic",
+    "America/Antigua": "Atlantic",
+    "America/Tortola": "Atlantic",
+    "America/Grenada": "Atlantic",
+    "America/St_Thomas": "Atlantic",
+    "Atlantic/Bermuda": "Atlantic",
+
+    "America/St_Johns": "Newfoundland",
+
+    "Pacific/Guam": "Chamorro",
+    "Pacific/Saipan": "Chamorro",
+
+    "Pacific/Pago_Pago": "Samoa"
   };
 
   const utcToLabel = {
     "UTC-04:00": "Atlantic",
+    "UTC-03:30": "Newfoundland",
     "UTC-05:00": "Eastern",
     "UTC-06:00": "Central",
     "UTC-07:00": "Mountain",
     "UTC-08:00": "Pacific",
     "UTC-09:00": "Alaska",
-    "UTC-10:00": "Hawaii"
+    "UTC-10:00": "Hawaii",
+    "UTC+10:00": "Chamorro",
+    "UTC-11:00": "Samoa"
   };
 
   let map = null;
@@ -153,7 +175,6 @@ window.addEventListener("DOMContentLoaded", () => {
     setText(mountainTimeEl, formatTimeForZone("America/Denver"));
     setText(centralTimeEl, formatTimeForZone("America/Chicago"));
     setText(easternTimeEl, formatTimeForZone("America/New_York"));
-
     setText(alaskaTimeEl, formatTimeForZone("America/Anchorage"));
     setText(hawaiiTimeEl, formatTimeForZone("Pacific/Honolulu"));
     setText(atlanticTimeEl, formatTimeForZone("America/Halifax"));
@@ -169,10 +190,34 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function getTimezoneLabelFromFeature(feature) {
     const props = feature.properties || {};
-    const tzName = props.tz_name1st || null;
-    const utc = props.time_zone || props.utc_format || null;
 
-    return getTimezoneLabelFromTzid(tzName) || utcToLabel[utc] || null;
+    const possibleTzids = [
+      props.__tz_label,
+      props.tz_name1st,
+      props.tzid,
+      props.timezone,
+      props.tz_name,
+      props.zone
+    ].filter(Boolean);
+
+    for (const tzid of possibleTzids) {
+      if (timezoneColors[tzid]) return tzid;
+      const mapped = getTimezoneLabelFromTzid(tzid);
+      if (mapped) return mapped;
+    }
+
+    const possibleUtc = [
+      props.time_zone,
+      props.utc_format,
+      props.utc,
+      props.UTC
+    ].filter(Boolean);
+
+    for (const utc of possibleUtc) {
+      if (utcToLabel[utc]) return utcToLabel[utc];
+    }
+
+    return null;
   }
 
   function clearInfo() {
@@ -297,9 +342,6 @@ window.addEventListener("DOMContentLoaded", () => {
       throw new Error("us_states.geojson is not a valid GeoJSON FeatureCollection");
     }
 
-    if (map.getLayer("land-mask-fill")) map.removeLayer("land-mask-fill");
-    if (map.getSource("land-mask")) map.removeSource("land-mask");
-
     if (map.getLayer("timezones-outline")) map.removeLayer("timezones-outline");
     if (map.getLayer("timezones-fill")) map.removeLayer("timezones-fill");
     if (map.getSource("timezones")) map.removeSource("timezones");
@@ -346,9 +388,23 @@ window.addEventListener("DOMContentLoaded", () => {
           "Alaska", getTimezoneColor("Alaska"),
           "Hawaii", getTimezoneColor("Hawaii"),
           "Atlantic", getTimezoneColor("Atlantic"),
+          "Newfoundland", getTimezoneColor("Newfoundland"),
+          "Chamorro", getTimezoneColor("Chamorro"),
+          "Samoa", getTimezoneColor("Samoa"),
+          "Various", getTimezoneColor("Various"),
           "#7f8c8d"
         ],
         "fill-opacity": 0.45
+      }
+    });
+
+    map.addLayer({
+      id: "timezones-outline",
+      type: "line",
+      source: "timezones",
+      paint: {
+        "line-color": "#0f172a",
+        "line-width": 1
       }
     });
 
