@@ -26,6 +26,14 @@
       "lat": 41.3083,
       "lng": -72.9279
     },
+    "204": {
+      "city": "Winnipeg",
+      "state": "MB",
+      "timezone": "Central",
+      "tzid": "America/Winnipeg",
+      "lat": 49.8951,
+      "lng": -97.1384
+    },
     "205": {
       "city": "Birmingham",
       "state": "AL",
@@ -55,7 +63,7 @@
       "state": "ID",
       "timezone": "Mountain",
       "tzid": "America/Boise",
-      "lat": 43.6150,
+      "lat": 43.615,
       "lng": -116.2023
     },
     "209": {
@@ -96,7 +104,7 @@
       "timezone": "Central",
       "tzid": "America/Chicago",
       "lat": 32.7767,
-      "lng": -96.7970
+      "lng": -96.797
     },
     "215": {
       "city": "Philadelphia",
@@ -107,3548 +115,3540 @@
       "lng": -75.1652
     },
     "216": {
-  "city": "Cleveland",
-  "state": "OH",
-  "timezone": "Eastern",
-  "tzid": "America/New_York",
-  "lat": 41.4993,
-  "lng": -81.6944
-},
-"217": {
-    "city": "Springfield",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 39.7817,
-    "lng": -89.6501
-  },
-  "218": {
-    "city": "Duluth",
-    "state": "MN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 46.7867,
-    "lng": -92.1005
-  },
-  "219": {
-    "city": "Gary",
-    "state": "IN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.5934,
-    "lng": -87.3464
-  },
-  "220": {
-    "city": "Newark",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.0581,
-    "lng": -82.4013
-  },
-  "223": {
-    "city": "Gettysburg",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.8309,
-    "lng": -77.2311
-  },
-  "224": {
-    "city": "Evanston",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 42.0451,
-    "lng": -87.6877
-  },
-  "225": {
-    "city": "Baton Rouge",
-    "state": "LA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.4515,
-    "lng": -91.1871
-  },
-  "226": {
-    "city": "London",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 42.9849,
-    "lng": -81.2453
-  },
-  "227": {
-    "city": "Rockville",
-    "state": "MD",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.0839,
-    "lng": -77.1528
-  },
-  "228": {
-    "city": "Gulfport",
-    "state": "MS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.3674,
-    "lng": -89.0928
-  },
-  "229": {
-    "city": "Albany",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 31.5785,
-    "lng": -84.1557
-  },
-  "231": {
-    "city": "Traverse City",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 44.7631,
-    "lng": -85.6206
-  },
-  "234": {
-    "city": "Akron",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.0814,
-    "lng": -81.5190
-  },
-  "236": {
-    "city": "Vancouver",
-    "state": "BC",
-    "timezone": "Pacific",
-    "tzid": "America/Vancouver",
-    "lat": 49.2827,
-    "lng": -123.1207
-  },
-  "239": {
-    "city": "Fort Myers",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 26.6406,
-    "lng": -81.8723
-  },
-  "240": {
-    "city": "Frederick",
-    "state": "MD",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.4143,
-    "lng": -77.4105
-  },
-  "242": {
-    "city": "Nassau",
-    "state": "Bahamas",
-    "timezone": "Eastern",
-    "tzid": "America/Nassau",
-    "lat": 25.0443,
-    "lng": -77.3504
-  },
-  "246": {
-    "city": "Bridgetown",
-    "state": "Barbados",
-    "timezone": "Atlantic",
-    "tzid": "America/Barbados",
-    "lat": 13.1939,
-    "lng": -59.5432
-  },
-  "248": {
-    "city": "Troy",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.6064,
-    "lng": -83.1498
-  },
-  "249": {
-    "city": "Sudbury",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 46.4917,
-    "lng": -80.9930
-  },
-  "250": {
-    "city": "Kelowna",
-    "state": "BC",
-    "timezone": "Pacific",
-    "tzid": "America/Vancouver",
-    "lat": 49.8880,
-    "lng": -119.4960
-  },
-  "251": {
-    "city": "Mobile",
-    "state": "AL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.6954,
-    "lng": -88.0399
-  },
-  "252": {
-    "city": "Greenville",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.6127,
-    "lng": -77.3664
-  },
-  "253": {
-    "city": "Tacoma",
-    "state": "WA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 47.2529,
-    "lng": -122.4443
-  },
-  "254": {
-    "city": "Waco",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 31.5493,
-    "lng": -97.1467
-  },
-  "256": {
-    "city": "Huntsville",
-    "state": "AL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 34.7304,
-    "lng": -86.5861
-  },
-  "260": {
-    "city": "Fort Wayne",
-    "state": "IN",
-    "timezone": "Eastern",
-    "tzid": "America/Indiana/Indianapolis",
-    "lat": 41.0793,
-    "lng": -85.1394
-  },
-  "262": {
-    "city": "Kenosha",
-    "state": "WI",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 42.5847,
-    "lng": -87.8212
-  },
-  "267": {
-    "city": "Philadelphia",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.9526,
-    "lng": -75.1652
-  },
-  "268": {
-    "city": "St. John's",
-    "state": "Antigua",
-    "timezone": "Atlantic",
-    "tzid": "America/Antigua",
-    "lat": 17.1274,
-    "lng": -61.8468
-  },
-  "269": {
-    "city": "Kalamazoo",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.2917,
-    "lng": -85.5872
-  },
-  "270": {
-    "city": "Bowling Green",
-    "state": "KY",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 36.9685,
-    "lng": -86.4808
-  },
-  "272": {
-    "city": "Scranton",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.4089,
-    "lng": -75.6624
-  },
-  "273": {
-    "city": "Quebec City",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 46.8139,
-    "lng": -71.2080
-  },
-  "274": {
-    "city": "Green Bay",
-    "state": "WI",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.5133,
-    "lng": -88.0133
-  },
-  "276": {
-    "city": "Bristol",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 36.5951,
-    "lng": -82.1887
-  },
-  "279": {
-    "city": "Sacramento",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 38.5816,
-    "lng": -121.4944
-  },
-  "281": {
-    "city": "Houston",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.7604,
-    "lng": -95.3698
-  },
-  "283": {
-    "city": "Cincinnati",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.1031,
-    "lng": -84.5120
-  },
-  "284": {
-    "city": "Road Town",
-    "state": "BVI",
-    "timezone": "Atlantic",
-    "tzid": "America/Tortola",
-    "lat": 18.4286,
-    "lng": -64.6185
-  },
-  "289": {
-    "city": "Hamilton",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 43.2557,
-    "lng": -79.8711
-  },
-  "301": {
-    "city": "Rockville",
-    "state": "MD",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.0839,
-    "lng": -77.1528
-  },
-  "302": {
-    "city": "Wilmington",
-    "state": "DE",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.7391,
-    "lng": -75.5398
-  },
-  "303": {
-    "city": "Denver",
-    "state": "CO",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 39.7392,
-    "lng": -104.9903
-  },
-  "304": {
-    "city": "Charleston",
-    "state": "WV",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 38.3498,
-    "lng": -81.6326
-  },
-  "305": {
-    "city": "Miami",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 25.7617,
-    "lng": -80.1918
-  },
-  "306": {
-    "city": "Saskatoon",
-    "state": "SK",
-    "timezone": "Central",
-    "tzid": "America/Regina",
-    "lat": 52.1579,
-    "lng": -106.6702
-  },
-  "307": {
-    "city": "Cheyenne",
-    "state": "WY",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 41.1400,
-    "lng": -104.8202
-  },
-  "308": {
-    "city": "North Platte",
-    "state": "NE",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.1403,
-    "lng": -100.7601
-  },
-  "309": {
-    "city": "Peoria",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 40.6936,
-    "lng": -89.5890
-  },
-  "310": {
-    "city": "Los Angeles",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
-  },
-  "312": {
-    "city": "Chicago",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.8781,
-    "lng": -87.6298
-  },
-  "313": {
-    "city": "Detroit",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.3314,
-    "lng": -83.0458
-  },
-  "314": {
-    "city": "St. Louis",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 38.6270,
-    "lng": -90.1994
-  },
-  "315": {
-    "city": "Syracuse",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 43.0481,
-    "lng": -76.1474
-  },
-  "316": {
-    "city": "Wichita",
-    "state": "KS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 37.6872,
-    "lng": -97.3301
-  },
-  "317": {
-    "city": "Indianapolis",
-    "state": "IN",
-    "timezone": "Eastern",
-    "tzid": "America/Indiana/Indianapolis",
-    "lat": 39.7684,
-    "lng": -86.1581
-  },
-  "318": {
-    "city": "Shreveport",
-    "state": "LA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.5252,
-    "lng": -93.7502
-  },
-  "319": {
-    "city": "Cedar Rapids",
-    "state": "IA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.9779,
-    "lng": -91.6656
-  },
-  "320": {
-    "city": "St. Cloud",
-    "state": "MN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 45.5579,
-    "lng": -94.1632
-  },
-  "321": {
-    "city": "Orlando",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 28.5383,
-    "lng": -81.3792
-  },
-  "323": {
-    "city": "Los Angeles",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
-  },
-  "325": {
-    "city": "Abilene",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.4487,
-    "lng": -99.7331
-  },
-  "330": {
-    "city": "Akron",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.0814,
-    "lng": -81.5190
-  },
-  "331": {
-    "city": "Aurora",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.7606,
-    "lng": -88.3201
-  },
-  "334": {
-    "city": "Montgomery",
-    "state": "AL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.3792,
-    "lng": -86.3077
-  },
-  "336": {
-    "city": "Greensboro",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 36.0726,
-    "lng": -79.7920
-  },
-  "337": {
-    "city": "Lafayette",
-    "state": "LA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.2241,
-    "lng": -92.0198
-  },
-  "339": {
-    "city": "Boston",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.3601,
-    "lng": -71.0589
-  },
-  "340": {
-    "city": "Charlotte Amalie",
-    "state": "USVI",
-    "timezone": "Atlantic",
-    "tzid": "America/St_Thomas",
-    "lat": 18.3419,
-    "lng": -64.9307
-  },
-  "341": {
-    "city": "Oakland",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.8044,
-    "lng": -122.2712
-  },
-  "343": {
-    "city": "Ottawa",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.4215,
-    "lng": -75.6972
-  },
-  "345": {
-    "city": "George Town",
-    "state": "Cayman Islands",
-    "timezone": "Eastern",
-    "tzid": "America/Cayman",
-    "lat": 19.2866,
-    "lng": -81.3744
-  },
-  "346": {
-    "city": "Houston",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.7604,
-    "lng": -95.3698
-  },
-  "347": {
-    "city": "New York",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7831,
-    "lng": -73.9712
-  },
-  "348": {
-    "city": "London",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 42.9849,
-    "lng": -81.2453
-  },
-  "351": {
-    "city": "Lowell",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.6334,
-    "lng": -71.3162
-  },
-  "352": {
-    "city": "Gainesville",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 29.6516,
-    "lng": -82.3248
-  },
-  "360": {
-    "city": "Olympia",
-    "state": "WA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 47.0379,
-    "lng": -122.9007
-  },
-  "361": {
-    "city": "Corpus Christi",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 27.8006,
-    "lng": -97.3964
-  },
-  "364": {
-    "city": "Bowling Green",
-    "state": "KY",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 36.9685,
-    "lng": -86.4808
-  },
-  "365": {
-    "city": "Hamilton",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 43.2557,
-    "lng": -79.8711
-  },
-  "367": {
-    "city": "Quebec City",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 46.8139,
-    "lng": -71.2080
-  },
-  "368": {
-    "city": "Calgary",
-    "state": "AB",
-    "timezone": "Mountain",
-    "tzid": "America/Edmonton",
-    "lat": 51.0447,
-    "lng": -114.0719
-  },
-  "369": {
-    "city": "Sacramento",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 38.5816,
-    "lng": -121.4944
-  },
-  "380": {
-    "city": "Columbus",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.9612,
-    "lng": -82.9988
-  },
-  "385": {
-    "city": "Salt Lake City",
-    "state": "UT",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 40.7608,
-    "lng": -111.8910
-  },
-  "386": {
-    "city": "Daytona Beach",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 29.2108,
-    "lng": -81.0228
-  },
-  "401": {
-    "city": "Providence",
-    "state": "RI",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.8240,
-    "lng": -71.4128
-  },
-  "402": {
-    "city": "Omaha",
-    "state": "NE",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.2565,
-    "lng": -95.9345
-  },
-  "403": {
-    "city": "Calgary",
-    "state": "AB",
-    "timezone": "Mountain",
-    "tzid": "America/Edmonton",
-    "lat": 51.0447,
-    "lng": -114.0719
-  },
-  "404": {
-    "city": "Atlanta",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 33.7490,
-    "lng": -84.3880
-  },
-  "405": {
-    "city": "Oklahoma City",
-    "state": "OK",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 35.4676,
-    "lng": -97.5164
-  },
-  "406": {
-    "city": "Billings",
-    "state": "MT",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 45.7833,
-    "lng": -108.5007
-  },
-  "407": {
-    "city": "Orlando",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 28.5383,
-    "lng": -81.3792
-  },
-  "408": {
-    "city": "San Jose",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.3382,
-    "lng": -121.8863
-  },
-  "409": {
-    "city": "Beaumont",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.0802,
-    "lng": -94.1266
-  },
-  "410": {
-    "city": "Baltimore",
-    "state": "MD",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.2904,
-    "lng": -76.6122
-  },
-  "412": {
-    "city": "Pittsburgh",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.4406,
-    "lng": -79.9959
-  },
-  "413": {
-    "city": "Springfield",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.1015,
-    "lng": -72.5898
-  },
-  "414": {
-    "city": "Milwaukee",
-    "state": "WI",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 43.0389,
-    "lng": -87.9065
-  },
-  "415": {
-    "city": "San Francisco",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.7749,
-    "lng": -122.4194
-  },
-  "416": {
-    "city": "Toronto",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 43.6532,
-    "lng": -79.3832
-  },
-  "417": {
-    "city": "Springfield",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 37.2089,
-    "lng": -93.2923
-  },
-  "418": {
-    "city": "Quebec City",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 46.8139,
-    "lng": -71.2080
-  },
-  "419": {
-    "city": "Toledo",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.6528,
-    "lng": -83.5379
-  },
-  "423": {
-    "city": "Chattanooga",
-    "state": "TN",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.0456,
-    "lng": -85.3097
-  },
-  "424": {
-    "city": "Los Angeles",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
-  },
-  "425": {
-    "city": "Bellevue",
-    "state": "WA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 47.6101,
-    "lng": -122.2015
-  },
-  "430": {
-    "city": "Tyler",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.3513,
-    "lng": -95.3011
-  },
-  "432": {
-    "city": "Midland",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 31.9973,
-    "lng": -102.0779
-  },
-  "434": {
-    "city": "Lynchburg",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 37.4138,
-    "lng": -79.1422
-  },
-  "435": {
-    "city": "St. George",
-    "state": "UT",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 37.0965,
-    "lng": -113.5684
-  },
-  "437": {
-    "city": "Toronto",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 43.6532,
-    "lng": -79.3832
-  },
-  "438": {
-    "city": "Montreal",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.5017,
-    "lng": -73.5673
-  },
-  "440": {
-    "city": "Cleveland",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.4993,
-    "lng": -81.6944
-  },
-  "441": {
-    "city": "Hamilton",
-    "state": "Bermuda",
-    "timezone": "Atlantic",
-    "tzid": "Atlantic/Bermuda",
-    "lat": 32.2948,
-    "lng": -64.7814
-  },
-  "442": {
-    "city": "Oceanside",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 33.1959,
-    "lng": -117.3795
-  },
-  "443": {
-    "city": "Baltimore",
-    "state": "MD",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.2904,
-    "lng": -76.6122
-  },
-  "445": {
-    "city": "Philadelphia",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.9526,
-    "lng": -75.1652
-  },
-  "447": {
-    "city": "Springfield",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 39.7817,
-    "lng": -89.6501
-  },
-  "448": {
-    "city": "Tampa",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 27.9506,
-    "lng": -82.4572
-  },
-  "450": {
-    "city": "Laval",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.6066,
-    "lng": -73.7124
-  },
-  "458": {
-    "city": "Eugene",
-    "state": "OR",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 44.0521,
-    "lng": -123.0868
-  },
-  "463": {
-    "city": "Indianapolis",
-    "state": "IN",
-    "timezone": "Eastern",
-    "tzid": "America/Indiana/Indianapolis",
-    "lat": 39.7684,
-    "lng": -86.1581
-  },
-  "464": {
-    "city": "Chicago",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.8781,
-    "lng": -87.6298
-  },
-  "469": {
-    "city": "Dallas",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.7767,
-    "lng": -96.7970
-  },
-  "470": {
-    "city": "Atlanta",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 33.7490,
-    "lng": -84.3880
-  },
-  "472": {
-    "city": "Greensboro",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 36.0726,
-    "lng": -79.7920
-  },
-  "473": {
-    "city": "St. George's",
-    "state": "Grenada",
-    "timezone": "Atlantic",
-    "tzid": "America/Grenada",
-    "lat": 12.0561,
-    "lng": -61.7488
-  },
-  "474": {
-    "city": "Waterbury",
-    "state": "CT",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.5582,
-    "lng": -73.0515
-  },
-  "475": {
-    "city": "New Haven",
-    "state": "CT",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.3083,
-    "lng": -72.9279
-  },
-  "478": {
-    "city": "Macon",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 32.8407,
-    "lng": -83.6324
-  },
-  "479": {
-    "city": "Fayetteville",
-    "state": "AR",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 36.0822,
-    "lng": -94.1719
-  },
-  "480": {
-    "city": "Scottsdale",
-    "state": "AZ",
-    "timezone": "Mountain",
-    "tzid": "America/Phoenix",
-    "lat": 33.4942,
-    "lng": -111.9261
-  },
-  "484": {
-    "city": "Allentown",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.6084,
-    "lng": -75.4902
-  },
-  "501": {
-    "city": "Little Rock",
-    "state": "AR",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 34.7465,
-    "lng": -92.2896
-  },
-  "502": {
-    "city": "Louisville",
-    "state": "KY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 38.2527,
-    "lng": -85.7585
-  },
-  "503": {
-    "city": "Portland",
-    "state": "OR",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 45.5152,
-    "lng": -122.6784
-  },
-  "504": {
-    "city": "New Orleans",
-    "state": "LA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.9511,
-    "lng": -90.0715
-  },
-  "505": {
-    "city": "Albuquerque",
-    "state": "NM",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 35.0844,
-    "lng": -106.6504
-  },
-  "506": {
-    "city": "Fredericton",
-    "state": "NB",
-    "timezone": "Atlantic",
-    "tzid": "America/Moncton",
-    "lat": 45.9636,
-    "lng": -66.6431
-  },
-  "507": {
-    "city": "Rochester",
-    "state": "MN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.0121,
-    "lng": -92.4802
-  },
-  "508": {
-    "city": "Worcester",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.2626,
-    "lng": -71.8023
-  },
-  "509": {
-    "city": "Spokane",
-    "state": "WA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 47.6588,
-    "lng": -117.4260
-  },
-  "510": {
-    "city": "Oakland",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.8044,
-    "lng": -122.2712
-  },
-  "512": {
-    "city": "Austin",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.2672,
-    "lng": -97.7431
-  },
-  "513": {
-    "city": "Cincinnati",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.1031,
-    "lng": -84.5120
-  },
-  "514": {
-    "city": "Montreal",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.5017,
-    "lng": -73.5673
-  },
-  "515": {
-    "city": "Des Moines",
-    "state": "IA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.5868,
-    "lng": -93.6250
-  },
-  "516": {
-    "city": "Hempstead",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7062,
-    "lng": -73.6187
-  },
-  "517": {
-    "city": "Lansing",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.7325,
-    "lng": -84.5555
-  },
-  "518": {
-    "city": "Albany",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.6526,
-    "lng": -73.7562
-  },
-  "519": {
-    "city": "London",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 42.9849,
-    "lng": -81.2453
-  },
-  "520": {
-    "city": "Tucson",
-    "state": "AZ",
-    "timezone": "Mountain",
-    "tzid": "America/Phoenix",
-    "lat": 32.2226,
-    "lng": -110.9747
-  },
-  "530": {
-    "city": "Redding",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 40.5865,
-    "lng": -122.3917
-  },
-  "531": {
-    "city": "Omaha",
-    "state": "NE",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.2565,
-    "lng": -95.9345
-  },
-  "534": {
-    "city": "Eau Claire",
-    "state": "WI",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.8113,
-    "lng": -91.4985
-  },
-  "539": {
-    "city": "Tulsa",
-    "state": "OK",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 36.1540,
-    "lng": -95.9928
-  },
-  "540": {
-    "city": "Roanoke",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 37.2709,
-    "lng": -79.9414
-  },
-  "541": {
-    "city": "Eugene",
-    "state": "OR",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 44.0521,
-    "lng": -123.0868
-  },
-  "551": {
-    "city": "Jersey City",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7282,
-    "lng": -74.0776
-  },
-  "559": {
-    "city": "Fresno",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 36.7378,
-    "lng": -119.7871
-  },
-  "561": {
-    "city": "West Palm Beach",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 26.7153,
-    "lng": -80.0534
-  },
-  "562": {
-    "city": "Long Beach",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 33.7701,
-    "lng": -118.1937
-  },
-  "563": {
-    "city": "Davenport",
-    "state": "IA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.5236,
-    "lng": -90.5776
-  },
-  "564": {
-    "city": "Vancouver",
-    "state": "WA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 45.6387,
-    "lng": -122.6615
-  },
-  "567": {
-    "city": "Toledo",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.6528,
-    "lng": -83.5379
-  },
-  "570": {
-    "city": "Wilkes-Barre",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.2459,
-    "lng": -75.8813
-  },
-  "571": {
-    "city": "Arlington",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 38.8816,
-    "lng": -77.0910
-  },
-  "573": {
-    "city": "Columbia",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 38.9517,
-    "lng": -92.3341
-  },
-  "574": {
-    "city": "South Bend",
-    "state": "IN",
-    "timezone": "Eastern",
-    "tzid": "America/Indiana/Indianapolis",
-    "lat": 41.6764,
-    "lng": -86.2520
-  },
-  "575": {
-    "city": "Las Cruces",
-    "state": "NM",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 32.3199,
-    "lng": -106.7637
-  },
-  "579": {
-    "city": "Quebec City",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 46.8139,
-    "lng": -71.2080
-  },
-  "580": {
-    "city": "Lawton",
-    "state": "OK",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 34.6036,
-    "lng": -98.3959
-  },
-  "581": {
-    "city": "Quebec City",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 46.8139,
-    "lng": -71.2080
-  },
-  "585": {
-    "city": "Rochester",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 43.1566,
-    "lng": -77.6088
-  },
-  "586": {
-    "city": "Warren",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.5145,
-    "lng": -83.0147
-  },
-  "587": {
-    "city": "Calgary",
-    "state": "AB",
-    "timezone": "Mountain",
-    "tzid": "America/Edmonton",
-    "lat": 51.0447,
-    "lng": -114.0719
-  },
-  "601": {
-    "city": "Jackson",
-    "state": "MS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.2988,
-    "lng": -90.1848
-  },
-  "602": {
-    "city": "Phoenix",
-    "state": "AZ",
-    "timezone": "Mountain",
-    "tzid": "America/Phoenix",
-    "lat": 33.4484,
-    "lng": -112.0740
-  },
-  "603": {
-    "city": "Manchester",
-    "state": "NH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.9956,
-    "lng": -71.4548
-  },
-  "604": {
-    "city": "Vancouver",
-    "state": "BC",
-    "timezone": "Pacific",
-    "tzid": "America/Vancouver",
-    "lat": 49.2827,
-    "lng": -123.1207
-  },
-  "605": {
-    "city": "Sioux Falls",
-    "state": "SD",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 43.5446,
-    "lng": -96.7311
-  },
-  "606": {
-    "city": "Ashland",
-    "state": "KY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 38.4784,
-    "lng": -82.6379
-  },
-  "607": {
-    "city": "Binghamton",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.0987,
-    "lng": -75.9180
-  },
-  "608": {
-    "city": "Madison",
-    "state": "WI",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 43.0731,
-    "lng": -89.4012
-  },
-  "609": {
-    "city": "Trenton",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.2206,
-    "lng": -74.7597
-  },
-  "610": {
-    "city": "Allentown",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.6084,
-    "lng": -75.4902
-  },
-  "612": {
-    "city": "Minneapolis",
-    "state": "MN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.9778,
-    "lng": -93.2650
-  },
-  "613": {
-    "city": "Ottawa",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.4215,
-    "lng": -75.6972
-  },
-  "614": {
-    "city": "Columbus",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.9612,
-    "lng": -82.9988
-  },
-  "615": {
-    "city": "Nashville",
-    "state": "TN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 36.1627,
-    "lng": -86.7816
-  },
-  "616": {
-    "city": "Grand Rapids",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.9634,
-    "lng": -85.6681
-  },
-  "617": {
-    "city": "Boston",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.3601,
-    "lng": -71.0589
-  },
-  "618": {
-    "city": "Belleville",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 38.5200,
-    "lng": -89.9839
-  },
-  "619": {
-    "city": "San Diego",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 32.7157,
-    "lng": -117.1611
-  },
-  "620": {
-    "city": "Dodge City",
-    "state": "KS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 37.7528,
-    "lng": -100.0171
-  },
-  "623": {
-    "city": "Glendale",
-    "state": "AZ",
-    "timezone": "Mountain",
-    "tzid": "America/Phoenix",
-    "lat": 33.5387,
-    "lng": -112.1860
-  },
-  "626": {
-    "city": "Pasadena",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.1478,
-    "lng": -118.1445
-  },
-  "628": {
-    "city": "San Francisco",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.7749,
-    "lng": -122.4194
-  },
-  "629": {
-    "city": "Nashville",
-    "state": "TN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 36.1627,
-    "lng": -86.7816
-  },
-  "630": {
-    "city": "Naperville",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.7508,
-    "lng": -88.1535
-  },
-  "631": {
-    "city": "Suffolk County",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7891,
-    "lng": -73.1350
-  },
-  "636": {
-    "city": "St. Charles",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 38.7881,
-    "lng": -90.4974
-  },
-  "641": {
-    "city": "Mason City",
-    "state": "IA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 43.1536,
-    "lng": -93.2010
-  },
-  "646": {
-    "city": "New York",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7831,
-    "lng": -73.9712
-  },
-  "650": {
-    "city": "San Mateo",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.5630,
-    "lng": -122.3255
-  },
-  "651": {
-    "city": "St. Paul",
-    "state": "MN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.9537,
-    "lng": -93.0900
-  },
-  "657": {
-    "city": "Anaheim",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 33.8366,
-    "lng": -117.9143
-  },
-  "660": {
-    "city": "Sedalia",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 38.7045,
-    "lng": -93.2283
-  },
-  "661": {
-    "city": "Bakersfield",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 35.3733,
-    "lng": -119.0187
-  },
-  "662": {
-    "city": "Tupelo",
-    "state": "MS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 34.2576,
-    "lng": -88.7034
-  },
-  "667": {
-    "city": "Baltimore",
-    "state": "MD",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.2904,
-    "lng": -76.6122
-  },
-  "669": {
-    "city": "San Jose",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.3382,
-    "lng": -121.8863
-  },
-  "670": {
-    "city": "Saipan",
-    "state": "Northern Mariana Islands",
-    "timezone": "Chamorro",
-    "tzid": "Pacific/Saipan",
-    "lat": 15.1778,
-    "lng": 145.7500
-  },
-  "671": {
-    "city": "Hagåtña",
-    "state": "Guam",
-    "timezone": "Chamorro",
-    "tzid": "Pacific/Guam",
-    "lat": 13.4757,
-    "lng": 144.7489
-  },
-  "678": {
-    "city": "Atlanta",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 33.7490,
-    "lng": -84.3880
-  },
-  "682": {
-    "city": "Fort Worth",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.7555,
-    "lng": -97.3308
-  },
-  "689": {
-    "city": "Orlando",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 28.5383,
-    "lng": -81.3792
-  },
-  "701": {
-    "city": "Fargo",
-    "state": "ND",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 46.8772,
-    "lng": -96.7898
-  },
-  "702": {
-    "city": "Las Vegas",
-    "state": "NV",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 36.1699,
-    "lng": -115.1398
-  },
-  "703": {
-    "city": "Arlington",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 38.8816,
-    "lng": -77.0910
-  },
-  "704": {
-    "city": "Charlotte",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.2271,
-    "lng": -80.8431
-  },
-  "705": {
-    "city": "Sudbury",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 46.4917,
-    "lng": -80.9930
-  },
-  "706": {
-    "city": "Columbus",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 32.4609,
-    "lng": -84.9877
-  },
-  "707": {
-    "city": "Santa Rosa",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 38.4405,
-    "lng": -122.7144
-  },
-  "708": {
-    "city": "Oak Park",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.8850,
-    "lng": -87.7845
-  },
-  "709": {
-    "city": "St. John's",
-    "state": "NL",
-    "timezone": "Newfoundland",
-    "tzid": "America/St_Johns",
-    "lat": 47.5615,
-    "lng": -52.7126
-  },
-  "710": {
-    "city": "US Government",
-    "state": "US",
-    "timezone": "Various",
-    "tzid": "America/New_York",
-    "lat": 38.8977,
-    "lng": -77.0365
-  },
-  "712": {
-    "city": "Sioux City",
-    "state": "IA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 42.4993,
-    "lng": -96.4003
-  },
-  "713": {
-    "city": "Houston",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.7604,
-    "lng": -95.3698
-  },
-  "714": {
-    "city": "Anaheim",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 33.8366,
-    "lng": -117.9143
-  },
-  "715": {
-    "city": "Eau Claire",
-    "state": "WI",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.8113,
-    "lng": -91.4985
-  },
-  "716": {
-    "city": "Buffalo",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.8864,
-    "lng": -78.8784
-  },
-  "717": {
-    "city": "Harrisburg",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.2732,
-    "lng": -76.8867
-  },
-  "718": {
-    "city": "New York",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7831,
-    "lng": -73.9712
-  },
-  "719": {
-    "city": "Colorado Springs",
-    "state": "CO",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 38.8339,
-    "lng": -104.8214
-  },
-  "720": {
-    "city": "Denver",
-    "state": "CO",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 39.7392,
-    "lng": -104.9903
-  },
-  "724": {
-    "city": "Greensburg",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.3015,
-    "lng": -79.5389
-  },
-  "725": {
-    "city": "Las Vegas",
-    "state": "NV",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 36.1699,
-    "lng": -115.1398
-  },
-  "726": {
-    "city": "San Antonio",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.4241,
-    "lng": -98.4936
-  },
-  "727": {
-    "city": "St. Petersburg",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 27.7676,
-    "lng": -82.6403
-  },
-  "728": {
-    "city": "Newark",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7357,
-    "lng": -74.1724
-  },
-  "730": {
-    "city": "Carbondale",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 37.7273,
-    "lng": -89.2168
-  },
-  "731": {
-    "city": "Jackson",
-    "state": "TN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 35.6145,
-    "lng": -88.8139
-  },
-  "732": {
-    "city": "New Brunswick",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.4862,
-    "lng": -74.4518
-  },
-  "734": {
-    "city": "Ann Arbor",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.2808,
-    "lng": -83.7430
-  },
-  "737": {
-    "city": "Austin",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.2672,
-    "lng": -97.7431
-  },
-  "740": {
-    "city": "Newark",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.0581,
-    "lng": -82.4013
-  },
-  "743": {
-    "city": "Greensboro",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 36.0726,
-    "lng": -79.7920
-  },
-  "747": {
-    "city": "Los Angeles",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
-  },
-  "754": {
-    "city": "Fort Lauderdale",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 26.1224,
-    "lng": -80.1373
-  },
-  "757": {
-    "city": "Virginia Beach",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 36.8529,
-    "lng": -75.9780
-  },
-  "760": {
-    "city": "Palm Springs",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 33.8303,
-    "lng": -116.5453
-  },
-  "762": {
-    "city": "Augusta",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 33.4735,
-    "lng": -82.0105
-  },
-  "763": {
-    "city": "Brooklyn Park",
-    "state": "MN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 45.0941,
-    "lng": -93.3563
-  },
-  "765": {
-    "city": "Lafayette",
-    "state": "IN",
-    "timezone": "Eastern",
-    "tzid": "America/Indiana/Indianapolis",
-    "lat": 40.4167,
-    "lng": -86.8753
-  },
-  "769": {
-    "city": "Jackson",
-    "state": "MS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.2988,
-    "lng": -90.1848
-  },
-  "770": {
-    "city": "Atlanta",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 33.7490,
-    "lng": -84.3880
-  },
-  "772": {
-    "city": "Port St. Lucie",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 27.2730,
-    "lng": -80.3582
-  },
-  "773": {
-    "city": "Chicago",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.8781,
-    "lng": -87.6298
-  },
-  "774": {
-    "city": "Worcester",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.2626,
-    "lng": -71.8023
-  },
-  "775": {
-    "city": "Reno",
-    "state": "NV",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 39.5296,
-    "lng": -119.8138
-  },
-  "778": {
-    "city": "Vancouver",
-    "state": "BC",
-    "timezone": "Pacific",
-    "tzid": "America/Vancouver",
-    "lat": 49.2827,
-    "lng": -123.1207
-  },
-  "779": {
-    "city": "Rockford",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 42.2711,
-    "lng": -89.0937
-  },
-  "780": {
-    "city": "Edmonton",
-    "state": "AB",
-    "timezone": "Mountain",
-    "tzid": "America/Edmonton",
-    "lat": 53.5461,
-    "lng": -113.4938
-  },
-  "781": {
-    "city": "Waltham",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.3765,
-    "lng": -71.2356
-  },
-  "782": {
-    "city": "Halifax",
-    "state": "NS",
-    "timezone": "Atlantic",
-    "tzid": "America/Halifax",
-    "lat": 44.6488,
-    "lng": -63.5752
-  },
-  "784": {
-    "city": "Kingstown",
-    "state": "St. Vincent",
-    "timezone": "Atlantic",
-    "tzid": "America/St_Vincent",
-    "lat": 13.1600,
-    "lng": -61.2248
-  },
-  "785": {
-    "city": "Topeka",
-    "state": "KS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 39.0473,
-    "lng": -95.6752
-  },
-  "786": {
-    "city": "Miami",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 25.7617,
-    "lng": -80.1918
-  },
-  "787": {
-    "city": "San Juan",
-    "state": "PR",
-    "timezone": "Atlantic",
-    "tzid": "America/Puerto_Rico",
-    "lat": 18.4655,
-    "lng": -66.1057
-  },
-  "801": {
-    "city": "Salt Lake City",
-    "state": "UT",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 40.7608,
-    "lng": -111.8910
-  },
-  "802": {
-    "city": "Burlington",
-    "state": "VT",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 44.4759,
-    "lng": -73.2121
-  },
-  "803": {
-    "city": "Columbia",
-    "state": "SC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 34.0007,
-    "lng": -81.0348
-  },
-  "804": {
-    "city": "Richmond",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 37.5407,
-    "lng": -77.4360
-  },
-  "805": {
-    "city": "Santa Barbara",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.4208,
-    "lng": -119.6982
-  },
-  "806": {
-    "city": "Amarillo",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 35.2220,
-    "lng": -101.8313
-  },
-  "807": {
-    "city": "Thunder Bay",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 48.3809,
-    "lng": -89.2477
-  },
-  "808": {
-    "city": "Honolulu",
-    "state": "HI",
-    "timezone": "Hawaii",
-    "tzid": "Pacific/Honolulu",
-    "lat": 21.3069,
-    "lng": -157.8583
-  },
-  "809": {
-    "city": "Santo Domingo",
-    "state": "Dominican Republic",
-    "timezone": "Atlantic",
-    "tzid": "America/Santo_Domingo",
-    "lat": 18.4861,
-    "lng": -69.9312
-  },
-  "810": {
-    "city": "Flint",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 43.0125,
-    "lng": -83.6875
-  },
-  "812": {
-    "city": "Evansville",
-    "state": "IN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 37.9716,
-    "lng": -87.5711
-  },
-  "813": {
-    "city": "Tampa",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 27.9506,
-    "lng": -82.4572
-  },
-  "814": {
-    "city": "Erie",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.1292,
-    "lng": -80.0851
-  },
-  "815": {
-    "city": "Rockford",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 42.2711,
-    "lng": -89.0937
-  },
-  "816": {
-    "city": "Kansas City",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 39.0997,
-    "lng": -94.5786
-  },
-  "817": {
-    "city": "Fort Worth",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.7555,
-    "lng": -97.3308
-  },
-  "818": {
-    "city": "Los Angeles",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
-  },
-  "819": {
-    "city": "Gatineau",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.4765,
-    "lng": -75.7013
-  },
-  "820": {
-    "city": "Indianapolis",
-    "state": "IN",
-    "timezone": "Eastern",
-    "tzid": "America/Indiana/Indianapolis",
-    "lat": 39.7684,
-    "lng": -86.1581
-  },
-  "825": {
-    "city": "Calgary",
-    "state": "AB",
-    "timezone": "Mountain",
-    "tzid": "America/Edmonton",
-    "lat": 51.0447,
-    "lng": -114.0719
-  },
-  "828": {
-    "city": "Asheville",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.5951,
-    "lng": -82.5515
-  },
-  "829": {
-    "city": "Santo Domingo",
-    "state": "Dominican Republic",
-    "timezone": "Atlantic",
-    "tzid": "America/Santo_Domingo",
-    "lat": 18.4861,
-    "lng": -69.9312
-  },
-  "830": {
-    "city": "New Braunfels",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.7030,
-    "lng": -98.1245
-  },
-  "831": {
-    "city": "Monterey",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 36.6002,
-    "lng": -121.8947
-  },
-  "832": {
-    "city": "Houston",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.7604,
-    "lng": -95.3698
-  },
-  "843": {
-    "city": "Charleston",
-    "state": "SC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 32.7765,
-    "lng": -79.9311
-  },
-  "845": {
-    "city": "Poughkeepsie",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.7004,
-    "lng": -73.9210
-  },
-  "847": {
-    "city": "Elgin",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 42.0354,
-    "lng": -88.2826
-  },
-  "848": {
-    "city": "New Brunswick",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.4862,
-    "lng": -74.4518
-  },
-  "850": {
-    "city": "Tallahassee",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 30.4383,
-    "lng": -84.2807
-  },
-  "854": {
-    "city": "Charleston",
-    "state": "SC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 32.7765,
-    "lng": -79.9311
-  },
-  "856": {
-    "city": "Camden",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.9259,
-    "lng": -75.1196
-  },
-  "857": {
-    "city": "Boston",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.3601,
-    "lng": -71.0589
-  },
-  "858": {
-    "city": "San Diego",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 32.7157,
-    "lng": -117.1611
-  },
-  "859": {
-    "city": "Lexington",
-    "state": "KY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 38.0406,
-    "lng": -84.5037
-  },
-  "860": {
-    "city": "Hartford",
-    "state": "CT",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.7658,
-    "lng": -72.6734
-  },
-  "862": {
-    "city": "Newark",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7357,
-    "lng": -74.1724
-  },
-  "863": {
-    "city": "Lakeland",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 28.0395,
-    "lng": -81.9498
-  },
-  "864": {
-    "city": "Greenville",
-    "state": "SC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 34.8526,
-    "lng": -82.3940
-  },
-  "865": {
-    "city": "Knoxville",
-    "state": "TN",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.9606,
-    "lng": -83.9207
-  },
-  "870": {
-    "city": "Jonesboro",
-    "state": "AR",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 35.8423,
-    "lng": -90.7043
-  },
-  "872": {
-    "city": "Chicago",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 41.8781,
-    "lng": -87.6298
-  },
-  "873": {
-    "city": "Sherbrooke",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.4042,
-    "lng": -71.8929
-  },
-  "876": {
-    "city": "Kingston",
-    "state": "Jamaica",
-    "timezone": "Eastern",
-    "tzid": "America/Jamaica",
-    "lat": 17.9712,
-    "lng": -76.7936
-  },
-  "878": {
-    "city": "Pittsburgh",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.4406,
-    "lng": -79.9959
-  },
-  "901": {
-    "city": "Memphis",
-    "state": "TN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 35.1495,
-    "lng": -90.0490
-  },
-  "902": {
-    "city": "Halifax",
-    "state": "NS",
-    "timezone": "Atlantic",
-    "tzid": "America/Halifax",
-    "lat": 44.6488,
-    "lng": -63.5752
-  },
-  "903": {
-    "city": "Tyler",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.3513,
-    "lng": -95.3011
-  },
-  "904": {
-    "city": "Jacksonville",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 30.3322,
-    "lng": -81.6557
-  },
-  "905": {
-    "city": "Hamilton",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 43.2557,
-    "lng": -79.8711
-  },
-  "906": {
-    "city": "Marquette",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 46.5436,
-    "lng": -87.3954
-  },
-  "907": {
-    "city": "Anchorage",
-    "state": "AK",
-    "timezone": "Alaska",
-    "tzid": "America/Anchorage",
-    "lat": 61.2181,
-    "lng": -149.9003
-  },
-  "908": {
-    "city": "Elizabeth",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.6639,
-    "lng": -74.2107
-  },
-  "909": {
-    "city": "San Bernardino",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.1083,
-    "lng": -117.2898
-  },
-  "910": {
-    "city": "Wilmington",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 34.2257,
-    "lng": -77.9447
-  },
-  "912": {
-    "city": "Savannah",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 32.0809,
-    "lng": -81.0912
-  },
-  "913": {
-    "city": "Kansas City",
-    "state": "KS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 39.1141,
-    "lng": -94.6275
-  },
-  "914": {
-    "city": "White Plains",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.0330,
-    "lng": -73.7629
-  },
-  "915": {
-    "city": "El Paso",
-    "state": "TX",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 31.7619,
-    "lng": -106.4850
-  },
-  "916": {
-    "city": "Sacramento",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 38.5816,
-    "lng": -121.4944
-  },
-  "917": {
-    "city": "New York",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7831,
-    "lng": -73.9712
-  },
-  "918": {
-    "city": "Tulsa",
-    "state": "OK",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 36.1540,
-    "lng": -95.9928
-  },
-  "919": {
-    "city": "Raleigh",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.7796,
-    "lng": -78.6382
-  },
-  "920": {
-    "city": "Green Bay",
-    "state": "WI",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.5133,
-    "lng": -88.0133
-  },
-  "925": {
-    "city": "Concord",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.9779,
-    "lng": -122.0311
-  },
-  "928": {
-    "city": "Flagstaff",
-    "state": "AZ",
-    "timezone": "Mountain",
-    "tzid": "America/Phoenix",
-    "lat": 35.1983,
-    "lng": -111.6513
-  },
-  "929": {
-    "city": "New York",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7831,
-    "lng": -73.9712
-  },
-  "930": {
-    "city": "Evansville",
-    "state": "IN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 37.9716,
-    "lng": -87.5711
-  },
-  "931": {
-    "city": "Clarksville",
-    "state": "TN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 36.5298,
-    "lng": -87.3595
-  },
-  "934": {
-    "city": "Long Island",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7891,
-    "lng": -73.1350
-  },
-  "936": {
-    "city": "Huntsville",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.7235,
-    "lng": -95.5508
-  },
-  "937": {
-    "city": "Dayton",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.7589,
-    "lng": -84.1916
-  },
-  "938": {
-    "city": "Huntsville",
-    "state": "AL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 34.7304,
-    "lng": -86.5861
-  },
-  "939": {
-    "city": "San Juan",
-    "state": "PR",
-    "timezone": "Atlantic",
-    "tzid": "America/Puerto_Rico",
-    "lat": 18.4655,
-    "lng": -66.1057
-  },
-  "940": {
-    "city": "Denton",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 33.2148,
-    "lng": -97.1331
-  },
-  "941": {
-    "city": "Sarasota",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 27.3364,
-    "lng": -82.5307
-  },
-  "947": {
-    "city": "Oakland County",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.5922,
-    "lng": -83.3362
-  },
-  "949": {
-    "city": "Irvine",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 33.6846,
-    "lng": -117.8265
-  },
-  "951": {
-    "city": "Riverside",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 33.9806,
-    "lng": -117.3755
-  },
-  "952": {
-    "city": "Bloomington",
-    "state": "MN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.8408,
-    "lng": -93.2983
-  },
-  "954": {
-    "city": "Fort Lauderdale",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 26.1224,
-    "lng": -80.1373
-  },
-  "956": {
-    "city": "Laredo",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 27.5306,
-    "lng": -99.4803
-  },
-  "959": {
-    "city": "Hartford",
-    "state": "CT",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.7658,
-    "lng": -72.6734
-  },
-  "970": {
-    "city": "Fort Collins",
-    "state": "CO",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 40.5853,
-    "lng": -105.0844
-  },
-  "971": {
-    "city": "Portland",
-    "state": "OR",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 45.5152,
-    "lng": -122.6784
-  },
-  "972": {
-    "city": "Dallas",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.7767,
-    "lng": -96.7970
-  },
-  "973": {
-    "city": "Newark",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7357,
-    "lng": -74.1724
-  },
-  "978": {
-    "city": "Lowell",
-    "state": "MA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.6334,
-    "lng": -71.3162
-  },
-  "979": {
-    "city": "College Station",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 30.6279,
-    "lng": -96.3344
-  },
-  "980": {
-    "city": "Charlotte",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.2271,
-    "lng": -80.8431
-  },
-  "984": {
-    "city": "Raleigh",
-    "state": "NC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.7796,
-    "lng": -78.6382
-  },
-  "985": {
-    "city": "Houma",
-    "state": "LA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.5958,
-    "lng": -90.7195
-  },
-  "989": {
-    "city": "Saginaw",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 43.4195,
-    "lng": -83.9508
-  },
-  "204": {
-    "city": "Winnipeg",
-    "state": "MB",
-    "timezone": "Central",
-    "tzid": "America/Winnipeg",
-    "lat": 49.8951,
-    "lng": -97.1384
-  },
-  "235": {
-    "city": "Columbia",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 38.9517,
-    "lng": -92.3341
-  },
-  "257": {
-    "city": "Vancouver",
-    "state": "BC",
-    "timezone": "Pacific",
-    "tzid": "America/Vancouver",
-    "lat": 49.2827,
-    "lng": -123.1207
-  },
-  "263": {
-    "city": "Montreal",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.5017,
-    "lng": -73.5673
-  },
-  "264": {
-    "city": "The Valley",
-    "state": "Anguilla",
-    "timezone": "Atlantic",
-    "tzid": "America/Anguilla",
-    "lat": 18.217,
-    "lng": -63.0578
-  },
-  "324": {
-    "city": "Jacksonville",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 30.3322,
-    "lng": -81.6557
-  },
-  "326": {
-    "city": "Dayton",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 39.7589,
-    "lng": -84.1916
-  },
-  "327": {
-    "city": "Texarkana",
-    "state": "AR",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 33.4251,
-    "lng": -94.0477
-  },
-  "329": {
-    "city": "Poughkeepsie",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.7004,
-    "lng": -73.921
-  },
-  "332": {
-    "city": "New York",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7831,
-    "lng": -73.9712
-  },
-  "350": {
-    "city": "Stockton",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 37.9577,
-    "lng": -121.2908
-  },
-  "353": {
-    "city": "Madison",
-    "state": "WI",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 43.0731,
-    "lng": -89.4012
-  },
-  "354": {
-    "city": "Laval",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.6066,
-    "lng": -73.7124
-  },
-  "357": {
-    "city": "Fresno",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 36.7378,
-    "lng": -119.7871
-  },
-  "363": {
-    "city": "Hempstead",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.7062,
-    "lng": -73.6187
-  },
-  "382": {
-    "city": "London",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 42.9849,
-    "lng": -81.2453
-  },
-  "428": {
-    "city": "Fredericton",
-    "state": "NB",
-    "timezone": "Atlantic",
-    "tzid": "America/Moncton",
-    "lat": 45.9636,
-    "lng": -66.6431
-  },
-  "431": {
-    "city": "Winnipeg",
-    "state": "MB",
-    "timezone": "Central",
-    "tzid": "America/Winnipeg",
-    "lat": 49.8951,
-    "lng": -97.1384
-  },
-  "436": {
-    "city": "Cleveland",
-    "state": "OH",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 41.4993,
-    "lng": -81.6944
-  },
-  "457": {
-    "city": "Shreveport",
-    "state": "LA",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.5252,
-    "lng": -93.7502
-  },
-  "468": {
-    "city": "Sherbrooke",
-    "state": "QC",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.4042,
-    "lng": -71.8929
-  },
-  "471": {
-    "city": "Tupelo",
-    "state": "MS",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 34.2576,
-    "lng": -88.7034
-  },
-  "483": {
-    "city": "Montgomery",
-    "state": "AL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.3792,
-    "lng": -86.3077
-  },
-  "548": {
-    "city": "London",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 42.9849,
-    "lng": -81.2453
-  },
-  "557": {
-    "city": "St. Louis",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 38.627,
-    "lng": -90.1994
-  },
-  "572": {
-    "city": "Oklahoma City",
-    "state": "OK",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 35.4676,
-    "lng": -97.5164
-  },
-  "582": {
-    "city": "Erie",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.1292,
-    "lng": -80.0851
-  },
-  "584": {
-    "city": "Winnipeg",
-    "state": "MB",
-    "timezone": "Central",
-    "tzid": "America/Winnipeg",
-    "lat": 49.8951,
-    "lng": -97.1384
-  },
-  "621": {
-    "city": "Houston",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 29.7604,
-    "lng": -95.3698
-  },
-  "624": {
-    "city": "Buffalo",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.8864,
-    "lng": -78.8784
-  },
-  "639": {
-    "city": "Saskatoon",
-    "state": "SK",
-    "timezone": "Central",
-    "tzid": "America/Regina",
-    "lat": 52.1579,
-    "lng": -106.6702
-  },
-  "640": {
-    "city": "Trenton",
-    "state": "NJ",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.2206,
-    "lng": -74.7597
-  },
-  "645": {
-    "city": "Miami",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 25.7617,
-    "lng": -80.1918
-  },
-  "647": {
-    "city": "Toronto",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 43.6532,
-    "lng": -79.3832
-  },
-  "649": {
-    "city": "Cockburn Town",
-    "state": "Turks and Caicos Islands",
-    "timezone": "Atlantic",
-    "tzid": "America/Grand_Turk",
-    "lat": 21.4612,
-    "lng": -71.1419
-  },
-  "656": {
-    "city": "Tampa",
-    "state": "FL",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 27.9506,
-    "lng": -82.4572
-  },
-  "658": {
-    "city": "Kingston",
-    "state": "Jamaica",
-    "timezone": "Eastern",
-    "tzid": "America/Jamaica",
-    "lat": 17.9712,
-    "lng": -76.7936
-  },
-  "659": {
-    "city": "Birmingham",
-    "state": "AL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 33.5207,
-    "lng": -86.8025
-  },
-  "664": {
-    "city": "Brades",
-    "state": "Montserrat",
-    "timezone": "Atlantic",
-    "tzid": "America/Montserrat",
-    "lat": 16.7918,
-    "lng": -62.2106
-  },
-  "672": {
-    "city": "Vancouver",
-    "state": "BC",
-    "timezone": "Pacific",
-    "tzid": "America/Vancouver",
-    "lat": 49.2827,
-    "lng": -123.1207
-  },
-  "679": {
-    "city": "Detroit",
-    "state": "MI",
-    "timezone": "Eastern",
-    "tzid": "America/Detroit",
-    "lat": 42.3314,
-    "lng": -83.0458
-  },
-  "680": {
-    "city": "Syracuse",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 43.0481,
-    "lng": -76.1474
-  },
-  "681": {
-    "city": "Charleston",
-    "state": "WV",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 38.3498,
-    "lng": -81.6326
-  },
-  "683": {
-    "city": "Sudbury",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 46.4917,
-    "lng": -80.993
-  },
-  "684": {
-    "city": "Pago Pago",
-    "state": "American Samoa",
-    "timezone": "Samoa",
-    "tzid": "Pacific/Pago_Pago",
-    "lat": -14.2756,
-    "lng": -170.702
-  },
-  "686": {
-    "city": "Richmond",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 37.5407,
-    "lng": -77.436
-  },
-  "721": {
-    "city": "Philipsburg",
-    "state": "Sint Maarten",
-    "timezone": "Atlantic",
-    "tzid": "America/Lower_Princes",
-    "lat": 18.026,
-    "lng": -63.0458
-  },
-  "729": {
-    "city": "Knoxville",
-    "state": "TN",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 35.9606,
-    "lng": -83.9207
-  },
-  "738": {
-    "city": "Los Angeles",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
-  },
-  "742": {
-    "city": "Hamilton",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 43.2557,
-    "lng": -79.8711
-  },
-  "748": {
-    "city": "Fort Collins",
-    "state": "CO",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 40.5853,
-    "lng": -105.0844
-  },
-  "753": {
-    "city": "Ottawa",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 45.4215,
-    "lng": -75.6972
-  },
-  "758": {
-    "city": "Castries",
-    "state": "Saint Lucia",
-    "timezone": "Atlantic",
-    "tzid": "America/St_Lucia",
-    "lat": 14.0101,
-    "lng": -60.9875
-  },
-  "767": {
-    "city": "Roseau",
-    "state": "Dominica",
-    "timezone": "Atlantic",
-    "tzid": "America/Dominica",
-    "lat": 15.3092,
-    "lng": -61.3794
-  },
-  "771": {
-    "city": "Washington",
-    "state": "DC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 38.9072,
-    "lng": -77.0369
-  },
-  "821": {
-    "city": "Greenville",
-    "state": "SC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 34.8526,
-    "lng": -82.394
-  },
-  "826": {
-    "city": "Roanoke",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 37.2709,
-    "lng": -79.9414
-  },
-  "835": {
-    "city": "Allentown",
-    "state": "PA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 40.6084,
-    "lng": -75.4902
-  },
-  "837": {
-    "city": "Redding",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 40.5865,
-    "lng": -122.3917
-  },
-  "838": {
-    "city": "Albany",
-    "state": "NY",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 42.6526,
-    "lng": -73.7562
-  },
-  "839": {
-    "city": "Columbia",
-    "state": "SC",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 34.0007,
-    "lng": -81.0348
-  },
-  "840": {
-    "city": "Ontario",
-    "state": "CA",
-    "timezone": "Pacific",
-    "tzid": "America/Los_Angeles",
-    "lat": 34.0633,
-    "lng": -117.6509
-  },
-  "849": {
-    "city": "Santo Domingo",
-    "state": "Dominican Republic",
-    "timezone": "Atlantic",
-    "tzid": "America/Santo_Domingo",
-    "lat": 18.4861,
-    "lng": -69.9312
-  },
-  "861": {
-    "city": "Peoria",
-    "state": "IL",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 40.6936,
-    "lng": -89.589
-  },
-  "867": {
-    "city": "Yellowknife",
-    "state": "Canadian Territories",
-    "timezone": "Mountain",
-    "tzid": "America/Yellowknife",
-    "lat": 62.454,
-    "lng": -114.3718
-  },
-  "868": {
-    "city": "Port of Spain",
-    "state": "Trinidad and Tobago",
-    "timezone": "Atlantic",
-    "tzid": "America/Port_of_Spain",
-    "lat": 10.6549,
-    "lng": -61.5019
-  },
-  "869": {
-    "city": "Basseterre",
-    "state": "Saint Kitts and Nevis",
-    "timezone": "Atlantic",
-    "tzid": "America/St_Kitts",
-    "lat": 17.3026,
-    "lng": -62.7177
-  },
-  "879": {
-    "city": "St. John's",
-    "state": "NL",
-    "timezone": "Newfoundland",
-    "tzid": "America/St_Johns",
-    "lat": 47.5615,
-    "lng": -52.7126
-  },
-  "924": {
-    "city": "Rochester",
-    "state": "MN",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 44.0121,
-    "lng": -92.4802
-  },
-  "942": {
-    "city": "Toronto",
-    "state": "ON",
-    "timezone": "Eastern",
-    "tzid": "America/Toronto",
-    "lat": 43.6532,
-    "lng": -79.3832
-  },
-  "943": {
-    "city": "Atlanta",
-    "state": "GA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 33.749,
-    "lng": -84.388
-  },
-  "945": {
-    "city": "Dallas",
-    "state": "TX",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 32.7767,
-    "lng": -96.797
-  },
-  "948": {
-    "city": "Virginia Beach",
-    "state": "VA",
-    "timezone": "Eastern",
-    "tzid": "America/New_York",
-    "lat": 36.8529,
-    "lng": -75.978
-  },
-  "975": {
-    "city": "Kansas City",
-    "state": "MO",
-    "timezone": "Central",
-    "tzid": "America/Chicago",
-    "lat": 39.0997,
-    "lng": -94.5786
-  },
-  "983": {
-    "city": "Denver",
-    "state": "CO",
-    "timezone": "Mountain",
-    "tzid": "America/Denver",
-    "lat": 39.7392,
-    "lng": -104.9903
-  },
-  "986": {
-    "city": "Boise",
-    "state": "ID",
-    "timezone": "Mountain",
-    "tzid": "America/Boise",
-    "lat": 43.615,
-    "lng": -116.2023
+      "city": "Cleveland",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.4993,
+      "lng": -81.6944
+    },
+    "217": {
+      "city": "Springfield",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 39.7817,
+      "lng": -89.6501
+    },
+    "218": {
+      "city": "Duluth",
+      "state": "MN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 46.7867,
+      "lng": -92.1005
+    },
+    "219": {
+      "city": "Gary",
+      "state": "IN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.5934,
+      "lng": -87.3464
+    },
+    "220": {
+      "city": "Newark",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.0581,
+      "lng": -82.4013
+    },
+    "223": {
+      "city": "Gettysburg",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.8309,
+      "lng": -77.2311
+    },
+    "224": {
+      "city": "Evanston",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 42.0451,
+      "lng": -87.6877
+    },
+    "225": {
+      "city": "Baton Rouge",
+      "state": "LA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.4515,
+      "lng": -91.1871
+    },
+    "226": {
+      "city": "London",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 42.9849,
+      "lng": -81.2453
+    },
+    "227": {
+      "city": "Rockville",
+      "state": "MD",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.0839,
+      "lng": -77.1528
+    },
+    "228": {
+      "city": "Gulfport",
+      "state": "MS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.3674,
+      "lng": -89.0928
+    },
+    "229": {
+      "city": "Albany",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 31.5785,
+      "lng": -84.1557
+    },
+    "231": {
+      "city": "Traverse City",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 44.7631,
+      "lng": -85.6206
+    },
+    "234": {
+      "city": "Akron",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.0814,
+      "lng": -81.519
+    },
+    "235": {
+      "city": "Columbia",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 38.9517,
+      "lng": -92.3341
+    },
+    "236": {
+      "city": "Vancouver",
+      "state": "BC",
+      "timezone": "Pacific",
+      "tzid": "America/Vancouver",
+      "lat": 49.2827,
+      "lng": -123.1207
+    },
+    "239": {
+      "city": "Fort Myers",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 26.6406,
+      "lng": -81.8723
+    },
+    "240": {
+      "city": "Frederick",
+      "state": "MD",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.4143,
+      "lng": -77.4105
+    },
+    "242": {
+      "city": "Nassau",
+      "state": "Bahamas",
+      "timezone": "Eastern",
+      "tzid": "America/Nassau",
+      "lat": 25.0443,
+      "lng": -77.3504
+    },
+    "246": {
+      "city": "Bridgetown",
+      "state": "Barbados",
+      "timezone": "Atlantic",
+      "tzid": "America/Barbados",
+      "lat": 13.1939,
+      "lng": -59.5432
+    },
+    "248": {
+      "city": "Troy",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.6064,
+      "lng": -83.1498
+    },
+    "249": {
+      "city": "Sudbury",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 46.4917,
+      "lng": -80.993
+    },
+    "250": {
+      "city": "Kelowna",
+      "state": "BC",
+      "timezone": "Pacific",
+      "tzid": "America/Vancouver",
+      "lat": 49.888,
+      "lng": -119.496
+    },
+    "251": {
+      "city": "Mobile",
+      "state": "AL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.6954,
+      "lng": -88.0399
+    },
+    "252": {
+      "city": "Greenville",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.6127,
+      "lng": -77.3664
+    },
+    "253": {
+      "city": "Tacoma",
+      "state": "WA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 47.2529,
+      "lng": -122.4443
+    },
+    "254": {
+      "city": "Waco",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 31.5493,
+      "lng": -97.1467
+    },
+    "256": {
+      "city": "Huntsville",
+      "state": "AL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 34.7304,
+      "lng": -86.5861
+    },
+    "257": {
+      "city": "Vancouver",
+      "state": "BC",
+      "timezone": "Pacific",
+      "tzid": "America/Vancouver",
+      "lat": 49.2827,
+      "lng": -123.1207
+    },
+    "260": {
+      "city": "Fort Wayne",
+      "state": "IN",
+      "timezone": "Eastern",
+      "tzid": "America/Indiana/Indianapolis",
+      "lat": 41.0793,
+      "lng": -85.1394
+    },
+    "262": {
+      "city": "Kenosha",
+      "state": "WI",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 42.5847,
+      "lng": -87.8212
+    },
+    "263": {
+      "city": "Montreal",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.5017,
+      "lng": -73.5673
+    },
+    "264": {
+      "city": "The Valley",
+      "state": "Anguilla",
+      "timezone": "Atlantic",
+      "tzid": "America/Anguilla",
+      "lat": 18.217,
+      "lng": -63.0578
+    },
+    "267": {
+      "city": "Philadelphia",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.9526,
+      "lng": -75.1652
+    },
+    "268": {
+      "city": "St. John's",
+      "state": "Antigua",
+      "timezone": "Atlantic",
+      "tzid": "America/Antigua",
+      "lat": 17.1274,
+      "lng": -61.8468
+    },
+    "269": {
+      "city": "Kalamazoo",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.2917,
+      "lng": -85.5872
+    },
+    "270": {
+      "city": "Bowling Green",
+      "state": "KY",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 36.9685,
+      "lng": -86.4808
+    },
+    "272": {
+      "city": "Scranton",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.4089,
+      "lng": -75.6624
+    },
+    "273": {
+      "city": "Quebec City",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 46.8139,
+      "lng": -71.208
+    },
+    "274": {
+      "city": "Green Bay",
+      "state": "WI",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.5133,
+      "lng": -88.0133
+    },
+    "276": {
+      "city": "Bristol",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 36.5951,
+      "lng": -82.1887
+    },
+    "279": {
+      "city": "Sacramento",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 38.5816,
+      "lng": -121.4944
+    },
+    "281": {
+      "city": "Houston",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.7604,
+      "lng": -95.3698
+    },
+    "283": {
+      "city": "Cincinnati",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.1031,
+      "lng": -84.512
+    },
+    "284": {
+      "city": "Road Town",
+      "state": "BVI",
+      "timezone": "Atlantic",
+      "tzid": "America/Tortola",
+      "lat": 18.4286,
+      "lng": -64.6185
+    },
+    "289": {
+      "city": "Hamilton",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 43.2557,
+      "lng": -79.8711
+    },
+    "301": {
+      "city": "Rockville",
+      "state": "MD",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.0839,
+      "lng": -77.1528
+    },
+    "302": {
+      "city": "Wilmington",
+      "state": "DE",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.7391,
+      "lng": -75.5398
+    },
+    "303": {
+      "city": "Denver",
+      "state": "CO",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 39.7392,
+      "lng": -104.9903
+    },
+    "304": {
+      "city": "Charleston",
+      "state": "WV",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 38.3498,
+      "lng": -81.6326
+    },
+    "305": {
+      "city": "Miami",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 25.7617,
+      "lng": -80.1918
+    },
+    "306": {
+      "city": "Saskatoon",
+      "state": "SK",
+      "timezone": "Central",
+      "tzid": "America/Regina",
+      "lat": 52.1579,
+      "lng": -106.6702
+    },
+    "307": {
+      "city": "Cheyenne",
+      "state": "WY",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 41.14,
+      "lng": -104.8202
+    },
+    "308": {
+      "city": "North Platte",
+      "state": "NE",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.1403,
+      "lng": -100.7601
+    },
+    "309": {
+      "city": "Peoria",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 40.6936,
+      "lng": -89.589
+    },
+    "310": {
+      "city": "Los Angeles",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.0522,
+      "lng": -118.2437
+    },
+    "312": {
+      "city": "Chicago",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.8781,
+      "lng": -87.6298
+    },
+    "313": {
+      "city": "Detroit",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.3314,
+      "lng": -83.0458
+    },
+    "314": {
+      "city": "St. Louis",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 38.627,
+      "lng": -90.1994
+    },
+    "315": {
+      "city": "Syracuse",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 43.0481,
+      "lng": -76.1474
+    },
+    "316": {
+      "city": "Wichita",
+      "state": "KS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 37.6872,
+      "lng": -97.3301
+    },
+    "317": {
+      "city": "Indianapolis",
+      "state": "IN",
+      "timezone": "Eastern",
+      "tzid": "America/Indiana/Indianapolis",
+      "lat": 39.7684,
+      "lng": -86.1581
+    },
+    "318": {
+      "city": "Shreveport",
+      "state": "LA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.5252,
+      "lng": -93.7502
+    },
+    "319": {
+      "city": "Cedar Rapids",
+      "state": "IA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.9779,
+      "lng": -91.6656
+    },
+    "320": {
+      "city": "St. Cloud",
+      "state": "MN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 45.5579,
+      "lng": -94.1632
+    },
+    "321": {
+      "city": "Orlando",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 28.5383,
+      "lng": -81.3792
+    },
+    "323": {
+      "city": "Los Angeles",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.0522,
+      "lng": -118.2437
+    },
+    "324": {
+      "city": "Jacksonville",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 30.3322,
+      "lng": -81.6557
+    },
+    "325": {
+      "city": "Abilene",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.4487,
+      "lng": -99.7331
+    },
+    "326": {
+      "city": "Dayton",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.7589,
+      "lng": -84.1916
+    },
+    "327": {
+      "city": "Texarkana",
+      "state": "AR",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 33.4251,
+      "lng": -94.0477
+    },
+    "329": {
+      "city": "Poughkeepsie",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.7004,
+      "lng": -73.921
+    },
+    "330": {
+      "city": "Akron",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.0814,
+      "lng": -81.519
+    },
+    "331": {
+      "city": "Aurora",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.7606,
+      "lng": -88.3201
+    },
+    "332": {
+      "city": "New York",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7831,
+      "lng": -73.9712
+    },
+    "334": {
+      "city": "Montgomery",
+      "state": "AL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.3792,
+      "lng": -86.3077
+    },
+    "336": {
+      "city": "Greensboro",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 36.0726,
+      "lng": -79.792
+    },
+    "337": {
+      "city": "Lafayette",
+      "state": "LA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.2241,
+      "lng": -92.0198
+    },
+    "339": {
+      "city": "Boston",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.3601,
+      "lng": -71.0589
+    },
+    "340": {
+      "city": "Charlotte Amalie",
+      "state": "USVI",
+      "timezone": "Atlantic",
+      "tzid": "America/St_Thomas",
+      "lat": 18.3419,
+      "lng": -64.9307
+    },
+    "341": {
+      "city": "Oakland",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.8044,
+      "lng": -122.2712
+    },
+    "343": {
+      "city": "Ottawa",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.4215,
+      "lng": -75.6972
+    },
+    "345": {
+      "city": "George Town",
+      "state": "Cayman Islands",
+      "timezone": "Eastern",
+      "tzid": "America/Cayman",
+      "lat": 19.2866,
+      "lng": -81.3744
+    },
+    "346": {
+      "city": "Houston",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.7604,
+      "lng": -95.3698
+    },
+    "347": {
+      "city": "New York",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7831,
+      "lng": -73.9712
+    },
+    "348": {
+      "city": "London",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 42.9849,
+      "lng": -81.2453
+    },
+    "350": {
+      "city": "Stockton",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.9577,
+      "lng": -121.2908
+    },
+    "351": {
+      "city": "Lowell",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.6334,
+      "lng": -71.3162
+    },
+    "352": {
+      "city": "Gainesville",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 29.6516,
+      "lng": -82.3248
+    },
+    "353": {
+      "city": "Madison",
+      "state": "WI",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 43.0731,
+      "lng": -89.4012
+    },
+    "354": {
+      "city": "Laval",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.6066,
+      "lng": -73.7124
+    },
+    "357": {
+      "city": "Fresno",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 36.7378,
+      "lng": -119.7871
+    },
+    "360": {
+      "city": "Olympia",
+      "state": "WA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 47.0379,
+      "lng": -122.9007
+    },
+    "361": {
+      "city": "Corpus Christi",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 27.8006,
+      "lng": -97.3964
+    },
+    "363": {
+      "city": "Hempstead",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7062,
+      "lng": -73.6187
+    },
+    "364": {
+      "city": "Bowling Green",
+      "state": "KY",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 36.9685,
+      "lng": -86.4808
+    },
+    "365": {
+      "city": "Hamilton",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 43.2557,
+      "lng": -79.8711
+    },
+    "367": {
+      "city": "Quebec City",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 46.8139,
+      "lng": -71.208
+    },
+    "368": {
+      "city": "Calgary",
+      "state": "AB",
+      "timezone": "Mountain",
+      "tzid": "America/Edmonton",
+      "lat": 51.0447,
+      "lng": -114.0719
+    },
+    "369": {
+      "city": "Sacramento",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 38.5816,
+      "lng": -121.4944
+    },
+    "380": {
+      "city": "Columbus",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.9612,
+      "lng": -82.9988
+    },
+    "382": {
+      "city": "London",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 42.9849,
+      "lng": -81.2453
+    },
+    "385": {
+      "city": "Salt Lake City",
+      "state": "UT",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 40.7608,
+      "lng": -111.891
+    },
+    "386": {
+      "city": "Daytona Beach",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 29.2108,
+      "lng": -81.0228
+    },
+    "401": {
+      "city": "Providence",
+      "state": "RI",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.824,
+      "lng": -71.4128
+    },
+    "402": {
+      "city": "Omaha",
+      "state": "NE",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.2565,
+      "lng": -95.9345
+    },
+    "403": {
+      "city": "Calgary",
+      "state": "AB",
+      "timezone": "Mountain",
+      "tzid": "America/Edmonton",
+      "lat": 51.0447,
+      "lng": -114.0719
+    },
+    "404": {
+      "city": "Atlanta",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 33.749,
+      "lng": -84.388
+    },
+    "405": {
+      "city": "Oklahoma City",
+      "state": "OK",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 35.4676,
+      "lng": -97.5164
+    },
+    "406": {
+      "city": "Billings",
+      "state": "MT",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 45.7833,
+      "lng": -108.5007
+    },
+    "407": {
+      "city": "Orlando",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 28.5383,
+      "lng": -81.3792
+    },
+    "408": {
+      "city": "San Jose",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.3382,
+      "lng": -121.8863
+    },
+    "409": {
+      "city": "Beaumont",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.0802,
+      "lng": -94.1266
+    },
+    "410": {
+      "city": "Baltimore",
+      "state": "MD",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.2904,
+      "lng": -76.6122
+    },
+    "412": {
+      "city": "Pittsburgh",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.4406,
+      "lng": -79.9959
+    },
+    "413": {
+      "city": "Springfield",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.1015,
+      "lng": -72.5898
+    },
+    "414": {
+      "city": "Milwaukee",
+      "state": "WI",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 43.0389,
+      "lng": -87.9065
+    },
+    "415": {
+      "city": "San Francisco",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.7749,
+      "lng": -122.4194
+    },
+    "416": {
+      "city": "Toronto",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 43.6532,
+      "lng": -79.3832
+    },
+    "417": {
+      "city": "Springfield",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 37.2089,
+      "lng": -93.2923
+    },
+    "418": {
+      "city": "Quebec City",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 46.8139,
+      "lng": -71.208
+    },
+    "419": {
+      "city": "Toledo",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.6528,
+      "lng": -83.5379
+    },
+    "423": {
+      "city": "Chattanooga",
+      "state": "TN",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.0456,
+      "lng": -85.3097
+    },
+    "424": {
+      "city": "Los Angeles",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.0522,
+      "lng": -118.2437
+    },
+    "425": {
+      "city": "Bellevue",
+      "state": "WA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 47.6101,
+      "lng": -122.2015
+    },
+    "428": {
+      "city": "Fredericton",
+      "state": "NB",
+      "timezone": "Atlantic",
+      "tzid": "America/Moncton",
+      "lat": 45.9636,
+      "lng": -66.6431
+    },
+    "430": {
+      "city": "Tyler",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.3513,
+      "lng": -95.3011
+    },
+    "431": {
+      "city": "Winnipeg",
+      "state": "MB",
+      "timezone": "Central",
+      "tzid": "America/Winnipeg",
+      "lat": 49.8951,
+      "lng": -97.1384
+    },
+    "432": {
+      "city": "Midland",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 31.9973,
+      "lng": -102.0779
+    },
+    "434": {
+      "city": "Lynchburg",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 37.4138,
+      "lng": -79.1422
+    },
+    "435": {
+      "city": "St. George",
+      "state": "UT",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 37.0965,
+      "lng": -113.5684
+    },
+    "436": {
+      "city": "Cleveland",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.4993,
+      "lng": -81.6944
+    },
+    "437": {
+      "city": "Toronto",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 43.6532,
+      "lng": -79.3832
+    },
+    "438": {
+      "city": "Montreal",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.5017,
+      "lng": -73.5673
+    },
+    "440": {
+      "city": "Cleveland",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.4993,
+      "lng": -81.6944
+    },
+    "441": {
+      "city": "Hamilton",
+      "state": "Bermuda",
+      "timezone": "Atlantic",
+      "tzid": "Atlantic/Bermuda",
+      "lat": 32.2948,
+      "lng": -64.7814
+    },
+    "442": {
+      "city": "Oceanside",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 33.1959,
+      "lng": -117.3795
+    },
+    "443": {
+      "city": "Baltimore",
+      "state": "MD",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.2904,
+      "lng": -76.6122
+    },
+    "445": {
+      "city": "Philadelphia",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.9526,
+      "lng": -75.1652
+    },
+    "447": {
+      "city": "Springfield",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 39.7817,
+      "lng": -89.6501
+    },
+    "448": {
+      "city": "Tampa",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 27.9506,
+      "lng": -82.4572
+    },
+    "450": {
+      "city": "Laval",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.6066,
+      "lng": -73.7124
+    },
+    "457": {
+      "city": "Shreveport",
+      "state": "LA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.5252,
+      "lng": -93.7502
+    },
+    "458": {
+      "city": "Eugene",
+      "state": "OR",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 44.0521,
+      "lng": -123.0868
+    },
+    "463": {
+      "city": "Indianapolis",
+      "state": "IN",
+      "timezone": "Eastern",
+      "tzid": "America/Indiana/Indianapolis",
+      "lat": 39.7684,
+      "lng": -86.1581
+    },
+    "464": {
+      "city": "Chicago",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.8781,
+      "lng": -87.6298
+    },
+    "468": {
+      "city": "Sherbrooke",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.4042,
+      "lng": -71.8929
+    },
+    "469": {
+      "city": "Dallas",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.7767,
+      "lng": -96.797
+    },
+    "470": {
+      "city": "Atlanta",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 33.749,
+      "lng": -84.388
+    },
+    "471": {
+      "city": "Tupelo",
+      "state": "MS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 34.2576,
+      "lng": -88.7034
+    },
+    "472": {
+      "city": "Greensboro",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 36.0726,
+      "lng": -79.792
+    },
+    "473": {
+      "city": "St. George's",
+      "state": "Grenada",
+      "timezone": "Atlantic",
+      "tzid": "America/Grenada",
+      "lat": 12.0561,
+      "lng": -61.7488
+    },
+    "474": {
+      "city": "Waterbury",
+      "state": "CT",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.5582,
+      "lng": -73.0515
+    },
+    "475": {
+      "city": "New Haven",
+      "state": "CT",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.3083,
+      "lng": -72.9279
+    },
+    "478": {
+      "city": "Macon",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 32.8407,
+      "lng": -83.6324
+    },
+    "479": {
+      "city": "Fayetteville",
+      "state": "AR",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 36.0822,
+      "lng": -94.1719
+    },
+    "480": {
+      "city": "Scottsdale",
+      "state": "AZ",
+      "timezone": "Mountain",
+      "tzid": "America/Phoenix",
+      "lat": 33.4942,
+      "lng": -111.9261
+    },
+    "483": {
+      "city": "Montgomery",
+      "state": "AL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.3792,
+      "lng": -86.3077
+    },
+    "484": {
+      "city": "Allentown",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.6084,
+      "lng": -75.4902
+    },
+    "501": {
+      "city": "Little Rock",
+      "state": "AR",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 34.7465,
+      "lng": -92.2896
+    },
+    "502": {
+      "city": "Louisville",
+      "state": "KY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 38.2527,
+      "lng": -85.7585
+    },
+    "503": {
+      "city": "Portland",
+      "state": "OR",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 45.5152,
+      "lng": -122.6784
+    },
+    "504": {
+      "city": "New Orleans",
+      "state": "LA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.9511,
+      "lng": -90.0715
+    },
+    "505": {
+      "city": "Albuquerque",
+      "state": "NM",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 35.0844,
+      "lng": -106.6504
+    },
+    "506": {
+      "city": "Fredericton",
+      "state": "NB",
+      "timezone": "Atlantic",
+      "tzid": "America/Moncton",
+      "lat": 45.9636,
+      "lng": -66.6431
+    },
+    "507": {
+      "city": "Rochester",
+      "state": "MN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.0121,
+      "lng": -92.4802
+    },
+    "508": {
+      "city": "Worcester",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.2626,
+      "lng": -71.8023
+    },
+    "509": {
+      "city": "Spokane",
+      "state": "WA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 47.6588,
+      "lng": -117.426
+    },
+    "510": {
+      "city": "Oakland",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.8044,
+      "lng": -122.2712
+    },
+    "512": {
+      "city": "Austin",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.2672,
+      "lng": -97.7431
+    },
+    "513": {
+      "city": "Cincinnati",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.1031,
+      "lng": -84.512
+    },
+    "514": {
+      "city": "Montreal",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.5017,
+      "lng": -73.5673
+    },
+    "515": {
+      "city": "Des Moines",
+      "state": "IA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.5868,
+      "lng": -93.625
+    },
+    "516": {
+      "city": "Hempstead",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7062,
+      "lng": -73.6187
+    },
+    "517": {
+      "city": "Lansing",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.7325,
+      "lng": -84.5555
+    },
+    "518": {
+      "city": "Albany",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.6526,
+      "lng": -73.7562
+    },
+    "519": {
+      "city": "London",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 42.9849,
+      "lng": -81.2453
+    },
+    "520": {
+      "city": "Tucson",
+      "state": "AZ",
+      "timezone": "Mountain",
+      "tzid": "America/Phoenix",
+      "lat": 32.2226,
+      "lng": -110.9747
+    },
+    "530": {
+      "city": "Redding",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 40.5865,
+      "lng": -122.3917
+    },
+    "531": {
+      "city": "Omaha",
+      "state": "NE",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.2565,
+      "lng": -95.9345
+    },
+    "534": {
+      "city": "Eau Claire",
+      "state": "WI",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.8113,
+      "lng": -91.4985
+    },
+    "539": {
+      "city": "Tulsa",
+      "state": "OK",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 36.154,
+      "lng": -95.9928
+    },
+    "540": {
+      "city": "Roanoke",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 37.2709,
+      "lng": -79.9414
+    },
+    "541": {
+      "city": "Eugene",
+      "state": "OR",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 44.0521,
+      "lng": -123.0868
+    },
+    "548": {
+      "city": "London",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 42.9849,
+      "lng": -81.2453
+    },
+    "551": {
+      "city": "Jersey City",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7282,
+      "lng": -74.0776
+    },
+    "557": {
+      "city": "St. Louis",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 38.627,
+      "lng": -90.1994
+    },
+    "559": {
+      "city": "Fresno",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 36.7378,
+      "lng": -119.7871
+    },
+    "561": {
+      "city": "West Palm Beach",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 26.7153,
+      "lng": -80.0534
+    },
+    "562": {
+      "city": "Long Beach",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 33.7701,
+      "lng": -118.1937
+    },
+    "563": {
+      "city": "Davenport",
+      "state": "IA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.5236,
+      "lng": -90.5776
+    },
+    "564": {
+      "city": "Vancouver",
+      "state": "WA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 45.6387,
+      "lng": -122.6615
+    },
+    "567": {
+      "city": "Toledo",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.6528,
+      "lng": -83.5379
+    },
+    "570": {
+      "city": "Wilkes-Barre",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.2459,
+      "lng": -75.8813
+    },
+    "571": {
+      "city": "Arlington",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 38.8816,
+      "lng": -77.091
+    },
+    "572": {
+      "city": "Oklahoma City",
+      "state": "OK",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 35.4676,
+      "lng": -97.5164
+    },
+    "573": {
+      "city": "Columbia",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 38.9517,
+      "lng": -92.3341
+    },
+    "574": {
+      "city": "South Bend",
+      "state": "IN",
+      "timezone": "Eastern",
+      "tzid": "America/Indiana/Indianapolis",
+      "lat": 41.6764,
+      "lng": -86.252
+    },
+    "575": {
+      "city": "Las Cruces",
+      "state": "NM",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 32.3199,
+      "lng": -106.7637
+    },
+    "579": {
+      "city": "Quebec City",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 46.8139,
+      "lng": -71.208
+    },
+    "580": {
+      "city": "Lawton",
+      "state": "OK",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 34.6036,
+      "lng": -98.3959
+    },
+    "581": {
+      "city": "Quebec City",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 46.8139,
+      "lng": -71.208
+    },
+    "582": {
+      "city": "Erie",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.1292,
+      "lng": -80.0851
+    },
+    "584": {
+      "city": "Winnipeg",
+      "state": "MB",
+      "timezone": "Central",
+      "tzid": "America/Winnipeg",
+      "lat": 49.8951,
+      "lng": -97.1384
+    },
+    "585": {
+      "city": "Rochester",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 43.1566,
+      "lng": -77.6088
+    },
+    "586": {
+      "city": "Warren",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.5145,
+      "lng": -83.0147
+    },
+    "587": {
+      "city": "Calgary",
+      "state": "AB",
+      "timezone": "Mountain",
+      "tzid": "America/Edmonton",
+      "lat": 51.0447,
+      "lng": -114.0719
+    },
+    "601": {
+      "city": "Jackson",
+      "state": "MS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.2988,
+      "lng": -90.1848
+    },
+    "602": {
+      "city": "Phoenix",
+      "state": "AZ",
+      "timezone": "Mountain",
+      "tzid": "America/Phoenix",
+      "lat": 33.4484,
+      "lng": -112.074
+    },
+    "603": {
+      "city": "Manchester",
+      "state": "NH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.9956,
+      "lng": -71.4548
+    },
+    "604": {
+      "city": "Vancouver",
+      "state": "BC",
+      "timezone": "Pacific",
+      "tzid": "America/Vancouver",
+      "lat": 49.2827,
+      "lng": -123.1207
+    },
+    "605": {
+      "city": "Sioux Falls",
+      "state": "SD",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 43.5446,
+      "lng": -96.7311
+    },
+    "606": {
+      "city": "Ashland",
+      "state": "KY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 38.4784,
+      "lng": -82.6379
+    },
+    "607": {
+      "city": "Binghamton",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.0987,
+      "lng": -75.918
+    },
+    "608": {
+      "city": "Madison",
+      "state": "WI",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 43.0731,
+      "lng": -89.4012
+    },
+    "609": {
+      "city": "Trenton",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.2206,
+      "lng": -74.7597
+    },
+    "610": {
+      "city": "Allentown",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.6084,
+      "lng": -75.4902
+    },
+    "612": {
+      "city": "Minneapolis",
+      "state": "MN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.9778,
+      "lng": -93.265
+    },
+    "613": {
+      "city": "Ottawa",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.4215,
+      "lng": -75.6972
+    },
+    "614": {
+      "city": "Columbus",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.9612,
+      "lng": -82.9988
+    },
+    "615": {
+      "city": "Nashville",
+      "state": "TN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 36.1627,
+      "lng": -86.7816
+    },
+    "616": {
+      "city": "Grand Rapids",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.9634,
+      "lng": -85.6681
+    },
+    "617": {
+      "city": "Boston",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.3601,
+      "lng": -71.0589
+    },
+    "618": {
+      "city": "Belleville",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 38.52,
+      "lng": -89.9839
+    },
+    "619": {
+      "city": "San Diego",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 32.7157,
+      "lng": -117.1611
+    },
+    "620": {
+      "city": "Dodge City",
+      "state": "KS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 37.7528,
+      "lng": -100.0171
+    },
+    "621": {
+      "city": "Houston",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.7604,
+      "lng": -95.3698
+    },
+    "623": {
+      "city": "Glendale",
+      "state": "AZ",
+      "timezone": "Mountain",
+      "tzid": "America/Phoenix",
+      "lat": 33.5387,
+      "lng": -112.186
+    },
+    "624": {
+      "city": "Buffalo",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.8864,
+      "lng": -78.8784
+    },
+    "626": {
+      "city": "Pasadena",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.1478,
+      "lng": -118.1445
+    },
+    "628": {
+      "city": "San Francisco",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.7749,
+      "lng": -122.4194
+    },
+    "629": {
+      "city": "Nashville",
+      "state": "TN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 36.1627,
+      "lng": -86.7816
+    },
+    "630": {
+      "city": "Naperville",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.7508,
+      "lng": -88.1535
+    },
+    "631": {
+      "city": "Suffolk County",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7891,
+      "lng": -73.135
+    },
+    "636": {
+      "city": "St. Charles",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 38.7881,
+      "lng": -90.4974
+    },
+    "639": {
+      "city": "Saskatoon",
+      "state": "SK",
+      "timezone": "Central",
+      "tzid": "America/Regina",
+      "lat": 52.1579,
+      "lng": -106.6702
+    },
+    "640": {
+      "city": "Trenton",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.2206,
+      "lng": -74.7597
+    },
+    "641": {
+      "city": "Mason City",
+      "state": "IA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 43.1536,
+      "lng": -93.201
+    },
+    "645": {
+      "city": "Miami",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 25.7617,
+      "lng": -80.1918
+    },
+    "646": {
+      "city": "New York",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7831,
+      "lng": -73.9712
+    },
+    "647": {
+      "city": "Toronto",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 43.6532,
+      "lng": -79.3832
+    },
+    "649": {
+      "city": "Cockburn Town",
+      "state": "Turks and Caicos Islands",
+      "timezone": "Atlantic",
+      "tzid": "America/Grand_Turk",
+      "lat": 21.4612,
+      "lng": -71.1419
+    },
+    "650": {
+      "city": "San Mateo",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.563,
+      "lng": -122.3255
+    },
+    "651": {
+      "city": "St. Paul",
+      "state": "MN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.9537,
+      "lng": -93.09
+    },
+    "656": {
+      "city": "Tampa",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 27.9506,
+      "lng": -82.4572
+    },
+    "657": {
+      "city": "Anaheim",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 33.8366,
+      "lng": -117.9143
+    },
+    "658": {
+      "city": "Kingston",
+      "state": "Jamaica",
+      "timezone": "Eastern",
+      "tzid": "America/Jamaica",
+      "lat": 17.9712,
+      "lng": -76.7936
+    },
+    "659": {
+      "city": "Birmingham",
+      "state": "AL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 33.5207,
+      "lng": -86.8025
+    },
+    "660": {
+      "city": "Sedalia",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 38.7045,
+      "lng": -93.2283
+    },
+    "661": {
+      "city": "Bakersfield",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 35.3733,
+      "lng": -119.0187
+    },
+    "662": {
+      "city": "Tupelo",
+      "state": "MS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 34.2576,
+      "lng": -88.7034
+    },
+    "664": {
+      "city": "Brades",
+      "state": "Montserrat",
+      "timezone": "Atlantic",
+      "tzid": "America/Montserrat",
+      "lat": 16.7918,
+      "lng": -62.2106
+    },
+    "667": {
+      "city": "Baltimore",
+      "state": "MD",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.2904,
+      "lng": -76.6122
+    },
+    "669": {
+      "city": "San Jose",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.3382,
+      "lng": -121.8863
+    },
+    "670": {
+      "city": "Saipan",
+      "state": "Northern Mariana Islands",
+      "timezone": "Chamorro",
+      "tzid": "Pacific/Saipan",
+      "lat": 15.1778,
+      "lng": 145.75
+    },
+    "671": {
+      "city": "Hagåtña",
+      "state": "Guam",
+      "timezone": "Chamorro",
+      "tzid": "Pacific/Guam",
+      "lat": 13.4757,
+      "lng": 144.7489
+    },
+    "672": {
+      "city": "Vancouver",
+      "state": "BC",
+      "timezone": "Pacific",
+      "tzid": "America/Vancouver",
+      "lat": 49.2827,
+      "lng": -123.1207
+    },
+    "678": {
+      "city": "Atlanta",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 33.749,
+      "lng": -84.388
+    },
+    "679": {
+      "city": "Detroit",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.3314,
+      "lng": -83.0458
+    },
+    "680": {
+      "city": "Syracuse",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 43.0481,
+      "lng": -76.1474
+    },
+    "681": {
+      "city": "Charleston",
+      "state": "WV",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 38.3498,
+      "lng": -81.6326
+    },
+    "682": {
+      "city": "Fort Worth",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.7555,
+      "lng": -97.3308
+    },
+    "683": {
+      "city": "Sudbury",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 46.4917,
+      "lng": -80.993
+    },
+    "684": {
+      "city": "Pago Pago",
+      "state": "American Samoa",
+      "timezone": "Samoa",
+      "tzid": "Pacific/Pago_Pago",
+      "lat": -14.2756,
+      "lng": -170.702
+    },
+    "686": {
+      "city": "Richmond",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 37.5407,
+      "lng": -77.436
+    },
+    "689": {
+      "city": "Orlando",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 28.5383,
+      "lng": -81.3792
+    },
+    "701": {
+      "city": "Fargo",
+      "state": "ND",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 46.8772,
+      "lng": -96.7898
+    },
+    "702": {
+      "city": "Las Vegas",
+      "state": "NV",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 36.1699,
+      "lng": -115.1398
+    },
+    "703": {
+      "city": "Arlington",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 38.8816,
+      "lng": -77.091
+    },
+    "704": {
+      "city": "Charlotte",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.2271,
+      "lng": -80.8431
+    },
+    "705": {
+      "city": "Sudbury",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 46.4917,
+      "lng": -80.993
+    },
+    "706": {
+      "city": "Columbus",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 32.4609,
+      "lng": -84.9877
+    },
+    "707": {
+      "city": "Santa Rosa",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 38.4405,
+      "lng": -122.7144
+    },
+    "708": {
+      "city": "Oak Park",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.885,
+      "lng": -87.7845
+    },
+    "709": {
+      "city": "St. John's",
+      "state": "NL",
+      "timezone": "Newfoundland",
+      "tzid": "America/St_Johns",
+      "lat": 47.5615,
+      "lng": -52.7126
+    },
+    "710": {
+      "city": "US Government",
+      "state": "US",
+      "timezone": "Various",
+      "tzid": "America/New_York",
+      "lat": 38.8977,
+      "lng": -77.0365
+    },
+    "712": {
+      "city": "Sioux City",
+      "state": "IA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 42.4993,
+      "lng": -96.4003
+    },
+    "713": {
+      "city": "Houston",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.7604,
+      "lng": -95.3698
+    },
+    "714": {
+      "city": "Anaheim",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 33.8366,
+      "lng": -117.9143
+    },
+    "715": {
+      "city": "Eau Claire",
+      "state": "WI",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.8113,
+      "lng": -91.4985
+    },
+    "716": {
+      "city": "Buffalo",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.8864,
+      "lng": -78.8784
+    },
+    "717": {
+      "city": "Harrisburg",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.2732,
+      "lng": -76.8867
+    },
+    "718": {
+      "city": "New York",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7831,
+      "lng": -73.9712
+    },
+    "719": {
+      "city": "Colorado Springs",
+      "state": "CO",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 38.8339,
+      "lng": -104.8214
+    },
+    "720": {
+      "city": "Denver",
+      "state": "CO",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 39.7392,
+      "lng": -104.9903
+    },
+    "721": {
+      "city": "Philipsburg",
+      "state": "Sint Maarten",
+      "timezone": "Atlantic",
+      "tzid": "America/Lower_Princes",
+      "lat": 18.026,
+      "lng": -63.0458
+    },
+    "724": {
+      "city": "Greensburg",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.3015,
+      "lng": -79.5389
+    },
+    "725": {
+      "city": "Las Vegas",
+      "state": "NV",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 36.1699,
+      "lng": -115.1398
+    },
+    "726": {
+      "city": "San Antonio",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.4241,
+      "lng": -98.4936
+    },
+    "727": {
+      "city": "St. Petersburg",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 27.7676,
+      "lng": -82.6403
+    },
+    "728": {
+      "city": "Newark",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7357,
+      "lng": -74.1724
+    },
+    "729": {
+      "city": "Knoxville",
+      "state": "TN",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.9606,
+      "lng": -83.9207
+    },
+    "730": {
+      "city": "Carbondale",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 37.7273,
+      "lng": -89.2168
+    },
+    "731": {
+      "city": "Jackson",
+      "state": "TN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 35.6145,
+      "lng": -88.8139
+    },
+    "732": {
+      "city": "New Brunswick",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.4862,
+      "lng": -74.4518
+    },
+    "734": {
+      "city": "Ann Arbor",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.2808,
+      "lng": -83.743
+    },
+    "737": {
+      "city": "Austin",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.2672,
+      "lng": -97.7431
+    },
+    "738": {
+      "city": "Los Angeles",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.0522,
+      "lng": -118.2437
+    },
+    "740": {
+      "city": "Newark",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.0581,
+      "lng": -82.4013
+    },
+    "742": {
+      "city": "Hamilton",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 43.2557,
+      "lng": -79.8711
+    },
+    "743": {
+      "city": "Greensboro",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 36.0726,
+      "lng": -79.792
+    },
+    "747": {
+      "city": "Los Angeles",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.0522,
+      "lng": -118.2437
+    },
+    "748": {
+      "city": "Fort Collins",
+      "state": "CO",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 40.5853,
+      "lng": -105.0844
+    },
+    "753": {
+      "city": "Ottawa",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.4215,
+      "lng": -75.6972
+    },
+    "754": {
+      "city": "Fort Lauderdale",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 26.1224,
+      "lng": -80.1373
+    },
+    "757": {
+      "city": "Virginia Beach",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 36.8529,
+      "lng": -75.978
+    },
+    "758": {
+      "city": "Castries",
+      "state": "Saint Lucia",
+      "timezone": "Atlantic",
+      "tzid": "America/St_Lucia",
+      "lat": 14.0101,
+      "lng": -60.9875
+    },
+    "760": {
+      "city": "Palm Springs",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 33.8303,
+      "lng": -116.5453
+    },
+    "762": {
+      "city": "Augusta",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 33.4735,
+      "lng": -82.0105
+    },
+    "763": {
+      "city": "Brooklyn Park",
+      "state": "MN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 45.0941,
+      "lng": -93.3563
+    },
+    "765": {
+      "city": "Lafayette",
+      "state": "IN",
+      "timezone": "Eastern",
+      "tzid": "America/Indiana/Indianapolis",
+      "lat": 40.4167,
+      "lng": -86.8753
+    },
+    "767": {
+      "city": "Roseau",
+      "state": "Dominica",
+      "timezone": "Atlantic",
+      "tzid": "America/Dominica",
+      "lat": 15.3092,
+      "lng": -61.3794
+    },
+    "769": {
+      "city": "Jackson",
+      "state": "MS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.2988,
+      "lng": -90.1848
+    },
+    "770": {
+      "city": "Atlanta",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 33.749,
+      "lng": -84.388
+    },
+    "771": {
+      "city": "Washington",
+      "state": "DC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 38.9072,
+      "lng": -77.0369
+    },
+    "772": {
+      "city": "Port St. Lucie",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 27.273,
+      "lng": -80.3582
+    },
+    "773": {
+      "city": "Chicago",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.8781,
+      "lng": -87.6298
+    },
+    "774": {
+      "city": "Worcester",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.2626,
+      "lng": -71.8023
+    },
+    "775": {
+      "city": "Reno",
+      "state": "NV",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 39.5296,
+      "lng": -119.8138
+    },
+    "778": {
+      "city": "Vancouver",
+      "state": "BC",
+      "timezone": "Pacific",
+      "tzid": "America/Vancouver",
+      "lat": 49.2827,
+      "lng": -123.1207
+    },
+    "779": {
+      "city": "Rockford",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 42.2711,
+      "lng": -89.0937
+    },
+    "780": {
+      "city": "Edmonton",
+      "state": "AB",
+      "timezone": "Mountain",
+      "tzid": "America/Edmonton",
+      "lat": 53.5461,
+      "lng": -113.4938
+    },
+    "781": {
+      "city": "Waltham",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.3765,
+      "lng": -71.2356
+    },
+    "782": {
+      "city": "Halifax",
+      "state": "NS",
+      "timezone": "Atlantic",
+      "tzid": "America/Halifax",
+      "lat": 44.6488,
+      "lng": -63.5752
+    },
+    "784": {
+      "city": "Kingstown",
+      "state": "St. Vincent",
+      "timezone": "Atlantic",
+      "tzid": "America/St_Vincent",
+      "lat": 13.16,
+      "lng": -61.2248
+    },
+    "785": {
+      "city": "Topeka",
+      "state": "KS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 39.0473,
+      "lng": -95.6752
+    },
+    "786": {
+      "city": "Miami",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 25.7617,
+      "lng": -80.1918
+    },
+    "787": {
+      "city": "San Juan",
+      "state": "PR",
+      "timezone": "Atlantic",
+      "tzid": "America/Puerto_Rico",
+      "lat": 18.4655,
+      "lng": -66.1057
+    },
+    "801": {
+      "city": "Salt Lake City",
+      "state": "UT",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 40.7608,
+      "lng": -111.891
+    },
+    "802": {
+      "city": "Burlington",
+      "state": "VT",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 44.4759,
+      "lng": -73.2121
+    },
+    "803": {
+      "city": "Columbia",
+      "state": "SC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 34.0007,
+      "lng": -81.0348
+    },
+    "804": {
+      "city": "Richmond",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 37.5407,
+      "lng": -77.436
+    },
+    "805": {
+      "city": "Santa Barbara",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.4208,
+      "lng": -119.6982
+    },
+    "806": {
+      "city": "Amarillo",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 35.222,
+      "lng": -101.8313
+    },
+    "807": {
+      "city": "Thunder Bay",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 48.3809,
+      "lng": -89.2477
+    },
+    "808": {
+      "city": "Honolulu",
+      "state": "HI",
+      "timezone": "Hawaii",
+      "tzid": "Pacific/Honolulu",
+      "lat": 21.3069,
+      "lng": -157.8583
+    },
+    "809": {
+      "city": "Santo Domingo",
+      "state": "Dominican Republic",
+      "timezone": "Atlantic",
+      "tzid": "America/Santo_Domingo",
+      "lat": 18.4861,
+      "lng": -69.9312
+    },
+    "810": {
+      "city": "Flint",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 43.0125,
+      "lng": -83.6875
+    },
+    "812": {
+      "city": "Evansville",
+      "state": "IN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 37.9716,
+      "lng": -87.5711
+    },
+    "813": {
+      "city": "Tampa",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 27.9506,
+      "lng": -82.4572
+    },
+    "814": {
+      "city": "Erie",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.1292,
+      "lng": -80.0851
+    },
+    "815": {
+      "city": "Rockford",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 42.2711,
+      "lng": -89.0937
+    },
+    "816": {
+      "city": "Kansas City",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 39.0997,
+      "lng": -94.5786
+    },
+    "817": {
+      "city": "Fort Worth",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.7555,
+      "lng": -97.3308
+    },
+    "818": {
+      "city": "Los Angeles",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.0522,
+      "lng": -118.2437
+    },
+    "819": {
+      "city": "Gatineau",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.4765,
+      "lng": -75.7013
+    },
+    "820": {
+      "city": "Indianapolis",
+      "state": "IN",
+      "timezone": "Eastern",
+      "tzid": "America/Indiana/Indianapolis",
+      "lat": 39.7684,
+      "lng": -86.1581
+    },
+    "821": {
+      "city": "Greenville",
+      "state": "SC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 34.8526,
+      "lng": -82.394
+    },
+    "825": {
+      "city": "Calgary",
+      "state": "AB",
+      "timezone": "Mountain",
+      "tzid": "America/Edmonton",
+      "lat": 51.0447,
+      "lng": -114.0719
+    },
+    "826": {
+      "city": "Roanoke",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 37.2709,
+      "lng": -79.9414
+    },
+    "828": {
+      "city": "Asheville",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.5951,
+      "lng": -82.5515
+    },
+    "829": {
+      "city": "Santo Domingo",
+      "state": "Dominican Republic",
+      "timezone": "Atlantic",
+      "tzid": "America/Santo_Domingo",
+      "lat": 18.4861,
+      "lng": -69.9312
+    },
+    "830": {
+      "city": "New Braunfels",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.703,
+      "lng": -98.1245
+    },
+    "831": {
+      "city": "Monterey",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 36.6002,
+      "lng": -121.8947
+    },
+    "832": {
+      "city": "Houston",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.7604,
+      "lng": -95.3698
+    },
+    "835": {
+      "city": "Allentown",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.6084,
+      "lng": -75.4902
+    },
+    "837": {
+      "city": "Redding",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 40.5865,
+      "lng": -122.3917
+    },
+    "838": {
+      "city": "Albany",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.6526,
+      "lng": -73.7562
+    },
+    "839": {
+      "city": "Columbia",
+      "state": "SC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 34.0007,
+      "lng": -81.0348
+    },
+    "840": {
+      "city": "Ontario",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.0633,
+      "lng": -117.6509
+    },
+    "843": {
+      "city": "Charleston",
+      "state": "SC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 32.7765,
+      "lng": -79.9311
+    },
+    "845": {
+      "city": "Poughkeepsie",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.7004,
+      "lng": -73.921
+    },
+    "847": {
+      "city": "Elgin",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 42.0354,
+      "lng": -88.2826
+    },
+    "848": {
+      "city": "New Brunswick",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.4862,
+      "lng": -74.4518
+    },
+    "849": {
+      "city": "Santo Domingo",
+      "state": "Dominican Republic",
+      "timezone": "Atlantic",
+      "tzid": "America/Santo_Domingo",
+      "lat": 18.4861,
+      "lng": -69.9312
+    },
+    "850": {
+      "city": "Tallahassee",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 30.4383,
+      "lng": -84.2807
+    },
+    "854": {
+      "city": "Charleston",
+      "state": "SC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 32.7765,
+      "lng": -79.9311
+    },
+    "856": {
+      "city": "Camden",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.9259,
+      "lng": -75.1196
+    },
+    "857": {
+      "city": "Boston",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.3601,
+      "lng": -71.0589
+    },
+    "858": {
+      "city": "San Diego",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 32.7157,
+      "lng": -117.1611
+    },
+    "859": {
+      "city": "Lexington",
+      "state": "KY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 38.0406,
+      "lng": -84.5037
+    },
+    "860": {
+      "city": "Hartford",
+      "state": "CT",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.7658,
+      "lng": -72.6734
+    },
+    "861": {
+      "city": "Peoria",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 40.6936,
+      "lng": -89.589
+    },
+    "862": {
+      "city": "Newark",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7357,
+      "lng": -74.1724
+    },
+    "863": {
+      "city": "Lakeland",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 28.0395,
+      "lng": -81.9498
+    },
+    "864": {
+      "city": "Greenville",
+      "state": "SC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 34.8526,
+      "lng": -82.394
+    },
+    "865": {
+      "city": "Knoxville",
+      "state": "TN",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.9606,
+      "lng": -83.9207
+    },
+    "867": {
+      "city": "Yellowknife",
+      "state": "Canadian Territories",
+      "timezone": "Mountain",
+      "tzid": "America/Yellowknife",
+      "lat": 62.454,
+      "lng": -114.3718
+    },
+    "868": {
+      "city": "Port of Spain",
+      "state": "Trinidad and Tobago",
+      "timezone": "Atlantic",
+      "tzid": "America/Port_of_Spain",
+      "lat": 10.6549,
+      "lng": -61.5019
+    },
+    "869": {
+      "city": "Basseterre",
+      "state": "Saint Kitts and Nevis",
+      "timezone": "Atlantic",
+      "tzid": "America/St_Kitts",
+      "lat": 17.3026,
+      "lng": -62.7177
+    },
+    "870": {
+      "city": "Jonesboro",
+      "state": "AR",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 35.8423,
+      "lng": -90.7043
+    },
+    "872": {
+      "city": "Chicago",
+      "state": "IL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 41.8781,
+      "lng": -87.6298
+    },
+    "873": {
+      "city": "Sherbrooke",
+      "state": "QC",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 45.4042,
+      "lng": -71.8929
+    },
+    "876": {
+      "city": "Kingston",
+      "state": "Jamaica",
+      "timezone": "Eastern",
+      "tzid": "America/Jamaica",
+      "lat": 17.9712,
+      "lng": -76.7936
+    },
+    "878": {
+      "city": "Pittsburgh",
+      "state": "PA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.4406,
+      "lng": -79.9959
+    },
+    "879": {
+      "city": "St. John's",
+      "state": "NL",
+      "timezone": "Newfoundland",
+      "tzid": "America/St_Johns",
+      "lat": 47.5615,
+      "lng": -52.7126
+    },
+    "901": {
+      "city": "Memphis",
+      "state": "TN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 35.1495,
+      "lng": -90.049
+    },
+    "902": {
+      "city": "Halifax",
+      "state": "NS",
+      "timezone": "Atlantic",
+      "tzid": "America/Halifax",
+      "lat": 44.6488,
+      "lng": -63.5752
+    },
+    "903": {
+      "city": "Tyler",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.3513,
+      "lng": -95.3011
+    },
+    "904": {
+      "city": "Jacksonville",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 30.3322,
+      "lng": -81.6557
+    },
+    "905": {
+      "city": "Hamilton",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 43.2557,
+      "lng": -79.8711
+    },
+    "906": {
+      "city": "Marquette",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 46.5436,
+      "lng": -87.3954
+    },
+    "907": {
+      "city": "Anchorage",
+      "state": "AK",
+      "timezone": "Alaska",
+      "tzid": "America/Anchorage",
+      "lat": 61.2181,
+      "lng": -149.9003
+    },
+    "908": {
+      "city": "Elizabeth",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.6639,
+      "lng": -74.2107
+    },
+    "909": {
+      "city": "San Bernardino",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 34.1083,
+      "lng": -117.2898
+    },
+    "910": {
+      "city": "Wilmington",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 34.2257,
+      "lng": -77.9447
+    },
+    "912": {
+      "city": "Savannah",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 32.0809,
+      "lng": -81.0912
+    },
+    "913": {
+      "city": "Kansas City",
+      "state": "KS",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 39.1141,
+      "lng": -94.6275
+    },
+    "914": {
+      "city": "White Plains",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.033,
+      "lng": -73.7629
+    },
+    "915": {
+      "city": "El Paso",
+      "state": "TX",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 31.7619,
+      "lng": -106.485
+    },
+    "916": {
+      "city": "Sacramento",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 38.5816,
+      "lng": -121.4944
+    },
+    "917": {
+      "city": "New York",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7831,
+      "lng": -73.9712
+    },
+    "918": {
+      "city": "Tulsa",
+      "state": "OK",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 36.154,
+      "lng": -95.9928
+    },
+    "919": {
+      "city": "Raleigh",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.7796,
+      "lng": -78.6382
+    },
+    "920": {
+      "city": "Green Bay",
+      "state": "WI",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.5133,
+      "lng": -88.0133
+    },
+    "924": {
+      "city": "Rochester",
+      "state": "MN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.0121,
+      "lng": -92.4802
+    },
+    "925": {
+      "city": "Concord",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 37.9779,
+      "lng": -122.0311
+    },
+    "928": {
+      "city": "Flagstaff",
+      "state": "AZ",
+      "timezone": "Mountain",
+      "tzid": "America/Phoenix",
+      "lat": 35.1983,
+      "lng": -111.6513
+    },
+    "929": {
+      "city": "New York",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7831,
+      "lng": -73.9712
+    },
+    "930": {
+      "city": "Evansville",
+      "state": "IN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 37.9716,
+      "lng": -87.5711
+    },
+    "931": {
+      "city": "Clarksville",
+      "state": "TN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 36.5298,
+      "lng": -87.3595
+    },
+    "934": {
+      "city": "Long Island",
+      "state": "NY",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7891,
+      "lng": -73.135
+    },
+    "936": {
+      "city": "Huntsville",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.7235,
+      "lng": -95.5508
+    },
+    "937": {
+      "city": "Dayton",
+      "state": "OH",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 39.7589,
+      "lng": -84.1916
+    },
+    "938": {
+      "city": "Huntsville",
+      "state": "AL",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 34.7304,
+      "lng": -86.5861
+    },
+    "939": {
+      "city": "San Juan",
+      "state": "PR",
+      "timezone": "Atlantic",
+      "tzid": "America/Puerto_Rico",
+      "lat": 18.4655,
+      "lng": -66.1057
+    },
+    "940": {
+      "city": "Denton",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 33.2148,
+      "lng": -97.1331
+    },
+    "941": {
+      "city": "Sarasota",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 27.3364,
+      "lng": -82.5307
+    },
+    "942": {
+      "city": "Toronto",
+      "state": "ON",
+      "timezone": "Eastern",
+      "tzid": "America/Toronto",
+      "lat": 43.6532,
+      "lng": -79.3832
+    },
+    "943": {
+      "city": "Atlanta",
+      "state": "GA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 33.749,
+      "lng": -84.388
+    },
+    "945": {
+      "city": "Dallas",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.7767,
+      "lng": -96.797
+    },
+    "947": {
+      "city": "Oakland County",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 42.5922,
+      "lng": -83.3362
+    },
+    "948": {
+      "city": "Virginia Beach",
+      "state": "VA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 36.8529,
+      "lng": -75.978
+    },
+    "949": {
+      "city": "Irvine",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 33.6846,
+      "lng": -117.8265
+    },
+    "951": {
+      "city": "Riverside",
+      "state": "CA",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 33.9806,
+      "lng": -117.3755
+    },
+    "952": {
+      "city": "Bloomington",
+      "state": "MN",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 44.8408,
+      "lng": -93.2983
+    },
+    "954": {
+      "city": "Fort Lauderdale",
+      "state": "FL",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 26.1224,
+      "lng": -80.1373
+    },
+    "956": {
+      "city": "Laredo",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 27.5306,
+      "lng": -99.4803
+    },
+    "959": {
+      "city": "Hartford",
+      "state": "CT",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 41.7658,
+      "lng": -72.6734
+    },
+    "970": {
+      "city": "Fort Collins",
+      "state": "CO",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 40.5853,
+      "lng": -105.0844
+    },
+    "971": {
+      "city": "Portland",
+      "state": "OR",
+      "timezone": "Pacific",
+      "tzid": "America/Los_Angeles",
+      "lat": 45.5152,
+      "lng": -122.6784
+    },
+    "972": {
+      "city": "Dallas",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 32.7767,
+      "lng": -96.797
+    },
+    "973": {
+      "city": "Newark",
+      "state": "NJ",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 40.7357,
+      "lng": -74.1724
+    },
+    "975": {
+      "city": "Kansas City",
+      "state": "MO",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 39.0997,
+      "lng": -94.5786
+    },
+    "978": {
+      "city": "Lowell",
+      "state": "MA",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 42.6334,
+      "lng": -71.3162
+    },
+    "979": {
+      "city": "College Station",
+      "state": "TX",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 30.6279,
+      "lng": -96.3344
+    },
+    "980": {
+      "city": "Charlotte",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.2271,
+      "lng": -80.8431
+    },
+    "983": {
+      "city": "Denver",
+      "state": "CO",
+      "timezone": "Mountain",
+      "tzid": "America/Denver",
+      "lat": 39.7392,
+      "lng": -104.9903
+    },
+    "984": {
+      "city": "Raleigh",
+      "state": "NC",
+      "timezone": "Eastern",
+      "tzid": "America/New_York",
+      "lat": 35.7796,
+      "lng": -78.6382
+    },
+    "985": {
+      "city": "Houma",
+      "state": "LA",
+      "timezone": "Central",
+      "tzid": "America/Chicago",
+      "lat": 29.5958,
+      "lng": -90.7195
+    },
+    "986": {
+      "city": "Boise",
+      "state": "ID",
+      "timezone": "Mountain",
+      "tzid": "America/Boise",
+      "lat": 43.615,
+      "lng": -116.2023
+    },
+    "989": {
+      "city": "Saginaw",
+      "state": "MI",
+      "timezone": "Eastern",
+      "tzid": "America/Detroit",
+      "lat": 43.4195,
+      "lng": -83.9508
+    }
   }
 }
-
