@@ -10,17 +10,17 @@ body {
 }
 
 .top-section {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 400px;
+  gap: 16px;
+  align-items: start;
+  padding: 20px 12px;
   background: #020617;
   border-bottom: 1px solid #1e293b;
 }
 
 .top-left {
-  min-width: 300px;
+  min-width: 0;
 }
 
 header h1 {
@@ -35,8 +35,9 @@ header p {
 
 .search {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .search input {
@@ -50,6 +51,7 @@ header p {
 
 .search button {
   padding: 10px 16px;
+  min-width: 78px;
   border: none;
   border-radius: 8px;
   background: #2563eb;
@@ -63,24 +65,22 @@ header p {
 }
 
 .timezone-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding-top: 2px;
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(95px, 1fr));
+  gap: 8px;
+  align-items: stretch;
 }
 
 .timezone-card {
-  min-width: 132px;
-  padding: 10px 14px;
+  min-width: 0;
+  padding: 10px 8px;
   border-radius: 14px;
   text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   border: 2px solid transparent;
   background: #12304a;
-  flex: 0 0 auto;
 }
 
 .local-card {
@@ -89,7 +89,7 @@ header p {
 }
 
 .hawaii-card {
-  border: 2px solid #a78bfa;
+  border-color: #a78bfa;
   box-shadow: 0 0 10px rgba(167, 139, 250, 0.35);
 }
 
@@ -114,31 +114,35 @@ header p {
 }
 
 .atlantic-card {
-  border: 2px solid #d4af37;
+  border-color: #d4af37;
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.35);
 }
 
 .newfoundland-card {
-  border: 2px solid #a855f7;
+  border-color: #a855f7;
   box-shadow: 0 0 10px rgba(168, 85, 247, 0.35);
 }
 
 .tz-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #e2e8f0;
   margin-bottom: 6px;
+  white-space: nowrap;
+  line-height: 1.1;
 }
 
 .tz-time {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   color: #ffffff;
+  white-space: nowrap;
+  line-height: 1.1;
 }
 
 #infoPanel {
-  width: 430px;
-  min-width: 430px;
+  width: 100%;
+  min-width: 0;
   background: #12304a;
   color: white;
   border-radius: 14px;
@@ -147,24 +151,24 @@ header p {
 }
 
 .info-title {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 14px;
 }
 
 .info-row {
   display: flex;
-  gap: 18px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
 .info-row-2 {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 #map {
   width: 100%;
-  height: calc(100vh - 170px);
+  height: calc(100vh - 160px);
   min-height: 500px;
 }
 
@@ -174,14 +178,32 @@ header p {
   line-height: 1.5;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1550px) {
   .top-section {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 280px minmax(0, 1fr) 360px;
   }
 
   .timezone-bar {
-    justify-content: flex-start;
+    grid-template-columns: repeat(8, minmax(85px, 1fr));
+  }
+
+  .tz-label {
+    font-size: 11px;
+  }
+
+  .tz-time {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .top-section {
+    grid-template-columns: 1fr;
+  }
+
+  .timezone-bar {
+    overflow-x: auto;
+    grid-template-columns: repeat(8, minmax(110px, 1fr));
   }
 
   #infoPanel {
@@ -201,7 +223,6 @@ header p {
   }
 
   .timezone-card {
-    min-width: 115px;
     padding: 10px 12px;
   }
 
