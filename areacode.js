@@ -35,6 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const alaskaTimeEl = getEl("alaskaTime");
   const hawaiiTimeEl = getEl("hawaiiTime");
   const atlanticTimeEl = getEl("atlanticTime");
+  const newfoundlandTimeEl = getEl("newfoundlandTime");
 
   if (!inputEl || !mapEl) {
     console.error("Missing required HTML elements.");
@@ -178,6 +179,7 @@ window.addEventListener("DOMContentLoaded", () => {
     setText(alaskaTimeEl, formatTimeForZone("America/Anchorage"));
     setText(hawaiiTimeEl, formatTimeForZone("Pacific/Honolulu"));
     setText(atlanticTimeEl, formatTimeForZone("America/Halifax"));
+    setText(newfoundlandTimeEl, formatTimeForZone("America/St_Johns"));
   }
 
   function getTimezoneColor(label) {
