@@ -113,6 +113,16 @@ header p {
   background: rgba(32, 199, 216, 0.16);
 }
 
+.atlantic-card {
+  border: 2px solid #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.35);
+}
+
+.newfoundland-card {
+  border: 2px solid #a855f7;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.35);
+}
+
 .tz-label {
   font-size: 13px;
   font-weight: 700;
