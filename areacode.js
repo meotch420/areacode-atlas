@@ -324,7 +324,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!map) return;
 
     if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
-      throw new Error("us_states.geojson is not a valid GeoJSON FeatureCollection");
+      throw new Error("timezones.geojson is not a valid GeoJSON FeatureCollection");
     }
 
     if (map.getLayer("timezones-outline")) map.removeLayer("timezones-outline");
