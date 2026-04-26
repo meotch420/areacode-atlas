@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
   const DATA_FILE = "area_code_data.json";
+  const COUNTRY_CODES_FILE = "country_codes.json";
   const TIMEZONES_FILE = "timezones.geojson";
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
@@ -139,8 +140,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let map = null;
   let mapReady = false;
-  let dataLoaded = false;
+
+  let areaDataLoaded = false;
+  let countryDataLoaded = false;
+
   let areaCodesByCode = {};
+  let countryCodes = [];
+
   let currentMarker = null;
 
   function formatLocalTime() {
@@ -326,7 +332,7 @@ window.addEventListener("DOMContentLoaded", () => {
     setText(infoTimezone, "-");
   }
 
-  function updateInfo(code, data) {
+  function updateAreaInfo(code, data) {
     if (!data) {
       clearInfo();
       return;
@@ -334,11 +340,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
     setText(infoAreaCode, code || "-");
     setText(infoCity, data.city || "-");
-    setText(infoState, data.state || "-");
+    setText(infoState, data.state || data.province || "-");
     setText(
       infoTimezone,
       data.timezone || getTimezoneLabelFromTzid(data.tzid) || "-"
     );
+  }
+
+  function updateCountryInfo(match) {
+    setText(infoAreaCode, match.matchedCode || "-");
+    setText(infoCity, match.country || "-");
+    setText(infoState, `${match.iso2 || "-"} / ${match.iso3 || "-"}`);
+    setText(infoTimezone, match.nanp ? "NANP: Yes" : "NANP: No");
   }
 
   function clearMarker() {
@@ -381,10 +394,26 @@ window.addEventListener("DOMContentLoaded", () => {
       alert(`Area code ${cleanCode} not found.`);
       clearInfo();
       clearMarker();
+      showSearchResultBox("No Match Found", [
+        ["Search", cleanCode],
+        ["Try", "Use an area code like 212 or a country code like +972"]
+      ]);
       return;
     }
 
-    updateInfo(cleanCode, item);
+    updateAreaInfo(cleanCode, item);
+
+    const countryInfo = getCountryInfoForAreaCode(cleanCode, item);
+
+    showSearchResultBox("Area Information", [
+      ["Area Code", cleanCode],
+      ["City", item.city || "N/A"],
+      ["State / Region", item.state || item.province || "N/A"],
+      ["Time Zone", item.timezone || getTimezoneLabelFromTzid(item.tzid) || "N/A"],
+      ["TZ ID", item.tzid || "N/A"],
+      ["Country", countryInfo.country],
+      ["Country Calling Code", countryInfo.callingCode]
+    ]);
 
     const lat = Number(item.lat);
     const lng = Number(item.lng);
@@ -398,20 +427,388 @@ window.addEventListener("DOMContentLoaded", () => {
     inputEl.value = cleanCode;
   }
 
-  function searchArea() {
-    if (!dataLoaded) {
-      alert("Data still loading.");
+  function searchAtlas() {
+    if (!areaDataLoaded) {
+      alert("Area code data still loading.");
       return;
     }
 
-    const input = inputEl.value.trim();
+    const rawInput = inputEl.value.trim();
 
-    if (!input) {
-      alert("Enter an area code.");
+    if (!rawInput) {
+      alert("Enter an area code or country code.");
       return;
     }
 
-    selectArea(input);
+    const cleanInput = removeSearchWords(rawInput);
+    const digitsOnly = cleanInput.replace(/\D/g, "");
+    const explicitCountrySearch = isExplicitCountrySearch(rawInput);
+
+    /*
+      Important:
+      - Plain 212 searches area code 212.
+      - Plain 972 searches area code 972 if it exists.
+      - To search a country code, use +972, 00972, or country 972.
+    */
+
+    if (explicitCountrySearch) {
+      const countryMatches = findCountryCodeMatches(rawInput);
+
+      if (countryMatches.length > 0) {
+        displayCountryCodeResult(rawInput, countryMatches);
+        return;
+      }
+
+      const possibleAreaCode = extractPossibleAreaCode(cleanInput);
+
+      if (possibleAreaCode && areaCodesByCode[possibleAreaCode]) {
+        selectArea(possibleAreaCode);
+        return;
+      }
+
+      showSearchResultBox("No Country Code Found", [
+        ["Search", rawInput],
+        ["Try", "Use +972, +44, +1-242, or country 972"]
+      ]);
+
+      clearMarker();
+      return;
+    }
+
+    if (digitsOnly.length === 3 && areaCodesByCode[digitsOnly]) {
+      selectArea(digitsOnly);
+      return;
+    }
+
+    const countryMatches = findCountryCodeMatches(rawInput);
+
+    if (countryMatches.length > 0) {
+      displayCountryCodeResult(rawInput, countryMatches);
+      return;
+    }
+
+    const possibleAreaCode = extractPossibleAreaCode(cleanInput);
+
+    if (possibleAreaCode && areaCodesByCode[possibleAreaCode]) {
+      selectArea(possibleAreaCode);
+      return;
+    }
+
+    showSearchResultBox("No Match Found", [
+      ["Search", rawInput],
+      ["Try Area Code", "212"],
+      ["Try Country Code", "+972"]
+    ]);
+
+    clearInfo();
+    clearMarker();
+  }
+
+  function removeSearchWords(value) {
+    return String(value)
+      .trim()
+      .replace(/^(country|calling|international|country code|calling code)\s+/i, "")
+      .trim();
+  }
+
+  function isExplicitCountrySearch(value) {
+    const text = String(value).trim().toLowerCase();
+
+    return (
+      text.startsWith("+") ||
+      text.startsWith("00") ||
+      text.startsWith("country ") ||
+      text.startsWith("country code ") ||
+      text.startsWith("calling ") ||
+      text.startsWith("calling code ") ||
+      text.startsWith("international ")
+    );
+  }
+
+  function findCountryCodeMatches(rawInput) {
+    if (!countryDataLoaded || !Array.isArray(countryCodes)) {
+      return [];
+    }
+
+    let search = removeSearchWords(rawInput);
+
+    if (search.startsWith("00")) {
+      search = "+" + search.slice(2);
+    }
+
+    const searchDigits = search.replace(/\D/g, "");
+
+    if (!searchDigits) return [];
+
+    const matches = [];
+
+    countryCodes.forEach((country) => {
+      const codes = country.calling_codes || [];
+
+      codes.forEach((code) => {
+        const codeDigits = String(code).replace(/\D/g, "");
+
+        if (codeDigits === searchDigits) {
+          matches.push({
+            ...country,
+            matchedCode: code
+          });
+        }
+      });
+    });
+
+    return matches;
+  }
+
+  function displayCountryCodeResult(rawInput, matches) {
+    clearMarker();
+
+    if (!matches || matches.length === 0) {
+      showSearchResultBox("No Country Code Found", [
+        ["Search", rawInput],
+        ["Try", "+972, +44, +1-242"]
+      ]);
+      return;
+    }
+
+    updateCountryInfo(matches[0]);
+
+    const rows = [];
+
+    rows.push(["Search", rawInput]);
+
+    matches.forEach((match, index) => {
+      const label = matches.length > 1 ? `Match ${index + 1}` : "Country";
+
+      rows.push([label, match.country || "N/A"]);
+      rows.push(["ISO 2", match.iso2 || "N/A"]);
+      rows.push(["ISO 3", match.iso3 || "N/A"]);
+      rows.push(["Calling Code", match.matchedCode || "N/A"]);
+      rows.push(["NANP", match.nanp ? "Yes" : "No"]);
+
+      if (index < matches.length - 1) {
+        rows.push(["---", "---"]);
+      }
+    });
+
+    showSearchResultBox("Country Code Information", rows);
+  }
+
+  function extractPossibleAreaCode(rawInput) {
+    const digits = String(rawInput).replace(/\D/g, "");
+
+    if (digits.length === 3) {
+      return digits;
+    }
+
+    /*
+      Allows:
+      +1-212
+      1-212
+      1212
+    */
+    if (digits.length === 4 && digits.startsWith("1")) {
+      return digits.slice(1);
+    }
+
+    /*
+      Allows:
+      2125551212
+      1-212-555-1212
+    */
+    if (digits.length === 10) {
+      return digits.slice(0, 3);
+    }
+
+    if (digits.length === 11 && digits.startsWith("1")) {
+      return digits.slice(1, 4);
+    }
+
+    return null;
+  }
+
+  function getCountryInfoForAreaCode(areaCode, data) {
+    const state = data.state || data.province || "";
+
+    const canadianRegions = [
+      "AB", "BC", "MB", "NB", "NL", "NS", "NT",
+      "NU", "ON", "PE", "QC", "SK", "YT"
+    ];
+
+    const usRegions = [
+      "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+      "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+      "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+      "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+      "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
+      "DC"
+    ];
+
+    const nanpCountryByAreaCode = {
+      "242": "Bahamas",
+      "246": "Barbados",
+      "264": "Anguilla",
+      "268": "Antigua and Barbuda",
+      "284": "British Virgin Islands",
+      "340": "United States Virgin Islands",
+      "345": "Cayman Islands",
+      "441": "Bermuda",
+      "473": "Grenada",
+      "649": "Turks and Caicos Islands",
+      "658": "Jamaica",
+      "664": "Montserrat",
+      "670": "Northern Mariana Islands",
+      "671": "Guam",
+      "684": "American Samoa",
+      "721": "Sint Maarten",
+      "758": "Saint Lucia",
+      "767": "Dominica",
+      "784": "Saint Vincent and the Grenadines",
+      "787": "Puerto Rico",
+      "809": "Dominican Republic",
+      "829": "Dominican Republic",
+      "849": "Dominican Republic",
+      "868": "Trinidad and Tobago",
+      "869": "Saint Kitts and Nevis",
+      "876": "Jamaica",
+      "939": "Puerto Rico"
+    };
+
+    if (nanpCountryByAreaCode[areaCode]) {
+      return {
+        country: nanpCountryByAreaCode[areaCode],
+        callingCode: "+1-" + areaCode
+      };
+    }
+
+    if (canadianRegions.includes(state)) {
+      return {
+        country: "Canada",
+        callingCode: "+1"
+      };
+    }
+
+    if (usRegions.includes(state)) {
+      return {
+        country: "United States",
+        callingCode: "+1"
+      };
+    }
+
+    return {
+      country: data.country || "NANP Region",
+      callingCode: "+1"
+    };
+  }
+
+  function escapeHTML(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function injectSearchResultStyles() {
+    if (document.getElementById("atlasSearchResultStyles")) return;
+
+    const style = document.createElement("style");
+    style.id = "atlasSearchResultStyles";
+
+    style.textContent = `
+      #atlasSearchResultBox {
+        margin-top: 14px;
+        padding: 14px;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        background: #0f172a;
+        color: #e5e7eb;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+        max-width: 420px;
+      }
+
+      .atlas-result-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #ffffff;
+        text-align: center;
+      }
+
+      .atlas-result-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
+      .atlas-result-row:last-child {
+        border-bottom: none;
+      }
+
+      .atlas-result-label {
+        font-weight: 700;
+        color: #93c5fd;
+        white-space: nowrap;
+      }
+
+      .atlas-result-value {
+        color: #f8fafc;
+        text-align: right;
+        word-break: break-word;
+      }
+
+      .atlas-result-divider {
+        border: none;
+        border-top: 1px solid #475569;
+        margin: 10px 0;
+      }
+    `;
+
+    document.head.appendChild(style);
+  }
+
+  function showSearchResultBox(title, rows) {
+    let resultBox = document.getElementById("atlasSearchResultBox");
+
+    if (!resultBox) {
+      resultBox = document.createElement("div");
+      resultBox.id = "atlasSearchResultBox";
+
+      const parent =
+        document.getElementById("areaInfo") ||
+        document.querySelector(".area-info") ||
+        document.querySelector(".info-panel") ||
+        document.querySelector(".info-card") ||
+        document.querySelector(".top-right") ||
+        document.querySelector(".details-card") ||
+        document.querySelector(".top-section") ||
+        document.body;
+
+      parent.appendChild(resultBox);
+    }
+
+    let html = `<div class="atlas-result-title">${escapeHTML(title)}</div>`;
+
+    rows.forEach((row) => {
+      const label = row[0];
+      const value = row[1];
+
+      if (label === "---") {
+        html += `<hr class="atlas-result-divider" />`;
+      } else {
+        html += `
+          <div class="atlas-result-row">
+            <span class="atlas-result-label">${escapeHTML(label)}:</span>
+            <span class="atlas-result-value">${escapeHTML(value)}</span>
+          </div>
+        `;
+      }
+    });
+
+    resultBox.innerHTML = html;
   }
 
   function isWaterOnlyTimezoneFeature(feature) {
@@ -556,10 +953,36 @@ window.addEventListener("DOMContentLoaded", () => {
         areaCodesByCode[String(code).trim()] = codes[code];
       });
 
-      dataLoaded = true;
+      areaDataLoaded = true;
       console.log("Loaded area codes:", Object.keys(areaCodesByCode).length);
     } catch (err) {
       console.error("Area code data load error:", err);
+    }
+  }
+
+  async function loadCountryCodeData() {
+    try {
+      const res = await fetch(`${COUNTRY_CODES_FILE}?v=${Date.now()}`);
+
+      if (!res.ok) {
+        throw new Error(`Failed to load ${COUNTRY_CODES_FILE}: ${res.status}`);
+      }
+
+      const data = await res.json();
+
+      countryCodes = data.countries || [];
+      countryDataLoaded = true;
+
+      console.log("Loaded country codes:", countryCodes.length);
+    } catch (err) {
+      countryCodes = [];
+      countryDataLoaded = false;
+      console.error("Country code data load error:", err);
+
+      showSearchResultBox("Country Codes Not Loaded", [
+        ["Missing File", COUNTRY_CODES_FILE],
+        ["Fix", "Upload country_codes.json into the same folder as index.html"]
+      ]);
     }
   }
 
@@ -591,7 +1014,11 @@ window.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  injectSearchResultStyles();
+
   loadAreaCodeData();
+  loadCountryCodeData();
+
   clearInfo();
   updateAllClocks();
   setInterval(updateAllClocks, 1000);
@@ -599,478 +1026,14 @@ window.addEventListener("DOMContentLoaded", () => {
   if (formEl) {
     formEl.addEventListener("submit", (e) => {
       e.preventDefault();
-      searchArea();
+      searchAtlas();
     });
   }
 
   if (!formEl && buttonEl) {
     buttonEl.addEventListener("click", (e) => {
       e.preventDefault();
-      searchArea();
+      searchAtlas();
     });
   }
 });
-
-/* =========================================================
-   AREA CODE ATLAS — COUNTRY CODE SEARCH ADD-ON
-   Loads:
-   1. area_code_data.json
-   2. country_codes.json
-
-   Search examples:
-   212        = area code search
-   +972       = Israel country code
-   972        = Israel country code
-   +1-242     = Bahamas country code
-   1242       = Bahamas country code
-   ========================================================= */
-
-let AREA_CODES = {};
-let COUNTRY_CODES = [];
-let COUNTRY_CODE_LOOKUP = {};
-let atlasDataLoaded = false;
-
-/* ---------- LOAD BOTH JSON FILES ---------- */
-async function loadAtlasSearchData() {
-  try {
-    const areaResponse = await fetch("area_code_data.json");
-    const areaData = await areaResponse.json();
-
-    AREA_CODES = areaData.area_codes || {};
-
-    const countryResponse = await fetch("country_codes.json");
-    const countryData = await countryResponse.json();
-
-    COUNTRY_CODES = countryData.countries || [];
-    COUNTRY_CODE_LOOKUP = countryData.lookup_by_calling_code || {};
-
-    atlasDataLoaded = true;
-
-    console.log("Area codes loaded:", Object.keys(AREA_CODES).length);
-    console.log("Country codes loaded:", COUNTRY_CODES.length);
-  } catch (error) {
-    console.error("Error loading JSON files:", error);
-    showAtlasResult("Error", [
-      ["Problem", "Could not load area_code_data.json or country_codes.json"],
-      ["Check", "Make sure both files are uploaded in the same folder as index.html"]
-    ]);
-  }
-}
-
-/* ---------- START WHEN PAGE IS READY ---------- */
-function atlasReady(callback) {
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", callback);
-  } else {
-    callback();
-  }
-}
-
-atlasReady(async function () {
-  injectAtlasResultStyles();
-  await loadAtlasSearchData();
-  setupUnifiedSearch();
-});
-
-/* ---------- SEARCH SETUP ---------- */
-function setupUnifiedSearch() {
-  const form = document.getElementById("searchForm");
-  const input = document.getElementById("areaSearch");
-
-  if (!form || !input) {
-    console.error("Missing searchForm or areaSearch in HTML.");
-    return;
-  }
-
-  form.addEventListener(
-    "submit",
-    function (event) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-
-      const rawSearch = input.value.trim();
-
-      if (!rawSearch) {
-        showAtlasResult("Search Error", [["Message", "Enter an area code or country code."]]);
-        return;
-      }
-
-      runUnifiedSearch(rawSearch);
-    },
-    true
-  );
-}
-
-/* ---------- MAIN SEARCH LOGIC ---------- */
-function runUnifiedSearch(rawSearch) {
-  if (!atlasDataLoaded) {
-    showAtlasResult("Loading", [["Message", "Data is still loading. Try again."]]);
-    return;
-  }
-
-  const digitsOnly = rawSearch.replace(/\D/g, "");
-  const hasPlus = rawSearch.includes("+");
-  const startsWithInternationalPrefix = rawSearch.startsWith("00");
-
-  /*
-    Priority:
-    1. If user types + or 00, treat it as country code first.
-    2. If user types 3 digits and it exists as an area code, show area code.
-    3. Otherwise try country code.
-  */
-
-  if (hasPlus || startsWithInternationalPrefix) {
-    const countryMatches = findCountryCodeMatches(rawSearch);
-
-    if (countryMatches.length > 0) {
-      displayCountryCodeResult(rawSearch, countryMatches);
-      return;
-    }
-
-    const possibleAreaCode = extractPossibleAreaCode(rawSearch);
-    if (possibleAreaCode && AREA_CODES[possibleAreaCode]) {
-      displayAreaCodeResult(possibleAreaCode, AREA_CODES[possibleAreaCode]);
-      return;
-    }
-  }
-
-  if (digitsOnly.length === 3 && AREA_CODES[digitsOnly]) {
-    displayAreaCodeResult(digitsOnly, AREA_CODES[digitsOnly]);
-    return;
-  }
-
-  const countryMatches = findCountryCodeMatches(rawSearch);
-
-  if (countryMatches.length > 0) {
-    displayCountryCodeResult(rawSearch, countryMatches);
-    return;
-  }
-
-  const possibleAreaCode = extractPossibleAreaCode(rawSearch);
-
-  if (possibleAreaCode && AREA_CODES[possibleAreaCode]) {
-    displayAreaCodeResult(possibleAreaCode, AREA_CODES[possibleAreaCode]);
-    return;
-  }
-
-  showAtlasResult("No Match Found", [
-    ["Search", rawSearch],
-    ["Try", "Use an area code like 212 or a country code like +972"]
-  ]);
-}
-
-/* ---------- AREA CODE RESULT ---------- */
-function displayAreaCodeResult(areaCode, data) {
-  const countryInfo = getCountryInfoForAreaCode(areaCode, data);
-
-  showAtlasResult("Area Information", [
-    ["Area Code", areaCode],
-    ["City", data.city || "N/A"],
-    ["State / Region", data.state || data.province || "N/A"],
-    ["Time Zone", data.timezone || "N/A"],
-    ["TZ ID", data.tzid || "N/A"],
-    ["Country", countryInfo.country],
-    ["Country Calling Code", countryInfo.callingCode]
-  ]);
-
-  focusMapOnArea(data);
-}
-
-/* ---------- COUNTRY CODE RESULT ---------- */
-function displayCountryCodeResult(rawSearch, matches) {
-  const rows = [];
-
-  rows.push(["Search", rawSearch]);
-
-  matches.forEach(function (match, index) {
-    const number = matches.length > 1 ? `Match ${index + 1}` : "Country";
-
-    rows.push([number, match.country]);
-    rows.push(["ISO 2", match.iso2 || "N/A"]);
-    rows.push(["ISO 3", match.iso3 || "N/A"]);
-    rows.push(["Calling Code", match.matchedCode || match.calling_codes?.join(", ") || "N/A"]);
-    rows.push(["NANP", match.nanp ? "Yes" : "No"]);
-
-    if (index < matches.length - 1) {
-      rows.push(["---", "---"]);
-    }
-  });
-
-  showAtlasResult("Country Code Information", rows);
-}
-
-/* ---------- FIND COUNTRY CODE MATCHES ---------- */
-function findCountryCodeMatches(rawSearch) {
-  let search = rawSearch.trim();
-
-  if (search.startsWith("00")) {
-    search = "+" + search.slice(2);
-  }
-
-  const searchDigits = search.replace(/\D/g, "");
-
-  if (!searchDigits) return [];
-
-  const matches = [];
-
-  COUNTRY_CODES.forEach(function (country) {
-    const codes = country.calling_codes || [];
-
-    codes.forEach(function (code) {
-      const codeDigits = code.replace(/\D/g, "");
-
-      if (codeDigits === searchDigits) {
-        matches.push({
-          ...country,
-          matchedCode: code
-        });
-      }
-    });
-  });
-
-  return matches;
-}
-
-/* ---------- EXTRACT AREA CODE FROM SEARCH ---------- */
-function extractPossibleAreaCode(rawSearch) {
-  const digits = rawSearch.replace(/\D/g, "");
-
-  if (digits.length === 3) {
-    return digits;
-  }
-
-  /*
-    Allows searches like:
-    +1-212
-    1212
-    1 212
-  */
-  if (digits.length === 4 && digits.startsWith("1")) {
-    return digits.slice(1);
-  }
-
-  return null;
-}
-
-/* ---------- COUNTRY INFO FOR NANP AREA CODES ---------- */
-function getCountryInfoForAreaCode(areaCode, data) {
-  const state = data.state || data.province || "";
-
-  const canadianRegions = [
-    "AB", "BC", "MB", "NB", "NL", "NS", "NT",
-    "NU", "ON", "PE", "QC", "SK", "YT"
-  ];
-
-  const usRegions = [
-    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
-    "DC"
-  ];
-
-  const nanpCountryByAreaCode = {
-    "242": "Bahamas",
-    "246": "Barbados",
-    "264": "Anguilla",
-    "268": "Antigua and Barbuda",
-    "284": "British Virgin Islands",
-    "340": "United States Virgin Islands",
-    "345": "Cayman Islands",
-    "441": "Bermuda",
-    "473": "Grenada",
-    "649": "Turks and Caicos Islands",
-    "658": "Jamaica",
-    "664": "Montserrat",
-    "670": "Northern Mariana Islands",
-    "671": "Guam",
-    "684": "American Samoa",
-    "721": "Sint Maarten",
-    "758": "Saint Lucia",
-    "767": "Dominica",
-    "784": "Saint Vincent and the Grenadines",
-    "787": "Puerto Rico",
-    "809": "Dominican Republic",
-    "829": "Dominican Republic",
-    "849": "Dominican Republic",
-    "868": "Trinidad and Tobago",
-    "869": "Saint Kitts and Nevis",
-    "876": "Jamaica",
-    "939": "Puerto Rico"
-  };
-
-  if (nanpCountryByAreaCode[areaCode]) {
-    return {
-      country: nanpCountryByAreaCode[areaCode],
-      callingCode: "+1-" + areaCode
-    };
-  }
-
-  if (canadianRegions.includes(state)) {
-    return {
-      country: "Canada",
-      callingCode: "+1"
-    };
-  }
-
-  if (usRegions.includes(state)) {
-    return {
-      country: "United States",
-      callingCode: "+1"
-    };
-  }
-
-  return {
-    country: data.country || "NANP Region",
-    callingCode: "+1"
-  };
-}
-
-/* ---------- MAP FOCUS ---------- */
-function focusMapOnArea(data) {
-  if (!data || data.lat === undefined || data.lng === undefined) return;
-
-  const lat = Number(data.lat);
-  const lng = Number(data.lng);
-
-  if (Number.isNaN(lat) || Number.isNaN(lng)) return;
-
-  try {
-    /*
-      Works with MapTiler SDK / MapLibre style maps.
-    */
-    if (typeof map !== "undefined" && map.flyTo) {
-      map.flyTo({
-        center: [lng, lat],
-        zoom: 8,
-        speed: 1.2,
-        essential: true
-      });
-      return;
-    }
-
-    /*
-      Works with Leaflet maps.
-    */
-    if (typeof map !== "undefined" && map.setView) {
-      map.setView([lat, lng], 8);
-      return;
-    }
-  } catch (error) {
-    console.warn("Map focus skipped:", error);
-  }
-}
-
-/* ---------- DISPLAY RESULT BOX ---------- */
-function showAtlasResult(title, rows) {
-  let resultBox = document.getElementById("atlasUnifiedResult");
-
-  if (!resultBox) {
-    resultBox = document.createElement("div");
-    resultBox.id = "atlasUnifiedResult";
-
-    const parent =
-      document.getElementById("areaInfo") ||
-      document.querySelector(".area-info") ||
-      document.querySelector(".info-panel") ||
-      document.querySelector(".info-card") ||
-      document.querySelector(".top-right") ||
-      document.querySelector(".details-card") ||
-      document.querySelector(".top-section") ||
-      document.body;
-
-    parent.appendChild(resultBox);
-  }
-
-  let html = `<div class="atlas-result-title">${escapeHTML(title)}</div>`;
-
-  rows.forEach(function (row) {
-    const label = row[0];
-    const value = row[1];
-
-    if (label === "---") {
-      html += `<hr class="atlas-result-divider" />`;
-    } else {
-      html += `
-        <div class="atlas-result-row">
-          <span class="atlas-result-label">${escapeHTML(label)}:</span>
-          <span class="atlas-result-value">${escapeHTML(value)}</span>
-        </div>
-      `;
-    }
-  });
-
-  resultBox.innerHTML = html;
-}
-
-/* ---------- BASIC HTML ESCAPE ---------- */
-function escapeHTML(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-/* ---------- RESULT BOX STYLES ---------- */
-function injectAtlasResultStyles() {
-  if (document.getElementById("atlasResultStyles")) return;
-
-  const style = document.createElement("style");
-  style.id = "atlasResultStyles";
-
-  style.textContent = `
-    #atlasUnifiedResult {
-      margin-top: 14px;
-      padding: 14px;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      background: #0f172a;
-      color: #e5e7eb;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-      max-width: 420px;
-    }
-
-    .atlas-result-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #ffffff;
-      text-align: center;
-    }
-
-    .atlas-result-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-    }
-
-    .atlas-result-row:last-child {
-      border-bottom: none;
-    }
-
-    .atlas-result-label {
-      font-weight: 700;
-      color: #93c5fd;
-      white-space: nowrap;
-    }
-
-    .atlas-result-value {
-      color: #f8fafc;
-      text-align: right;
-      word-break: break-word;
-    }
-
-    .atlas-result-divider {
-      border: none;
-      border-top: 1px solid #475569;
-      margin: 10px 0;
-    }
-  `;
-
-  document.head.appendChild(style);
-}
