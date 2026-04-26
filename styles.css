@@ -2,37 +2,24 @@
   box-sizing: border-box;
 }
 
-html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
+html,
 body {
   margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   font-family: Arial, sans-serif;
   background: #0f172a;
-  color: #ffffff;
+  color: white;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-/* =========================
-   TOP SECTION
-========================= */
-
+/* MAIN TOP SECTION */
 .top-section {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr) 340px;
+  grid-template-columns: 300px minmax(0, 1fr) 360px;
   gap: 16px;
-  align-items: stretch;
-  padding: 18px 14px;
+  align-items: start;
+  padding: 20px 12px 30px;
   background: #020617;
   border-bottom: 1px solid #1e293b;
 }
@@ -44,49 +31,37 @@ body {
 header h1 {
   margin: 0 0 6px 0;
   font-size: 2rem;
-  line-height: 1.1;
-  color: #ffffff;
 }
 
 header p {
   margin: 0 0 16px 0;
   color: #cbd5e1;
-  font-size: 0.95rem;
 }
 
-/* =========================
-   SEARCH BOX
-========================= */
-
+/* SEARCH BOX */
 .search {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 10px;
 }
 
 .search input {
-  width: 220px;
   padding: 10px 12px;
+  width: 230px;
   border: 1px solid #334155;
   border-radius: 8px;
   background: #e2e8f0;
   color: #0f172a;
   font-size: 1rem;
-  outline: none;
-}
-
-.search input:focus {
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
 }
 
 .search button {
-  padding: 10px 18px;
+  padding: 10px 14px;
+  width: 120px;
   border: none;
   border-radius: 8px;
   background: #2563eb;
-  color: #ffffff;
+  color: white;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -100,432 +75,497 @@ header p {
   margin-top: 12px;
   color: #94a3b8;
   font-size: 0.9rem;
-  line-height: 1.4;
 }
 
-/* =========================
-   TIME ZONE BOX AREA
-   4 rows x 7 boxes = 28 boxes
-========================= */
+/* TIME ZONE BOX AREA */
+.timezone-section,
+.timezone-bar,
+.timezone-grid {
+  width: 100%;
+}
 
-.timezone-bar {
-  position: relative;
+.timezone-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(4, auto);
+  grid-template-columns: repeat(7, minmax(105px, 1fr));
   gap: 10px;
-  align-content: center;
-  padding: 34px 10px;
-  min-height: 360px;
-}
-
-.timezone-bar::before,
-.timezone-bar::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #334155;
-}
-
-.timezone-bar::before {
-  top: 18px;
-}
-
-.timezone-bar::after {
-  bottom: 18px;
+  padding: 0 0 14px;
 }
 
 .timezone-card {
-  min-height: 72px;
-  padding: 9px 6px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  min-height: 58px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #1e293b;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  text-align: center;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
 }
 
 .tz-label {
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 6px;
-  line-height: 1.1;
+  color: #e2e8f0;
+  margin-bottom: 4px;
+  text-align: center;
 }
 
 .tz-time {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: bold;
-  white-space: nowrap;
+  color: white;
 }
 
-/* =========================
-   TIME ZONE BOX COLORS
-========================= */
-
+/* TIME ZONE COLORS */
 .local-card {
   background: #334155;
-  color: #ffffff;
 }
 
-.line-islands-card {
-  background: #0ea5e9;
-  color: #ffffff;
+.utc-card {
+  background: #475569;
 }
 
-.tonga-card {
-  background: #0284c7;
-  color: #ffffff;
-}
-
-.new-zealand-card {
-  background: #0369a1;
-  color: #ffffff;
-}
-
-.solomon-card {
-  background: #075985;
-  color: #ffffff;
-}
-
-.australia-card {
-  background: #2563eb;
-  color: #ffffff;
-}
-
-.japan-card {
-  background: #1d4ed8;
-  color: #ffffff;
-}
-
-.china-card {
-  background: #1e40af;
-  color: #ffffff;
-}
-
-.indochina-card {
-  background: #3730a3;
-  color: #ffffff;
-}
-
-.bangladesh-card {
-  background: #4f46e5;
-  color: #ffffff;
-}
-
-.pakistan-card {
-  background: #7c3aed;
-  color: #ffffff;
-}
-
-.gulf-card {
-  background: #9333ea;
-  color: #ffffff;
-}
-
-.east-africa-card {
-  background: #a855f7;
-  color: #ffffff;
-}
-
-.central-africa-card {
-  background: #c026d3;
-  color: #ffffff;
-}
-
-.central-europe-card {
-  background: #db2777;
-  color: #ffffff;
-}
-
-.greenwich-card {
-  background: #e11d48;
-  color: #ffffff;
-}
-
-.azores-card {
-  background: #dc2626;
-  color: #ffffff;
-}
-
-.south-georgia-card {
-  background: #ea580c;
-  color: #ffffff;
-}
-
-.argentina-card {
-  background: #f97316;
-  color: #111827;
+.newfoundland-card {
+  background: #a16207;
 }
 
 .atlantic-card {
-  background: #d97706;
-  color: #ffffff;
+  background: #7c3aed;
 }
 
 .eastern-card {
   background: #2563eb;
-  color: #ffffff;
 }
 
 .central-card {
-  background: #16a34a;
-  color: #ffffff;
+  background: #0369a1;
 }
 
 .mountain-card {
-  background: #f59e0b;
-  color: #111827;
+  background: #0e7490;
 }
 
 .pacific-card {
-  background: #dc2626;
-  color: #ffffff;
+  background: #0891b2;
 }
 
 .alaska-card {
-  background: #0891b2;
-  color: #ffffff;
+  background: #0f766e;
 }
 
 .hawaii-card {
-  background: #9333ea;
-  color: #ffffff;
-}
-
-.samoa-card {
   background: #64748b;
-  color: #ffffff;
 }
 
-.baker-card {
-  background: #475569;
-  color: #ffffff;
-}
-
-/* =========================
-   AREA INFORMATION BOX
-========================= */
-
-.area-info,
-.area-info-box,
-.info-panel {
-  background: #020617;
+/* AREA INFORMATION PANEL */
+.info-panel,
+.area-info {
+  padding: 18px;
   border: 1px solid #334155;
   border-radius: 14px;
-  padding: 14px;
-  min-height: 150px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  background: #020617;
+  min-height: 170px;
 }
 
-.area-info h2,
-.area-info-box h2,
-.info-panel h2 {
-  margin: 0 0 12px 0;
+.info-panel h2,
+.area-info h2 {
+  margin: 0 0 16px;
   text-align: center;
-  font-size: 1.55rem;
-  color: #ffffff;
+  font-size: 1.6rem;
 }
 
 .info-row {
-  display: grid;
-  grid-template-columns: 95px 1fr;
-  gap: 8px;
-  padding: 6px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
   border-bottom: 1px solid #1e293b;
 }
 
-.info-row:last-child {
-  border-bottom: none;
-}
-
-.info-label {
+.info-row span {
   color: #94a3b8;
-  font-weight: bold;
-  font-size: 0.9rem;
 }
 
-.info-value {
-  color: #ffffff;
-  font-size: 0.95rem;
+.info-row strong {
+  color: white;
+  text-align: right;
 }
 
-/* =========================
-   MAIN MAP AREA
-   This makes the page longer
-   so you can scroll down
-========================= */
-
+/* GLOBE / MAP AREA */
 main {
   width: 100%;
+  min-height: 1050px;
+  padding: 12px 12px 180px;
   background: #0f172a;
-  padding: 0;
-  margin: 0;
 }
-
-/* This is the main fix.
-   Do NOT use calc(100vh - 390px).
-   A fixed tall map lets the page scroll. */
 
 #map {
   width: 100%;
-  height: 820px;
-  min-height: 820px;
+  height: 860px;
+  min-height: 860px;
+  border-radius: 0;
   background: #0f172a;
 }
 
-/* =========================
-   BOTTOM AD AREA
-========================= */
+/* EXTRA SCROLL SPACE BELOW MAP */
+.map-spacer {
+  height: 180px;
+}
 
+/* ADVERTISEMENT SECTION */
 .bottom-ads {
   width: 100%;
-  min-height: 240px;
-  padding: 28px 18px 40px;
+  min-height: 340px;
+  padding: 45px 20px 160px;
   background: #020617;
   border-top: 1px solid #1e293b;
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  align-items: center;
 }
 
 .ad-box {
-  width: min(970px, 100%);
-  height: 120px;
-  border: 2px dashed #475569;
-  border-radius: 14px;
-  background: #111827;
+  width: 100%;
+  max-width: 970px;
+  min-height: 130px;
+  border: 2px dashed #64748b;
+  border-radius: 16px;
   color: #94a3b8;
+  background: rgba(15, 23, 42, 0.85);
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
   font-size: 1rem;
   font-weight: bold;
 }
 
-/* =========================
-   MAP POPUPS
-========================= */
-
-.maptiler-popup-content,
-.maplibregl-popup-content {
-  background: #020617;
-  color: #ffffff;
-  border-radius: 10px;
-  border: 1px solid #334155;
-  padding: 10px;
-}
-
-.maptiler-popup-tip,
-.maplibregl-popup-tip {
-  border-top-color: #020617;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 1400px) {
-  .top-section {
-    grid-template-columns: 260px minmax(0, 1fr) 300px;
-  }
-
-  .timezone-card {
-    min-height: 68px;
-    padding: 8px 5px;
-  }
-
-  .tz-label {
-    font-size: 0.62rem;
-  }
-
-  .tz-time {
-    font-size: 0.82rem;
-  }
-
-  #map {
-    height: 780px;
-    min-height: 780px;
-  }
-}
-
+/* MOBILE / SMALL SCREEN FIX */
 @media (max-width: 1100px) {
   .top-section {
     grid-template-columns: 1fr;
   }
 
-  .timezone-bar {
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(4, auto);
-    min-height: 340px;
+  .timezone-grid {
+    grid-template-columns: repeat(4, minmax(105px, 1fr));
   }
 
-  #map {
-    height: 720px;
-    min-height: 720px;
-  }
-}
-
-@media (max-width: 850px) {
-  .timezone-bar {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
-    min-height: auto;
-  }
-
-  #map {
-    height: 680px;
-    min-height: 680px;
-  }
-}
-
-@media (max-width: 600px) {
-  .top-section {
-    padding: 14px 10px;
-  }
-
-  header h1 {
-    font-size: 1.65rem;
-  }
-
-  .search {
+  .info-panel,
+  .area-info {
     width: 100%;
+  }
+
+  #map {
+    height: 760px;
+    min-height: 760px;
+  }
+}
+
+@media (max-width: 700px) {
+  .timezone-grid {
+    grid-template-columns: repeat(2, minmax(105px, 1fr));
   }
 
   .search input {
     width: 100%;
   }
 
-  .timezone-bar {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 32px 0;
-  }
-
-  .timezone-card {
-    min-height: 68px;
-  }
-
-  .tz-time {
-    font-size: 0.9rem;
+  main {
+    min-height: 900px;
+    padding-bottom: 140px;
   }
 
   #map {
-    height: 620px;
-    min-height: 620px;
+    height: 680px;
+    min-height: 680px;
   }
 
   .bottom-ads {
-    min-height: 220px;
-    padding: 24px 12px 34px;
+    min-height: 280px;
+    padding-bottom: 120px;
+  }
+}* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* MAIN TOP SECTION */
+.top-section {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 360px;
+  gap: 16px;
+  align-items: start;
+  padding: 20px 12px 30px;
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
+}
+
+.top-left {
+  min-width: 0;
+}
+
+header h1 {
+  margin: 0 0 6px 0;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 0 0 16px 0;
+  color: #cbd5e1;
+}
+
+/* SEARCH BOX */
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search input {
+  padding: 10px 12px;
+  width: 230px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.search button {
+  padding: 10px 14px;
+  width: 120px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search button:hover {
+  background: #1d4ed8;
+}
+
+.status-message {
+  margin-top: 12px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* TIME ZONE BOX AREA */
+.timezone-section,
+.timezone-bar,
+.timezone-grid {
+  width: 100%;
+}
+
+.timezone-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(105px, 1fr));
+  gap: 10px;
+  padding: 0 0 14px;
+}
+
+.timezone-card {
+  min-height: 58px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tz-label {
+  font-size: 0.78rem;
+  font-weight: bold;
+  color: #e2e8f0;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.tz-time {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* TIME ZONE COLORS */
+.local-card {
+  background: #334155;
+}
+
+.utc-card {
+  background: #475569;
+}
+
+.newfoundland-card {
+  background: #a16207;
+}
+
+.atlantic-card {
+  background: #7c3aed;
+}
+
+.eastern-card {
+  background: #2563eb;
+}
+
+.central-card {
+  background: #0369a1;
+}
+
+.mountain-card {
+  background: #0e7490;
+}
+
+.pacific-card {
+  background: #0891b2;
+}
+
+.alaska-card {
+  background: #0f766e;
+}
+
+.hawaii-card {
+  background: #64748b;
+}
+
+/* AREA INFORMATION PANEL */
+.info-panel,
+.area-info {
+  padding: 18px;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  background: #020617;
+  min-height: 170px;
+}
+
+.info-panel h2,
+.area-info h2 {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #1e293b;
+}
+
+.info-row span {
+  color: #94a3b8;
+}
+
+.info-row strong {
+  color: white;
+  text-align: right;
+}
+
+/* GLOBE / MAP AREA */
+main {
+  width: 100%;
+  min-height: 1050px;
+  padding: 12px 12px 180px;
+  background: #0f172a;
+}
+
+#map {
+  width: 100%;
+  height: 860px;
+  min-height: 860px;
+  border-radius: 0;
+  background: #0f172a;
+}
+
+/* EXTRA SCROLL SPACE BELOW MAP */
+.map-spacer {
+  height: 180px;
+}
+
+/* ADVERTISEMENT SECTION */
+.bottom-ads {
+  width: 100%;
+  min-height: 340px;
+  padding: 45px 20px 160px;
+  background: #020617;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.ad-box {
+  width: 100%;
+  max-width: 970px;
+  min-height: 130px;
+  border: 2px dashed #64748b;
+  border-radius: 16px;
+  color: #94a3b8;
+  background: rgba(15, 23, 42, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* MOBILE / SMALL SCREEN FIX */
+@media (max-width: 1100px) {
+  .top-section {
+    grid-template-columns: 1fr;
   }
 
-  .ad-box {
-    height: 110px;
+  .timezone-grid {
+    grid-template-columns: repeat(4, minmax(105px, 1fr));
+  }
+
+  .info-panel,
+  .area-info {
+    width: 100%;
+  }
+
+  #map {
+    height: 760px;
+    min-height: 760px;
+  }
+}
+
+@media (max-width: 700px) {
+  .timezone-grid {
+    grid-template-columns: repeat(2, minmax(105px, 1fr));
+  }
+
+  .search input {
+    width: 100%;
+  }
+
+  main {
+    min-height: 900px;
+    padding-bottom: 140px;
+  }
+
+  #map {
+    height: 680px;
+    min-height: 680px;
+  }
+
+  .bottom-ads {
+    min-height: 280px;
+    padding-bottom: 120px;
   }
 }
