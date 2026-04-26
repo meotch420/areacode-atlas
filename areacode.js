@@ -3,6 +3,8 @@
    Fixes:
    - Loads area_code_data.json correctly
    - Reads area codes from data.area_codes
+   - Matches colors for the time zone boxes
+   - Removes duplicate zoom/navigation buttons
    - Removes the left-side "+44 found..." message
    - Country-code searches populate Country, Country Code, Time Zone
    - City and State / Region stay blank for country-code searches
@@ -28,7 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
     center: [-40, 25],
     zoom: 1.7,
-    projection: "globe"
+    projection: "globe",
+    navigationControl: false,
+    geolocateControl: false
   });
 
   map.addControl(new maptilersdk.NavigationControl(), "top-right");
@@ -344,41 +348,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const COUNTRY_CODE_PRIORITY_WITHOUT_PLUS = new Set(["972"]);
 
   /* =====================================================
-     TIME ZONE BOXES
+     TIME ZONE BOXES WITH COLORS
   ===================================================== */
 
   const TIME_ZONES = [
-    { key: "hawaii", label: "HAWAII", tz: "Pacific/Honolulu", center: [-157.8583, 21.3069], zoom: 4 },
-    { key: "alaska", label: "ALASKA", tz: "America/Anchorage", center: [-149.9003, 61.2181], zoom: 4 },
-    { key: "pacific", label: "PACIFIC", tz: "America/Los_Angeles", center: [-118.2437, 34.0522], zoom: 4 },
-    { key: "mountain", label: "MOUNTAIN", tz: "America/Denver", center: [-104.9903, 39.7392], zoom: 4 },
-    { key: "central", label: "CENTRAL", tz: "America/Chicago", center: [-87.6298, 41.8781], zoom: 4 },
-    { key: "eastern", label: "EASTERN", tz: "America/New_York", center: [-74.006, 40.7128], zoom: 4 },
-    { key: "atlantic", label: "ATLANTIC", tz: "America/Halifax", center: [-63.5752, 44.6488], zoom: 5 },
+    { key: "hawaii", label: "HAWAII", tz: "Pacific/Honolulu", center: [-157.8583, 21.3069], zoom: 4, color: "#8a2fd6" },
+    { key: "alaska", label: "ALASKA", tz: "America/Anchorage", center: [-149.9003, 61.2181], zoom: 4, color: "#138aa0" },
+    { key: "pacific", label: "PACIFIC", tz: "America/Los_Angeles", center: [-118.2437, 34.0522], zoom: 4, color: "#e62d2d" },
+    { key: "mountain", label: "MOUNTAIN", tz: "America/Denver", center: [-104.9903, 39.7392], zoom: 4, color: "#f59e0b", darkText: true },
+    { key: "central", label: "CENTRAL", tz: "America/Chicago", center: [-87.6298, 41.8781], zoom: 4, color: "#18b95f" },
+    { key: "eastern", label: "EASTERN", tz: "America/New_York", center: [-74.006, 40.7128], zoom: 4, color: "#3478ea" },
+    { key: "atlantic", label: "ATLANTIC", tz: "America/Halifax", center: [-63.5752, 44.6488], zoom: 5, color: "#e68600" },
 
-    { key: "newfoundland", label: "NEWFOUNDLAND", tz: "America/St_Johns", center: [-52.7126, 47.5615], zoom: 5 },
-    { key: "brasilia", label: "BRASÍLIA", tz: "America/Sao_Paulo", center: [-47.8825, -15.7942], zoom: 4 },
-    { key: "south-georgia", label: "SOUTH GEORGIA", tz: "Atlantic/South_Georgia", center: [-36.5879, -54.4296], zoom: 4 },
-    { key: "azores", label: "AZORES", tz: "Atlantic/Azores", center: [-25.6756, 37.7412], zoom: 5 },
-    { key: "greenwich", label: "GREENWICH", tz: "Etc/GMT", center: [0, 51.4769], zoom: 5 },
-    { key: "london", label: "LONDON", tz: "Europe/London", center: [-0.1276, 51.5072], zoom: 5 },
-    { key: "central-europe", label: "CENTRAL EUROPE", tz: "Europe/Berlin", center: [10.4515, 51.1657], zoom: 4 },
+    { key: "newfoundland", label: "NEWFOUNDLAND", tz: "America/St_Johns", center: [-52.7126, 47.5615], zoom: 5, color: "#7330d8" },
+    { key: "brasilia", label: "BRASÍLIA", tz: "America/Sao_Paulo", center: [-47.8825, -15.7942], zoom: 4, color: "#0f956f" },
+    { key: "south-georgia", label: "SOUTH GEORGIA", tz: "Atlantic/South_Georgia", center: [-36.5879, -54.4296], zoom: 4, color: "#d21f52" },
+    { key: "azores", label: "AZORES", tz: "Atlantic/Azores", center: [-25.6756, 37.7412], zoom: 5, color: "#5147d9" },
+    { key: "greenwich", label: "GREENWICH", tz: "Etc/GMT", center: [0, 51.4769], zoom: 5, color: "#475569" },
+    { key: "london", label: "LONDON", tz: "Europe/London", center: [-0.1276, 51.5072], zoom: 5, color: "#159d92" },
+    { key: "central-europe", label: "CENTRAL EUROPE", tz: "Europe/Berlin", center: [10.4515, 51.1657], zoom: 4, color: "#d9480f" },
 
-    { key: "israel", label: "ISRAEL", tz: "Asia/Jerusalem", center: [34.8516, 31.0461], zoom: 6 },
-    { key: "gulf", label: "GULF", tz: "Asia/Dubai", center: [55.2708, 25.2048], zoom: 5 },
-    { key: "pakistan", label: "PAKISTAN", tz: "Asia/Karachi", center: [69.3451, 30.3753], zoom: 5 },
-    { key: "bangladesh", label: "BANGLADESH", tz: "Asia/Dhaka", center: [90.3563, 23.685], zoom: 6 },
-    { key: "indochina", label: "INDOCHINA", tz: "Asia/Bangkok", center: [100.9925, 15.87], zoom: 5 },
-    { key: "china-singapore", label: "CHINA / SINGAPORE", tz: "Asia/Shanghai", center: [104.1954, 35.8617], zoom: 4 },
-    { key: "japan-korea", label: "JAPAN / KOREA", tz: "Asia/Tokyo", center: [138.2529, 36.2048], zoom: 4 },
+    { key: "israel", label: "ISRAEL", tz: "Asia/Jerusalem", center: [34.8516, 31.0461], zoom: 6, color: "#3b82f6" },
+    { key: "gulf", label: "GULF", tz: "Asia/Dubai", center: [55.2708, 25.2048], zoom: 5, color: "#ea580c" },
+    { key: "pakistan", label: "PAKISTAN", tz: "Asia/Karachi", center: [69.3451, 30.3753], zoom: 5, color: "#087652" },
+    { key: "bangladesh", label: "BANGLADESH", tz: "Asia/Dhaka", center: [90.3563, 23.685], zoom: 6, color: "#29963d" },
+    { key: "indochina", label: "INDOCHINA", tz: "Asia/Bangkok", center: [100.9925, 15.87], zoom: 5, color: "#d91646" },
+    { key: "china-singapore", label: "CHINA / SINGAPORE", tz: "Asia/Shanghai", center: [104.1954, 35.8617], zoom: 4, color: "#c9252c" },
+    { key: "japan-korea", label: "JAPAN / KOREA", tz: "Asia/Tokyo", center: [138.2529, 36.2048], zoom: 4, color: "#8b41db" },
 
-    { key: "australian-eastern", label: "AUSTRALIAN EASTERN", tz: "Australia/Sydney", center: [151.2093, -33.8688], zoom: 4 },
-    { key: "solomon-islands", label: "SOLOMON ISLANDS", tz: "Pacific/Guadalcanal", center: [160.1562, -9.6457], zoom: 5 },
-    { key: "new-zealand", label: "NEW ZEALAND", tz: "Pacific/Auckland", center: [174.886, -40.9006], zoom: 5 },
-    { key: "tonga", label: "TONGA", tz: "Pacific/Tongatapu", center: [-175.1982, -21.1789], zoom: 5 },
-    { key: "line-islands", label: "LINE ISLANDS", tz: "Pacific/Kiritimati", center: [-157.3768, 1.8721], zoom: 5 },
-    { key: "baker-island", label: "BAKER ISLAND", tz: "Etc/GMT+12", center: [-176.4797, 0.1936], zoom: 5 },
-    { key: "samoa", label: "SAMOA", tz: "Pacific/Apia", center: [-172.1046, -13.759], zoom: 5 }
+    { key: "australian-eastern", label: "AUSTRALIAN EASTERN", tz: "Australia/Sydney", center: [151.2093, -33.8688], zoom: 4, color: "#159bd3" },
+    { key: "solomon-islands", label: "SOLOMON ISLANDS", tz: "Pacific/Guadalcanal", center: [160.1562, -9.6457], zoom: 5, color: "#168f86" },
+    { key: "new-zealand", label: "NEW ZEALAND", tz: "Pacific/Auckland", center: [174.886, -40.9006], zoom: 5, color: "#4f4bc2" },
+    { key: "tonga", label: "TONGA", tz: "Pacific/Tongatapu", center: [-175.1982, -21.1789], zoom: 5, color: "#d12c78" },
+    { key: "line-islands", label: "LINE ISLANDS", tz: "Pacific/Kiritimati", center: [-157.3768, 1.8721], zoom: 5, color: "#f5b21a", darkText: true },
+    { key: "baker-island", label: "BAKER ISLAND", tz: "Etc/GMT+12", center: [-176.4797, 0.1936], zoom: 5, color: "#64748b" },
+    { key: "samoa", label: "SAMOA", tz: "Pacific/Pago_Pago", center: [-170.702, -14.2756], zoom: 5, color: "#1f5bd8" }
   ];
 
   const timezoneGrid =
@@ -389,8 +393,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (timezoneGrid) {
     timezoneGrid.innerHTML = TIME_ZONES.map(zone => {
+      const textColor = zone.darkText ? "#061320" : "#ffffff";
+      const textShadow = zone.darkText ? "none" : "0 1px 2px rgba(0,0,0,0.45)";
+
       return `
-        <div class="timezone-card" data-timezone="${zone.key}" role="button" tabindex="0">
+        <div
+          class="timezone-card"
+          data-timezone="${zone.key}"
+          role="button"
+          tabindex="0"
+          style="background:${zone.color}; color:${textColor}; text-shadow:${textShadow};"
+        >
           <div class="timezone-name">${zone.label}</div>
           <div class="timezone-time" data-time-display="${zone.key}">--:--:--</div>
         </div>
@@ -620,16 +633,18 @@ document.addEventListener("DOMContentLoaded", () => {
       return data.coordinates;
     }
 
-    const lng =
+    const lng = Number(
       data.lng ||
       data.lon ||
-      data.longitude;
+      data.longitude
+    );
 
-    const lat =
+    const lat = Number(
       data.lat ||
-      data.latitude;
+      data.latitude
+    );
 
-    if (typeof lat === "number" && typeof lng === "number") {
+    if (Number.isFinite(lat) && Number.isFinite(lng)) {
       return [lng, lat];
     }
 
