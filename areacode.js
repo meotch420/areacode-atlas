@@ -187,6 +187,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     for (const tzid of possibleTzids) {
       if (timezoneColors[tzid]) return tzid;
+
       const mapped = getTimezoneLabelFromTzid(tzid);
       if (mapped) return mapped;
     }
@@ -221,7 +222,10 @@ window.addEventListener("DOMContentLoaded", () => {
     setText(infoAreaCode, code || "-");
     setText(infoCity, data.city || "-");
     setText(infoState, data.state || "-");
-    setText(infoTimezone, data.timezone || getTimezoneLabelFromTzid(data.tzid) || "-");
+    setText(
+      infoTimezone,
+      data.timezone || getTimezoneLabelFromTzid(data.tzid) || "-"
+    );
   }
 
   function clearMarker() {
@@ -242,7 +246,9 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function flyToCoordinates(lat, lng) {
-    if (!mapReady || !Number.isFinite(lat) || !Number.isFinite(lng)) return false;
+    if (!mapReady || !Number.isFinite(lat) || !Number.isFinite(lng)) {
+      return false;
+    }
 
     map.flyTo({
       center: [lng, lat],
@@ -315,7 +321,8 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!text) return false;
 
     const waterWords = /\b(ocean|sea|gulf|bay|strait|channel|waters)\b/;
-    const landWords = /\b(island|islands|state|province|territory|county|city|municipality|parish|district|country)\b/;
+    const landWords =
+      /\b(island|islands|state|province|territory|county|city|municipality|parish|district|country)\b/;
 
     return waterWords.test(text) && !landWords.test(text);
   }
@@ -327,9 +334,17 @@ window.addEventListener("DOMContentLoaded", () => {
       throw new Error("timezones.geojson is not a valid GeoJSON FeatureCollection");
     }
 
-    if (map.getLayer("timezones-outline")) map.removeLayer("timezones-outline");
-    if (map.getLayer("timezones-fill")) map.removeLayer("timezones-fill");
-    if (map.getSource("timezones")) map.removeSource("timezones");
+    if (map.getLayer("timezones-outline")) {
+      map.removeLayer("timezones-outline");
+    }
+
+    if (map.getLayer("timezones-fill")) {
+      map.removeLayer("timezones-fill");
+    }
+
+    if (map.getSource("timezones")) {
+      map.removeSource("timezones");
+    }
 
     const filteredFeatures = data.features
       .filter((feature) => !isWaterOnlyTimezoneFeature(feature))
@@ -347,6 +362,8 @@ window.addEventListener("DOMContentLoaded", () => {
         };
       })
       .filter(Boolean);
+
+    console.log("Timezone features found:", filteredFeatures.length);
 
     const normalized = {
       type: "FeatureCollection",
@@ -366,17 +383,28 @@ window.addEventListener("DOMContentLoaded", () => {
         "fill-color": [
           "match",
           ["get", "__tz_label"],
-          "Eastern", getTimezoneColor("Eastern"),
-          "Central", getTimezoneColor("Central"),
-          "Mountain", getTimezoneColor("Mountain"),
-          "Pacific", getTimezoneColor("Pacific"),
-          "Alaska", getTimezoneColor("Alaska"),
-          "Hawaii", getTimezoneColor("Hawaii"),
-          "Atlantic", getTimezoneColor("Atlantic"),
-          "Newfoundland", getTimezoneColor("Newfoundland"),
-          "Chamorro", getTimezoneColor("Chamorro"),
-          "Samoa", getTimezoneColor("Samoa"),
-          "Various", getTimezoneColor("Various"),
+          "Eastern",
+          getTimezoneColor("Eastern"),
+          "Central",
+          getTimezoneColor("Central"),
+          "Mountain",
+          getTimezoneColor("Mountain"),
+          "Pacific",
+          getTimezoneColor("Pacific"),
+          "Alaska",
+          getTimezoneColor("Alaska"),
+          "Hawaii",
+          getTimezoneColor("Hawaii"),
+          "Atlantic",
+          getTimezoneColor("Atlantic"),
+          "Newfoundland",
+          getTimezoneColor("Newfoundland"),
+          "Chamorro",
+          getTimezoneColor("Chamorro"),
+          "Samoa",
+          getTimezoneColor("Samoa"),
+          "Various",
+          getTimezoneColor("Various"),
           "#7f8c8d"
         ],
         "fill-opacity": 0.45
@@ -407,7 +435,7 @@ window.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       addTimezonesLayer(data);
     } catch (err) {
-      console.error("States load error:", err);
+      console.error("Timezone load error:", err);
     }
   }
 
@@ -428,10 +456,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
       dataLoaded = true;
       console.log("Loaded area codes:", Object.keys(areaCodesByCode).length);
-
-      if (mapReady) {
-        await loadStatesData();
-      }
     } catch (err) {
       console.error("Area code data load error:", err);
     }
@@ -454,9 +478,7 @@ window.addEventListener("DOMContentLoaded", () => {
       mapReady = true;
       console.log("Globe loaded successfully");
 
-      if (dataLoaded) {
-        await loadStatesData();
-      }
+      await loadStatesData();
     });
 
     map.on("error", (err) => {
