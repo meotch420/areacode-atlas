@@ -2,18 +2,25 @@
   box-sizing: border-box;
 }
 
-html,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-}
-
-body {
+  min-height: 100vh;
   font-family: Arial, sans-serif;
   background: #0f172a;
   color: #ffffff;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* =========================
@@ -349,14 +356,57 @@ header p {
 }
 
 /* =========================
-   MAP
+   MAIN MAP AREA
+   This makes the page longer
+   so you can scroll down
 ========================= */
+
+main {
+  width: 100%;
+  background: #0f172a;
+  padding: 0;
+  margin: 0;
+}
+
+/* This is the main fix.
+   Do NOT use calc(100vh - 390px).
+   A fixed tall map lets the page scroll. */
 
 #map {
   width: 100%;
-  height: calc(100vh - 390px);
-  min-height: 520px;
+  height: 820px;
+  min-height: 820px;
   background: #0f172a;
+}
+
+/* =========================
+   BOTTOM AD AREA
+========================= */
+
+.bottom-ads {
+  width: 100%;
+  min-height: 240px;
+  padding: 28px 18px 40px;
+  background: #020617;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ad-box {
+  width: min(970px, 100%);
+  height: 120px;
+  border: 2px dashed #475569;
+  border-radius: 14px;
+  background: #111827;
+  color: #94a3b8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 /* =========================
@@ -398,6 +448,11 @@ header p {
   .tz-time {
     font-size: 0.82rem;
   }
+
+  #map {
+    height: 780px;
+    min-height: 780px;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -412,7 +467,8 @@ header p {
   }
 
   #map {
-    height: 620px;
+    height: 720px;
+    min-height: 720px;
   }
 }
 
@@ -421,6 +477,11 @@ header p {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
     min-height: auto;
+  }
+
+  #map {
+    height: 680px;
+    min-height: 680px;
   }
 }
 
@@ -455,7 +516,16 @@ header p {
   }
 
   #map {
-    height: 560px;
-    min-height: 480px;
+    height: 620px;
+    min-height: 620px;
+  }
+
+  .bottom-ads {
+    min-height: 220px;
+    padding: 24px 12px 34px;
+  }
+
+  .ad-box {
+    height: 110px;
   }
 }
