@@ -5,64 +5,64 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #020617;
-  color: #ffffff;
+  background: #0f172a;
+  color: white;
 }
 
+/* MAIN TOP LAYOUT */
 .top-section {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  gap: 16px;
-  padding: 16px;
+  grid-template-columns: 300px minmax(0, 1fr) 280px;
+  grid-template-areas: "left clocks info";
+  gap: 20px;
+  align-items: start;
+
+  padding: 10px;
   background: #020617;
   border-bottom: 1px solid #1e293b;
+  min-height: 440px;
 }
 
+/* LEFT SIDE */
 .top-left {
+  grid-area: left;
   min-width: 0;
 }
 
 header h1 {
   margin: 0 0 6px 0;
   font-size: 2rem;
-  line-height: 1.1;
+  color: white;
 }
 
 header p {
-  margin: 0 0 14px 0;
-  color: #cbd5e1;
-  font-size: 0.95rem;
+  margin: 0 0 16px 0;
+  color: white;
 }
 
 .search {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .search input {
-  width: 190px;
   padding: 10px 12px;
-  border: 1px solid #334155;
-  border-radius: 8px;
+  width: 190px;
+  border: 1px solid #94a3b8;
+  border-radius: 7px;
   background: #e2e8f0;
   color: #0f172a;
   font-size: 0.95rem;
-  outline: none;
-}
-
-.search input:focus {
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
 }
 
 .search button {
-  padding: 10px 16px;
+  padding: 10px 18px;
   border: none;
   border-radius: 8px;
   background: #0ea5e9;
-  color: #ffffff;
+  color: white;
   font-weight: 700;
   cursor: pointer;
 }
@@ -72,32 +72,126 @@ header p {
 }
 
 .status-message {
-  margin-top: 10px;
-  min-height: 20px;
-  color: #cbd5e1;
-  font-size: 0.9rem;
+  margin-top: 12px;
+  color: white;
+  font-size: 0.95rem;
 }
 
-.info-panel {
+/* TIMEZONE BOXES - MIDDLE ONLY */
+.timezone-bar {
+  grid-area: clocks;
+  align-self: end;
+
+  display: grid;
+  grid-template-columns: repeat(7, minmax(110px, 1fr));
+  gap: 10px;
+
   width: 100%;
-  max-width: 280px;
-  padding: 14px;
-  border: 1px solid #334155;
-  border-radius: 14px;
-  background: #0f172a;
-  box-shadow: 0 0 18px rgba(15, 23, 42, 0.8);
+  padding: 0;
+  margin: 0;
+  background: transparent;
 }
 
-.info-panel h2 {
-  margin: 0 0 12px 0;
+.timezone-card {
+  min-height: 58px;
+  border-radius: 10px;
+  background: #111827;
+  border: 1px solid #1e293b;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tz-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
   text-align: center;
-  font-size: 1.35rem;
+}
+
+.tz-time {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+
+/* TIMEZONE BORDER COLORS */
+.local-card {
+  border-color: #64748b;
+}
+
+.newfoundland-card {
+  border-color: #a855f7;
+}
+
+.atlantic-card {
+  border-color: #f59e0b;
+}
+
+.eastern-card {
+  border-color: #3b82f6;
+}
+
+.central-card {
+  border-color: #22c55e;
+}
+
+.mountain-card {
+  border-color: #eab308;
+}
+
+.pacific-card {
+  border-color: #ef4444;
+}
+
+.alaska-card {
+  border-color: #38bdf8;
+}
+
+.hawaii-card {
+  border-color: #fb7185;
+}
+
+.samoa-card {
+  border-color: #14b8a6;
+}
+
+.chamorro-card {
+  border-color: #c084fc;
+}
+
+/* AREA INFORMATION PANEL */
+.area-info-panel,
+.area-info,
+.area-information,
+.info-panel {
+  grid-area: info;
+  width: 100%;
+  background: #111827;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 14px;
+  color: white;
+}
+
+.area-info-panel h2,
+.area-info h2,
+.area-information h2,
+.info-panel h2 {
+  margin: 0 0 14px 0;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
 }
 
 .info-row {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   padding: 8px 0;
   border-bottom: 1px solid #1e293b;
   font-size: 0.9rem;
@@ -107,110 +201,70 @@ header p {
   border-bottom: none;
 }
 
-.info-row span {
-  color: #94a3b8;
+.info-label {
+  color: #93c5fd;
 }
 
-.info-row strong {
-  color: #ffffff;
+.info-value {
+  color: white;
+  font-weight: 700;
   text-align: right;
 }
 
-.timezone-bar {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(7, minmax(110px, 1fr));
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.timezone-card {
-  min-height: 58px;
-  padding: 9px 8px;
-  border: 2px solid var(--tz-color);
-  border-radius: 13px;
-  background: rgba(15, 23, 42, 0.94);
-  box-shadow: 0 0 12px var(--tz-glow);
-  text-align: center;
-}
-
-.timezone-card.israel-card {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 56, 184, 0.42),
-    rgba(15, 23, 42, 0.98)
-  );
-}
-
-.tz-label {
-  margin-bottom: 5px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  line-height: 1.1;
-}
-
-.tz-time {
-  font-size: 0.98rem;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.map-wrapper {
-  position: relative;
-  height: calc(100vh - 315px);
-  min-height: 430px;
-  background: #0f172a;
-}
-
+/* MAP AREA */
 #map {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 460px);
+  min-height: 420px;
 }
 
-.map-notice {
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  z-index: 10;
-  transform: translateX(-50%);
-  max-width: 90%;
-  padding: 10px 14px;
-  border: 1px solid #334155;
-  border-radius: 10px;
-  background: rgba(15, 23, 42, 0.95);
-  color: #ffffff;
-  font-size: 0.9rem;
-  text-align: center;
-}
+/* RESPONSIVE */
+@media (max-width: 1500px) {
+  .top-section {
+    grid-template-columns: 290px minmax(0, 1fr) 270px;
+  }
 
-.hidden {
-  display: none;
-}
-
-@media (max-width: 1050px) {
   .timezone-bar {
-    grid-template-columns: repeat(4, minmax(110px, 1fr));
-  }
-
-  .map-wrapper {
-    height: calc(100vh - 430px);
+    grid-template-columns: repeat(6, minmax(105px, 1fr));
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 1100px) {
   .top-section {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "left"
+      "info"
+      "clocks";
+    min-height: auto;
   }
 
+  .timezone-bar {
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+  }
+
+  .area-info-panel,
+  .area-info,
+  .area-information,
   .info-panel {
     max-width: none;
   }
+}
 
+@media (max-width: 650px) {
   .timezone-bar {
     grid-template-columns: repeat(2, minmax(120px, 1fr));
   }
 
-  .map-wrapper {
-    height: 520px;
+  .search input {
+    width: 100%;
+  }
+
+  .search button {
+    width: 100%;
+  }
+
+  header h1 {
+    font-size: 1.7rem;
   }
 }
