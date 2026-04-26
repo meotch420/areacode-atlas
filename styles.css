@@ -102,14 +102,14 @@ header p {
 
 .timezone-grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(112px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(7, minmax(90px, 1fr));
+  gap: 6px;
 }
 
 .timezone-card {
-  min-height: 82px;
-  padding: 12px 8px;
-  border-radius: 12px;
+  min-height: 58px;
+  padding: 7px 5px;
+  border-radius: 9px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   text-align: center;
   cursor: pointer;
@@ -126,11 +126,11 @@ header p {
 }
 
 .tz-label {
-  min-height: 28px;
+  min-height: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.68rem;
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: 0.3px;
@@ -138,17 +138,12 @@ header p {
 }
 
 .tz-name {
-  margin-top: 4px;
-  min-height: 16px;
-  font-size: 0.64rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.82);
-  line-height: 1.1;
+  display: none;
 }
 
 .tz-time {
-  margin-top: 7px;
-  font-size: 1rem;
+  margin-top: 4px;
+  font-size: 0.82rem;
   font-weight: 900;
   letter-spacing: 0.2px;
   white-space: nowrap;
@@ -378,25 +373,21 @@ header p {
   }
 
   .timezone-grid {
-    grid-template-columns: repeat(7, minmax(96px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(7, minmax(80px, 1fr));
+    gap: 5px;
   }
 
   .timezone-card {
-    min-height: 78px;
-    padding: 10px 6px;
+    min-height: 52px;
+    padding: 6px 4px;
   }
 
   .tz-label {
-    font-size: 0.72rem;
-  }
-
-  .tz-name {
-    font-size: 0.58rem;
+    font-size: 0.62rem;
   }
 
   .tz-time {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
   }
 }
 
