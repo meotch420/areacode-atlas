@@ -26,8 +26,7 @@ const TIME_ZONE_CARDS = [
     iana: "Pacific/Honolulu",
     center: [-157.8583, 21.3069],
     zoom: 4,
-    color: "#8a2fd6",
-    bounds: [-166, 18, -154, 24]
+    color: "#8a2fd6"
   },
   {
     key: "alaska",
@@ -35,8 +34,7 @@ const TIME_ZONE_CARDS = [
     iana: "America/Anchorage",
     center: [-149.9003, 61.2181],
     zoom: 3.6,
-    color: "#138aa0",
-    bounds: [-170, 50, -130, 72]
+    color: "#138aa0"
   },
   {
     key: "pacific",
@@ -44,8 +42,7 @@ const TIME_ZONE_CARDS = [
     iana: "America/Los_Angeles",
     center: [-118.2437, 34.0522],
     zoom: 4,
-    color: "#e62d2d",
-    bounds: [-125, 25, -114, 50]
+    color: "#e62d2d"
   },
   {
     key: "mountain",
@@ -54,7 +51,6 @@ const TIME_ZONE_CARDS = [
     center: [-104.9903, 39.7392],
     zoom: 4,
     color: "#f59e0b",
-    bounds: [-115, 25, -102, 50],
     darkText: true
   },
   {
@@ -63,8 +59,7 @@ const TIME_ZONE_CARDS = [
     iana: "America/Chicago",
     center: [-87.6298, 41.8781],
     zoom: 4,
-    color: "#18b95f",
-    bounds: [-103, 25, -86, 50]
+    color: "#18b95f"
   },
   {
     key: "eastern",
@@ -72,8 +67,7 @@ const TIME_ZONE_CARDS = [
     iana: "America/New_York",
     center: [-74.006, 40.7128],
     zoom: 4,
-    color: "#3478ea",
-    bounds: [-88, 24, -66, 50]
+    color: "#3478ea"
   },
   {
     key: "atlantic",
@@ -81,8 +75,7 @@ const TIME_ZONE_CARDS = [
     iana: "America/Halifax",
     center: [-63.5752, 44.6488],
     zoom: 4,
-    color: "#e68600",
-    bounds: [-70, 40, -50, 60]
+    color: "#e68600"
   },
   {
     key: "newfoundland",
@@ -90,8 +83,7 @@ const TIME_ZONE_CARDS = [
     iana: "America/St_Johns",
     center: [-52.7126, 47.5615],
     zoom: 5,
-    color: "#7330d8",
-    bounds: [-60, 45, -50, 55]
+    color: "#7330d8"
   },
   {
     key: "brasilia",
@@ -99,8 +91,7 @@ const TIME_ZONE_CARDS = [
     iana: "America/Sao_Paulo",
     center: [-47.8825, -15.7942],
     zoom: 4,
-    color: "#0f956f",
-    bounds: [-55, -35, -35, 5]
+    color: "#0f956f"
   },
   {
     key: "south_georgia",
@@ -108,8 +99,7 @@ const TIME_ZONE_CARDS = [
     iana: "Atlantic/South_Georgia",
     center: [-36.5879, -54.4296],
     zoom: 5,
-    color: "#d21f52",
-    bounds: [-42, -56, -31, -50]
+    color: "#d21f52"
   },
   {
     key: "azores",
@@ -117,8 +107,7 @@ const TIME_ZONE_CARDS = [
     iana: "Atlantic/Azores",
     center: [-25.6756, 37.7412],
     zoom: 5,
-    color: "#5147d9",
-    bounds: [-32, 35, -20, 42]
+    color: "#5147d9"
   },
   {
     key: "greenwich",
@@ -126,8 +115,7 @@ const TIME_ZONE_CARDS = [
     iana: "Etc/GMT",
     center: [0, 51.4779],
     zoom: 4,
-    color: "#475569",
-    bounds: [-10, -35, 10, 60]
+    color: "#475569"
   },
   {
     key: "london",
@@ -135,8 +123,7 @@ const TIME_ZONE_CARDS = [
     iana: "Europe/London",
     center: [-0.1276, 51.5072],
     zoom: 5,
-    color: "#159d92",
-    bounds: [-8, 49, 2, 59]
+    color: "#159d92"
   },
   {
     key: "central_europe",
@@ -144,8 +131,7 @@ const TIME_ZONE_CARDS = [
     iana: "Europe/Berlin",
     center: [13.405, 52.52],
     zoom: 4,
-    color: "#d9480f",
-    bounds: [2, 35, 25, 60]
+    color: "#d9480f"
   },
   {
     key: "israel",
@@ -153,8 +139,7 @@ const TIME_ZONE_CARDS = [
     iana: "Asia/Jerusalem",
     center: [35.2137, 31.7683],
     zoom: 6,
-    color: "#3b82f6",
-    bounds: [34, 29, 36, 34]
+    color: "#3b82f6"
   },
   {
     key: "gulf",
@@ -162,8 +147,7 @@ const TIME_ZONE_CARDS = [
     iana: "Asia/Dubai",
     center: [55.2708, 25.2048],
     zoom: 5,
-    color: "#ea580c",
-    bounds: [44, 12, 58, 32]
+    color: "#ea580c"
   },
   {
     key: "pakistan",
@@ -171,8 +155,7 @@ const TIME_ZONE_CARDS = [
     iana: "Asia/Karachi",
     center: [67.0011, 24.8607],
     zoom: 5,
-    color: "#087652",
-    bounds: [60, 23, 78, 38]
+    color: "#087652"
   },
   {
     key: "bangladesh",
@@ -180,8 +163,7 @@ const TIME_ZONE_CARDS = [
     iana: "Asia/Dhaka",
     center: [90.4125, 23.8103],
     zoom: 6,
-    color: "#29963d",
-    bounds: [88, 20, 93, 27]
+    color: "#29963d"
   },
   {
     key: "indochina",
@@ -189,8 +171,7 @@ const TIME_ZONE_CARDS = [
     iana: "Asia/Bangkok",
     center: [100.5018, 13.7563],
     zoom: 5,
-    color: "#d91646",
-    bounds: [95, 5, 108, 24]
+    color: "#d91646"
   },
   {
     key: "china_singapore",
@@ -198,8 +179,7 @@ const TIME_ZONE_CARDS = [
     iana: "Asia/Shanghai",
     center: [103.8198, 1.3521],
     zoom: 4,
-    color: "#c9252c",
-    bounds: [103, 1, 125, 45]
+    color: "#c9252c"
   },
   {
     key: "japan_korea",
@@ -207,8 +187,7 @@ const TIME_ZONE_CARDS = [
     iana: "Asia/Tokyo",
     center: [139.6917, 35.6895],
     zoom: 4,
-    color: "#8b41db",
-    bounds: [126, 30, 146, 46]
+    color: "#8b41db"
   },
   {
     key: "australian_eastern",
@@ -216,8 +195,7 @@ const TIME_ZONE_CARDS = [
     iana: "Australia/Sydney",
     center: [151.2093, -33.8688],
     zoom: 4,
-    color: "#159bd3",
-    bounds: [140, -45, 154, -10]
+    color: "#159bd3"
   },
   {
     key: "solomon",
@@ -225,8 +203,7 @@ const TIME_ZONE_CARDS = [
     iana: "Pacific/Guadalcanal",
     center: [160.1562, -9.6457],
     zoom: 5,
-    color: "#168f86",
-    bounds: [155, -13, 167, -5]
+    color: "#168f86"
   },
   {
     key: "new_zealand",
@@ -234,8 +211,7 @@ const TIME_ZONE_CARDS = [
     iana: "Pacific/Auckland",
     center: [174.7633, -36.8485],
     zoom: 4,
-    color: "#4f4bc2",
-    bounds: [165, -48, 180, -33]
+    color: "#4f4bc2"
   },
   {
     key: "tonga",
@@ -243,8 +219,7 @@ const TIME_ZONE_CARDS = [
     iana: "Pacific/Tongatapu",
     center: [-175.1982, -21.1393],
     zoom: 6,
-    color: "#d12c78",
-    bounds: [-178, -24, -172, -15]
+    color: "#d12c78"
   },
   {
     key: "line_islands",
@@ -253,7 +228,6 @@ const TIME_ZONE_CARDS = [
     center: [-157.363, 1.8721],
     zoom: 5,
     color: "#f5b21a",
-    bounds: [178, -5, -150, 8],
     darkText: true
   },
   {
@@ -262,8 +236,7 @@ const TIME_ZONE_CARDS = [
     iana: "Etc/GMT+12",
     center: [-176.4769, 0.1936],
     zoom: 6,
-    color: "#64748b",
-    bounds: [-180, -2, -170, 2]
+    color: "#64748b"
   },
   {
     key: "samoa",
@@ -271,8 +244,7 @@ const TIME_ZONE_CARDS = [
     iana: "Pacific/Pago_Pago",
     center: [-170.1322, -14.271],
     zoom: 6,
-    color: "#1f5bd8",
-    bounds: [-172, -15, -168, -10]
+    color: "#1f5bd8"
   }
 ];
 
@@ -408,14 +380,6 @@ function setupMap() {
   });
 
   map.addControl(new maptilersdk.NavigationControl(), "top-right");
-
-  map.on("load", () => {
-    setupTimezoneHighlightLayer();
-
-    if (selectedZoneKey) {
-      highlightTimezoneOnMap(selectedZoneKey);
-    }
-  });
 }
 
 /* =====================================================
@@ -446,10 +410,7 @@ function renderTimeZoneCards() {
     `;
 
     card.addEventListener("click", () => {
-      selectTimeZone(zone.key, {
-        fly: true,
-        updateStatus: true
-      });
+      selectTimeZone(zone.key, true);
     });
 
     grid.appendChild(card);
@@ -487,7 +448,7 @@ function updateClocks() {
    CLICK TIME ZONE BOXES
 ===================================================== */
 
-function selectTimeZone(zoneKey, options = {}) {
+function selectTimeZone(zoneKey, shouldFly = false) {
   const zone = TIME_ZONE_CARDS.find((item) => item.key === zoneKey);
   if (!zone) return;
 
@@ -498,7 +459,6 @@ function selectTimeZone(zoneKey, options = {}) {
     card.classList.toggle("selected", card.dataset.zoneKey === zone.key);
   });
 
-  highlightTimezoneOnMap(zone.key);
   updateInfoPanel({
     areaCode: "---",
     city: zone.label,
@@ -507,123 +467,10 @@ function selectTimeZone(zoneKey, options = {}) {
     localTime: getTimeForZone(zone.iana)
   });
 
-  if (options.fly) {
+  if (shouldFly) {
     flyToLocation(zone.center, zone.zoom);
+    setStatus(`${zone.label} selected.`);
   }
-
-  if (options.updateStatus) {
-    setStatus(`${zone.label} time zone highlighted.`);
-  }
-}
-
-/* =====================================================
-   MAP HIGHLIGHT LAYER
-===================================================== */
-
-function setupTimezoneHighlightLayer() {
-  if (!map || !map.loaded()) return;
-
-  if (!map.getSource("selected-timezone-source")) {
-    map.addSource("selected-timezone-source", {
-      type: "geojson",
-      data: emptyFeatureCollection()
-    });
-  }
-
-  if (!map.getLayer("selected-timezone-fill")) {
-    map.addLayer({
-      id: "selected-timezone-fill",
-      type: "fill",
-      source: "selected-timezone-source",
-      paint: {
-        "fill-color": "#ffffff",
-        "fill-opacity": 0.42
-      }
-    });
-  }
-
-  if (!map.getLayer("selected-timezone-outline")) {
-    map.addLayer({
-      id: "selected-timezone-outline",
-      type: "line",
-      source: "selected-timezone-source",
-      paint: {
-        "line-color": "#ffffff",
-        "line-width": 4,
-        "line-opacity": 0.95
-      }
-    });
-  }
-}
-
-function highlightTimezoneOnMap(zoneKey) {
-  const zone = TIME_ZONE_CARDS.find((item) => item.key === zoneKey);
-  if (!zone || !map) return;
-
-  if (!map.loaded()) {
-    map.once("load", () => highlightTimezoneOnMap(zoneKey));
-    return;
-  }
-
-  setupTimezoneHighlightLayer();
-
-  const source = map.getSource("selected-timezone-source");
-  if (!source) return;
-
-  source.setData(boundsToFeatureCollection(zone.bounds));
-
-  if (map.getLayer("selected-timezone-fill")) {
-    map.setPaintProperty("selected-timezone-fill", "fill-color", zone.color);
-  }
-
-  if (map.getLayer("selected-timezone-outline")) {
-    map.setPaintProperty("selected-timezone-outline", "line-color", "#ffffff");
-  }
-}
-
-function emptyFeatureCollection() {
-  return {
-    type: "FeatureCollection",
-    features: []
-  };
-}
-
-function boundsToFeatureCollection(bounds) {
-  const [minLng, minLat, maxLng, maxLat] = bounds;
-
-  if (minLng <= maxLng) {
-    return {
-      type: "FeatureCollection",
-      features: [polygonFeature(minLng, minLat, maxLng, maxLat)]
-    };
-  }
-
-  return {
-    type: "FeatureCollection",
-    features: [
-      polygonFeature(minLng, minLat, 180, maxLat),
-      polygonFeature(-180, minLat, maxLng, maxLat)
-    ]
-  };
-}
-
-function polygonFeature(minLng, minLat, maxLng, maxLat) {
-  return {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Polygon",
-      coordinates: [
-        [
-          [minLng, minLat],
-          [maxLng, minLat],
-          [maxLng, maxLat],
-          [minLng, maxLat],
-          [minLng, minLat]
-        ]
-      ]
-    }
-  };
 }
 
 /* =====================================================
@@ -741,10 +588,7 @@ function showCountryResult(country) {
   placeMarker(country.center, country.name);
 
   if (country.zoneKey) {
-    selectTimeZone(country.zoneKey, {
-      fly: false,
-      updateStatus: false
-    });
+    selectTimeZone(country.zoneKey, false);
   }
 
   setStatus(`${country.code} found: ${country.name}.`);
@@ -767,10 +611,7 @@ function showAreaCodeResult(code, data) {
   }
 
   if (result.zoneKey) {
-    selectTimeZone(result.zoneKey, {
-      fly: false,
-      updateStatus: false
-    });
+    selectTimeZone(result.zoneKey, false);
   }
 
   setStatus(`${code} found: ${result.city}${result.state ? ", " + result.state : ""}.`);
