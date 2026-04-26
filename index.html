@@ -1,141 +1,241 @@
-<div class="timezone-bar">
-  <div class="timezone-card utc-minus-12-card">
-    <div class="tz-label">Baker Island</div>
-    <div class="tz-time" id="utcMinus12Time">--:--:--</div>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <div class="timezone-card samoa-card">
-    <div class="tz-label">Samoa</div>
-    <div class="tz-time" id="samoaTime">--:--:--</div>
-  </div>
+  <title>Area Code Atlas</title>
 
-  <div class="timezone-card hawaii-card">
-    <div class="tz-label">Hawaii</div>
-    <div class="tz-time" id="hawaiiTime">--:--:--</div>
-  </div>
+  <!-- MapTiler SDK CSS for globe/map -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css"
+  />
 
-  <div class="timezone-card alaska-card">
-    <div class="tz-label">Alaska</div>
-    <div class="tz-time" id="alaskaTime">--:--:--</div>
-  </div>
+  <!-- Your CSS file -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-  <div class="timezone-card pacific-card">
-    <div class="tz-label">Pacific</div>
-    <div class="tz-time" id="pacificTime">--:--:--</div>
-  </div>
+<body>
+  <section class="top-section">
+    <!-- LEFT SIDE: TITLE + SEARCH -->
+    <div class="top-left">
+      <header>
+        <h1>Area Code Atlas</h1>
+        <p>Navigate North America by Area Code</p>
+      </header>
 
-  <div class="timezone-card mountain-card">
-    <div class="tz-label">Mountain</div>
-    <div class="tz-time" id="mountainTime">--:--:--</div>
-  </div>
+      <form class="search" id="searchForm">
+        <input
+          id="areaSearch"
+          type="text"
+          placeholder="Area code or country code"
+          autocomplete="off"
+        />
 
-  <div class="timezone-card central-card">
-    <div class="tz-label">Central</div>
-    <div class="tz-time" id="centralTime">--:--:--</div>
-  </div>
+        <button type="submit" id="searchBtn">Search</button>
+      </form>
 
-  <div class="timezone-card eastern-card">
-    <div class="tz-label">Eastern</div>
-    <div class="tz-time" id="easternTime">--:--:--</div>
-  </div>
+      <div class="status-message" id="statusMessage">
+        Enter a 3-digit area code or country code like +972.
+      </div>
+    </div>
 
-  <div class="timezone-card atlantic-card">
-    <div class="tz-label">Atlantic</div>
-    <div class="tz-time" id="atlanticTime">--:--:--</div>
-  </div>
+    <!-- CENTER: TIME ZONE BAR -->
+    <div class="timezone-wrapper">
+      <div class="timezone-bar" id="timezoneBar">
+        <div class="timezone-card hawaii-card">
+          <div class="tz-label">Hawaii</div>
+          <div class="tz-time" id="hawaiiTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card newfoundland-card">
-    <div class="tz-label">Newfoundland</div>
-    <div class="tz-time" id="newfoundlandTime">--:--:--</div>
-  </div>
+        <div class="timezone-card alaska-card">
+          <div class="tz-label">Alaska</div>
+          <div class="tz-time" id="alaskaTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card brazil-card">
-    <div class="tz-label">Brasília</div>
-    <div class="tz-time" id="brazilTime">--:--:--</div>
-  </div>
+        <div class="timezone-card pacific-card">
+          <div class="tz-label">Pacific</div>
+          <div class="tz-time" id="pacificTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card south-georgia-card">
-    <div class="tz-label">South Georgia</div>
-    <div class="tz-time" id="southGeorgiaTime">--:--:--</div>
-  </div>
+        <div class="timezone-card mountain-card">
+          <div class="tz-label">Mountain</div>
+          <div class="tz-time" id="mountainTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card azores-card">
-    <div class="tz-label">Azores</div>
-    <div class="tz-time" id="azoresTime">--:--:--</div>
-  </div>
+        <div class="timezone-card central-card">
+          <div class="tz-label">Central</div>
+          <div class="tz-time" id="centralTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card utc-card">
-    <div class="tz-label">Greenwich</div>
-    <div class="tz-time" id="utcTime">--:--:--</div>
-  </div>
+        <div class="timezone-card eastern-card">
+          <div class="tz-label">Eastern</div>
+          <div class="tz-time" id="easternTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card london-card">
-    <div class="tz-label">London</div>
-    <div class="tz-time" id="londonTime">--:--:--</div>
-  </div>
+        <div class="timezone-card atlantic-card">
+          <div class="tz-label">Atlantic</div>
+          <div class="tz-time" id="atlanticTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card central-europe-card">
-    <div class="tz-label">Central Europe</div>
-    <div class="tz-time" id="centralEuropeTime">--:--:--</div>
-  </div>
+        <div class="timezone-card newfoundland-card">
+          <div class="tz-label">Newfoundland</div>
+          <div class="tz-time" id="newfoundlandTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card israel-card">
-    <div class="tz-label">Israel</div>
-    <div class="tz-time" id="israelTime">--:--:--</div>
-  </div>
+        <div class="timezone-card brazil-card">
+          <div class="tz-label">Brasília</div>
+          <div class="tz-time" id="brazilTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card gulf-card">
-    <div class="tz-label">Gulf</div>
-    <div class="tz-time" id="gulfTime">--:--:--</div>
-  </div>
+        <div class="timezone-card south-georgia-card">
+          <div class="tz-label">South Georgia</div>
+          <div class="tz-time" id="southGeorgiaTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card pakistan-card">
-    <div class="tz-label">Pakistan</div>
-    <div class="tz-time" id="pakistanTime">--:--:--</div>
-  </div>
+        <div class="timezone-card azores-card">
+          <div class="tz-label">Azores</div>
+          <div class="tz-time" id="azoresTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card bangladesh-card">
-    <div class="tz-label">Bangladesh</div>
-    <div class="tz-time" id="bangladeshTime">--:--:--</div>
-  </div>
+        <div class="timezone-card utc-card">
+          <div class="tz-label">Greenwich</div>
+          <div class="tz-time" id="utcTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card indochina-card">
-    <div class="tz-label">Indochina</div>
-    <div class="tz-time" id="indochinaTime">--:--:--</div>
-  </div>
+        <div class="timezone-card london-card">
+          <div class="tz-label">London</div>
+          <div class="tz-time" id="londonTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card china-card">
-    <div class="tz-label">China / Singapore</div>
-    <div class="tz-time" id="chinaTime">--:--:--</div>
-  </div>
+        <div class="timezone-card central-europe-card">
+          <div class="tz-label">Central Europe</div>
+          <div class="tz-time" id="centralEuropeTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card japan-card">
-    <div class="tz-label">Japan / Korea</div>
-    <div class="tz-time" id="japanTime">--:--:--</div>
-  </div>
+        <div class="timezone-card israel-card">
+          <div class="tz-label">Israel</div>
+          <div class="tz-time" id="israelTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card australia-card">
-    <div class="tz-label">Australian Eastern</div>
-    <div class="tz-time" id="australiaTime">--:--:--</div>
-  </div>
+        <div class="timezone-card gulf-card">
+          <div class="tz-label">Gulf</div>
+          <div class="tz-time" id="gulfTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card solomon-card">
-    <div class="tz-label">Solomon Islands</div>
-    <div class="tz-time" id="solomonTime">--:--:--</div>
-  </div>
+        <div class="timezone-card pakistan-card">
+          <div class="tz-label">Pakistan</div>
+          <div class="tz-time" id="pakistanTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card new-zealand-card">
-    <div class="tz-label">New Zealand</div>
-    <div class="tz-time" id="newZealandTime">--:--:--</div>
-  </div>
+        <div class="timezone-card bangladesh-card">
+          <div class="tz-label">Bangladesh</div>
+          <div class="tz-time" id="bangladeshTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card tonga-card">
-    <div class="tz-label">Tonga</div>
-    <div class="tz-time" id="tongaTime">--:--:--</div>
-  </div>
+        <div class="timezone-card indochina-card">
+          <div class="tz-label">Indochina</div>
+          <div class="tz-time" id="indochinaTime">--:--:--</div>
+        </div>
 
-  <div class="timezone-card line-islands-card">
-    <div class="tz-label">Line Islands</div>
-    <div class="tz-time" id="lineIslandsTime">--:--:--</div>
-  </div>
-</div>
+        <div class="timezone-card china-card">
+          <div class="tz-label">China / Singapore</div>
+          <div class="tz-time" id="chinaTime">--:--:--</div>
+        </div>
+
+        <div class="timezone-card japan-card">
+          <div class="tz-label">Japan / Korea</div>
+          <div class="tz-time" id="japanTime">--:--:--</div>
+        </div>
+
+        <div class="timezone-card australia-card">
+          <div class="tz-label">Australian Eastern</div>
+          <div class="tz-time" id="australiaTime">--:--:--</div>
+        </div>
+
+        <div class="timezone-card solomon-card">
+          <div class="tz-label">Solomon Islands</div>
+          <div class="tz-time" id="solomonTime">--:--:--</div>
+        </div>
+
+        <div class="timezone-card new-zealand-card">
+          <div class="tz-label">New Zealand</div>
+          <div class="tz-time" id="newZealandTime">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tonga-card">
+          <div class="tz-label">Tonga</div>
+          <div class="tz-time" id="tongaTime">--:--:--</div>
+        </div>
+
+        <div class="timezone-card line-islands-card">
+          <div class="tz-label">Line Islands</div>
+          <div class="tz-time" id="lineIslandsTime">--:--:--</div>
+        </div>
+
+        <div class="timezone-card utc-minus-12-card">
+          <div class="tz-label">Baker Island</div>
+          <div class="tz-time" id="utcMinus12Time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card samoa-card">
+          <div class="tz-label">Samoa</div>
+          <div class="tz-time" id="samoaTime">--:--:--</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: AREA INFORMATION -->
+    <aside class="info-panel">
+      <h2>Area Information</h2>
+
+      <div class="info-row">
+        <span>Area Code</span>
+        <strong id="infoAreaCode">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>City</span>
+        <strong id="infoCity">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>State / Region</span>
+        <strong id="infoState">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Country</span>
+        <strong id="infoCountry">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Country Code</span>
+        <strong id="infoCountryCode">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Time Zone</span>
+        <strong id="infoTimezone">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Local Time</span>
+        <strong id="infoLocalTime">---</strong>
+      </div>
+    </aside>
+  </section>
+
+  <!-- GLOBE / MAP AREA -->
+  <main>
+    <div id="map"></div>
+  </main>
+
+  <!-- MapTiler SDK JS for globe/map -->
+  <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
+
+  <!-- Your main JavaScript file -->
+  <script src="areacode.js"></script>
+</body>
+</html>
