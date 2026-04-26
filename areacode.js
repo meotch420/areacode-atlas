@@ -92,7 +92,7 @@ function initMap() {
     projection: "globe"
   });
 
-  map.addControl(new maptilersdk.NavigationControl(), "top-right");
+// map.addControl(new maptilersdk.NavigationControl(), "top-right");
 
   map.on("load", () => {
     if (typeof map.setProjection === "function") {
