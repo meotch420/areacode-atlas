@@ -9,8 +9,10 @@
     rel="stylesheet"
     href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css"
   />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div class="top-section">
     <div class="top-left">
@@ -30,14 +32,15 @@
     </div>
 
     <div class="timezone-bar">
-      <div class="timezone-card local-card">
-        <div class="tz-label">Local Time</div>
-        <div class="tz-time" id="localTime">--:--:--</div>
-      </div>
-
+      <!-- Row 1 -->
       <div class="timezone-card hawaii-card">
         <div class="tz-label">Hawaii</div>
         <div class="tz-time" id="hawaiiTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card alaska-card">
+        <div class="tz-label">Alaska</div>
+        <div class="tz-time" id="alaskaTime">--:--:--</div>
       </div>
 
       <div class="timezone-card pacific-card">
@@ -69,13 +72,53 @@
         <div class="tz-label">Newfoundland</div>
         <div class="tz-time" id="newfoundlandTime">--:--:--</div>
       </div>
+
+      <!-- Row 2 -->
+      <div class="timezone-card brazil-card">
+        <div class="tz-label">Brazil</div>
+        <div class="tz-time" id="brazilTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card southgeorgia-card">
+        <div class="tz-label">S. Georgia</div>
+        <div class="tz-time" id="southGeorgiaTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card azores-card">
+        <div class="tz-label">Azores</div>
+        <div class="tz-time" id="azoresTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card utc-card">
+        <div class="tz-label">UTC</div>
+        <div class="tz-time" id="utcTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card london-card">
+        <div class="tz-label">London</div>
+        <div class="tz-time" id="londonTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card europe-card">
+        <div class="tz-label">Central Europe</div>
+        <div class="tz-time" id="centralEuropeTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card israel-card">
+        <div class="tz-label">Israel</div>
+        <div class="tz-time" id="israelTime">--:--:--</div>
+      </div>
+
+      <div class="timezone-card gulf-card">
+        <div class="tz-label">Gulf</div>
+        <div class="tz-time" id="gulfTime">--:--:--</div>
+      </div>
     </div>
 
     <div id="infoPanel">
       <div class="info-title">Area Information</div>
 
       <div class="info-row info-row-2">
-        <div><strong>Area Code:</strong> <span id="info-area-code">-</span></div>
         <div><strong>City:</strong> <span id="info-city">-</span></div>
         <div><strong>State:</strong> <span id="info-state">-</span></div>
         <div><strong>Timezone:</strong> <span id="info-timezone">-</span></div>
