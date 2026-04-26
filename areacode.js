@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
   const DATA_FILE = "area_code_data.json";
-  const STATES_FILE = "timezones.geojson";
+  const TIMEZONES_FILE = "timezones.geojson";
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
   function getEl(...ids) {
@@ -70,16 +70,32 @@ window.addEventListener("DOMContentLoaded", () => {
     "America/Montreal": "Eastern",
     "America/Nassau": "Eastern",
     "America/Cayman": "Eastern",
+    "America/Indiana/Indianapolis": "Eastern",
+    "America/Indiana/Vincennes": "Eastern",
+    "America/Indiana/Winamac": "Eastern",
+    "America/Indiana/Marengo": "Eastern",
+    "America/Indiana/Petersburg": "Eastern",
+    "America/Indiana/Vevay": "Eastern",
+    "America/Kentucky/Louisville": "Eastern",
+    "America/Kentucky/Monticello": "Eastern",
 
     "America/Chicago": "Central",
     "America/Winnipeg": "Central",
     "America/Mexico_City": "Central",
     "America/Regina": "Central",
+    "America/Indiana/Knox": "Central",
+    "America/Indiana/Tell_City": "Central",
+    "America/Menominee": "Central",
+    "America/North_Dakota/Center": "Central",
+    "America/North_Dakota/New_Salem": "Central",
+    "America/North_Dakota/Beulah": "Central",
 
     "America/Denver": "Mountain",
     "America/Edmonton": "Mountain",
     "America/Phoenix": "Mountain",
     "America/Boise": "Mountain",
+    "America/Ciudad_Juarez": "Mountain",
+    "America/Ojinaga": "Mountain",
 
     "America/Los_Angeles": "Pacific",
     "America/Vancouver": "Pacific",
@@ -90,6 +106,7 @@ window.addEventListener("DOMContentLoaded", () => {
     "America/Nome": "Alaska",
     "America/Sitka": "Alaska",
     "America/Yakutat": "Alaska",
+    "America/Metlakatla": "Alaska",
 
     "Pacific/Honolulu": "Hawaii",
 
@@ -103,6 +120,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     "Pacific/Guam": "Chamorro",
     "Pacific/Saipan": "Chamorro",
+
     "Pacific/Pago_Pago": "Samoa"
   };
 
@@ -166,7 +184,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function getTimezoneColor(label) {
-    return timezoneColors[label] || "#7f8c8d";
+    return timezoneColors[label] || timezoneColors.Various;
   }
 
   function getTimezoneLabelFromTzid(tzid) {
@@ -176,20 +194,115 @@ window.addEventListener("DOMContentLoaded", () => {
   function getTimezoneLabelFromFeature(feature) {
     const props = feature.properties || {};
 
-    const possibleTzids = [
+    const possibleValues = [
       props.__tz_label,
       props.tz_name1st,
       props.tzid,
+      props.TZID,
       props.timezone,
+      props.TimeZone,
       props.tz_name,
-      props.zone
-    ].filter(Boolean);
+      props.zone,
+      props.Zone,
+      props.name,
+      props.NAME,
+      props.Name
+    ]
+      .filter(Boolean)
+      .map((value) => String(value));
 
-    for (const tzid of possibleTzids) {
-      if (timezoneColors[tzid]) return tzid;
+    for (const value of possibleValues) {
+      if (timezoneColors[value]) return value;
 
-      const mapped = getTimezoneLabelFromTzid(tzid);
+      const mapped = getTimezoneLabelFromTzid(value);
       if (mapped) return mapped;
+    }
+
+    const joined = possibleValues.join(" ").toLowerCase();
+
+    if (joined.includes("st_johns") || joined.includes("newfoundland")) {
+      return "Newfoundland";
+    }
+
+    if (
+      joined.includes("halifax") ||
+      joined.includes("glace_bay") ||
+      joined.includes("moncton") ||
+      joined.includes("puerto_rico") ||
+      joined.includes("bermuda") ||
+      joined.includes("atlantic")
+    ) {
+      return "Atlantic";
+    }
+
+    if (
+      joined.includes("new_york") ||
+      joined.includes("detroit") ||
+      joined.includes("toronto") ||
+      joined.includes("montreal") ||
+      joined.includes("nassau") ||
+      joined.includes("cayman") ||
+      joined.includes("indiana") ||
+      joined.includes("kentucky") ||
+      joined.includes("eastern")
+    ) {
+      return "Eastern";
+    }
+
+    if (
+      joined.includes("chicago") ||
+      joined.includes("winnipeg") ||
+      joined.includes("mexico_city") ||
+      joined.includes("regina") ||
+      joined.includes("central")
+    ) {
+      return "Central";
+    }
+
+    if (
+      joined.includes("denver") ||
+      joined.includes("edmonton") ||
+      joined.includes("phoenix") ||
+      joined.includes("boise") ||
+      joined.includes("mountain")
+    ) {
+      return "Mountain";
+    }
+
+    if (
+      joined.includes("los_angeles") ||
+      joined.includes("vancouver") ||
+      joined.includes("tijuana") ||
+      joined.includes("pacific")
+    ) {
+      return "Pacific";
+    }
+
+    if (
+      joined.includes("anchorage") ||
+      joined.includes("juneau") ||
+      joined.includes("nome") ||
+      joined.includes("sitka") ||
+      joined.includes("yakutat") ||
+      joined.includes("alaska")
+    ) {
+      return "Alaska";
+    }
+
+    if (joined.includes("honolulu") || joined.includes("hawaii")) {
+      return "Hawaii";
+    }
+
+    if (
+      joined.includes("guam") ||
+      joined.includes("saipan") ||
+      joined.includes("chamorro")
+    ) {
+      return "Chamorro";
+    }
+
+    if (joined.includes("pago_pago") || joined.includes("samoa")) {
+      return "Samoa";
     }
 
     const possibleUtc = [
@@ -203,7 +316,7 @@ window.addEventListener("DOMContentLoaded", () => {
       if (utcToLabel[utc]) return utcToLabel[utc];
     }
 
-    return null;
+    return "Various";
   }
 
   function clearInfo() {
@@ -349,8 +462,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const filteredFeatures = data.features
       .filter((feature) => !isWaterOnlyTimezoneFeature(feature))
       .map((feature, index) => {
-        const tzLabel = getTimezoneLabelFromFeature(feature);
-        if (!tzLabel) return null;
+        const tzLabel = getTimezoneLabelFromFeature(feature) || "Various";
 
         return {
           ...feature,
@@ -360,10 +472,11 @@ window.addEventListener("DOMContentLoaded", () => {
             __tz_label: tzLabel
           }
         };
-      })
-      .filter(Boolean);
+      });
 
-    console.log("Timezone features found:", filteredFeatures.length);
+    console.log("Original timezone features:", data.features.length);
+    console.log("Timezone features drawn:", filteredFeatures.length);
+    console.log("Sample timezone properties:", filteredFeatures[0]?.properties);
 
     const normalized = {
       type: "FeatureCollection",
@@ -383,31 +496,20 @@ window.addEventListener("DOMContentLoaded", () => {
         "fill-color": [
           "match",
           ["get", "__tz_label"],
-          "Eastern",
-          getTimezoneColor("Eastern"),
-          "Central",
-          getTimezoneColor("Central"),
-          "Mountain",
-          getTimezoneColor("Mountain"),
-          "Pacific",
-          getTimezoneColor("Pacific"),
-          "Alaska",
-          getTimezoneColor("Alaska"),
-          "Hawaii",
-          getTimezoneColor("Hawaii"),
-          "Atlantic",
-          getTimezoneColor("Atlantic"),
-          "Newfoundland",
-          getTimezoneColor("Newfoundland"),
-          "Chamorro",
-          getTimezoneColor("Chamorro"),
-          "Samoa",
-          getTimezoneColor("Samoa"),
-          "Various",
-          getTimezoneColor("Various"),
-          "#7f8c8d"
+          "Eastern", getTimezoneColor("Eastern"),
+          "Central", getTimezoneColor("Central"),
+          "Mountain", getTimezoneColor("Mountain"),
+          "Pacific", getTimezoneColor("Pacific"),
+          "Alaska", getTimezoneColor("Alaska"),
+          "Hawaii", getTimezoneColor("Hawaii"),
+          "Atlantic", getTimezoneColor("Atlantic"),
+          "Newfoundland", getTimezoneColor("Newfoundland"),
+          "Chamorro", getTimezoneColor("Chamorro"),
+          "Samoa", getTimezoneColor("Samoa"),
+          "Various", getTimezoneColor("Various"),
+          "#64748b"
         ],
-        "fill-opacity": 0.45
+        "fill-opacity": 0.7
       }
     });
 
@@ -416,7 +518,7 @@ window.addEventListener("DOMContentLoaded", () => {
       type: "line",
       source: "timezones",
       paint: {
-        "line-color": "#0f172a",
+        "line-color": "#020617",
         "line-width": 1
       }
     });
@@ -424,12 +526,12 @@ window.addEventListener("DOMContentLoaded", () => {
     console.log("Timezone layer added successfully");
   }
 
-  async function loadStatesData() {
+  async function loadTimezoneData() {
     try {
-      const res = await fetch(STATES_FILE);
+      const res = await fetch(`${TIMEZONES_FILE}?v=${Date.now()}`);
 
       if (!res.ok) {
-        throw new Error(`Failed to load ${STATES_FILE}: ${res.status}`);
+        throw new Error(`Failed to load ${TIMEZONES_FILE}: ${res.status}`);
       }
 
       const data = await res.json();
@@ -441,7 +543,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   async function loadAreaCodeData() {
     try {
-      const res = await fetch(DATA_FILE);
+      const res = await fetch(`${DATA_FILE}?v=${Date.now()}`);
 
       if (!res.ok) {
         throw new Error(`Failed to load ${DATA_FILE}: ${res.status}`);
@@ -478,7 +580,7 @@ window.addEventListener("DOMContentLoaded", () => {
       mapReady = true;
       console.log("Globe loaded successfully");
 
-      await loadStatesData();
+      await loadTimezoneData();
     });
 
     map.on("error", (err) => {
