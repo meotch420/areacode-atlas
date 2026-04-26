@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
   const DATA_FILE = "area_code_data.json";
-  const STATES_FILE = "us_states.geojson";
+  const STATES_FILE = "timezones.geojson";
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
   function getEl(...ids) {
