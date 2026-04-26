@@ -12,7 +12,6 @@ const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
 let map;
 let resultMarker = null;
-let selectedZoneKey = null;
 let areaCodeData = {};
 
 /* =====================================================
@@ -452,13 +451,6 @@ function selectTimeZone(zoneKey, shouldFly = false) {
   const zone = TIME_ZONE_CARDS.find((item) => item.key === zoneKey);
   if (!zone) return;
 
-  selectedZoneKey = zone.key;
-
-  document.querySelectorAll(".timezone-card").forEach((card) => {
-    card.classList.toggle("active", card.dataset.zoneKey === zone.key);
-    card.classList.toggle("selected", card.dataset.zoneKey === zone.key);
-  });
-
   updateInfoPanel({
     areaCode: "---",
     city: zone.label,
@@ -587,10 +579,6 @@ function showCountryResult(country) {
   flyToLocation(country.center, country.zoom);
   placeMarker(country.center, country.name);
 
-  if (country.zoneKey) {
-    selectTimeZone(country.zoneKey, false);
-  }
-
   setStatus(`${country.code} found: ${country.name}.`);
 }
 
@@ -608,10 +596,6 @@ function showAreaCodeResult(code, data) {
   if (result.center) {
     flyToLocation(result.center, result.zoom);
     placeMarker(result.center, `${code} - ${result.city}`);
-  }
-
-  if (result.zoneKey) {
-    selectTimeZone(result.zoneKey, false);
   }
 
   setStatus(`${code} found: ${result.city}${result.state ? ", " + result.state : ""}.`);
