@@ -6,137 +6,261 @@
 
   <title>Area Code Atlas</title>
 
-  <!-- MapTiler SDK CSS -->
   <link
     rel="stylesheet"
     href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css"
   />
 
-  <!-- Your CSS -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <section class="top-section">
-    <!-- LEFT SIDE: TITLE + SEARCH -->
     <div class="top-left">
       <header>
         <h1>Area Code Atlas</h1>
-        <p>Navigate North America by Area Code</p>
+        <p>Navigate Country Codes and Area Codes</p>
       </header>
 
       <form class="search" id="searchForm">
         <input
           id="areaSearch"
           type="text"
-          inputmode="numeric"
-          maxlength="3"
-          placeholder="Enter Area Code"
+          placeholder="Area code or country code"
           autocomplete="off"
         />
 
-        <button type="submit" id="searchBtn">Search</button>
+        <button type="submit">Search</button>
       </form>
 
       <div class="status-message" id="statusMessage">
-        Enter a 3-digit area code to search.
+        Enter a 3-digit area code or country code like +972.
       </div>
     </div>
 
-    <!-- CENTER: TIME ZONE BOXES BETWEEN TWO LINES -->
-    <div class="timezone-center">
-      <div class="timezone-line"></div>
-
-      <div class="timezone-bar">
-        <div class="timezone-card local-card">
-          <div class="tz-label">Local Time</div>
-          <div class="tz-time" id="localTime">--:--:--</div>
+    <div class="timezone-wrap">
+      <div class="timezone-grid">
+        <div class="timezone-card tz-hawaii" data-tz="Pacific/Honolulu" data-lng="-157.8583" data-lat="21.3069" data-zoom="4">
+          <div class="tz-label">HAWAII</div>
+          <div class="tz-name">Hawaii Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
 
-        <div class="timezone-card newfoundland-card">
-          <div class="tz-label">Newfoundland</div>
-          <div class="tz-time" id="newfoundlandTime">--:--:--</div>
+        <div class="timezone-card tz-alaska" data-tz="America/Anchorage" data-lng="-149.9003" data-lat="61.2181" data-zoom="4">
+          <div class="tz-label">ALASKA</div>
+          <div class="tz-name">Alaska Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
 
-        <div class="timezone-card atlantic-card">
-          <div class="tz-label">Atlantic</div>
-          <div class="tz-time" id="atlanticTime">--:--:--</div>
+        <div class="timezone-card tz-pacific" data-tz="America/Los_Angeles" data-lng="-118.2437" data-lat="34.0522" data-zoom="4">
+          <div class="tz-label">PACIFIC</div>
+          <div class="tz-name">Pacific Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
 
-        <div class="timezone-card eastern-card">
-          <div class="tz-label">Eastern</div>
-          <div class="tz-time" id="easternTime">--:--:--</div>
+        <div class="timezone-card tz-mountain" data-tz="America/Denver" data-lng="-104.9903" data-lat="39.7392" data-zoom="4">
+          <div class="tz-label">MOUNTAIN</div>
+          <div class="tz-name">Mountain Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
 
-        <div class="timezone-card central-card">
-          <div class="tz-label">Central</div>
-          <div class="tz-time" id="centralTime">--:--:--</div>
+        <div class="timezone-card tz-central" data-tz="America/Chicago" data-lng="-87.6298" data-lat="41.8781" data-zoom="4">
+          <div class="tz-label">CENTRAL</div>
+          <div class="tz-name">Central Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
 
-        <div class="timezone-card mountain-card">
-          <div class="tz-label">Mountain</div>
-          <div class="tz-time" id="mountainTime">--:--:--</div>
+        <div class="timezone-card tz-eastern" data-tz="America/New_York" data-lng="-74.0060" data-lat="40.7128" data-zoom="4">
+          <div class="tz-label">EASTERN</div>
+          <div class="tz-name">Eastern Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
 
-        <div class="timezone-card pacific-card">
-          <div class="tz-label">Pacific</div>
-          <div class="tz-time" id="pacificTime">--:--:--</div>
+        <div class="timezone-card tz-atlantic" data-tz="America/Halifax" data-lng="-63.5752" data-lat="44.6488" data-zoom="4">
+          <div class="tz-label">ATLANTIC</div>
+          <div class="tz-name">Atlantic Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
 
-        <div class="timezone-card alaska-card">
-          <div class="tz-label">Alaska</div>
-          <div class="tz-time" id="alaskaTime">--:--:--</div>
+        <div class="timezone-card tz-newfoundland" data-tz="America/St_Johns" data-lng="-52.7126" data-lat="47.5615" data-zoom="5">
+          <div class="tz-label">NEWFOUNDLAND</div>
+          <div class="tz-name">Newfoundland Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
 
-        <div class="timezone-card hawaii-card">
-          <div class="tz-label">Hawaii</div>
-          <div class="tz-time" id="hawaiiTime">--:--:--</div>
+        <div class="timezone-card tz-brasilia" data-tz="America/Sao_Paulo" data-lng="-47.8825" data-lat="-15.7942" data-zoom="4">
+          <div class="tz-label">BRASÍLIA</div>
+          <div class="tz-name">Brasília Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-south-georgia" data-tz="Atlantic/South_Georgia" data-lng="-36.5879" data-lat="-54.4296" data-zoom="4">
+          <div class="tz-label">SOUTH GEORGIA</div>
+          <div class="tz-name">South Georgia Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-azores" data-tz="Atlantic/Azores" data-lng="-25.6756" data-lat="37.7412" data-zoom="5">
+          <div class="tz-label">AZORES</div>
+          <div class="tz-name">Azores Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-greenwich" data-tz="Etc/UTC" data-lng="0.0000" data-lat="51.4769" data-zoom="4">
+          <div class="tz-label">GREENWICH</div>
+          <div class="tz-name">Greenwich Mean Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-london" data-tz="Europe/London" data-lng="-0.1276" data-lat="51.5072" data-zoom="5">
+          <div class="tz-label">LONDON</div>
+          <div class="tz-name">UK Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-central-europe" data-tz="Europe/Berlin" data-lng="13.4050" data-lat="52.5200" data-zoom="4">
+          <div class="tz-label">CENTRAL EUROPE</div>
+          <div class="tz-name">Central European Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-israel" data-tz="Asia/Jerusalem" data-lng="34.7818" data-lat="32.0853" data-zoom="6">
+          <div class="tz-label">ISRAEL</div>
+          <div class="tz-name">Israel Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-gulf" data-tz="Asia/Dubai" data-lng="55.2708" data-lat="25.2048" data-zoom="5">
+          <div class="tz-label">GULF</div>
+          <div class="tz-name">Gulf Standard Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-pakistan" data-tz="Asia/Karachi" data-lng="67.0011" data-lat="24.8607" data-zoom="5">
+          <div class="tz-label">PAKISTAN</div>
+          <div class="tz-name">Pakistan Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-bangladesh" data-tz="Asia/Dhaka" data-lng="90.4125" data-lat="23.8103" data-zoom="6">
+          <div class="tz-label">BANGLADESH</div>
+          <div class="tz-name">Bangladesh Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-indochina" data-tz="Asia/Bangkok" data-lng="100.5018" data-lat="13.7563" data-zoom="5">
+          <div class="tz-label">INDOCHINA</div>
+          <div class="tz-name">Indochina Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-china" data-tz="Asia/Singapore" data-lng="103.8198" data-lat="1.3521" data-zoom="5">
+          <div class="tz-label">CHINA / SINGAPORE</div>
+          <div class="tz-name">China / Singapore Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-japan" data-tz="Asia/Tokyo" data-lng="139.6917" data-lat="35.6895" data-zoom="5">
+          <div class="tz-label">JAPAN / KOREA</div>
+          <div class="tz-name">Japan / Korea Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-australian-eastern" data-tz="Australia/Sydney" data-lng="151.2093" data-lat="-33.8688" data-zoom="4">
+          <div class="tz-label">AUSTRALIAN EASTERN</div>
+          <div class="tz-name">Australian Eastern Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-solomon" data-tz="Pacific/Guadalcanal" data-lng="160.1562" data-lat="-9.4456" data-zoom="5">
+          <div class="tz-label">SOLOMON ISLANDS</div>
+          <div class="tz-name">Solomon Islands Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-new-zealand" data-tz="Pacific/Auckland" data-lng="174.7633" data-lat="-36.8485" data-zoom="5">
+          <div class="tz-label">NEW ZEALAND</div>
+          <div class="tz-name">New Zealand Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-tonga" data-tz="Pacific/Tongatapu" data-lng="-175.1982" data-lat="-21.1789" data-zoom="5">
+          <div class="tz-label">TONGA</div>
+          <div class="tz-name">Tonga Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-line-islands" data-tz="Pacific/Kiritimati" data-lng="-157.3768" data-lat="1.8721" data-zoom="5">
+          <div class="tz-label">LINE ISLANDS</div>
+          <div class="tz-name">Line Islands Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-baker" data-tz="Etc/GMT+12" data-lng="-176.4797" data-lat="0.1936" data-zoom="5">
+          <div class="tz-label">BAKER ISLAND</div>
+          <div class="tz-name">Baker Island Time</div>
+          <div class="tz-time">--:--:--</div>
+        </div>
+
+        <div class="timezone-card tz-samoa" data-tz="Pacific/Pago_Pago" data-lng="-170.7020" data-lat="-14.2756" data-zoom="5">
+          <div class="tz-label">SAMOA</div>
+          <div class="tz-name">Samoa Time</div>
+          <div class="tz-time">--:--:--</div>
         </div>
       </div>
-
-      <div class="timezone-line"></div>
     </div>
 
-    <!-- RIGHT SIDE: AREA INFORMATION -->
     <aside class="info-panel">
       <h2>Area Information</h2>
 
       <div class="info-row">
-        <span class="info-label">Area Code</span>
-        <span class="info-value" id="infoAreaCode">---</span>
+        <span>Area Code</span>
+        <strong id="infoAreaCode">---</strong>
       </div>
 
       <div class="info-row">
-        <span class="info-label">Country Code</span>
-        <span class="info-value" id="infoCountryCode">---</span>
+        <span>City</span>
+        <strong id="infoCity">---</strong>
       </div>
 
       <div class="info-row">
-        <span class="info-label">City</span>
-        <span class="info-value" id="infoCity">---</span>
+        <span>State / Region</span>
+        <strong id="infoState">---</strong>
       </div>
 
       <div class="info-row">
-        <span class="info-label">State / Province</span>
-        <span class="info-value" id="infoState">---</span>
+        <span>Country</span>
+        <strong id="infoCountry">---</strong>
       </div>
 
       <div class="info-row">
-        <span class="info-label">Time Zone</span>
-        <span class="info-value" id="infoTimezone">---</span>
+        <span>Country Code</span>
+        <strong id="infoCountryCode">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Time Zone</span>
+        <strong id="infoTimezone">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Local Time</span>
+        <strong id="infoLocalTime">---</strong>
       </div>
     </aside>
   </section>
 
-  <!-- MAP -->
   <main class="map-section">
     <div id="map"></div>
   </main>
 
-  <!-- MAPTILER SDK JS -->
-  <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
+  <section class="ad-space">
+    <div class="ad-placeholder">
+      Ad Space
+    </div>
+  </section>
 
-  <!-- YOUR JAVASCRIPT -->
+  <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
   <script src="areacode.js"></script>
 </body>
 </html>
