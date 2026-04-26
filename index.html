@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Area Code Atlas</title>
 
   <link
@@ -14,119 +15,71 @@
 </head>
 
 <body>
-  <div class="top-section">
+  <section class="top-section">
     <div class="top-left">
       <header>
         <h1>Area Code Atlas</h1>
-        <p>Navigate by Country Code or Area Code</p>
+        <p>Navigate North America by Area Code</p>
       </header>
 
       <form class="search" id="searchForm">
         <input
           id="areaSearch"
           type="text"
-          placeholder="Enter Area Code (ex: 212)"
+          inputmode="numeric"
+          maxlength="3"
+          placeholder="Enter Area Code"
+          autocomplete="off"
         />
-        <button type="submit" id="searchBtn">Search</button>
+        <button type="submit">Search</button>
       </form>
-    </div>
 
-    <div class="timezone-bar">
-      <!-- Row 1 -->
-      <div class="timezone-card hawaii-card">
-        <div class="tz-label">Hawaii</div>
-        <div class="tz-time" id="hawaiiTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card alaska-card">
-        <div class="tz-label">Alaska</div>
-        <div class="tz-time" id="alaskaTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card pacific-card">
-        <div class="tz-label">Pacific</div>
-        <div class="tz-time" id="pacificTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card mountain-card">
-        <div class="tz-label">Mountain</div>
-        <div class="tz-time" id="mountainTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card central-card">
-        <div class="tz-label">Central</div>
-        <div class="tz-time" id="centralTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card eastern-card">
-        <div class="tz-label">Eastern</div>
-        <div class="tz-time" id="easternTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card atlantic-card">
-        <div class="tz-label">Atlantic</div>
-        <div class="tz-time" id="atlanticTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card newfoundland-card">
-        <div class="tz-label">Newfoundland</div>
-        <div class="tz-time" id="newfoundlandTime">--:--:--</div>
-      </div>
-
-      <!-- Row 2 -->
-      <div class="timezone-card brazil-card">
-        <div class="tz-label">Brazil</div>
-        <div class="tz-time" id="brazilTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card southgeorgia-card">
-        <div class="tz-label">S. Georgia</div>
-        <div class="tz-time" id="southGeorgiaTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card azores-card">
-        <div class="tz-label">Azores</div>
-        <div class="tz-time" id="azoresTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card utc-card">
-        <div class="tz-label">UTC</div>
-        <div class="tz-time" id="utcTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card london-card">
-        <div class="tz-label">London</div>
-        <div class="tz-time" id="londonTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card europe-card">
-        <div class="tz-label">Central Europe</div>
-        <div class="tz-time" id="centralEuropeTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card israel-card">
-        <div class="tz-label">Israel</div>
-        <div class="tz-time" id="israelTime">--:--:--</div>
-      </div>
-
-      <div class="timezone-card gulf-card">
-        <div class="tz-label">Gulf</div>
-        <div class="tz-time" id="gulfTime">--:--:--</div>
+      <div class="status-message" id="statusMessage">
+        Enter a 3-digit area code to search.
       </div>
     </div>
 
-    <div id="infoPanel">
-      <div class="info-title">Area Information</div>
+    <aside class="info-panel">
+      <h2>Area Information</h2>
 
-      <div class="info-row info-row-2">
-        <div><strong>City:</strong> <span id="info-city">-</span></div>
-        <div><strong>State:</strong> <span id="info-state">-</span></div>
-        <div><strong>Timezone:</strong> <span id="info-timezone">-</span></div>
+      <div class="info-row">
+        <span>Area Code</span>
+        <strong id="areaCodeValue">---</strong>
       </div>
-    </div>
-  </div>
 
-  <div id="map"></div>
+      <div class="info-row">
+        <span>City</span>
+        <strong id="cityValue">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>State / Province</span>
+        <strong id="stateValue">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Country</span>
+        <strong id="countryValue">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Time Zone</span>
+        <strong id="timezoneValue">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Local Time</span>
+        <strong id="selectedLocalTime">--:--:--</strong>
+      </div>
+    </aside>
+
+    <section class="timezone-bar" id="timezoneBar"></section>
+  </section>
+
+  <main class="map-wrapper">
+    <div id="map"></div>
+    <div class="map-notice hidden" id="mapNotice"></div>
+  </main>
 
   <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
   <script src="areacode.js"></script>
