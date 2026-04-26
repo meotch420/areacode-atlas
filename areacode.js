@@ -1,6 +1,5 @@
 window.addEventListener("DOMContentLoaded", () => {
   const DATA_FILE = "area_code_data.json";
-  const COUNTRY_CODES_FILE = "country_codes.json";
   const TIMEZONES_FILE = "timezones.geojson";
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
@@ -23,20 +22,25 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const infoCity = getEl("info-city", "infoCity");
   const infoState = getEl("info-state", "infoState");
-  const infoAreaCode = getEl("info-area-code", "infoAreaCode");
   const infoTimezone = getEl("info-timezone", "infoTimezone");
 
-  const liveTimeEl = getEl("clock", "infoTime");
-
-  const localTimeEl = getEl("localTime");
+  const hawaiiTimeEl = getEl("hawaiiTime");
+  const alaskaTimeEl = getEl("alaskaTime");
   const pacificTimeEl = getEl("pacificTime");
   const mountainTimeEl = getEl("mountainTime");
   const centralTimeEl = getEl("centralTime");
   const easternTimeEl = getEl("easternTime");
-  const alaskaTimeEl = getEl("alaskaTime");
-  const hawaiiTimeEl = getEl("hawaiiTime");
   const atlanticTimeEl = getEl("atlanticTime");
   const newfoundlandTimeEl = getEl("newfoundlandTime");
+
+  const brazilTimeEl = getEl("brazilTime");
+  const southGeorgiaTimeEl = getEl("southGeorgiaTime");
+  const azoresTimeEl = getEl("azoresTime");
+  const utcTimeEl = getEl("utcTime");
+  const londonTimeEl = getEl("londonTime");
+  const centralEuropeTimeEl = getEl("centralEuropeTime");
+  const israelTimeEl = getEl("israelTime");
+  const gulfTimeEl = getEl("gulfTime");
 
   if (!inputEl || !mapEl) {
     console.error("Missing required HTML elements.");
@@ -55,10 +59,20 @@ window.addEventListener("DOMContentLoaded", () => {
     Central: "#e6c35a",
     Mountain: "#f48a7a",
     Pacific: "#11b5d9",
-    Alaska: "#b58ad6",
-    Hawaii: "#ff6fb7",
-    Atlantic: "#ff9f43",
-    Newfoundland: "#ec4899",
+    Alaska: "#60a5fa",
+    Hawaii: "#a78bfa",
+    Atlantic: "#d4af37",
+    Newfoundland: "#a855f7",
+
+    Brazil: "#22c55e",
+    SouthGeorgia: "#14b8a6",
+    Azores: "#38bdf8",
+    UTC: "#cbd5e1",
+    London: "#94a3b8",
+    CentralEurope: "#fb923c",
+    Israel: "#f97316",
+    Gulf: "#e879f9",
+
     Chamorro: "#06b6d4",
     Samoa: "#eab308",
     Various: "#64748b"
@@ -119,44 +133,59 @@ window.addEventListener("DOMContentLoaded", () => {
 
     "America/St_Johns": "Newfoundland",
 
+    "America/Sao_Paulo": "Brazil",
+    "Atlantic/South_Georgia": "SouthGeorgia",
+    "Atlantic/Azores": "Azores",
+    "Etc/UTC": "UTC",
+    "UTC": "UTC",
+    "Europe/London": "London",
+    "Europe/Paris": "CentralEurope",
+    "Europe/Berlin": "CentralEurope",
+    "Europe/Madrid": "CentralEurope",
+    "Europe/Rome": "CentralEurope",
+    "Europe/Amsterdam": "CentralEurope",
+    "Europe/Brussels": "CentralEurope",
+    "Europe/Vienna": "CentralEurope",
+    "Europe/Warsaw": "CentralEurope",
+    "Asia/Jerusalem": "Israel",
+    "Asia/Dubai": "Gulf",
+    "Asia/Muscat": "Gulf",
+    "Asia/Qatar": "Gulf",
+    "Asia/Bahrain": "Gulf",
+    "Asia/Kuwait": "Gulf",
+    "Asia/Riyadh": "Gulf",
+
     "Pacific/Guam": "Chamorro",
     "Pacific/Saipan": "Chamorro",
-
     "Pacific/Pago_Pago": "Samoa"
   };
 
   const utcToLabel = {
+    "UTC-11:00": "Samoa",
+    "UTC-10:00": "Hawaii",
+    "UTC-09:00": "Alaska",
+    "UTC-08:00": "Pacific",
+    "UTC-07:00": "Mountain",
+    "UTC-06:00": "Central",
+    "UTC-05:00": "Eastern",
     "UTC-04:00": "Atlantic",
     "UTC-03:30": "Newfoundland",
-    "UTC-05:00": "Eastern",
-    "UTC-06:00": "Central",
-    "UTC-07:00": "Mountain",
-    "UTC-08:00": "Pacific",
-    "UTC-09:00": "Alaska",
-    "UTC-10:00": "Hawaii",
-    "UTC+10:00": "Chamorro",
-    "UTC-11:00": "Samoa"
+    "UTC-03:00": "Brazil",
+    "UTC-02:00": "SouthGeorgia",
+    "UTC-01:00": "Azores",
+    "UTC+00:00": "UTC",
+    "UTC+01:00": "London",
+    "UTC+02:00": "CentralEurope",
+    "UTC+03:00": "Israel",
+    "UTC+04:00": "Gulf",
+    "UTC+10:00": "Chamorro"
   };
 
   let map = null;
   let mapReady = false;
-
   let areaDataLoaded = false;
-  let countryDataLoaded = false;
-
   let areaCodesByCode = {};
-  let countryCodes = [];
-
   let currentMarker = null;
-
-  function formatLocalTime() {
-    return new Date().toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true
-    });
-  }
 
   function formatTimeForZone(timeZone) {
     try {
@@ -174,19 +203,23 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateAllClocks() {
-    const localNow = formatLocalTime();
-
-    setText(liveTimeEl, localNow);
-    setText(localTimeEl, localNow);
-
+    setText(hawaiiTimeEl, formatTimeForZone("Pacific/Honolulu"));
+    setText(alaskaTimeEl, formatTimeForZone("America/Anchorage"));
     setText(pacificTimeEl, formatTimeForZone("America/Los_Angeles"));
     setText(mountainTimeEl, formatTimeForZone("America/Denver"));
     setText(centralTimeEl, formatTimeForZone("America/Chicago"));
     setText(easternTimeEl, formatTimeForZone("America/New_York"));
-    setText(alaskaTimeEl, formatTimeForZone("America/Anchorage"));
-    setText(hawaiiTimeEl, formatTimeForZone("Pacific/Honolulu"));
     setText(atlanticTimeEl, formatTimeForZone("America/Halifax"));
     setText(newfoundlandTimeEl, formatTimeForZone("America/St_Johns"));
+
+    setText(brazilTimeEl, formatTimeForZone("America/Sao_Paulo"));
+    setText(southGeorgiaTimeEl, formatTimeForZone("Atlantic/South_Georgia"));
+    setText(azoresTimeEl, formatTimeForZone("Atlantic/Azores"));
+    setText(utcTimeEl, formatTimeForZone("Etc/UTC"));
+    setText(londonTimeEl, formatTimeForZone("Europe/London"));
+    setText(centralEuropeTimeEl, formatTimeForZone("Europe/Paris"));
+    setText(israelTimeEl, formatTimeForZone("Asia/Jerusalem"));
+    setText(gulfTimeEl, formatTimeForZone("Asia/Dubai"));
   }
 
   function getTimezoneColor(label) {
@@ -300,6 +333,70 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     if (
+      joined.includes("sao_paulo") ||
+      joined.includes("sao paulo") ||
+      joined.includes("brazil")
+    ) {
+      return "Brazil";
+    }
+
+    if (
+      joined.includes("south_georgia") ||
+      joined.includes("south georgia")
+    ) {
+      return "SouthGeorgia";
+    }
+
+    if (joined.includes("azores")) {
+      return "Azores";
+    }
+
+    if (
+      joined.includes("utc") ||
+      joined.includes("greenwich") ||
+      joined.includes("gmt")
+    ) {
+      return "UTC";
+    }
+
+    if (joined.includes("london")) {
+      return "London";
+    }
+
+    if (
+      joined.includes("paris") ||
+      joined.includes("berlin") ||
+      joined.includes("madrid") ||
+      joined.includes("rome") ||
+      joined.includes("amsterdam") ||
+      joined.includes("brussels") ||
+      joined.includes("vienna") ||
+      joined.includes("warsaw") ||
+      joined.includes("central europe")
+    ) {
+      return "CentralEurope";
+    }
+
+    if (
+      joined.includes("jerusalem") ||
+      joined.includes("israel")
+    ) {
+      return "Israel";
+    }
+
+    if (
+      joined.includes("dubai") ||
+      joined.includes("muscat") ||
+      joined.includes("qatar") ||
+      joined.includes("bahrain") ||
+      joined.includes("kuwait") ||
+      joined.includes("riyadh") ||
+      joined.includes("gulf")
+    ) {
+      return "Gulf";
+    }
+
+    if (
       joined.includes("guam") ||
       joined.includes("saipan") ||
       joined.includes("chamorro")
@@ -326,32 +423,23 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearInfo() {
-    setText(infoAreaCode, "-");
     setText(infoCity, "-");
     setText(infoState, "-");
     setText(infoTimezone, "-");
   }
 
-  function updateAreaInfo(code, data) {
+  function updateAreaInfo(data) {
     if (!data) {
       clearInfo();
       return;
     }
 
-    setText(infoAreaCode, code || "-");
     setText(infoCity, data.city || "-");
     setText(infoState, data.state || data.province || "-");
     setText(
       infoTimezone,
       data.timezone || getTimezoneLabelFromTzid(data.tzid) || "-"
     );
-  }
-
-  function updateCountryInfo(match) {
-    setText(infoAreaCode, match.matchedCode || "-");
-    setText(infoCity, match.country || "-");
-    setText(infoState, `${match.iso2 || "-"} / ${match.iso3 || "-"}`);
-    setText(infoTimezone, match.nanp ? "NANP: Yes" : "NANP: No");
   }
 
   function clearMarker() {
@@ -394,26 +482,10 @@ window.addEventListener("DOMContentLoaded", () => {
       alert(`Area code ${cleanCode} not found.`);
       clearInfo();
       clearMarker();
-      showSearchResultBox("No Match Found", [
-        ["Search", cleanCode],
-        ["Try", "Use an area code like 212 or a country code like +972"]
-      ]);
       return;
     }
 
-    updateAreaInfo(cleanCode, item);
-
-    const countryInfo = getCountryInfoForAreaCode(cleanCode, item);
-
-    showSearchResultBox("Area Information", [
-      ["Area Code", cleanCode],
-      ["City", item.city || "N/A"],
-      ["State / Region", item.state || item.province || "N/A"],
-      ["Time Zone", item.timezone || getTimezoneLabelFromTzid(item.tzid) || "N/A"],
-      ["TZ ID", item.tzid || "N/A"],
-      ["Country", countryInfo.country],
-      ["Country Calling Code", countryInfo.callingCode]
-    ]);
+    updateAreaInfo(item);
 
     const lat = Number(item.lat);
     const lng = Number(item.lng);
@@ -436,162 +508,20 @@ window.addEventListener("DOMContentLoaded", () => {
     const rawInput = inputEl.value.trim();
 
     if (!rawInput) {
-      alert("Enter an area code or country code.");
+      alert("Enter an area code.");
       return;
     }
 
-    const cleanInput = removeSearchWords(rawInput);
-    const digitsOnly = cleanInput.replace(/\D/g, "");
-    const explicitCountrySearch = isExplicitCountrySearch(rawInput);
-
-    /*
-      Important:
-      - Plain 212 searches area code 212.
-      - Plain 972 searches area code 972 if it exists.
-      - To search a country code, use +972, 00972, or country 972.
-    */
-
-    if (explicitCountrySearch) {
-      const countryMatches = findCountryCodeMatches(rawInput);
-
-      if (countryMatches.length > 0) {
-        displayCountryCodeResult(rawInput, countryMatches);
-        return;
-      }
-
-      const possibleAreaCode = extractPossibleAreaCode(cleanInput);
-
-      if (possibleAreaCode && areaCodesByCode[possibleAreaCode]) {
-        selectArea(possibleAreaCode);
-        return;
-      }
-
-      showSearchResultBox("No Country Code Found", [
-        ["Search", rawInput],
-        ["Try", "Use +972, +44, +1-242, or country 972"]
-      ]);
-
-      clearMarker();
-      return;
-    }
-
-    if (digitsOnly.length === 3 && areaCodesByCode[digitsOnly]) {
-      selectArea(digitsOnly);
-      return;
-    }
-
-    const countryMatches = findCountryCodeMatches(rawInput);
-
-    if (countryMatches.length > 0) {
-      displayCountryCodeResult(rawInput, countryMatches);
-      return;
-    }
-
-    const possibleAreaCode = extractPossibleAreaCode(cleanInput);
+    const possibleAreaCode = extractPossibleAreaCode(rawInput);
 
     if (possibleAreaCode && areaCodesByCode[possibleAreaCode]) {
       selectArea(possibleAreaCode);
       return;
     }
 
-    showSearchResultBox("No Match Found", [
-      ["Search", rawInput],
-      ["Try Area Code", "212"],
-      ["Try Country Code", "+972"]
-    ]);
-
+    alert(`Area code ${rawInput} not found.`);
     clearInfo();
     clearMarker();
-  }
-
-  function removeSearchWords(value) {
-    return String(value)
-      .trim()
-      .replace(/^(country|calling|international|country code|calling code)\s+/i, "")
-      .trim();
-  }
-
-  function isExplicitCountrySearch(value) {
-    const text = String(value).trim().toLowerCase();
-
-    return (
-      text.startsWith("+") ||
-      text.startsWith("00") ||
-      text.startsWith("country ") ||
-      text.startsWith("country code ") ||
-      text.startsWith("calling ") ||
-      text.startsWith("calling code ") ||
-      text.startsWith("international ")
-    );
-  }
-
-  function findCountryCodeMatches(rawInput) {
-    if (!countryDataLoaded || !Array.isArray(countryCodes)) {
-      return [];
-    }
-
-    let search = removeSearchWords(rawInput);
-
-    if (search.startsWith("00")) {
-      search = "+" + search.slice(2);
-    }
-
-    const searchDigits = search.replace(/\D/g, "");
-
-    if (!searchDigits) return [];
-
-    const matches = [];
-
-    countryCodes.forEach((country) => {
-      const codes = country.calling_codes || [];
-
-      codes.forEach((code) => {
-        const codeDigits = String(code).replace(/\D/g, "");
-
-        if (codeDigits === searchDigits) {
-          matches.push({
-            ...country,
-            matchedCode: code
-          });
-        }
-      });
-    });
-
-    return matches;
-  }
-
-  function displayCountryCodeResult(rawInput, matches) {
-    clearMarker();
-
-    if (!matches || matches.length === 0) {
-      showSearchResultBox("No Country Code Found", [
-        ["Search", rawInput],
-        ["Try", "+972, +44, +1-242"]
-      ]);
-      return;
-    }
-
-    updateCountryInfo(matches[0]);
-
-    const rows = [];
-
-    rows.push(["Search", rawInput]);
-
-    matches.forEach((match, index) => {
-      const label = matches.length > 1 ? `Match ${index + 1}` : "Country";
-
-      rows.push([label, match.country || "N/A"]);
-      rows.push(["ISO 2", match.iso2 || "N/A"]);
-      rows.push(["ISO 3", match.iso3 || "N/A"]);
-      rows.push(["Calling Code", match.matchedCode || "N/A"]);
-      rows.push(["NANP", match.nanp ? "Yes" : "No"]);
-
-      if (index < matches.length - 1) {
-        rows.push(["---", "---"]);
-      }
-    });
-
-    showSearchResultBox("Country Code Information", rows);
   }
 
   function extractPossibleAreaCode(rawInput) {
@@ -601,21 +531,10 @@ window.addEventListener("DOMContentLoaded", () => {
       return digits;
     }
 
-    /*
-      Allows:
-      +1-212
-      1-212
-      1212
-    */
     if (digits.length === 4 && digits.startsWith("1")) {
       return digits.slice(1);
     }
 
-    /*
-      Allows:
-      2125551212
-      1-212-555-1212
-    */
     if (digits.length === 10) {
       return digits.slice(0, 3);
     }
@@ -625,190 +544,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     return null;
-  }
-
-  function getCountryInfoForAreaCode(areaCode, data) {
-    const state = data.state || data.province || "";
-
-    const canadianRegions = [
-      "AB", "BC", "MB", "NB", "NL", "NS", "NT",
-      "NU", "ON", "PE", "QC", "SK", "YT"
-    ];
-
-    const usRegions = [
-      "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-      "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-      "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-      "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-      "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
-      "DC"
-    ];
-
-    const nanpCountryByAreaCode = {
-      "242": "Bahamas",
-      "246": "Barbados",
-      "264": "Anguilla",
-      "268": "Antigua and Barbuda",
-      "284": "British Virgin Islands",
-      "340": "United States Virgin Islands",
-      "345": "Cayman Islands",
-      "441": "Bermuda",
-      "473": "Grenada",
-      "649": "Turks and Caicos Islands",
-      "658": "Jamaica",
-      "664": "Montserrat",
-      "670": "Northern Mariana Islands",
-      "671": "Guam",
-      "684": "American Samoa",
-      "721": "Sint Maarten",
-      "758": "Saint Lucia",
-      "767": "Dominica",
-      "784": "Saint Vincent and the Grenadines",
-      "787": "Puerto Rico",
-      "809": "Dominican Republic",
-      "829": "Dominican Republic",
-      "849": "Dominican Republic",
-      "868": "Trinidad and Tobago",
-      "869": "Saint Kitts and Nevis",
-      "876": "Jamaica",
-      "939": "Puerto Rico"
-    };
-
-    if (nanpCountryByAreaCode[areaCode]) {
-      return {
-        country: nanpCountryByAreaCode[areaCode],
-        callingCode: "+1-" + areaCode
-      };
-    }
-
-    if (canadianRegions.includes(state)) {
-      return {
-        country: "Canada",
-        callingCode: "+1"
-      };
-    }
-
-    if (usRegions.includes(state)) {
-      return {
-        country: "United States",
-        callingCode: "+1"
-      };
-    }
-
-    return {
-      country: data.country || "NANP Region",
-      callingCode: "+1"
-    };
-  }
-
-  function escapeHTML(value) {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function injectSearchResultStyles() {
-    if (document.getElementById("atlasSearchResultStyles")) return;
-
-    const style = document.createElement("style");
-    style.id = "atlasSearchResultStyles";
-
-    style.textContent = `
-      #atlasSearchResultBox {
-        margin-top: 14px;
-        padding: 14px;
-        border: 1px solid #334155;
-        border-radius: 12px;
-        background: #0f172a;
-        color: #e5e7eb;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-        max-width: 420px;
-      }
-
-      .atlas-result-title {
-        font-size: 1.15rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #ffffff;
-        text-align: center;
-      }
-
-      .atlas-result-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 6px 0;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-      }
-
-      .atlas-result-row:last-child {
-        border-bottom: none;
-      }
-
-      .atlas-result-label {
-        font-weight: 700;
-        color: #93c5fd;
-        white-space: nowrap;
-      }
-
-      .atlas-result-value {
-        color: #f8fafc;
-        text-align: right;
-        word-break: break-word;
-      }
-
-      .atlas-result-divider {
-        border: none;
-        border-top: 1px solid #475569;
-        margin: 10px 0;
-      }
-    `;
-
-    document.head.appendChild(style);
-  }
-
-  function showSearchResultBox(title, rows) {
-    let resultBox = document.getElementById("atlasSearchResultBox");
-
-    if (!resultBox) {
-      resultBox = document.createElement("div");
-      resultBox.id = "atlasSearchResultBox";
-
-      const parent =
-        document.getElementById("areaInfo") ||
-        document.querySelector(".area-info") ||
-        document.querySelector(".info-panel") ||
-        document.querySelector(".info-card") ||
-        document.querySelector(".top-right") ||
-        document.querySelector(".details-card") ||
-        document.querySelector(".top-section") ||
-        document.body;
-
-      parent.appendChild(resultBox);
-    }
-
-    let html = `<div class="atlas-result-title">${escapeHTML(title)}</div>`;
-
-    rows.forEach((row) => {
-      const label = row[0];
-      const value = row[1];
-
-      if (label === "---") {
-        html += `<hr class="atlas-result-divider" />`;
-      } else {
-        html += `
-          <div class="atlas-result-row">
-            <span class="atlas-result-label">${escapeHTML(label)}:</span>
-            <span class="atlas-result-value">${escapeHTML(value)}</span>
-          </div>
-        `;
-      }
-    });
-
-    resultBox.innerHTML = html;
   }
 
   function isWaterOnlyTimezoneFeature(feature) {
@@ -893,6 +628,7 @@ window.addEventListener("DOMContentLoaded", () => {
         "fill-color": [
           "match",
           ["get", "__tz_label"],
+
           "Eastern", getTimezoneColor("Eastern"),
           "Central", getTimezoneColor("Central"),
           "Mountain", getTimezoneColor("Mountain"),
@@ -901,9 +637,20 @@ window.addEventListener("DOMContentLoaded", () => {
           "Hawaii", getTimezoneColor("Hawaii"),
           "Atlantic", getTimezoneColor("Atlantic"),
           "Newfoundland", getTimezoneColor("Newfoundland"),
+
+          "Brazil", getTimezoneColor("Brazil"),
+          "SouthGeorgia", getTimezoneColor("SouthGeorgia"),
+          "Azores", getTimezoneColor("Azores"),
+          "UTC", getTimezoneColor("UTC"),
+          "London", getTimezoneColor("London"),
+          "CentralEurope", getTimezoneColor("CentralEurope"),
+          "Israel", getTimezoneColor("Israel"),
+          "Gulf", getTimezoneColor("Gulf"),
+
           "Chamorro", getTimezoneColor("Chamorro"),
           "Samoa", getTimezoneColor("Samoa"),
           "Various", getTimezoneColor("Various"),
+
           "#64748b"
         ],
         "fill-opacity": 0.7
@@ -960,32 +707,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  async function loadCountryCodeData() {
-    try {
-      const res = await fetch(`${COUNTRY_CODES_FILE}?v=${Date.now()}`);
-
-      if (!res.ok) {
-        throw new Error(`Failed to load ${COUNTRY_CODES_FILE}: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      countryCodes = data.countries || [];
-      countryDataLoaded = true;
-
-      console.log("Loaded country codes:", countryCodes.length);
-    } catch (err) {
-      countryCodes = [];
-      countryDataLoaded = false;
-      console.error("Country code data load error:", err);
-
-      showSearchResultBox("Country Codes Not Loaded", [
-        ["Missing File", COUNTRY_CODES_FILE],
-        ["Fix", "Upload country_codes.json into the same folder as index.html"]
-      ]);
-    }
-  }
-
   try {
     map = new maptilersdk.Map({
       container: "map",
@@ -1014,10 +735,7 @@ window.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  injectSearchResultStyles();
-
   loadAreaCodeData();
-  loadCountryCodeData();
 
   clearInfo();
   updateAllClocks();
