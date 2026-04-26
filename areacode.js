@@ -2,6 +2,7 @@
 
 /* =========================
    AREA CODE ATLAS - FULL JS
+   WITH 28 TIME ZONES + GLOBE + COUNTRY CODES
    ========================= */
 
 /* Put your real MapTiler key here */
@@ -9,16 +10,18 @@ const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
 
 /* File names */
 const AREA_CODE_DATA_FILE = "area_code_data.json";
+const COUNTRY_CODE_DATA_FILE = "country_codes.json";
 const TIMEZONE_GEOJSON_FILE = "timezones.geojson";
 
 /* Map globals */
 let map = null;
 let areaMarker = null;
 let areaCodeData = {};
+let countryCodeData = {};
 let selectedAreaTzid = null;
 
 /* =========================
-   TIMEZONE CLOCKS
+   TIMEZONE CLOCKS - 28 BOXES
    ========================= */
 
 const TIMEZONE_CLOCKS = [
@@ -308,7 +311,7 @@ function updateSelectedAreaLocalTime() {
 }
 
 /* =========================
-   AREA CODE DATA
+   DATA LOADING
    ========================= */
 
 async function loadAreaCodeData() {
@@ -324,8 +327,24 @@ async function loadAreaCodeData() {
     areaCodeData =
       data.area_codes ||
       data.areaCodes ||
-      data.codes ||
-      data;
+      data.nanp_area_codes ||
+      {};
+
+    if (Object.keys(areaCodeData).length === 0 && !data.country_codes && !data.countryCodes) {
+      areaCodeData = data;
+    }
+
+    const countryCodesInsideAreaFile =
+      data.country_codes ||
+      data.countryCodes ||
+      data.calling_codes ||
+      data.callingCodes ||
+      null;
+
+    if (countryCodesInsideAreaFile) {
+      countryCodeData = normalizeCountryCodeData(countryCodesInsideAreaFile);
+      console.log("Country code data loaded from area_code_data.json:", Object.keys(countryCodeData).length);
+    }
 
     console.log("Area code data loaded:", Object.keys(areaCodeData).length);
   } catch (error) {
@@ -334,14 +353,128 @@ async function loadAreaCodeData() {
   }
 }
 
+async function loadCountryCodeData() {
+  try {
+    const response = await fetch(COUNTRY_CODE_DATA_FILE);
+
+    if (!response.ok) {
+      console.warn(`${COUNTRY_CODE_DATA_FILE} not found. Using country codes from area_code_data.json if available.`);
+      return;
+    }
+
+    const data = await response.json();
+
+    const source =
+      data.country_codes ||
+      data.countryCodes ||
+      data.calling_codes ||
+      data.callingCodes ||
+      data.codes ||
+      data;
+
+    const normalized = normalizeCountryCodeData(source);
+
+    countryCodeData = {
+      ...countryCodeData,
+      ...normalized
+    };
+
+    console.log("Country code data loaded:", Object.keys(countryCodeData).length);
+  } catch (error) {
+    console.warn("Country code data skipped:", error);
+  }
+}
+
+function normalizeCountryCodeData(source) {
+  const normalized = {};
+
+  if (Array.isArray(source)) {
+    source.forEach((item) => {
+      if (!item) return;
+
+      const rawCode =
+        item.code ||
+        item.dial_code ||
+        item.dialCode ||
+        item.country_code ||
+        item.countryCode ||
+        item.calling_code ||
+        item.callingCode ||
+        "";
+
+      const cleanCode = normalizeCountryCode(rawCode);
+
+      if (!cleanCode) return;
+
+      normalized[cleanCode] = item;
+      normalized[`+${cleanCode}`] = item;
+    });
+
+    return normalized;
+  }
+
+  if (typeof source === "object" && source !== null) {
+    Object.keys(source).forEach((key) => {
+      const item = source[key];
+
+      const rawCode =
+        key ||
+        item?.code ||
+        item?.dial_code ||
+        item?.dialCode ||
+        item?.country_code ||
+        item?.countryCode ||
+        item?.calling_code ||
+        item?.callingCode ||
+        "";
+
+      const cleanCode = normalizeCountryCode(rawCode);
+
+      if (!cleanCode) return;
+
+      normalized[cleanCode] = item;
+      normalized[`+${cleanCode}`] = item;
+    });
+  }
+
+  return normalized;
+}
+
+/* =========================
+   AREA CODE + COUNTRY CODE HELPERS
+   ========================= */
+
 function getAreaCodeInfo(code) {
   if (!areaCodeData) return null;
 
   return areaCodeData[code] || null;
 }
 
+function normalizeCountryCode(value) {
+  return String(value || "")
+    .trim()
+    .replace(/[^\d]/g, "");
+}
+
+function getCountryCodeInfo(value) {
+  if (!countryCodeData) return null;
+
+  const cleanCode = normalizeCountryCode(value);
+
+  if (!cleanCode) return null;
+
+  return (
+    countryCodeData[`+${cleanCode}`] ||
+    countryCodeData[cleanCode] ||
+    null
+  );
+}
+
 function getCountryFromInfo(info) {
   if (info.country) return info.country;
+  if (info.name) return info.name;
+  if (info.country_name) return info.country_name;
+  if (info.countryName) return info.countryName;
 
   const state = String(info.state || "").toUpperCase();
 
@@ -355,30 +488,83 @@ function getCountryFromInfo(info) {
   return "United States";
 }
 
+function getCityFromInfo(info) {
+  return (
+    info.city ||
+    info.capital ||
+    info.major_city ||
+    info.majorCity ||
+    info.region ||
+    "---"
+  );
+}
+
+function getStateFromInfo(info) {
+  return (
+    info.state ||
+    info.province ||
+    info.region ||
+    info.continent ||
+    "---"
+  );
+}
+
+function getTimezoneNameFromInfo(info) {
+  return (
+    info.timezone ||
+    info.time_zone ||
+    info.timeZone ||
+    info.zone ||
+    info.label ||
+    "---"
+  );
+}
+
 function getTzidFromInfo(info) {
   if (info.tzid) return info.tzid;
   if (info.timezone_id) return info.timezone_id;
   if (info.timeZoneId) return info.timeZoneId;
+  if (info.iana) return info.iana;
+  if (info.iana_timezone) return info.iana_timezone;
+  if (info.ianaTimezone) return info.ianaTimezone;
 
-  return timezoneNameToTzid(info.timezone || "");
+  return timezoneNameToTzid(getTimezoneNameFromInfo(info));
 }
 
 function timezoneNameToTzid(timezoneName) {
   const name = String(timezoneName).toLowerCase();
 
-  if (name.includes("newfoundland")) return "America/St_Johns";
-  if (name.includes("atlantic")) return "America/Halifax";
-  if (name.includes("eastern")) return "America/New_York";
-  if (name.includes("central")) return "America/Chicago";
-  if (name.includes("mountain")) return "America/Denver";
-  if (name.includes("pacific")) return "America/Los_Angeles";
-  if (name.includes("alaska")) return "America/Anchorage";
-  if (name.includes("hawaii")) return "Pacific/Honolulu";
+  if (name.includes("baker")) return "Etc/GMT+12";
   if (name.includes("samoa")) return "Pacific/Pago_Pago";
-  if (name.includes("chamorro")) return "Pacific/Guam";
-  if (name.includes("guam")) return "Pacific/Guam";
+  if (name.includes("hawaii")) return "Pacific/Honolulu";
+  if (name.includes("alaska")) return "America/Anchorage";
+  if (name.includes("pacific")) return "America/Los_Angeles";
+  if (name.includes("mountain")) return "America/Denver";
+  if (name.includes("central europe")) return "Europe/Paris";
+  if (name.includes("central")) return "America/Chicago";
+  if (name.includes("eastern")) return "America/New_York";
+  if (name.includes("atlantic")) return "America/Halifax";
+  if (name.includes("newfoundland")) return "America/St_Johns";
+  if (name.includes("brasília") || name.includes("brasilia") || name.includes("brazil")) return "America/Sao_Paulo";
+  if (name.includes("south georgia")) return "Atlantic/South_Georgia";
+  if (name.includes("azores")) return "Atlantic/Azores";
+  if (name.includes("greenwich") || name.includes("utc")) return "UTC";
+  if (name.includes("london")) return "Europe/London";
+  if (name.includes("israel") || name.includes("jerusalem")) return "Asia/Jerusalem";
+  if (name.includes("gulf") || name.includes("dubai")) return "Asia/Dubai";
+  if (name.includes("pakistan") || name.includes("karachi")) return "Asia/Karachi";
+  if (name.includes("bangladesh") || name.includes("dhaka")) return "Asia/Dhaka";
+  if (name.includes("indochina") || name.includes("bangkok")) return "Asia/Bangkok";
+  if (name.includes("china") || name.includes("singapore") || name.includes("shanghai")) return "Asia/Shanghai";
+  if (name.includes("japan") || name.includes("korea") || name.includes("tokyo") || name.includes("seoul")) return "Asia/Tokyo";
+  if (name.includes("australian") || name.includes("sydney")) return "Australia/Sydney";
+  if (name.includes("solomon")) return "Pacific/Guadalcanal";
+  if (name.includes("new zealand") || name.includes("auckland")) return "Pacific/Auckland";
+  if (name.includes("tonga")) return "Pacific/Tongatapu";
+  if (name.includes("line islands") || name.includes("kiritimati")) return "Pacific/Kiritimati";
+  if (name.includes("chamorro") || name.includes("guam")) return "Pacific/Guam";
 
-  return "America/New_York";
+  return "UTC";
 }
 
 /* =========================
@@ -397,36 +583,108 @@ function setupSearch() {
   searchForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const code = searchInput.value.trim();
+    const searchValue = searchInput.value.trim();
 
-    searchAreaCode(code);
+    searchCode(searchValue);
   });
 
   searchInput.addEventListener("input", function () {
-    searchInput.value = searchInput.value.replace(/\D/g, "").slice(0, 3);
+    let value = searchInput.value.trim();
+
+    value = value.replace(/[^\d+]/g, "");
+
+    const startsWithPlus = value.startsWith("+");
+
+    value = value.replace(/\+/g, "");
+
+    if (startsWithPlus) {
+      value = `+${value.slice(0, 3)}`;
+    } else {
+      value = value.slice(0, 3);
+    }
+
+    searchInput.value = value;
   });
 }
 
-function searchAreaCode(code) {
-  if (!/^\d{3}$/.test(code)) {
-    setStatus("Enter a valid 3-digit area code.");
+function searchCode(rawInput) {
+  const input = String(rawInput || "").trim();
+
+  if (!input) {
+    setStatus("Enter a 3-digit area code or country code like +972.");
     clearAreaInfo();
     return;
   }
 
-  const info = getAreaCodeInfo(code);
+  const hasPlus = input.startsWith("+");
+  const cleanCode = normalizeCountryCode(input);
 
-  if (!info) {
-    setStatus(`Area code ${code} was not found.`);
+  if (!/^\d{1,3}$/.test(cleanCode)) {
+    setStatus("Enter a valid area code or country code like 212, +1, or +972.");
     clearAreaInfo();
-    setInfoValue("areaCode", code);
     return;
   }
 
-  const city = info.city || "---";
-  const state = info.state || info.province || "---";
+  /*
+    Search order:
+    1. If user types +972, +1, etc. => country code first.
+    2. If user types 3 digits without + => area code first.
+    3. If no area code match => country code fallback.
+    4. If 1 or 2 digits without + => country code.
+  */
+
+  if (hasPlus) {
+    const countryInfo = getCountryCodeInfo(cleanCode);
+
+    if (countryInfo) {
+      showCountryCodeResult(cleanCode, countryInfo);
+      return;
+    }
+
+    setStatus(`Country code +${cleanCode} was not found.`);
+    clearAreaInfo();
+    setInfoValue("areaCode", `+${cleanCode}`);
+    return;
+  }
+
+  if (cleanCode.length === 3) {
+    const areaInfo = getAreaCodeInfo(cleanCode);
+
+    if (areaInfo) {
+      showAreaCodeResult(cleanCode, areaInfo);
+      return;
+    }
+
+    const countryInfo = getCountryCodeInfo(cleanCode);
+
+    if (countryInfo) {
+      showCountryCodeResult(cleanCode, countryInfo);
+      return;
+    }
+
+    setStatus(`Area code or country code ${cleanCode} was not found.`);
+    clearAreaInfo();
+    setInfoValue("areaCode", cleanCode);
+    return;
+  }
+
+  const countryInfo = getCountryCodeInfo(cleanCode);
+
+  if (countryInfo) {
+    showCountryCodeResult(cleanCode, countryInfo);
+    return;
+  }
+
+  setStatus(`Country code +${cleanCode} was not found.`);
+  clearAreaInfo();
+  setInfoValue("areaCode", `+${cleanCode}`);
+}
+
+function showAreaCodeResult(code, info) {
+  const city = getCityFromInfo(info);
+  const state = getStateFromInfo(info);
   const country = getCountryFromInfo(info);
-  const timezone = info.timezone || "---";
+  const timezone = getTimezoneNameFromInfo(info);
   const tzid = getTzidFromInfo(info);
 
   selectedAreaTzid = tzid;
@@ -440,7 +698,32 @@ function searchAreaCode(code) {
 
   setStatus(`Showing area code ${code}.`);
 
-  moveMapToArea(info);
+  moveMapToLocation(info, 7);
+  highlightTimezoneCard(timezone);
+}
+
+function showCountryCodeResult(code, info) {
+  const cleanCode = normalizeCountryCode(code);
+  const displayCode = `+${cleanCode}`;
+
+  const city = getCityFromInfo(info);
+  const state = getStateFromInfo(info);
+  const country = getCountryFromInfo(info);
+  const timezone = getTimezoneNameFromInfo(info);
+  const tzid = getTzidFromInfo(info);
+
+  selectedAreaTzid = tzid;
+
+  setInfoValue("areaCode", displayCode);
+  setInfoValue("city", city);
+  setInfoValue("state", state);
+  setInfoValue("country", country);
+  setInfoValue("timezone", timezone);
+  updateSelectedAreaLocalTime();
+
+  setStatus(`Showing country code ${displayCode}.`);
+
+  moveMapToLocation(info, 4);
   highlightTimezoneCard(timezone);
 }
 
@@ -453,7 +736,7 @@ function setStatus(message) {
 }
 
 /* =========================
-   MAP
+   MAP - COLOR GLOBE
    ========================= */
 
 function setupMap() {
@@ -477,16 +760,20 @@ function setupMap() {
 
   maptilersdk.config.apiKey = MAPTILER_KEY;
 
+  /*
+    COLOR GLOBE STYLE:
+    This replaces the black/gray Dataviz Dark map.
+  */
   const mapStyle =
-    maptilersdk.MapStyle?.DATAVIZ?.DARK ||
-    `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
+    maptilersdk.MapStyle?.STREETS ||
+    `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`;
 
   map = new maptilersdk.Map({
     container: "map",
     style: mapStyle,
     center: [-98.5795, 39.8283],
-    zoom: 3,
-    minZoom: 2,
+    zoom: 2.7,
+    minZoom: 1.5,
     maxZoom: 12,
     projection: "globe"
   });
@@ -494,25 +781,37 @@ function setupMap() {
   map.addControl(new maptilersdk.NavigationControl(), "top-right");
 
   map.on("load", function () {
-    console.log("Map loaded.");
+    console.log("Color globe loaded.");
     loadTimezoneLayer();
   });
 }
 
-function moveMapToArea(info) {
+function moveMapToLocation(info, zoomLevel) {
   if (!map) return;
 
-  const lat = Number(info.lat || info.latitude);
-  const lng = Number(info.lng || info.lon || info.longitude);
+  const lat = Number(
+    info.lat ||
+    info.latitude ||
+    info.center_lat ||
+    info.centerLat
+  );
+
+  const lng = Number(
+    info.lng ||
+    info.lon ||
+    info.longitude ||
+    info.center_lng ||
+    info.centerLng
+  );
 
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-    console.warn("No valid lat/lng for this area code:", info);
+    console.warn("No valid lat/lng for this result:", info);
     return;
   }
 
   map.flyTo({
     center: [lng, lat],
-    zoom: 7,
+    zoom: zoomLevel,
     speed: 0.9,
     essential: true
   });
@@ -529,7 +828,7 @@ function moveMapToArea(info) {
 }
 
 /* =========================
-   OPTIONAL TIMEZONE GEOJSON
+   TIMEZONE GEOJSON COLORS
    ========================= */
 
 async function loadTimezoneLayer() {
@@ -616,7 +915,7 @@ async function loadTimezoneLayer() {
 
             "#475569"
           ],
-          "fill-opacity": 0.35
+          "fill-opacity": 0.32
         }
       });
     }
@@ -628,13 +927,13 @@ async function loadTimezoneLayer() {
         source: "timezones",
         paint: {
           "line-color": "#ffffff",
-          "line-opacity": 0.25,
+          "line-opacity": 0.35,
           "line-width": 1
         }
       });
     }
 
-    console.log("Timezone layer loaded.");
+    console.log("Timezone color layer loaded.");
   } catch (error) {
     console.warn("Timezone layer skipped:", error);
   }
@@ -715,7 +1014,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   startTimezoneClocks();
   setupSearch();
   setupMap();
-  await loadAreaCodeData();
 
-  setStatus("Enter a 3-digit area code to search.");
+  await loadAreaCodeData();
+  await loadCountryCodeData();
+
+  setStatus("Enter a 3-digit area code or country code like +972.");
 });
