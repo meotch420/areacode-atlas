@@ -318,7 +318,7 @@ header p {
 .map-section {
   width: 100%;
   height: 620px;
-  background: #020617;
+  background: #1e3a5f;
   padding: 0 10px;
 }
 
@@ -328,7 +328,7 @@ header p {
   min-height: 620px;
   border-radius: 0;
   overflow: hidden;
-  background: #7dd3fc;
+  background: #1e3a5f;
 }
 
 /* =====================================================
