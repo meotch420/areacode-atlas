@@ -1,6 +1,8 @@
 /* =====================================================
    AREA CODE ATLAS - FULL JS
    Fixes:
+   - Loads area_code_data.json correctly
+   - Reads area codes from data.area_codes
    - Removes the left-side "+44 found..." message
    - Country-code searches populate Country, Country Code, Time Zone
    - City and State / Region stay blank for country-code searches
@@ -449,10 +451,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) {
         throw new Error("area_code_data.json could not be loaded");
       }
+
       return response.json();
     })
     .then(data => {
       areaCodeData = normalizeAreaCodeData(data);
+      console.log("Area code data loaded:", areaCodeData);
     })
     .catch(error => {
       console.warn(error);
@@ -462,8 +466,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function normalizeAreaCodeData(data) {
     const normalized = {};
 
-    if (Array.isArray(data)) {
-      data.forEach(item => {
+    const source = data && data.area_codes ? data.area_codes : data;
+
+    if (Array.isArray(source)) {
+      source.forEach(item => {
         const code = String(
           item.area_code ||
           item.areaCode ||
@@ -480,9 +486,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return normalized;
     }
 
-    if (data && typeof data === "object") {
-      Object.keys(data).forEach(code => {
-        normalized[String(code).trim()] = data[code];
+    if (source && typeof source === "object") {
+      Object.keys(source).forEach(code => {
+        normalized[String(code).trim()] = source[code];
       });
     }
 
@@ -498,6 +504,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
 
       const rawInput = searchInput ? searchInput.value.trim() : "";
+
       if (!rawInput) {
         clearInfoPanel();
         return;
@@ -654,6 +661,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function setText(ids, value) {
     ids.forEach(id => {
       const element = document.getElementById(id);
+
       if (element) {
         element.textContent = value;
       }
