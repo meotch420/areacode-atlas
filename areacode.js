@@ -190,7 +190,7 @@ window.addEventListener("DOMContentLoaded", () => {
   function formatTimeForZone(timeZone) {
     try {
       return new Date().toLocaleTimeString("en-US", {
-        timeZone,
+        timeZone: timeZone,
         hour: "numeric",
         minute: "2-digit",
         second: "2-digit",
@@ -215,7 +215,7 @@ window.addEventListener("DOMContentLoaded", () => {
     setText(brazilTimeEl, formatTimeForZone("America/Sao_Paulo"));
     setText(southGeorgiaTimeEl, formatTimeForZone("Atlantic/South_Georgia"));
     setText(azoresTimeEl, formatTimeForZone("Atlantic/Azores"));
-    setText(utcTimeEl, formatTimeForZone("Etc/UTC"));
+    setText(utcTimeEl, formatTimeForZone("UTC"));
     setText(londonTimeEl, formatTimeForZone("Europe/London"));
     setText(centralEuropeTimeEl, formatTimeForZone("Europe/Paris"));
     setText(israelTimeEl, formatTimeForZone("Asia/Jerusalem"));
