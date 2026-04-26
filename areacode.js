@@ -329,59 +329,6 @@ function normalizeCountryCodeData(raw) {
     });
   }
 
-  const source =
-    raw.country_codes ||
-    raw.countryCodes ||
-    raw.calling_codes ||
-    raw.callingCodes ||
-    raw.codes;
-
-  if (Array.isArray(source)) {
-    source.forEach((item) => {
-      const code = cleanCode(
-        item.countryCode ||
-        item.country_code ||
-        item.callingCode ||
-        item.calling_code ||
-        item.code
-      );
-
-      if (code) {
-        normalized[code] = {
-          ...normalized[code],
-          ...item,
-          countryCode:
-            item.countryCode ||
-            item.country_code ||
-            item.callingCode ||
-            item.calling_code ||
-            item.code ||
-            `+${code}`
-        };
-      }
-    });
-  } else if (source && typeof source === "object") {
-    Object.entries(source).forEach(([key, value]) => {
-      const code = cleanCode(key);
-
-      if (!code) return;
-
-      if (typeof value === "string") {
-        normalized[code] = {
-          ...normalized[code],
-          country: value,
-          countryCode: key.startsWith("+") ? key : `+${code}`
-        };
-      } else {
-        normalized[code] = {
-          ...normalized[code],
-          ...value,
-          countryCode: value.countryCode || value.country_code || key || `+${code}`
-        };
-      }
-    });
-  }
-
   return normalized;
 }
 
@@ -397,26 +344,6 @@ function fallbackCountryCodes() {
       lng: -98.5795,
       zoom: 3
     },
-    "20": {
-      country: "Egypt",
-      countryCode: "+20",
-      region: "Africa",
-      timezone: "Central Europe",
-      tzid: "Africa/Cairo",
-      lat: 30.0444,
-      lng: 31.2357,
-      zoom: 5
-    },
-    "27": {
-      country: "South Africa",
-      countryCode: "+27",
-      region: "Africa",
-      timezone: "South Africa",
-      tzid: "Africa/Johannesburg",
-      lat: -30.5595,
-      lng: 22.9375,
-      zoom: 4
-    },
     "44": {
       country: "United Kingdom",
       countryCode: "+44",
@@ -425,16 +352,6 @@ function fallbackCountryCodes() {
       tzid: "Europe/London",
       lat: 51.5072,
       lng: -0.1276,
-      zoom: 5
-    },
-    "46": {
-      country: "Sweden",
-      countryCode: "+46",
-      region: "Europe",
-      timezone: "Central Europe",
-      tzid: "Europe/Stockholm",
-      lat: 59.3293,
-      lng: 18.0686,
       zoom: 5
     },
     "55": {
@@ -447,15 +364,15 @@ function fallbackCountryCodes() {
       lng: -47.8828,
       zoom: 4
     },
-    "61": {
-      country: "Australia",
-      countryCode: "+61",
-      region: "Oceania",
-      timezone: "Australian Eastern",
-      tzid: "Australia/Sydney",
-      lat: -25.2744,
-      lng: 133.7751,
-      zoom: 4
+    "57": {
+      country: "Colombia",
+      countryCode: "+57",
+      region: "South America",
+      timezone: "Eastern",
+      tzid: "America/Bogota",
+      lat: 4.711,
+      lng: -74.0721,
+      zoom: 5
     },
     "81": {
       country: "Japan",
@@ -477,26 +394,6 @@ function fallbackCountryCodes() {
       lng: 126.978,
       zoom: 5
     },
-    "86": {
-      country: "China",
-      countryCode: "+86",
-      region: "Asia",
-      timezone: "China / Singapore",
-      tzid: "Asia/Shanghai",
-      lat: 39.9042,
-      lng: 116.4074,
-      zoom: 4
-    },
-    "91": {
-      country: "India",
-      countryCode: "+91",
-      region: "Asia",
-      timezone: "India",
-      tzid: "Asia/Kolkata",
-      lat: 20.5937,
-      lng: 78.9629,
-      zoom: 4
-    },
     "972": {
       country: "Israel",
       countryCode: "+972",
@@ -506,56 +403,6 @@ function fallbackCountryCodes() {
       lat: 31.7683,
       lng: 35.2137,
       zoom: 6
-    },
-    "238": {
-      country: "Cape Verde",
-      countryCode: "+238",
-      region: "Africa",
-      timezone: "Azores",
-      tzid: "Atlantic/Cape_Verde",
-      lat: 14.933,
-      lng: -23.5133,
-      zoom: 6
-    },
-    "245": {
-      country: "Guinea-Bissau",
-      countryCode: "+245",
-      region: "Africa",
-      timezone: "Greenwich",
-      tzid: "Africa/Bissau",
-      lat: 11.8817,
-      lng: -15.617,
-      zoom: 6
-    },
-    "266": {
-      country: "Lesotho",
-      countryCode: "+266",
-      region: "Africa",
-      timezone: "South Africa",
-      tzid: "Africa/Maseru",
-      lat: -29.3151,
-      lng: 27.4869,
-      zoom: 6
-    },
-    "676": {
-      country: "Tonga",
-      countryCode: "+676",
-      region: "Oceania",
-      timezone: "Tonga",
-      tzid: "Pacific/Tongatapu",
-      lat: -21.1394,
-      lng: -175.2049,
-      zoom: 7
-    },
-    "992": {
-      country: "Tajikistan",
-      countryCode: "+992",
-      region: "Asia",
-      timezone: "Pakistan",
-      tzid: "Asia/Dushanbe",
-      lat: 38.5598,
-      lng: 68.787,
-      zoom: 5
     }
   };
 }
@@ -564,7 +411,7 @@ function initSearch() {
   const form = document.getElementById("searchForm");
   const input = document.getElementById("areaSearch");
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const rawValue = input.value.trim();
@@ -578,7 +425,7 @@ function initSearch() {
     const typedPlus = rawValue.startsWith("+");
 
     if (typedPlus && countryCodeData[cleanedValue]) {
-      showCountryCode(cleanedValue, countryCodeData[cleanedValue]);
+      await showCountryCode(cleanedValue, countryCodeData[cleanedValue]);
       return;
     }
 
@@ -588,7 +435,7 @@ function initSearch() {
     }
 
     if (countryCodeData[cleanedValue]) {
-      showCountryCode(cleanedValue, countryCodeData[cleanedValue]);
+      await showCountryCode(cleanedValue, countryCodeData[cleanedValue]);
       return;
     }
 
@@ -618,7 +465,7 @@ function showAreaCode(code, record) {
   setStatus(`Showing area code ${code}.`);
 }
 
-function showCountryCode(code, record) {
+async function showCountryCode(code, record) {
   const country = record.country || record.name || "---";
   const region = record.region || record.continent || "---";
   const countryCode = record.countryCode || record.country_code || `+${code}`;
@@ -635,8 +482,69 @@ function showCountryCode(code, record) {
 
   activeInfoTzid = tzid;
 
-  flyToRecord(record, record.zoom || 5);
-  setStatus(`Showing country code ${countryCode}.`);
+  if (hasCoordinates(record)) {
+    flyToRecord(record, record.zoom || 5);
+    setStatus(`Showing country code ${countryCode}.`);
+    return;
+  }
+
+  setStatus(`Showing country code ${countryCode}. Finding location on map...`);
+
+  const geocoded = await geocodeCountry(country);
+
+  if (geocoded) {
+    record.lat = geocoded.lat;
+    record.lng = geocoded.lng;
+    record.zoom = 5;
+
+    flyToRecord(record, 5);
+    setStatus(`Showing country code ${countryCode}.`);
+  } else {
+    setStatus(`Country code ${countryCode} was found, but no map location was available.`);
+  }
+}
+
+function hasCoordinates(record) {
+  const lat = Number(record.lat || record.latitude);
+  const lng = Number(record.lng || record.lon || record.longitude);
+
+  return Number.isFinite(lat) && Number.isFinite(lng);
+}
+
+async function geocodeCountry(countryName) {
+  if (!countryName || countryName === "---") {
+    return null;
+  }
+
+  const firstCountry = countryName.split("/")[0].trim();
+  const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(firstCountry)}.json?key=${MAPTILER_KEY}&limit=1`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+
+    if (!data.features || !data.features.length) {
+      return null;
+    }
+
+    const center = data.features[0].center;
+
+    if (!center || center.length < 2) {
+      return null;
+    }
+
+    return {
+      lng: center[0],
+      lat: center[1]
+    };
+  } catch (error) {
+    return null;
+  }
 }
 
 function initTimezoneCards() {
