@@ -1,0 +1,4148 @@
+{
+  "version": "1.0",
+  "type": "international_phone_country_calling_codes",
+  "description": "Upload-ready country calling code file for Area Code Atlas. Includes countries and territories, ISO codes, calling codes, and NANP flag where applicable.",
+  "countries": [
+    {
+      "country": "Afghanistan",
+      "iso2": "AF",
+      "iso3": "AFG",
+      "calling_codes": [
+        "+93"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Albania",
+      "iso2": "AL",
+      "iso3": "ALB",
+      "calling_codes": [
+        "+355"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Algeria",
+      "iso2": "DZ",
+      "iso3": "DZA",
+      "calling_codes": [
+        "+213"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "American Samoa",
+      "iso2": "AS",
+      "iso3": "ASM",
+      "calling_codes": [
+        "+1-684"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Andorra",
+      "iso2": "AD",
+      "iso3": "AND",
+      "calling_codes": [
+        "+376"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Angola",
+      "iso2": "AO",
+      "iso3": "AGO",
+      "calling_codes": [
+        "+244"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Anguilla",
+      "iso2": "AI",
+      "iso3": "AIA",
+      "calling_codes": [
+        "+1-264"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Antigua and Barbuda",
+      "iso2": "AG",
+      "iso3": "ATG",
+      "calling_codes": [
+        "+1-268"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Argentina",
+      "iso2": "AR",
+      "iso3": "ARG",
+      "calling_codes": [
+        "+54"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Armenia",
+      "iso2": "AM",
+      "iso3": "ARM",
+      "calling_codes": [
+        "+374"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Aruba",
+      "iso2": "AW",
+      "iso3": "ABW",
+      "calling_codes": [
+        "+297"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Ascension Island",
+      "iso2": "AC",
+      "iso3": "ASC",
+      "calling_codes": [
+        "+247"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Australia",
+      "iso2": "AU",
+      "iso3": "AUS",
+      "calling_codes": [
+        "+61"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Austria",
+      "iso2": "AT",
+      "iso3": "AUT",
+      "calling_codes": [
+        "+43"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Azerbaijan",
+      "iso2": "AZ",
+      "iso3": "AZE",
+      "calling_codes": [
+        "+994"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Bahamas",
+      "iso2": "BS",
+      "iso3": "BHS",
+      "calling_codes": [
+        "+1-242"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Bahrain",
+      "iso2": "BH",
+      "iso3": "BHR",
+      "calling_codes": [
+        "+973"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Bangladesh",
+      "iso2": "BD",
+      "iso3": "BGD",
+      "calling_codes": [
+        "+880"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Barbados",
+      "iso2": "BB",
+      "iso3": "BRB",
+      "calling_codes": [
+        "+1-246"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Belarus",
+      "iso2": "BY",
+      "iso3": "BLR",
+      "calling_codes": [
+        "+375"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Belgium",
+      "iso2": "BE",
+      "iso3": "BEL",
+      "calling_codes": [
+        "+32"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Belize",
+      "iso2": "BZ",
+      "iso3": "BLZ",
+      "calling_codes": [
+        "+501"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Benin",
+      "iso2": "BJ",
+      "iso3": "BEN",
+      "calling_codes": [
+        "+229"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Bermuda",
+      "iso2": "BM",
+      "iso3": "BMU",
+      "calling_codes": [
+        "+1-441"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Bhutan",
+      "iso2": "BT",
+      "iso3": "BTN",
+      "calling_codes": [
+        "+975"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Bolivia",
+      "iso2": "BO",
+      "iso3": "BOL",
+      "calling_codes": [
+        "+591"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Bonaire, Sint Eustatius and Saba",
+      "iso2": "BQ",
+      "iso3": "BES",
+      "calling_codes": [
+        "+599"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Bosnia and Herzegovina",
+      "iso2": "BA",
+      "iso3": "BIH",
+      "calling_codes": [
+        "+387"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Botswana",
+      "iso2": "BW",
+      "iso3": "BWA",
+      "calling_codes": [
+        "+267"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Brazil",
+      "iso2": "BR",
+      "iso3": "BRA",
+      "calling_codes": [
+        "+55"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "British Virgin Islands",
+      "iso2": "VG",
+      "iso3": "VGB",
+      "calling_codes": [
+        "+1-284"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Brunei",
+      "iso2": "BN",
+      "iso3": "BRN",
+      "calling_codes": [
+        "+673"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Bulgaria",
+      "iso2": "BG",
+      "iso3": "BGR",
+      "calling_codes": [
+        "+359"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Burkina Faso",
+      "iso2": "BF",
+      "iso3": "BFA",
+      "calling_codes": [
+        "+226"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Burundi",
+      "iso2": "BI",
+      "iso3": "BDI",
+      "calling_codes": [
+        "+257"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Cambodia",
+      "iso2": "KH",
+      "iso3": "KHM",
+      "calling_codes": [
+        "+855"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Cameroon",
+      "iso2": "CM",
+      "iso3": "CMR",
+      "calling_codes": [
+        "+237"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Canada",
+      "iso2": "CA",
+      "iso3": "CAN",
+      "calling_codes": [
+        "+1"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Cape Verde",
+      "iso2": "CV",
+      "iso3": "CPV",
+      "calling_codes": [
+        "+238"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Cayman Islands",
+      "iso2": "KY",
+      "iso3": "CYM",
+      "calling_codes": [
+        "+1-345"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Central African Republic",
+      "iso2": "CF",
+      "iso3": "CAF",
+      "calling_codes": [
+        "+236"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Chad",
+      "iso2": "TD",
+      "iso3": "TCD",
+      "calling_codes": [
+        "+235"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Chile",
+      "iso2": "CL",
+      "iso3": "CHL",
+      "calling_codes": [
+        "+56"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "China",
+      "iso2": "CN",
+      "iso3": "CHN",
+      "calling_codes": [
+        "+86"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Christmas Island",
+      "iso2": "CX",
+      "iso3": "CXR",
+      "calling_codes": [
+        "+61"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Cocos Islands",
+      "iso2": "CC",
+      "iso3": "CCK",
+      "calling_codes": [
+        "+61"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Colombia",
+      "iso2": "CO",
+      "iso3": "COL",
+      "calling_codes": [
+        "+57"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Comoros",
+      "iso2": "KM",
+      "iso3": "COM",
+      "calling_codes": [
+        "+269"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Congo",
+      "iso2": "CG",
+      "iso3": "COG",
+      "calling_codes": [
+        "+242"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Cook Islands",
+      "iso2": "CK",
+      "iso3": "COK",
+      "calling_codes": [
+        "+682"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Costa Rica",
+      "iso2": "CR",
+      "iso3": "CRI",
+      "calling_codes": [
+        "+506"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Croatia",
+      "iso2": "HR",
+      "iso3": "HRV",
+      "calling_codes": [
+        "+385"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Cuba",
+      "iso2": "CU",
+      "iso3": "CUB",
+      "calling_codes": [
+        "+53"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Curaçao",
+      "iso2": "CW",
+      "iso3": "CUW",
+      "calling_codes": [
+        "+599"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Cyprus",
+      "iso2": "CY",
+      "iso3": "CYP",
+      "calling_codes": [
+        "+357"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Czech Republic",
+      "iso2": "CZ",
+      "iso3": "CZE",
+      "calling_codes": [
+        "+420"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Democratic Republic of the Congo",
+      "iso2": "CD",
+      "iso3": "COD",
+      "calling_codes": [
+        "+243"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Denmark",
+      "iso2": "DK",
+      "iso3": "DNK",
+      "calling_codes": [
+        "+45"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Diego Garcia",
+      "iso2": "DG",
+      "iso3": "DGA",
+      "calling_codes": [
+        "+246"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Djibouti",
+      "iso2": "DJ",
+      "iso3": "DJI",
+      "calling_codes": [
+        "+253"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Dominica",
+      "iso2": "DM",
+      "iso3": "DMA",
+      "calling_codes": [
+        "+1-767"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Dominican Republic",
+      "iso2": "DO",
+      "iso3": "DOM",
+      "calling_codes": [
+        "+1-809",
+        "+1-829",
+        "+1-849"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Ecuador",
+      "iso2": "EC",
+      "iso3": "ECU",
+      "calling_codes": [
+        "+593"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Egypt",
+      "iso2": "EG",
+      "iso3": "EGY",
+      "calling_codes": [
+        "+20"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "El Salvador",
+      "iso2": "SV",
+      "iso3": "SLV",
+      "calling_codes": [
+        "+503"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Equatorial Guinea",
+      "iso2": "GQ",
+      "iso3": "GNQ",
+      "calling_codes": [
+        "+240"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Eritrea",
+      "iso2": "ER",
+      "iso3": "ERI",
+      "calling_codes": [
+        "+291"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Estonia",
+      "iso2": "EE",
+      "iso3": "EST",
+      "calling_codes": [
+        "+372"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Eswatini",
+      "iso2": "SZ",
+      "iso3": "SWZ",
+      "calling_codes": [
+        "+268"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Ethiopia",
+      "iso2": "ET",
+      "iso3": "ETH",
+      "calling_codes": [
+        "+251"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Falkland Islands",
+      "iso2": "FK",
+      "iso3": "FLK",
+      "calling_codes": [
+        "+500"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Faroe Islands",
+      "iso2": "FO",
+      "iso3": "FRO",
+      "calling_codes": [
+        "+298"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Fiji",
+      "iso2": "FJ",
+      "iso3": "FJI",
+      "calling_codes": [
+        "+679"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Finland",
+      "iso2": "FI",
+      "iso3": "FIN",
+      "calling_codes": [
+        "+358"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "France",
+      "iso2": "FR",
+      "iso3": "FRA",
+      "calling_codes": [
+        "+33"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "French Guiana",
+      "iso2": "GF",
+      "iso3": "GUF",
+      "calling_codes": [
+        "+594"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "French Polynesia",
+      "iso2": "PF",
+      "iso3": "PYF",
+      "calling_codes": [
+        "+689"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Gabon",
+      "iso2": "GA",
+      "iso3": "GAB",
+      "calling_codes": [
+        "+241"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Gambia",
+      "iso2": "GM",
+      "iso3": "GMB",
+      "calling_codes": [
+        "+220"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Georgia",
+      "iso2": "GE",
+      "iso3": "GEO",
+      "calling_codes": [
+        "+995"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Germany",
+      "iso2": "DE",
+      "iso3": "DEU",
+      "calling_codes": [
+        "+49"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Ghana",
+      "iso2": "GH",
+      "iso3": "GHA",
+      "calling_codes": [
+        "+233"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Gibraltar",
+      "iso2": "GI",
+      "iso3": "GIB",
+      "calling_codes": [
+        "+350"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Greece",
+      "iso2": "GR",
+      "iso3": "GRC",
+      "calling_codes": [
+        "+30"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Greenland",
+      "iso2": "GL",
+      "iso3": "GRL",
+      "calling_codes": [
+        "+299"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Grenada",
+      "iso2": "GD",
+      "iso3": "GRD",
+      "calling_codes": [
+        "+1-473"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Guadeloupe",
+      "iso2": "GP",
+      "iso3": "GLP",
+      "calling_codes": [
+        "+590"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Guam",
+      "iso2": "GU",
+      "iso3": "GUM",
+      "calling_codes": [
+        "+1-671"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Guatemala",
+      "iso2": "GT",
+      "iso3": "GTM",
+      "calling_codes": [
+        "+502"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Guernsey",
+      "iso2": "GG",
+      "iso3": "GGY",
+      "calling_codes": [
+        "+44-1481"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Guinea",
+      "iso2": "GN",
+      "iso3": "GIN",
+      "calling_codes": [
+        "+224"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Guinea-Bissau",
+      "iso2": "GW",
+      "iso3": "GNB",
+      "calling_codes": [
+        "+245"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Guyana",
+      "iso2": "GY",
+      "iso3": "GUY",
+      "calling_codes": [
+        "+592"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Haiti",
+      "iso2": "HT",
+      "iso3": "HTI",
+      "calling_codes": [
+        "+509"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Honduras",
+      "iso2": "HN",
+      "iso3": "HND",
+      "calling_codes": [
+        "+504"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Hong Kong",
+      "iso2": "HK",
+      "iso3": "HKG",
+      "calling_codes": [
+        "+852"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Hungary",
+      "iso2": "HU",
+      "iso3": "HUN",
+      "calling_codes": [
+        "+36"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Iceland",
+      "iso2": "IS",
+      "iso3": "ISL",
+      "calling_codes": [
+        "+354"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "India",
+      "iso2": "IN",
+      "iso3": "IND",
+      "calling_codes": [
+        "+91"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Indonesia",
+      "iso2": "ID",
+      "iso3": "IDN",
+      "calling_codes": [
+        "+62"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Iran",
+      "iso2": "IR",
+      "iso3": "IRN",
+      "calling_codes": [
+        "+98"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Iraq",
+      "iso2": "IQ",
+      "iso3": "IRQ",
+      "calling_codes": [
+        "+964"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Ireland",
+      "iso2": "IE",
+      "iso3": "IRL",
+      "calling_codes": [
+        "+353"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Isle of Man",
+      "iso2": "IM",
+      "iso3": "IMN",
+      "calling_codes": [
+        "+44-1624"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Israel",
+      "iso2": "IL",
+      "iso3": "ISR",
+      "calling_codes": [
+        "+972"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Italy",
+      "iso2": "IT",
+      "iso3": "ITA",
+      "calling_codes": [
+        "+39"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Ivory Coast",
+      "iso2": "CI",
+      "iso3": "CIV",
+      "calling_codes": [
+        "+225"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Jamaica",
+      "iso2": "JM",
+      "iso3": "JAM",
+      "calling_codes": [
+        "+1-876",
+        "+1-658"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Japan",
+      "iso2": "JP",
+      "iso3": "JPN",
+      "calling_codes": [
+        "+81"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Jersey",
+      "iso2": "JE",
+      "iso3": "JEY",
+      "calling_codes": [
+        "+44-1534"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Jordan",
+      "iso2": "JO",
+      "iso3": "JOR",
+      "calling_codes": [
+        "+962"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Kazakhstan",
+      "iso2": "KZ",
+      "iso3": "KAZ",
+      "calling_codes": [
+        "+7"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Kenya",
+      "iso2": "KE",
+      "iso3": "KEN",
+      "calling_codes": [
+        "+254"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Kiribati",
+      "iso2": "KI",
+      "iso3": "KIR",
+      "calling_codes": [
+        "+686"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Kosovo",
+      "iso2": "XK",
+      "iso3": "XKX",
+      "calling_codes": [
+        "+383"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Kuwait",
+      "iso2": "KW",
+      "iso3": "KWT",
+      "calling_codes": [
+        "+965"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Kyrgyzstan",
+      "iso2": "KG",
+      "iso3": "KGZ",
+      "calling_codes": [
+        "+996"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Laos",
+      "iso2": "LA",
+      "iso3": "LAO",
+      "calling_codes": [
+        "+856"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Latvia",
+      "iso2": "LV",
+      "iso3": "LVA",
+      "calling_codes": [
+        "+371"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Lebanon",
+      "iso2": "LB",
+      "iso3": "LBN",
+      "calling_codes": [
+        "+961"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Lesotho",
+      "iso2": "LS",
+      "iso3": "LSO",
+      "calling_codes": [
+        "+266"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Liberia",
+      "iso2": "LR",
+      "iso3": "LBR",
+      "calling_codes": [
+        "+231"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Libya",
+      "iso2": "LY",
+      "iso3": "LBY",
+      "calling_codes": [
+        "+218"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Liechtenstein",
+      "iso2": "LI",
+      "iso3": "LIE",
+      "calling_codes": [
+        "+423"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Lithuania",
+      "iso2": "LT",
+      "iso3": "LTU",
+      "calling_codes": [
+        "+370"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Luxembourg",
+      "iso2": "LU",
+      "iso3": "LUX",
+      "calling_codes": [
+        "+352"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Macau",
+      "iso2": "MO",
+      "iso3": "MAC",
+      "calling_codes": [
+        "+853"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Madagascar",
+      "iso2": "MG",
+      "iso3": "MDG",
+      "calling_codes": [
+        "+261"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Malawi",
+      "iso2": "MW",
+      "iso3": "MWI",
+      "calling_codes": [
+        "+265"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Malaysia",
+      "iso2": "MY",
+      "iso3": "MYS",
+      "calling_codes": [
+        "+60"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Maldives",
+      "iso2": "MV",
+      "iso3": "MDV",
+      "calling_codes": [
+        "+960"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Mali",
+      "iso2": "ML",
+      "iso3": "MLI",
+      "calling_codes": [
+        "+223"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Malta",
+      "iso2": "MT",
+      "iso3": "MLT",
+      "calling_codes": [
+        "+356"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Marshall Islands",
+      "iso2": "MH",
+      "iso3": "MHL",
+      "calling_codes": [
+        "+692"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Martinique",
+      "iso2": "MQ",
+      "iso3": "MTQ",
+      "calling_codes": [
+        "+596"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Mauritania",
+      "iso2": "MR",
+      "iso3": "MRT",
+      "calling_codes": [
+        "+222"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Mauritius",
+      "iso2": "MU",
+      "iso3": "MUS",
+      "calling_codes": [
+        "+230"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Mayotte",
+      "iso2": "YT",
+      "iso3": "MYT",
+      "calling_codes": [
+        "+262"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Mexico",
+      "iso2": "MX",
+      "iso3": "MEX",
+      "calling_codes": [
+        "+52"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Micronesia",
+      "iso2": "FM",
+      "iso3": "FSM",
+      "calling_codes": [
+        "+691"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Moldova",
+      "iso2": "MD",
+      "iso3": "MDA",
+      "calling_codes": [
+        "+373"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Monaco",
+      "iso2": "MC",
+      "iso3": "MCO",
+      "calling_codes": [
+        "+377"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Mongolia",
+      "iso2": "MN",
+      "iso3": "MNG",
+      "calling_codes": [
+        "+976"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Montenegro",
+      "iso2": "ME",
+      "iso3": "MNE",
+      "calling_codes": [
+        "+382"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Montserrat",
+      "iso2": "MS",
+      "iso3": "MSR",
+      "calling_codes": [
+        "+1-664"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Morocco",
+      "iso2": "MA",
+      "iso3": "MAR",
+      "calling_codes": [
+        "+212"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Mozambique",
+      "iso2": "MZ",
+      "iso3": "MOZ",
+      "calling_codes": [
+        "+258"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Myanmar",
+      "iso2": "MM",
+      "iso3": "MMR",
+      "calling_codes": [
+        "+95"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Namibia",
+      "iso2": "NA",
+      "iso3": "NAM",
+      "calling_codes": [
+        "+264"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Nauru",
+      "iso2": "NR",
+      "iso3": "NRU",
+      "calling_codes": [
+        "+674"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Nepal",
+      "iso2": "NP",
+      "iso3": "NPL",
+      "calling_codes": [
+        "+977"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Netherlands",
+      "iso2": "NL",
+      "iso3": "NLD",
+      "calling_codes": [
+        "+31"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "New Caledonia",
+      "iso2": "NC",
+      "iso3": "NCL",
+      "calling_codes": [
+        "+687"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "New Zealand",
+      "iso2": "NZ",
+      "iso3": "NZL",
+      "calling_codes": [
+        "+64"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Nicaragua",
+      "iso2": "NI",
+      "iso3": "NIC",
+      "calling_codes": [
+        "+505"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Niger",
+      "iso2": "NE",
+      "iso3": "NER",
+      "calling_codes": [
+        "+227"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Nigeria",
+      "iso2": "NG",
+      "iso3": "NGA",
+      "calling_codes": [
+        "+234"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Niue",
+      "iso2": "NU",
+      "iso3": "NIU",
+      "calling_codes": [
+        "+683"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Norfolk Island",
+      "iso2": "NF",
+      "iso3": "NFK",
+      "calling_codes": [
+        "+672"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "North Korea",
+      "iso2": "KP",
+      "iso3": "PRK",
+      "calling_codes": [
+        "+850"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "North Macedonia",
+      "iso2": "MK",
+      "iso3": "MKD",
+      "calling_codes": [
+        "+389"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Northern Mariana Islands",
+      "iso2": "MP",
+      "iso3": "MNP",
+      "calling_codes": [
+        "+1-670"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Norway",
+      "iso2": "NO",
+      "iso3": "NOR",
+      "calling_codes": [
+        "+47"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Oman",
+      "iso2": "OM",
+      "iso3": "OMN",
+      "calling_codes": [
+        "+968"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Pakistan",
+      "iso2": "PK",
+      "iso3": "PAK",
+      "calling_codes": [
+        "+92"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Palau",
+      "iso2": "PW",
+      "iso3": "PLW",
+      "calling_codes": [
+        "+680"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Palestine",
+      "iso2": "PS",
+      "iso3": "PSE",
+      "calling_codes": [
+        "+970"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Panama",
+      "iso2": "PA",
+      "iso3": "PAN",
+      "calling_codes": [
+        "+507"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Papua New Guinea",
+      "iso2": "PG",
+      "iso3": "PNG",
+      "calling_codes": [
+        "+675"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Paraguay",
+      "iso2": "PY",
+      "iso3": "PRY",
+      "calling_codes": [
+        "+595"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Peru",
+      "iso2": "PE",
+      "iso3": "PER",
+      "calling_codes": [
+        "+51"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Philippines",
+      "iso2": "PH",
+      "iso3": "PHL",
+      "calling_codes": [
+        "+63"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Poland",
+      "iso2": "PL",
+      "iso3": "POL",
+      "calling_codes": [
+        "+48"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Portugal",
+      "iso2": "PT",
+      "iso3": "PRT",
+      "calling_codes": [
+        "+351"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Puerto Rico",
+      "iso2": "PR",
+      "iso3": "PRI",
+      "calling_codes": [
+        "+1-787",
+        "+1-939"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Qatar",
+      "iso2": "QA",
+      "iso3": "QAT",
+      "calling_codes": [
+        "+974"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Réunion",
+      "iso2": "RE",
+      "iso3": "REU",
+      "calling_codes": [
+        "+262"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Romania",
+      "iso2": "RO",
+      "iso3": "ROU",
+      "calling_codes": [
+        "+40"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Russia",
+      "iso2": "RU",
+      "iso3": "RUS",
+      "calling_codes": [
+        "+7"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Rwanda",
+      "iso2": "RW",
+      "iso3": "RWA",
+      "calling_codes": [
+        "+250"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Saint Barthélemy",
+      "iso2": "BL",
+      "iso3": "BLM",
+      "calling_codes": [
+        "+590"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Saint Helena",
+      "iso2": "SH",
+      "iso3": "SHN",
+      "calling_codes": [
+        "+290"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Saint Kitts and Nevis",
+      "iso2": "KN",
+      "iso3": "KNA",
+      "calling_codes": [
+        "+1-869"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Saint Lucia",
+      "iso2": "LC",
+      "iso3": "LCA",
+      "calling_codes": [
+        "+1-758"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Saint Martin",
+      "iso2": "MF",
+      "iso3": "MAF",
+      "calling_codes": [
+        "+590"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Saint Pierre and Miquelon",
+      "iso2": "PM",
+      "iso3": "SPM",
+      "calling_codes": [
+        "+508"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Saint Vincent and the Grenadines",
+      "iso2": "VC",
+      "iso3": "VCT",
+      "calling_codes": [
+        "+1-784"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Samoa",
+      "iso2": "WS",
+      "iso3": "WSM",
+      "calling_codes": [
+        "+685"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "San Marino",
+      "iso2": "SM",
+      "iso3": "SMR",
+      "calling_codes": [
+        "+378"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "São Tomé and Príncipe",
+      "iso2": "ST",
+      "iso3": "STP",
+      "calling_codes": [
+        "+239"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Saudi Arabia",
+      "iso2": "SA",
+      "iso3": "SAU",
+      "calling_codes": [
+        "+966"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Senegal",
+      "iso2": "SN",
+      "iso3": "SEN",
+      "calling_codes": [
+        "+221"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Serbia",
+      "iso2": "RS",
+      "iso3": "SRB",
+      "calling_codes": [
+        "+381"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Seychelles",
+      "iso2": "SC",
+      "iso3": "SYC",
+      "calling_codes": [
+        "+248"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Sierra Leone",
+      "iso2": "SL",
+      "iso3": "SLE",
+      "calling_codes": [
+        "+232"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Singapore",
+      "iso2": "SG",
+      "iso3": "SGP",
+      "calling_codes": [
+        "+65"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Sint Maarten",
+      "iso2": "SX",
+      "iso3": "SXM",
+      "calling_codes": [
+        "+1-721"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Slovakia",
+      "iso2": "SK",
+      "iso3": "SVK",
+      "calling_codes": [
+        "+421"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Slovenia",
+      "iso2": "SI",
+      "iso3": "SVN",
+      "calling_codes": [
+        "+386"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Solomon Islands",
+      "iso2": "SB",
+      "iso3": "SLB",
+      "calling_codes": [
+        "+677"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Somalia",
+      "iso2": "SO",
+      "iso3": "SOM",
+      "calling_codes": [
+        "+252"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "South Africa",
+      "iso2": "ZA",
+      "iso3": "ZAF",
+      "calling_codes": [
+        "+27"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "South Korea",
+      "iso2": "KR",
+      "iso3": "KOR",
+      "calling_codes": [
+        "+82"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "South Sudan",
+      "iso2": "SS",
+      "iso3": "SSD",
+      "calling_codes": [
+        "+211"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Spain",
+      "iso2": "ES",
+      "iso3": "ESP",
+      "calling_codes": [
+        "+34"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Sri Lanka",
+      "iso2": "LK",
+      "iso3": "LKA",
+      "calling_codes": [
+        "+94"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Sudan",
+      "iso2": "SD",
+      "iso3": "SDN",
+      "calling_codes": [
+        "+249"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Suriname",
+      "iso2": "SR",
+      "iso3": "SUR",
+      "calling_codes": [
+        "+597"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Sweden",
+      "iso2": "SE",
+      "iso3": "SWE",
+      "calling_codes": [
+        "+46"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Switzerland",
+      "iso2": "CH",
+      "iso3": "CHE",
+      "calling_codes": [
+        "+41"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Syria",
+      "iso2": "SY",
+      "iso3": "SYR",
+      "calling_codes": [
+        "+963"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Taiwan",
+      "iso2": "TW",
+      "iso3": "TWN",
+      "calling_codes": [
+        "+886"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Tajikistan",
+      "iso2": "TJ",
+      "iso3": "TJK",
+      "calling_codes": [
+        "+992"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Tanzania",
+      "iso2": "TZ",
+      "iso3": "TZA",
+      "calling_codes": [
+        "+255"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Thailand",
+      "iso2": "TH",
+      "iso3": "THA",
+      "calling_codes": [
+        "+66"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Timor-Leste",
+      "iso2": "TL",
+      "iso3": "TLS",
+      "calling_codes": [
+        "+670"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Togo",
+      "iso2": "TG",
+      "iso3": "TGO",
+      "calling_codes": [
+        "+228"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Tokelau",
+      "iso2": "TK",
+      "iso3": "TKL",
+      "calling_codes": [
+        "+690"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Tonga",
+      "iso2": "TO",
+      "iso3": "TON",
+      "calling_codes": [
+        "+676"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Trinidad and Tobago",
+      "iso2": "TT",
+      "iso3": "TTO",
+      "calling_codes": [
+        "+1-868"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Tunisia",
+      "iso2": "TN",
+      "iso3": "TUN",
+      "calling_codes": [
+        "+216"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Turkey",
+      "iso2": "TR",
+      "iso3": "TUR",
+      "calling_codes": [
+        "+90"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Turkmenistan",
+      "iso2": "TM",
+      "iso3": "TKM",
+      "calling_codes": [
+        "+993"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Turks and Caicos Islands",
+      "iso2": "TC",
+      "iso3": "TCA",
+      "calling_codes": [
+        "+1-649"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Tuvalu",
+      "iso2": "TV",
+      "iso3": "TUV",
+      "calling_codes": [
+        "+688"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Uganda",
+      "iso2": "UG",
+      "iso3": "UGA",
+      "calling_codes": [
+        "+256"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Ukraine",
+      "iso2": "UA",
+      "iso3": "UKR",
+      "calling_codes": [
+        "+380"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "United Arab Emirates",
+      "iso2": "AE",
+      "iso3": "ARE",
+      "calling_codes": [
+        "+971"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "United Kingdom",
+      "iso2": "GB",
+      "iso3": "GBR",
+      "calling_codes": [
+        "+44"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "United States",
+      "iso2": "US",
+      "iso3": "USA",
+      "calling_codes": [
+        "+1"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "United States Virgin Islands",
+      "iso2": "VI",
+      "iso3": "VIR",
+      "calling_codes": [
+        "+1-340"
+      ],
+      "nanp": true
+    },
+    {
+      "country": "Uruguay",
+      "iso2": "UY",
+      "iso3": "URY",
+      "calling_codes": [
+        "+598"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Uzbekistan",
+      "iso2": "UZ",
+      "iso3": "UZB",
+      "calling_codes": [
+        "+998"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Vanuatu",
+      "iso2": "VU",
+      "iso3": "VUT",
+      "calling_codes": [
+        "+678"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Vatican City",
+      "iso2": "VA",
+      "iso3": "VAT",
+      "calling_codes": [
+        "+379",
+        "+39"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Venezuela",
+      "iso2": "VE",
+      "iso3": "VEN",
+      "calling_codes": [
+        "+58"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Vietnam",
+      "iso2": "VN",
+      "iso3": "VNM",
+      "calling_codes": [
+        "+84"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Wallis and Futuna",
+      "iso2": "WF",
+      "iso3": "WLF",
+      "calling_codes": [
+        "+681"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Western Sahara",
+      "iso2": "EH",
+      "iso3": "ESH",
+      "calling_codes": [
+        "+212"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Yemen",
+      "iso2": "YE",
+      "iso3": "YEM",
+      "calling_codes": [
+        "+967"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Zambia",
+      "iso2": "ZM",
+      "iso3": "ZMB",
+      "calling_codes": [
+        "+260"
+      ],
+      "nanp": false
+    },
+    {
+      "country": "Zimbabwe",
+      "iso2": "ZW",
+      "iso3": "ZWE",
+      "calling_codes": [
+        "+263"
+      ],
+      "nanp": false
+    }
+  ],
+  "lookup_by_calling_code": {
+    "+93": [
+      {
+        "country": "Afghanistan",
+        "iso2": "AF",
+        "iso3": "AFG",
+        "nanp": false
+      }
+    ],
+    "+355": [
+      {
+        "country": "Albania",
+        "iso2": "AL",
+        "iso3": "ALB",
+        "nanp": false
+      }
+    ],
+    "+213": [
+      {
+        "country": "Algeria",
+        "iso2": "DZ",
+        "iso3": "DZA",
+        "nanp": false
+      }
+    ],
+    "+1-684": [
+      {
+        "country": "American Samoa",
+        "iso2": "AS",
+        "iso3": "ASM",
+        "nanp": true
+      }
+    ],
+    "+376": [
+      {
+        "country": "Andorra",
+        "iso2": "AD",
+        "iso3": "AND",
+        "nanp": false
+      }
+    ],
+    "+244": [
+      {
+        "country": "Angola",
+        "iso2": "AO",
+        "iso3": "AGO",
+        "nanp": false
+      }
+    ],
+    "+1-264": [
+      {
+        "country": "Anguilla",
+        "iso2": "AI",
+        "iso3": "AIA",
+        "nanp": true
+      }
+    ],
+    "+1-268": [
+      {
+        "country": "Antigua and Barbuda",
+        "iso2": "AG",
+        "iso3": "ATG",
+        "nanp": true
+      }
+    ],
+    "+54": [
+      {
+        "country": "Argentina",
+        "iso2": "AR",
+        "iso3": "ARG",
+        "nanp": false
+      }
+    ],
+    "+374": [
+      {
+        "country": "Armenia",
+        "iso2": "AM",
+        "iso3": "ARM",
+        "nanp": false
+      }
+    ],
+    "+297": [
+      {
+        "country": "Aruba",
+        "iso2": "AW",
+        "iso3": "ABW",
+        "nanp": false
+      }
+    ],
+    "+247": [
+      {
+        "country": "Ascension Island",
+        "iso2": "AC",
+        "iso3": "ASC",
+        "nanp": false
+      }
+    ],
+    "+61": [
+      {
+        "country": "Australia",
+        "iso2": "AU",
+        "iso3": "AUS",
+        "nanp": false
+      },
+      {
+        "country": "Christmas Island",
+        "iso2": "CX",
+        "iso3": "CXR",
+        "nanp": false
+      },
+      {
+        "country": "Cocos Islands",
+        "iso2": "CC",
+        "iso3": "CCK",
+        "nanp": false
+      }
+    ],
+    "+43": [
+      {
+        "country": "Austria",
+        "iso2": "AT",
+        "iso3": "AUT",
+        "nanp": false
+      }
+    ],
+    "+994": [
+      {
+        "country": "Azerbaijan",
+        "iso2": "AZ",
+        "iso3": "AZE",
+        "nanp": false
+      }
+    ],
+    "+1-242": [
+      {
+        "country": "Bahamas",
+        "iso2": "BS",
+        "iso3": "BHS",
+        "nanp": true
+      }
+    ],
+    "+973": [
+      {
+        "country": "Bahrain",
+        "iso2": "BH",
+        "iso3": "BHR",
+        "nanp": false
+      }
+    ],
+    "+880": [
+      {
+        "country": "Bangladesh",
+        "iso2": "BD",
+        "iso3": "BGD",
+        "nanp": false
+      }
+    ],
+    "+1-246": [
+      {
+        "country": "Barbados",
+        "iso2": "BB",
+        "iso3": "BRB",
+        "nanp": true
+      }
+    ],
+    "+375": [
+      {
+        "country": "Belarus",
+        "iso2": "BY",
+        "iso3": "BLR",
+        "nanp": false
+      }
+    ],
+    "+32": [
+      {
+        "country": "Belgium",
+        "iso2": "BE",
+        "iso3": "BEL",
+        "nanp": false
+      }
+    ],
+    "+501": [
+      {
+        "country": "Belize",
+        "iso2": "BZ",
+        "iso3": "BLZ",
+        "nanp": false
+      }
+    ],
+    "+229": [
+      {
+        "country": "Benin",
+        "iso2": "BJ",
+        "iso3": "BEN",
+        "nanp": false
+      }
+    ],
+    "+1-441": [
+      {
+        "country": "Bermuda",
+        "iso2": "BM",
+        "iso3": "BMU",
+        "nanp": true
+      }
+    ],
+    "+975": [
+      {
+        "country": "Bhutan",
+        "iso2": "BT",
+        "iso3": "BTN",
+        "nanp": false
+      }
+    ],
+    "+591": [
+      {
+        "country": "Bolivia",
+        "iso2": "BO",
+        "iso3": "BOL",
+        "nanp": false
+      }
+    ],
+    "+599": [
+      {
+        "country": "Bonaire, Sint Eustatius and Saba",
+        "iso2": "BQ",
+        "iso3": "BES",
+        "nanp": false
+      },
+      {
+        "country": "Curaçao",
+        "iso2": "CW",
+        "iso3": "CUW",
+        "nanp": false
+      }
+    ],
+    "+387": [
+      {
+        "country": "Bosnia and Herzegovina",
+        "iso2": "BA",
+        "iso3": "BIH",
+        "nanp": false
+      }
+    ],
+    "+267": [
+      {
+        "country": "Botswana",
+        "iso2": "BW",
+        "iso3": "BWA",
+        "nanp": false
+      }
+    ],
+    "+55": [
+      {
+        "country": "Brazil",
+        "iso2": "BR",
+        "iso3": "BRA",
+        "nanp": false
+      }
+    ],
+    "+1-284": [
+      {
+        "country": "British Virgin Islands",
+        "iso2": "VG",
+        "iso3": "VGB",
+        "nanp": true
+      }
+    ],
+    "+673": [
+      {
+        "country": "Brunei",
+        "iso2": "BN",
+        "iso3": "BRN",
+        "nanp": false
+      }
+    ],
+    "+359": [
+      {
+        "country": "Bulgaria",
+        "iso2": "BG",
+        "iso3": "BGR",
+        "nanp": false
+      }
+    ],
+    "+226": [
+      {
+        "country": "Burkina Faso",
+        "iso2": "BF",
+        "iso3": "BFA",
+        "nanp": false
+      }
+    ],
+    "+257": [
+      {
+        "country": "Burundi",
+        "iso2": "BI",
+        "iso3": "BDI",
+        "nanp": false
+      }
+    ],
+    "+855": [
+      {
+        "country": "Cambodia",
+        "iso2": "KH",
+        "iso3": "KHM",
+        "nanp": false
+      }
+    ],
+    "+237": [
+      {
+        "country": "Cameroon",
+        "iso2": "CM",
+        "iso3": "CMR",
+        "nanp": false
+      }
+    ],
+    "+1": [
+      {
+        "country": "Canada",
+        "iso2": "CA",
+        "iso3": "CAN",
+        "nanp": true
+      },
+      {
+        "country": "United States",
+        "iso2": "US",
+        "iso3": "USA",
+        "nanp": true
+      }
+    ],
+    "+238": [
+      {
+        "country": "Cape Verde",
+        "iso2": "CV",
+        "iso3": "CPV",
+        "nanp": false
+      }
+    ],
+    "+1-345": [
+      {
+        "country": "Cayman Islands",
+        "iso2": "KY",
+        "iso3": "CYM",
+        "nanp": true
+      }
+    ],
+    "+236": [
+      {
+        "country": "Central African Republic",
+        "iso2": "CF",
+        "iso3": "CAF",
+        "nanp": false
+      }
+    ],
+    "+235": [
+      {
+        "country": "Chad",
+        "iso2": "TD",
+        "iso3": "TCD",
+        "nanp": false
+      }
+    ],
+    "+56": [
+      {
+        "country": "Chile",
+        "iso2": "CL",
+        "iso3": "CHL",
+        "nanp": false
+      }
+    ],
+    "+86": [
+      {
+        "country": "China",
+        "iso2": "CN",
+        "iso3": "CHN",
+        "nanp": false
+      }
+    ],
+    "+57": [
+      {
+        "country": "Colombia",
+        "iso2": "CO",
+        "iso3": "COL",
+        "nanp": false
+      }
+    ],
+    "+269": [
+      {
+        "country": "Comoros",
+        "iso2": "KM",
+        "iso3": "COM",
+        "nanp": false
+      }
+    ],
+    "+242": [
+      {
+        "country": "Congo",
+        "iso2": "CG",
+        "iso3": "COG",
+        "nanp": false
+      }
+    ],
+    "+682": [
+      {
+        "country": "Cook Islands",
+        "iso2": "CK",
+        "iso3": "COK",
+        "nanp": false
+      }
+    ],
+    "+506": [
+      {
+        "country": "Costa Rica",
+        "iso2": "CR",
+        "iso3": "CRI",
+        "nanp": false
+      }
+    ],
+    "+385": [
+      {
+        "country": "Croatia",
+        "iso2": "HR",
+        "iso3": "HRV",
+        "nanp": false
+      }
+    ],
+    "+53": [
+      {
+        "country": "Cuba",
+        "iso2": "CU",
+        "iso3": "CUB",
+        "nanp": false
+      }
+    ],
+    "+357": [
+      {
+        "country": "Cyprus",
+        "iso2": "CY",
+        "iso3": "CYP",
+        "nanp": false
+      }
+    ],
+    "+420": [
+      {
+        "country": "Czech Republic",
+        "iso2": "CZ",
+        "iso3": "CZE",
+        "nanp": false
+      }
+    ],
+    "+243": [
+      {
+        "country": "Democratic Republic of the Congo",
+        "iso2": "CD",
+        "iso3": "COD",
+        "nanp": false
+      }
+    ],
+    "+45": [
+      {
+        "country": "Denmark",
+        "iso2": "DK",
+        "iso3": "DNK",
+        "nanp": false
+      }
+    ],
+    "+246": [
+      {
+        "country": "Diego Garcia",
+        "iso2": "DG",
+        "iso3": "DGA",
+        "nanp": false
+      }
+    ],
+    "+253": [
+      {
+        "country": "Djibouti",
+        "iso2": "DJ",
+        "iso3": "DJI",
+        "nanp": false
+      }
+    ],
+    "+1-767": [
+      {
+        "country": "Dominica",
+        "iso2": "DM",
+        "iso3": "DMA",
+        "nanp": true
+      }
+    ],
+    "+1-809": [
+      {
+        "country": "Dominican Republic",
+        "iso2": "DO",
+        "iso3": "DOM",
+        "nanp": true
+      }
+    ],
+    "+1-829": [
+      {
+        "country": "Dominican Republic",
+        "iso2": "DO",
+        "iso3": "DOM",
+        "nanp": true
+      }
+    ],
+    "+1-849": [
+      {
+        "country": "Dominican Republic",
+        "iso2": "DO",
+        "iso3": "DOM",
+        "nanp": true
+      }
+    ],
+    "+593": [
+      {
+        "country": "Ecuador",
+        "iso2": "EC",
+        "iso3": "ECU",
+        "nanp": false
+      }
+    ],
+    "+20": [
+      {
+        "country": "Egypt",
+        "iso2": "EG",
+        "iso3": "EGY",
+        "nanp": false
+      }
+    ],
+    "+503": [
+      {
+        "country": "El Salvador",
+        "iso2": "SV",
+        "iso3": "SLV",
+        "nanp": false
+      }
+    ],
+    "+240": [
+      {
+        "country": "Equatorial Guinea",
+        "iso2": "GQ",
+        "iso3": "GNQ",
+        "nanp": false
+      }
+    ],
+    "+291": [
+      {
+        "country": "Eritrea",
+        "iso2": "ER",
+        "iso3": "ERI",
+        "nanp": false
+      }
+    ],
+    "+372": [
+      {
+        "country": "Estonia",
+        "iso2": "EE",
+        "iso3": "EST",
+        "nanp": false
+      }
+    ],
+    "+268": [
+      {
+        "country": "Eswatini",
+        "iso2": "SZ",
+        "iso3": "SWZ",
+        "nanp": false
+      }
+    ],
+    "+251": [
+      {
+        "country": "Ethiopia",
+        "iso2": "ET",
+        "iso3": "ETH",
+        "nanp": false
+      }
+    ],
+    "+500": [
+      {
+        "country": "Falkland Islands",
+        "iso2": "FK",
+        "iso3": "FLK",
+        "nanp": false
+      }
+    ],
+    "+298": [
+      {
+        "country": "Faroe Islands",
+        "iso2": "FO",
+        "iso3": "FRO",
+        "nanp": false
+      }
+    ],
+    "+679": [
+      {
+        "country": "Fiji",
+        "iso2": "FJ",
+        "iso3": "FJI",
+        "nanp": false
+      }
+    ],
+    "+358": [
+      {
+        "country": "Finland",
+        "iso2": "FI",
+        "iso3": "FIN",
+        "nanp": false
+      }
+    ],
+    "+33": [
+      {
+        "country": "France",
+        "iso2": "FR",
+        "iso3": "FRA",
+        "nanp": false
+      }
+    ],
+    "+594": [
+      {
+        "country": "French Guiana",
+        "iso2": "GF",
+        "iso3": "GUF",
+        "nanp": false
+      }
+    ],
+    "+689": [
+      {
+        "country": "French Polynesia",
+        "iso2": "PF",
+        "iso3": "PYF",
+        "nanp": false
+      }
+    ],
+    "+241": [
+      {
+        "country": "Gabon",
+        "iso2": "GA",
+        "iso3": "GAB",
+        "nanp": false
+      }
+    ],
+    "+220": [
+      {
+        "country": "Gambia",
+        "iso2": "GM",
+        "iso3": "GMB",
+        "nanp": false
+      }
+    ],
+    "+995": [
+      {
+        "country": "Georgia",
+        "iso2": "GE",
+        "iso3": "GEO",
+        "nanp": false
+      }
+    ],
+    "+49": [
+      {
+        "country": "Germany",
+        "iso2": "DE",
+        "iso3": "DEU",
+        "nanp": false
+      }
+    ],
+    "+233": [
+      {
+        "country": "Ghana",
+        "iso2": "GH",
+        "iso3": "GHA",
+        "nanp": false
+      }
+    ],
+    "+350": [
+      {
+        "country": "Gibraltar",
+        "iso2": "GI",
+        "iso3": "GIB",
+        "nanp": false
+      }
+    ],
+    "+30": [
+      {
+        "country": "Greece",
+        "iso2": "GR",
+        "iso3": "GRC",
+        "nanp": false
+      }
+    ],
+    "+299": [
+      {
+        "country": "Greenland",
+        "iso2": "GL",
+        "iso3": "GRL",
+        "nanp": false
+      }
+    ],
+    "+1-473": [
+      {
+        "country": "Grenada",
+        "iso2": "GD",
+        "iso3": "GRD",
+        "nanp": true
+      }
+    ],
+    "+590": [
+      {
+        "country": "Guadeloupe",
+        "iso2": "GP",
+        "iso3": "GLP",
+        "nanp": false
+      },
+      {
+        "country": "Saint Barthélemy",
+        "iso2": "BL",
+        "iso3": "BLM",
+        "nanp": false
+      },
+      {
+        "country": "Saint Martin",
+        "iso2": "MF",
+        "iso3": "MAF",
+        "nanp": false
+      }
+    ],
+    "+1-671": [
+      {
+        "country": "Guam",
+        "iso2": "GU",
+        "iso3": "GUM",
+        "nanp": true
+      }
+    ],
+    "+502": [
+      {
+        "country": "Guatemala",
+        "iso2": "GT",
+        "iso3": "GTM",
+        "nanp": false
+      }
+    ],
+    "+44-1481": [
+      {
+        "country": "Guernsey",
+        "iso2": "GG",
+        "iso3": "GGY",
+        "nanp": false
+      }
+    ],
+    "+224": [
+      {
+        "country": "Guinea",
+        "iso2": "GN",
+        "iso3": "GIN",
+        "nanp": false
+      }
+    ],
+    "+245": [
+      {
+        "country": "Guinea-Bissau",
+        "iso2": "GW",
+        "iso3": "GNB",
+        "nanp": false
+      }
+    ],
+    "+592": [
+      {
+        "country": "Guyana",
+        "iso2": "GY",
+        "iso3": "GUY",
+        "nanp": false
+      }
+    ],
+    "+509": [
+      {
+        "country": "Haiti",
+        "iso2": "HT",
+        "iso3": "HTI",
+        "nanp": false
+      }
+    ],
+    "+504": [
+      {
+        "country": "Honduras",
+        "iso2": "HN",
+        "iso3": "HND",
+        "nanp": false
+      }
+    ],
+    "+852": [
+      {
+        "country": "Hong Kong",
+        "iso2": "HK",
+        "iso3": "HKG",
+        "nanp": false
+      }
+    ],
+    "+36": [
+      {
+        "country": "Hungary",
+        "iso2": "HU",
+        "iso3": "HUN",
+        "nanp": false
+      }
+    ],
+    "+354": [
+      {
+        "country": "Iceland",
+        "iso2": "IS",
+        "iso3": "ISL",
+        "nanp": false
+      }
+    ],
+    "+91": [
+      {
+        "country": "India",
+        "iso2": "IN",
+        "iso3": "IND",
+        "nanp": false
+      }
+    ],
+    "+62": [
+      {
+        "country": "Indonesia",
+        "iso2": "ID",
+        "iso3": "IDN",
+        "nanp": false
+      }
+    ],
+    "+98": [
+      {
+        "country": "Iran",
+        "iso2": "IR",
+        "iso3": "IRN",
+        "nanp": false
+      }
+    ],
+    "+964": [
+      {
+        "country": "Iraq",
+        "iso2": "IQ",
+        "iso3": "IRQ",
+        "nanp": false
+      }
+    ],
+    "+353": [
+      {
+        "country": "Ireland",
+        "iso2": "IE",
+        "iso3": "IRL",
+        "nanp": false
+      }
+    ],
+    "+44-1624": [
+      {
+        "country": "Isle of Man",
+        "iso2": "IM",
+        "iso3": "IMN",
+        "nanp": false
+      }
+    ],
+    "+972": [
+      {
+        "country": "Israel",
+        "iso2": "IL",
+        "iso3": "ISR",
+        "nanp": false
+      }
+    ],
+    "+39": [
+      {
+        "country": "Italy",
+        "iso2": "IT",
+        "iso3": "ITA",
+        "nanp": false
+      },
+      {
+        "country": "Vatican City",
+        "iso2": "VA",
+        "iso3": "VAT",
+        "nanp": false
+      }
+    ],
+    "+225": [
+      {
+        "country": "Ivory Coast",
+        "iso2": "CI",
+        "iso3": "CIV",
+        "nanp": false
+      }
+    ],
+    "+1-876": [
+      {
+        "country": "Jamaica",
+        "iso2": "JM",
+        "iso3": "JAM",
+        "nanp": true
+      }
+    ],
+    "+1-658": [
+      {
+        "country": "Jamaica",
+        "iso2": "JM",
+        "iso3": "JAM",
+        "nanp": true
+      }
+    ],
+    "+81": [
+      {
+        "country": "Japan",
+        "iso2": "JP",
+        "iso3": "JPN",
+        "nanp": false
+      }
+    ],
+    "+44-1534": [
+      {
+        "country": "Jersey",
+        "iso2": "JE",
+        "iso3": "JEY",
+        "nanp": false
+      }
+    ],
+    "+962": [
+      {
+        "country": "Jordan",
+        "iso2": "JO",
+        "iso3": "JOR",
+        "nanp": false
+      }
+    ],
+    "+7": [
+      {
+        "country": "Kazakhstan",
+        "iso2": "KZ",
+        "iso3": "KAZ",
+        "nanp": false
+      },
+      {
+        "country": "Russia",
+        "iso2": "RU",
+        "iso3": "RUS",
+        "nanp": false
+      }
+    ],
+    "+254": [
+      {
+        "country": "Kenya",
+        "iso2": "KE",
+        "iso3": "KEN",
+        "nanp": false
+      }
+    ],
+    "+686": [
+      {
+        "country": "Kiribati",
+        "iso2": "KI",
+        "iso3": "KIR",
+        "nanp": false
+      }
+    ],
+    "+383": [
+      {
+        "country": "Kosovo",
+        "iso2": "XK",
+        "iso3": "XKX",
+        "nanp": false
+      }
+    ],
+    "+965": [
+      {
+        "country": "Kuwait",
+        "iso2": "KW",
+        "iso3": "KWT",
+        "nanp": false
+      }
+    ],
+    "+996": [
+      {
+        "country": "Kyrgyzstan",
+        "iso2": "KG",
+        "iso3": "KGZ",
+        "nanp": false
+      }
+    ],
+    "+856": [
+      {
+        "country": "Laos",
+        "iso2": "LA",
+        "iso3": "LAO",
+        "nanp": false
+      }
+    ],
+    "+371": [
+      {
+        "country": "Latvia",
+        "iso2": "LV",
+        "iso3": "LVA",
+        "nanp": false
+      }
+    ],
+    "+961": [
+      {
+        "country": "Lebanon",
+        "iso2": "LB",
+        "iso3": "LBN",
+        "nanp": false
+      }
+    ],
+    "+266": [
+      {
+        "country": "Lesotho",
+        "iso2": "LS",
+        "iso3": "LSO",
+        "nanp": false
+      }
+    ],
+    "+231": [
+      {
+        "country": "Liberia",
+        "iso2": "LR",
+        "iso3": "LBR",
+        "nanp": false
+      }
+    ],
+    "+218": [
+      {
+        "country": "Libya",
+        "iso2": "LY",
+        "iso3": "LBY",
+        "nanp": false
+      }
+    ],
+    "+423": [
+      {
+        "country": "Liechtenstein",
+        "iso2": "LI",
+        "iso3": "LIE",
+        "nanp": false
+      }
+    ],
+    "+370": [
+      {
+        "country": "Lithuania",
+        "iso2": "LT",
+        "iso3": "LTU",
+        "nanp": false
+      }
+    ],
+    "+352": [
+      {
+        "country": "Luxembourg",
+        "iso2": "LU",
+        "iso3": "LUX",
+        "nanp": false
+      }
+    ],
+    "+853": [
+      {
+        "country": "Macau",
+        "iso2": "MO",
+        "iso3": "MAC",
+        "nanp": false
+      }
+    ],
+    "+261": [
+      {
+        "country": "Madagascar",
+        "iso2": "MG",
+        "iso3": "MDG",
+        "nanp": false
+      }
+    ],
+    "+265": [
+      {
+        "country": "Malawi",
+        "iso2": "MW",
+        "iso3": "MWI",
+        "nanp": false
+      }
+    ],
+    "+60": [
+      {
+        "country": "Malaysia",
+        "iso2": "MY",
+        "iso3": "MYS",
+        "nanp": false
+      }
+    ],
+    "+960": [
+      {
+        "country": "Maldives",
+        "iso2": "MV",
+        "iso3": "MDV",
+        "nanp": false
+      }
+    ],
+    "+223": [
+      {
+        "country": "Mali",
+        "iso2": "ML",
+        "iso3": "MLI",
+        "nanp": false
+      }
+    ],
+    "+356": [
+      {
+        "country": "Malta",
+        "iso2": "MT",
+        "iso3": "MLT",
+        "nanp": false
+      }
+    ],
+    "+692": [
+      {
+        "country": "Marshall Islands",
+        "iso2": "MH",
+        "iso3": "MHL",
+        "nanp": false
+      }
+    ],
+    "+596": [
+      {
+        "country": "Martinique",
+        "iso2": "MQ",
+        "iso3": "MTQ",
+        "nanp": false
+      }
+    ],
+    "+222": [
+      {
+        "country": "Mauritania",
+        "iso2": "MR",
+        "iso3": "MRT",
+        "nanp": false
+      }
+    ],
+    "+230": [
+      {
+        "country": "Mauritius",
+        "iso2": "MU",
+        "iso3": "MUS",
+        "nanp": false
+      }
+    ],
+    "+262": [
+      {
+        "country": "Mayotte",
+        "iso2": "YT",
+        "iso3": "MYT",
+        "nanp": false
+      },
+      {
+        "country": "Réunion",
+        "iso2": "RE",
+        "iso3": "REU",
+        "nanp": false
+      }
+    ],
+    "+52": [
+      {
+        "country": "Mexico",
+        "iso2": "MX",
+        "iso3": "MEX",
+        "nanp": false
+      }
+    ],
+    "+691": [
+      {
+        "country": "Micronesia",
+        "iso2": "FM",
+        "iso3": "FSM",
+        "nanp": false
+      }
+    ],
+    "+373": [
+      {
+        "country": "Moldova",
+        "iso2": "MD",
+        "iso3": "MDA",
+        "nanp": false
+      }
+    ],
+    "+377": [
+      {
+        "country": "Monaco",
+        "iso2": "MC",
+        "iso3": "MCO",
+        "nanp": false
+      }
+    ],
+    "+976": [
+      {
+        "country": "Mongolia",
+        "iso2": "MN",
+        "iso3": "MNG",
+        "nanp": false
+      }
+    ],
+    "+382": [
+      {
+        "country": "Montenegro",
+        "iso2": "ME",
+        "iso3": "MNE",
+        "nanp": false
+      }
+    ],
+    "+1-664": [
+      {
+        "country": "Montserrat",
+        "iso2": "MS",
+        "iso3": "MSR",
+        "nanp": true
+      }
+    ],
+    "+212": [
+      {
+        "country": "Morocco",
+        "iso2": "MA",
+        "iso3": "MAR",
+        "nanp": false
+      },
+      {
+        "country": "Western Sahara",
+        "iso2": "EH",
+        "iso3": "ESH",
+        "nanp": false
+      }
+    ],
+    "+258": [
+      {
+        "country": "Mozambique",
+        "iso2": "MZ",
+        "iso3": "MOZ",
+        "nanp": false
+      }
+    ],
+    "+95": [
+      {
+        "country": "Myanmar",
+        "iso2": "MM",
+        "iso3": "MMR",
+        "nanp": false
+      }
+    ],
+    "+264": [
+      {
+        "country": "Namibia",
+        "iso2": "NA",
+        "iso3": "NAM",
+        "nanp": false
+      }
+    ],
+    "+674": [
+      {
+        "country": "Nauru",
+        "iso2": "NR",
+        "iso3": "NRU",
+        "nanp": false
+      }
+    ],
+    "+977": [
+      {
+        "country": "Nepal",
+        "iso2": "NP",
+        "iso3": "NPL",
+        "nanp": false
+      }
+    ],
+    "+31": [
+      {
+        "country": "Netherlands",
+        "iso2": "NL",
+        "iso3": "NLD",
+        "nanp": false
+      }
+    ],
+    "+687": [
+      {
+        "country": "New Caledonia",
+        "iso2": "NC",
+        "iso3": "NCL",
+        "nanp": false
+      }
+    ],
+    "+64": [
+      {
+        "country": "New Zealand",
+        "iso2": "NZ",
+        "iso3": "NZL",
+        "nanp": false
+      }
+    ],
+    "+505": [
+      {
+        "country": "Nicaragua",
+        "iso2": "NI",
+        "iso3": "NIC",
+        "nanp": false
+      }
+    ],
+    "+227": [
+      {
+        "country": "Niger",
+        "iso2": "NE",
+        "iso3": "NER",
+        "nanp": false
+      }
+    ],
+    "+234": [
+      {
+        "country": "Nigeria",
+        "iso2": "NG",
+        "iso3": "NGA",
+        "nanp": false
+      }
+    ],
+    "+683": [
+      {
+        "country": "Niue",
+        "iso2": "NU",
+        "iso3": "NIU",
+        "nanp": false
+      }
+    ],
+    "+672": [
+      {
+        "country": "Norfolk Island",
+        "iso2": "NF",
+        "iso3": "NFK",
+        "nanp": false
+      }
+    ],
+    "+850": [
+      {
+        "country": "North Korea",
+        "iso2": "KP",
+        "iso3": "PRK",
+        "nanp": false
+      }
+    ],
+    "+389": [
+      {
+        "country": "North Macedonia",
+        "iso2": "MK",
+        "iso3": "MKD",
+        "nanp": false
+      }
+    ],
+    "+1-670": [
+      {
+        "country": "Northern Mariana Islands",
+        "iso2": "MP",
+        "iso3": "MNP",
+        "nanp": true
+      }
+    ],
+    "+47": [
+      {
+        "country": "Norway",
+        "iso2": "NO",
+        "iso3": "NOR",
+        "nanp": false
+      }
+    ],
+    "+968": [
+      {
+        "country": "Oman",
+        "iso2": "OM",
+        "iso3": "OMN",
+        "nanp": false
+      }
+    ],
+    "+92": [
+      {
+        "country": "Pakistan",
+        "iso2": "PK",
+        "iso3": "PAK",
+        "nanp": false
+      }
+    ],
+    "+680": [
+      {
+        "country": "Palau",
+        "iso2": "PW",
+        "iso3": "PLW",
+        "nanp": false
+      }
+    ],
+    "+970": [
+      {
+        "country": "Palestine",
+        "iso2": "PS",
+        "iso3": "PSE",
+        "nanp": false
+      }
+    ],
+    "+507": [
+      {
+        "country": "Panama",
+        "iso2": "PA",
+        "iso3": "PAN",
+        "nanp": false
+      }
+    ],
+    "+675": [
+      {
+        "country": "Papua New Guinea",
+        "iso2": "PG",
+        "iso3": "PNG",
+        "nanp": false
+      }
+    ],
+    "+595": [
+      {
+        "country": "Paraguay",
+        "iso2": "PY",
+        "iso3": "PRY",
+        "nanp": false
+      }
+    ],
+    "+51": [
+      {
+        "country": "Peru",
+        "iso2": "PE",
+        "iso3": "PER",
+        "nanp": false
+      }
+    ],
+    "+63": [
+      {
+        "country": "Philippines",
+        "iso2": "PH",
+        "iso3": "PHL",
+        "nanp": false
+      }
+    ],
+    "+48": [
+      {
+        "country": "Poland",
+        "iso2": "PL",
+        "iso3": "POL",
+        "nanp": false
+      }
+    ],
+    "+351": [
+      {
+        "country": "Portugal",
+        "iso2": "PT",
+        "iso3": "PRT",
+        "nanp": false
+      }
+    ],
+    "+1-787": [
+      {
+        "country": "Puerto Rico",
+        "iso2": "PR",
+        "iso3": "PRI",
+        "nanp": true
+      }
+    ],
+    "+1-939": [
+      {
+        "country": "Puerto Rico",
+        "iso2": "PR",
+        "iso3": "PRI",
+        "nanp": true
+      }
+    ],
+    "+974": [
+      {
+        "country": "Qatar",
+        "iso2": "QA",
+        "iso3": "QAT",
+        "nanp": false
+      }
+    ],
+    "+40": [
+      {
+        "country": "Romania",
+        "iso2": "RO",
+        "iso3": "ROU",
+        "nanp": false
+      }
+    ],
+    "+250": [
+      {
+        "country": "Rwanda",
+        "iso2": "RW",
+        "iso3": "RWA",
+        "nanp": false
+      }
+    ],
+    "+290": [
+      {
+        "country": "Saint Helena",
+        "iso2": "SH",
+        "iso3": "SHN",
+        "nanp": false
+      }
+    ],
+    "+1-869": [
+      {
+        "country": "Saint Kitts and Nevis",
+        "iso2": "KN",
+        "iso3": "KNA",
+        "nanp": true
+      }
+    ],
+    "+1-758": [
+      {
+        "country": "Saint Lucia",
+        "iso2": "LC",
+        "iso3": "LCA",
+        "nanp": true
+      }
+    ],
+    "+508": [
+      {
+        "country": "Saint Pierre and Miquelon",
+        "iso2": "PM",
+        "iso3": "SPM",
+        "nanp": false
+      }
+    ],
+    "+1-784": [
+      {
+        "country": "Saint Vincent and the Grenadines",
+        "iso2": "VC",
+        "iso3": "VCT",
+        "nanp": true
+      }
+    ],
+    "+685": [
+      {
+        "country": "Samoa",
+        "iso2": "WS",
+        "iso3": "WSM",
+        "nanp": false
+      }
+    ],
+    "+378": [
+      {
+        "country": "San Marino",
+        "iso2": "SM",
+        "iso3": "SMR",
+        "nanp": false
+      }
+    ],
+    "+239": [
+      {
+        "country": "São Tomé and Príncipe",
+        "iso2": "ST",
+        "iso3": "STP",
+        "nanp": false
+      }
+    ],
+    "+966": [
+      {
+        "country": "Saudi Arabia",
+        "iso2": "SA",
+        "iso3": "SAU",
+        "nanp": false
+      }
+    ],
+    "+221": [
+      {
+        "country": "Senegal",
+        "iso2": "SN",
+        "iso3": "SEN",
+        "nanp": false
+      }
+    ],
+    "+381": [
+      {
+        "country": "Serbia",
+        "iso2": "RS",
+        "iso3": "SRB",
+        "nanp": false
+      }
+    ],
+    "+248": [
+      {
+        "country": "Seychelles",
+        "iso2": "SC",
+        "iso3": "SYC",
+        "nanp": false
+      }
+    ],
+    "+232": [
+      {
+        "country": "Sierra Leone",
+        "iso2": "SL",
+        "iso3": "SLE",
+        "nanp": false
+      }
+    ],
+    "+65": [
+      {
+        "country": "Singapore",
+        "iso2": "SG",
+        "iso3": "SGP",
+        "nanp": false
+      }
+    ],
+    "+1-721": [
+      {
+        "country": "Sint Maarten",
+        "iso2": "SX",
+        "iso3": "SXM",
+        "nanp": true
+      }
+    ],
+    "+421": [
+      {
+        "country": "Slovakia",
+        "iso2": "SK",
+        "iso3": "SVK",
+        "nanp": false
+      }
+    ],
+    "+386": [
+      {
+        "country": "Slovenia",
+        "iso2": "SI",
+        "iso3": "SVN",
+        "nanp": false
+      }
+    ],
+    "+677": [
+      {
+        "country": "Solomon Islands",
+        "iso2": "SB",
+        "iso3": "SLB",
+        "nanp": false
+      }
+    ],
+    "+252": [
+      {
+        "country": "Somalia",
+        "iso2": "SO",
+        "iso3": "SOM",
+        "nanp": false
+      }
+    ],
+    "+27": [
+      {
+        "country": "South Africa",
+        "iso2": "ZA",
+        "iso3": "ZAF",
+        "nanp": false
+      }
+    ],
+    "+82": [
+      {
+        "country": "South Korea",
+        "iso2": "KR",
+        "iso3": "KOR",
+        "nanp": false
+      }
+    ],
+    "+211": [
+      {
+        "country": "South Sudan",
+        "iso2": "SS",
+        "iso3": "SSD",
+        "nanp": false
+      }
+    ],
+    "+34": [
+      {
+        "country": "Spain",
+        "iso2": "ES",
+        "iso3": "ESP",
+        "nanp": false
+      }
+    ],
+    "+94": [
+      {
+        "country": "Sri Lanka",
+        "iso2": "LK",
+        "iso3": "LKA",
+        "nanp": false
+      }
+    ],
+    "+249": [
+      {
+        "country": "Sudan",
+        "iso2": "SD",
+        "iso3": "SDN",
+        "nanp": false
+      }
+    ],
+    "+597": [
+      {
+        "country": "Suriname",
+        "iso2": "SR",
+        "iso3": "SUR",
+        "nanp": false
+      }
+    ],
+    "+46": [
+      {
+        "country": "Sweden",
+        "iso2": "SE",
+        "iso3": "SWE",
+        "nanp": false
+      }
+    ],
+    "+41": [
+      {
+        "country": "Switzerland",
+        "iso2": "CH",
+        "iso3": "CHE",
+        "nanp": false
+      }
+    ],
+    "+963": [
+      {
+        "country": "Syria",
+        "iso2": "SY",
+        "iso3": "SYR",
+        "nanp": false
+      }
+    ],
+    "+886": [
+      {
+        "country": "Taiwan",
+        "iso2": "TW",
+        "iso3": "TWN",
+        "nanp": false
+      }
+    ],
+    "+992": [
+      {
+        "country": "Tajikistan",
+        "iso2": "TJ",
+        "iso3": "TJK",
+        "nanp": false
+      }
+    ],
+    "+255": [
+      {
+        "country": "Tanzania",
+        "iso2": "TZ",
+        "iso3": "TZA",
+        "nanp": false
+      }
+    ],
+    "+66": [
+      {
+        "country": "Thailand",
+        "iso2": "TH",
+        "iso3": "THA",
+        "nanp": false
+      }
+    ],
+    "+670": [
+      {
+        "country": "Timor-Leste",
+        "iso2": "TL",
+        "iso3": "TLS",
+        "nanp": false
+      }
+    ],
+    "+228": [
+      {
+        "country": "Togo",
+        "iso2": "TG",
+        "iso3": "TGO",
+        "nanp": false
+      }
+    ],
+    "+690": [
+      {
+        "country": "Tokelau",
+        "iso2": "TK",
+        "iso3": "TKL",
+        "nanp": false
+      }
+    ],
+    "+676": [
+      {
+        "country": "Tonga",
+        "iso2": "TO",
+        "iso3": "TON",
+        "nanp": false
+      }
+    ],
+    "+1-868": [
+      {
+        "country": "Trinidad and Tobago",
+        "iso2": "TT",
+        "iso3": "TTO",
+        "nanp": true
+      }
+    ],
+    "+216": [
+      {
+        "country": "Tunisia",
+        "iso2": "TN",
+        "iso3": "TUN",
+        "nanp": false
+      }
+    ],
+    "+90": [
+      {
+        "country": "Turkey",
+        "iso2": "TR",
+        "iso3": "TUR",
+        "nanp": false
+      }
+    ],
+    "+993": [
+      {
+        "country": "Turkmenistan",
+        "iso2": "TM",
+        "iso3": "TKM",
+        "nanp": false
+      }
+    ],
+    "+1-649": [
+      {
+        "country": "Turks and Caicos Islands",
+        "iso2": "TC",
+        "iso3": "TCA",
+        "nanp": true
+      }
+    ],
+    "+688": [
+      {
+        "country": "Tuvalu",
+        "iso2": "TV",
+        "iso3": "TUV",
+        "nanp": false
+      }
+    ],
+    "+256": [
+      {
+        "country": "Uganda",
+        "iso2": "UG",
+        "iso3": "UGA",
+        "nanp": false
+      }
+    ],
+    "+380": [
+      {
+        "country": "Ukraine",
+        "iso2": "UA",
+        "iso3": "UKR",
+        "nanp": false
+      }
+    ],
+    "+971": [
+      {
+        "country": "United Arab Emirates",
+        "iso2": "AE",
+        "iso3": "ARE",
+        "nanp": false
+      }
+    ],
+    "+44": [
+      {
+        "country": "United Kingdom",
+        "iso2": "GB",
+        "iso3": "GBR",
+        "nanp": false
+      }
+    ],
+    "+1-340": [
+      {
+        "country": "United States Virgin Islands",
+        "iso2": "VI",
+        "iso3": "VIR",
+        "nanp": true
+      }
+    ],
+    "+598": [
+      {
+        "country": "Uruguay",
+        "iso2": "UY",
+        "iso3": "URY",
+        "nanp": false
+      }
+    ],
+    "+998": [
+      {
+        "country": "Uzbekistan",
+        "iso2": "UZ",
+        "iso3": "UZB",
+        "nanp": false
+      }
+    ],
+    "+678": [
+      {
+        "country": "Vanuatu",
+        "iso2": "VU",
+        "iso3": "VUT",
+        "nanp": false
+      }
+    ],
+    "+379": [
+      {
+        "country": "Vatican City",
+        "iso2": "VA",
+        "iso3": "VAT",
+        "nanp": false
+      }
+    ],
+    "+58": [
+      {
+        "country": "Venezuela",
+        "iso2": "VE",
+        "iso3": "VEN",
+        "nanp": false
+      }
+    ],
+    "+84": [
+      {
+        "country": "Vietnam",
+        "iso2": "VN",
+        "iso3": "VNM",
+        "nanp": false
+      }
+    ],
+    "+681": [
+      {
+        "country": "Wallis and Futuna",
+        "iso2": "WF",
+        "iso3": "WLF",
+        "nanp": false
+      }
+    ],
+    "+967": [
+      {
+        "country": "Yemen",
+        "iso2": "YE",
+        "iso3": "YEM",
+        "nanp": false
+      }
+    ],
+    "+260": [
+      {
+        "country": "Zambia",
+        "iso2": "ZM",
+        "iso3": "ZMB",
+        "nanp": false
+      }
+    ],
+    "+263": [
+      {
+        "country": "Zimbabwe",
+        "iso2": "ZW",
+        "iso3": "ZWE",
+        "nanp": false
+      }
+    ]
+  }
+}
