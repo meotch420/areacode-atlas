@@ -312,13 +312,13 @@ header p {
 
 /* =====================================================
    MAP AREA
-   No white line. No divider. Map starts below top area.
+   Darker background around the globe.
 ===================================================== */
 
 .map-section {
   width: 100%;
   height: 620px;
-  background: #1e3a5f;
+  background: #071a2f;
   padding: 0 10px;
 }
 
@@ -328,7 +328,11 @@ header p {
   min-height: 620px;
   border-radius: 0;
   overflow: hidden;
-  background: #1e3a5f;
+  background: #071a2f;
+}
+
+#map canvas {
+  background: #071a2f;
 }
 
 /* =====================================================
