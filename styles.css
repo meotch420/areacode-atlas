@@ -64,6 +64,7 @@ header p {
   background: #1d4ed8;
 }
 
+/* 16 time boxes: 8 on top, 8 underneath */
 .timezone-bar {
   width: 100%;
   min-width: 0;
@@ -83,14 +84,34 @@ header p {
   background: #12304a;
 }
 
-.local-card {
-  border-color: #9fd3ff;
-  background: #12304a;
+.tz-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  line-height: 1.1;
 }
 
+.tz-time {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+/* Row 1 timezone colors */
 .hawaii-card {
   border-color: #a78bfa;
+  background: rgba(167, 139, 250, 0.16);
   box-shadow: 0 0 10px rgba(167, 139, 250, 0.35);
+}
+
+.alaska-card {
+  border-color: #60a5fa;
+  background: rgba(96, 165, 250, 0.16);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.35);
 }
 
 .pacific-card {
@@ -115,31 +136,58 @@ header p {
 
 .atlantic-card {
   border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.16);
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.35);
 }
 
 .newfoundland-card {
   border-color: #a855f7;
+  background: rgba(168, 85, 247, 0.16);
   box-shadow: 0 0 10px rgba(168, 85, 247, 0.35);
 }
 
-.tz-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: #e2e8f0;
-  margin-bottom: 6px;
-  white-space: nowrap;
-  line-height: 1.1;
+/* Row 2 timezone colors */
+.brazil-card {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.16);
 }
 
-.tz-time {
-  font-size: 15px;
-  font-weight: 700;
-  color: #ffffff;
-  white-space: nowrap;
-  line-height: 1.1;
+.southgeorgia-card {
+  border-color: #14b8a6;
+  background: rgba(20, 184, 166, 0.16);
 }
 
+.azores-card {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.16);
+}
+
+.utc-card {
+  border-color: #cbd5e1;
+  background: rgba(203, 213, 225, 0.16);
+}
+
+.london-card {
+  border-color: #94a3b8;
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.europe-card {
+  border-color: #fb923c;
+  background: rgba(251, 146, 60, 0.16);
+}
+
+.israel-card {
+  border-color: #f97316;
+  background: rgba(249, 115, 22, 0.16);
+}
+
+.gulf-card {
+  border-color: #e879f9;
+  background: rgba(232, 121, 249, 0.16);
+}
+
+/* Area Information box */
 #infoPanel {
   width: 100%;
   min-width: 0;
@@ -166,10 +214,11 @@ header p {
   font-size: 16px;
 }
 
+/* Map */
 #map {
   width: 100%;
-  height: calc(100vh - 160px);
-  min-height: 500px;
+  height: calc(100vh - 230px);
+  min-height: 480px;
 }
 
 #info {
@@ -178,6 +227,7 @@ header p {
   line-height: 1.5;
 }
 
+/* Medium screens */
 @media (max-width: 1550px) {
   .top-section {
     grid-template-columns: 280px minmax(0, 1fr) 360px;
@@ -196,22 +246,28 @@ header p {
   }
 }
 
+/* Smaller screens */
 @media (max-width: 1400px) {
   .top-section {
     grid-template-columns: 1fr;
   }
 
   .timezone-bar {
-    overflow-x: auto;
-    grid-template-columns: repeat(8, minmax(110px, 1fr));
+    grid-template-columns: repeat(4, minmax(110px, 1fr));
   }
 
   #infoPanel {
     width: 100%;
     min-width: 0;
   }
+
+  #map {
+    height: calc(100vh - 360px);
+    min-height: 420px;
+  }
 }
 
+/* Phone screens */
 @media (max-width: 768px) {
   .top-section {
     padding: 16px;
@@ -220,6 +276,10 @@ header p {
 
   header h1 {
     font-size: 1.7rem;
+  }
+
+  .timezone-bar {
+    grid-template-columns: repeat(2, minmax(130px, 1fr));
   }
 
   .timezone-card {
