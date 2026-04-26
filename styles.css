@@ -2,199 +2,335 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
   font-family: Arial, sans-serif;
   background: #0f172a;
-  color: white;
+  color: #ffffff;
 }
 
-/* MAIN TOP LAYOUT */
+/* =========================
+   TOP SECTION
+========================= */
+
 .top-section {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr) 280px;
-  grid-template-areas: "left clocks info";
-  gap: 20px;
-  align-items: start;
-
-  padding: 10px;
+  grid-template-columns: 300px minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: stretch;
+  padding: 18px 14px;
   background: #020617;
   border-bottom: 1px solid #1e293b;
-  min-height: 440px;
 }
 
-/* LEFT SIDE */
 .top-left {
-  grid-area: left;
   min-width: 0;
 }
 
 header h1 {
   margin: 0 0 6px 0;
   font-size: 2rem;
-  color: white;
+  line-height: 1.1;
+  color: #ffffff;
 }
 
 header p {
   margin: 0 0 16px 0;
-  color: white;
+  color: #cbd5e1;
+  font-size: 0.95rem;
 }
+
+/* =========================
+   SEARCH BOX
+========================= */
 
 .search {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
 .search input {
+  width: 220px;
   padding: 10px 12px;
-  width: 190px;
-  border: 1px solid #94a3b8;
-  border-radius: 7px;
+  border: 1px solid #334155;
+  border-radius: 8px;
   background: #e2e8f0;
   color: #0f172a;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
 }
 
 .search button {
   padding: 10px 18px;
   border: none;
   border-radius: 8px;
-  background: #0ea5e9;
-  color: white;
-  font-weight: 700;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .search button:hover {
-  background: #0284c7;
+  background: #1d4ed8;
 }
 
 .status-message {
   margin-top: 12px;
-  color: white;
-  font-size: 0.95rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
-/* TIMEZONE BOXES - MIDDLE ONLY */
+/* =========================
+   TIME ZONE BOX AREA
+   4 rows x 7 boxes = 28 boxes
+========================= */
+
 .timezone-bar {
-  grid-area: clocks;
-  align-self: end;
-
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(7, minmax(110px, 1fr));
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(4, auto);
   gap: 10px;
+  align-content: center;
+  padding: 34px 10px;
+  min-height: 360px;
+}
 
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  background: transparent;
+.timezone-bar::before,
+.timezone-bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #334155;
+}
+
+.timezone-bar::before {
+  top: 18px;
+}
+
+.timezone-bar::after {
+  bottom: 18px;
 }
 
 .timezone-card {
-  min-height: 58px;
-  border-radius: 10px;
-  background: #111827;
-  border: 1px solid #1e293b;
-
+  min-height: 72px;
+  padding: 9px 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  text-align: center;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
 }
 
 .tz-label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 4px;
-  text-align: center;
+  font-size: 0.68rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  line-height: 1.1;
 }
 
 .tz-time {
-  font-size: 1rem;
-  font-weight: 700;
-  color: white;
-  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
-/* TIMEZONE BORDER COLORS */
+/* =========================
+   TIME ZONE BOX COLORS
+========================= */
+
 .local-card {
-  border-color: #64748b;
+  background: #334155;
+  color: #ffffff;
 }
 
-.newfoundland-card {
-  border-color: #a855f7;
+.line-islands-card {
+  background: #0ea5e9;
+  color: #ffffff;
+}
+
+.tonga-card {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.new-zealand-card {
+  background: #0369a1;
+  color: #ffffff;
+}
+
+.solomon-card {
+  background: #075985;
+  color: #ffffff;
+}
+
+.australia-card {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.japan-card {
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+.china-card {
+  background: #1e40af;
+  color: #ffffff;
+}
+
+.indochina-card {
+  background: #3730a3;
+  color: #ffffff;
+}
+
+.bangladesh-card {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.pakistan-card {
+  background: #7c3aed;
+  color: #ffffff;
+}
+
+.gulf-card {
+  background: #9333ea;
+  color: #ffffff;
+}
+
+.east-africa-card {
+  background: #a855f7;
+  color: #ffffff;
+}
+
+.central-africa-card {
+  background: #c026d3;
+  color: #ffffff;
+}
+
+.central-europe-card {
+  background: #db2777;
+  color: #ffffff;
+}
+
+.greenwich-card {
+  background: #e11d48;
+  color: #ffffff;
+}
+
+.azores-card {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.south-georgia-card {
+  background: #ea580c;
+  color: #ffffff;
+}
+
+.argentina-card {
+  background: #f97316;
+  color: #111827;
 }
 
 .atlantic-card {
-  border-color: #f59e0b;
+  background: #d97706;
+  color: #ffffff;
 }
 
 .eastern-card {
-  border-color: #3b82f6;
+  background: #2563eb;
+  color: #ffffff;
 }
 
 .central-card {
-  border-color: #22c55e;
+  background: #16a34a;
+  color: #ffffff;
 }
 
 .mountain-card {
-  border-color: #eab308;
+  background: #f59e0b;
+  color: #111827;
 }
 
 .pacific-card {
-  border-color: #ef4444;
+  background: #dc2626;
+  color: #ffffff;
 }
 
 .alaska-card {
-  border-color: #38bdf8;
+  background: #0891b2;
+  color: #ffffff;
 }
 
 .hawaii-card {
-  border-color: #fb7185;
+  background: #9333ea;
+  color: #ffffff;
 }
 
 .samoa-card {
-  border-color: #14b8a6;
+  background: #64748b;
+  color: #ffffff;
 }
 
-.chamorro-card {
-  border-color: #c084fc;
+.baker-card {
+  background: #475569;
+  color: #ffffff;
 }
 
-/* AREA INFORMATION PANEL */
-.area-info-panel,
+/* =========================
+   AREA INFORMATION BOX
+========================= */
+
 .area-info,
-.area-information,
+.area-info-box,
 .info-panel {
-  grid-area: info;
-  width: 100%;
-  background: #111827;
+  background: #020617;
   border: 1px solid #334155;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 14px;
-  color: white;
+  min-height: 150px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
 }
 
-.area-info-panel h2,
 .area-info h2,
-.area-information h2,
+.area-info-box h2,
 .info-panel h2 {
-  margin: 0 0 14px 0;
+  margin: 0 0 12px 0;
   text-align: center;
-  font-size: 1.5rem;
-  color: white;
+  font-size: 1.55rem;
+  color: #ffffff;
 }
 
 .info-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 8px 0;
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  gap: 8px;
+  padding: 6px 0;
   border-bottom: 1px solid #1e293b;
-  font-size: 0.9rem;
 }
 
 .info-row:last-child {
@@ -202,69 +338,124 @@ header p {
 }
 
 .info-label {
-  color: #93c5fd;
+  color: #94a3b8;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .info-value {
-  color: white;
-  font-weight: 700;
-  text-align: right;
+  color: #ffffff;
+  font-size: 0.95rem;
 }
 
-/* MAP AREA */
+/* =========================
+   MAP
+========================= */
+
 #map {
   width: 100%;
-  height: calc(100vh - 460px);
-  min-height: 420px;
+  height: calc(100vh - 390px);
+  min-height: 520px;
+  background: #0f172a;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1500px) {
+/* =========================
+   MAP POPUPS
+========================= */
+
+.maptiler-popup-content,
+.maplibregl-popup-content {
+  background: #020617;
+  color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  padding: 10px;
+}
+
+.maptiler-popup-tip,
+.maplibregl-popup-tip {
+  border-top-color: #020617;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1400px) {
   .top-section {
-    grid-template-columns: 290px minmax(0, 1fr) 270px;
+    grid-template-columns: 260px minmax(0, 1fr) 300px;
   }
 
-  .timezone-bar {
-    grid-template-columns: repeat(6, minmax(105px, 1fr));
+  .timezone-card {
+    min-height: 68px;
+    padding: 8px 5px;
+  }
+
+  .tz-label {
+    font-size: 0.62rem;
+  }
+
+  .tz-time {
+    font-size: 0.82rem;
   }
 }
 
 @media (max-width: 1100px) {
   .top-section {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "left"
-      "info"
-      "clocks";
-    min-height: auto;
   }
 
   .timezone-bar {
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(4, auto);
+    min-height: 340px;
   }
 
-  .area-info-panel,
-  .area-info,
-  .area-information,
-  .info-panel {
-    max-width: none;
+  #map {
+    height: 620px;
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 850px) {
   .timezone-bar {
-    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .top-section {
+    padding: 14px 10px;
+  }
+
+  header h1 {
+    font-size: 1.65rem;
+  }
+
+  .search {
+    width: 100%;
   }
 
   .search input {
     width: 100%;
   }
 
-  .search button {
-    width: 100%;
+  .timezone-bar {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 32px 0;
   }
 
-  header h1 {
-    font-size: 1.7rem;
+  .timezone-card {
+    min-height: 68px;
+  }
+
+  .tz-time {
+    font-size: 0.9rem;
+  }
+
+  #map {
+    height: 560px;
+    min-height: 480px;
   }
 }
