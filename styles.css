@@ -285,6 +285,10 @@ header p {
   background: linear-gradient(135deg, #64748b, #1e293b);
 }
 
+.timezone-card[data-tz="Asia/Jerusalem"] {
+  background: linear-gradient(135deg, #5340c9, #3f2f9a);
+}
+
 /* =========================
    AREA INFORMATION BOX
 ========================= */
