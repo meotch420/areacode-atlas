@@ -32,13 +32,11 @@
         <button type="submit">Search</button>
       </form>
 
-      <div class="status-message" id="statusMessage">
-        Enter a 3-digit area code or country code like +972.
-      </div>
+      <div class="status-message" id="statusMessage"></div>
     </div>
 
     <div class="timezone-wrap">
-      <div class="timezone-grid">
+      <div class="timezone-grid" id="timezoneGrid">
 
         <div class="timezone-card tz-hawaii" data-tz="Pacific/Honolulu" data-lng="-157.8583" data-lat="21.3069" data-zoom="4">
           <div class="tz-label">HAWAII</div>
@@ -193,7 +191,7 @@
 
       <div class="info-row">
         <span>State / Region</span>
-        <strong id="infoState">---</strong>
+        <strong id="infoRegion">---</strong>
       </div>
 
       <div class="info-row">
@@ -208,7 +206,7 @@
 
       <div class="info-row">
         <span>Time Zone</span>
-        <strong id="infoTimezone">---</strong>
+        <strong id="infoTimeZone">---</strong>
       </div>
     </aside>
   </section>
@@ -218,9 +216,7 @@
   </main>
 
   <section class="ad-space">
-    <div class="ad-placeholder">
-      Ad Space
-    </div>
+    <div class="ad-placeholder">Ad Space</div>
   </section>
 
   <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
