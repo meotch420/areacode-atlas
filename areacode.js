@@ -20,6 +20,7 @@
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
+  const TIMEZONE_CARD_MAX_ZOOM = 3.2;
 
   let map;
   let activeMarker = null;
@@ -383,7 +384,11 @@
         setActiveTimeZoneCard(zoneId);
         highlightTimeZoneBand(zoneId);
 
-        flyToLocation(zone.center[0], zone.center[1], zone.zoom);
+        flyToLocation(
+          zone.center[0],
+          zone.center[1],
+          Math.min(zone.zoom, TIMEZONE_CARD_MAX_ZOOM)
+        );
         clearMarker();
         clearCountryOutline();
 
