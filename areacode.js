@@ -21,6 +21,12 @@
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
   const TIMEZONE_CARD_MAX_ZOOM = 3.2;
+  const DEFAULT_COUNTRY_VIEW = {
+    name: "United States",
+    countryCode: "+1",
+    center: [-98.5795, 39.8283],
+    zoom: 3
+  };
 
   let map;
   let activeMarker = null;
@@ -76,8 +82,8 @@
     map = new maptilersdk.Map({
       container: "map",
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
-      center: [10, 20],
-      zoom: 1.45,
+      center: DEFAULT_COUNTRY_VIEW.center,
+      zoom: DEFAULT_COUNTRY_VIEW.zoom,
       minZoom: 1,
       maxZoom: 18,
       projection: "globe",
@@ -88,10 +94,12 @@
     });
 
     map.addControl(new maptilersdk.NavigationControl(), "top-right");
+    setupGlobeOnlyWheelZoom();
 
-    map.on("load", () => {
+    map.on("load", async () => {
       ensureTimeZoneBandLayer();
       removeExtraZoomControls();
+      await focusDefaultCountryOnLoad();
     });
 
     setTimeout(removeExtraZoomControls, 500);
@@ -115,6 +123,77 @@
         group.remove();
       }
     });
+  }
+
+
+  function setupGlobeOnlyWheelZoom() {
+    if (!map) return;
+
+    const mapEl = document.getElementById("map");
+
+    if (!mapEl) return;
+
+    map.scrollZoom.disable();
+
+    mapEl.addEventListener(
+      "wheel",
+      (event) => {
+        if (!isPointerOverGlobe(event.clientX, event.clientY)) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const currentZoom = map.getZoom();
+        const zoomDirection = event.deltaY < 0 ? 1 : -1;
+        const nextZoom = Math.min(18, Math.max(1, currentZoom + zoomDirection * 0.25));
+
+        map.easeTo({
+          zoom: nextZoom,
+          duration: 150,
+          essential: true
+        });
+      },
+      { passive: false }
+    );
+  }
+
+  function isPointerOverGlobe(clientX, clientY) {
+    const mapEl = document.getElementById("map");
+
+    if (!mapEl) return false;
+
+    const rect = mapEl.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const radius = Math.min(rect.width, rect.height) / 2;
+    const distance = Math.hypot(x - centerX, y - centerY);
+
+    return distance <= radius;
+  }
+
+  async function focusDefaultCountryOnLoad() {
+    flyToLocation(
+      DEFAULT_COUNTRY_VIEW.center[0],
+      DEFAULT_COUNTRY_VIEW.center[1],
+      DEFAULT_COUNTRY_VIEW.zoom
+    );
+
+    setInfoPanel({
+      city: "---",
+      region: "North America",
+      state: "---",
+      country: DEFAULT_COUNTRY_VIEW.name,
+      countryCode: DEFAULT_COUNTRY_VIEW.countryCode,
+      timeZone: "Multiple",
+      timezone: "Multiple"
+    });
+
+    setStatus("");
+    clearMarker();
+    await outlineCountry(DEFAULT_COUNTRY_VIEW.name);
   }
 
   /* =====================================================
