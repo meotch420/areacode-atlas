@@ -138,6 +138,12 @@ header p {
   filter: brightness(1.12);
 }
 
+.timezone-card.is-active {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95), 0 0 24px rgba(255, 255, 255, 0.45);
+  filter: brightness(1.16);
+}
+
 .timezone-name,
 .timezone-card-name {
   display: block;

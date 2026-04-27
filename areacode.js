@@ -14,10 +14,14 @@
 
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
+  const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
+  const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
+  const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
 
   let map;
   let activeMarker = null;
   let areaCodeIndex = new Map();
+  let selectedTimeZoneId = null;
 
   /* =====================================================
      AUTO REFRESH PAGE EVERY 1 HOUR
@@ -82,6 +86,7 @@
     map.addControl(new maptilersdk.NavigationControl(), "top-right");
 
     map.on("load", () => {
+      ensureTimeZoneBandLayer();
       removeExtraZoomControls();
     });
 
@@ -112,174 +117,233 @@
      TIME ZONE CARDS - 28 BOXES
   ===================================================== */
 
+  const TIMEZONE_COLORS = [
+    "#0ea5e9",
+    "#2563eb",
+    "#7c3aed",
+    "#9333ea",
+    "#c026d3",
+    "#db2777",
+    "#e11d48",
+    "#f97316",
+    "#ea580c",
+    "#d97706",
+    "#ca8a04",
+    "#65a30d",
+    "#16a34a",
+    "#059669",
+    "#0d9488",
+    "#0891b2",
+    "#0284c7",
+    "#1d4ed8",
+    "#4338ca",
+    "#6d28d9",
+    "#be185d",
+    "#dc2626",
+    "#b45309",
+    "#4d7c0f",
+    "#047857",
+    "#0369a1",
+    "#334155",
+    "#64748b"
+  ];
+
   const timeZones = [
     {
       name: "HAWAII",
       timeZone: "Pacific/Honolulu",
       center: [-157.8583, 21.3069],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -10
     },
     {
       name: "ALASKA",
       timeZone: "America/Anchorage",
       center: [-149.9003, 61.2181],
-      zoom: 3.5
+      zoom: 3.5,
+      utcOffset: -9
     },
     {
       name: "PACIFIC",
       timeZone: "America/Los_Angeles",
       center: [-118.2437, 34.0522],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -8
     },
     {
       name: "MOUNTAIN",
       timeZone: "America/Denver",
       center: [-104.9903, 39.7392],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -7
     },
     {
       name: "CENTRAL",
       timeZone: "America/Chicago",
       center: [-87.6298, 41.8781],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -6
     },
     {
       name: "EASTERN",
       timeZone: "America/New_York",
       center: [-74.006, 40.7128],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -5
     },
     {
       name: "ATLANTIC",
       timeZone: "America/Halifax",
       center: [-63.5752, 44.6488],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -4
     },
     {
       name: "NEWFOUNDLAND",
       timeZone: "America/St_Johns",
       center: [-52.7126, 47.5615],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -3.5
     },
     {
       name: "BRAZIL",
       timeZone: "America/Sao_Paulo",
       center: [-47.8825, -15.7942],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -3
     },
     {
       name: "SOUTH GEORGIA",
       timeZone: "Atlantic/South_Georgia",
       center: [-36.5879, -54.4296],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -2
     },
     {
       name: "AZORES",
       timeZone: "Atlantic/Azores",
       center: [-25.6756, 37.7412],
-      zoom: 4
+      zoom: 4,
+      utcOffset: -1
     },
     {
       name: "GREENWICH",
       timeZone: "Etc/GMT",
       center: [-0.1276, 51.5072],
-      zoom: 4
+      zoom: 4,
+      utcOffset: 0
     },
     {
       name: "LONDON",
       timeZone: "Europe/London",
       center: [-0.1276, 51.5072],
-      zoom: 4
+      zoom: 4,
+      utcOffset: 0
     },
     {
       name: "CENTRAL EUROPE",
       timeZone: "Europe/Berlin",
       center: [13.405, 52.52],
-      zoom: 4
+      zoom: 4,
+      utcOffset: 1
     },
     {
       name: "ISRAEL",
       timeZone: "Asia/Jerusalem",
       center: [35.2137, 31.7683],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 2
     },
     {
       name: "GULF",
       timeZone: "Asia/Dubai",
       center: [55.2708, 25.2048],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 4
     },
     {
       name: "PAKISTAN",
       timeZone: "Asia/Karachi",
       center: [67.0011, 24.8607],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 5
     },
     {
       name: "BANGLADESH",
       timeZone: "Asia/Dhaka",
       center: [90.4125, 23.8103],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 6
     },
     {
       name: "INDOCHINA",
       timeZone: "Asia/Bangkok",
       center: [100.5018, 13.7563],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 7
     },
     {
       name: "CHINA / SINGAPORE",
       timeZone: "Asia/Singapore",
       center: [103.8198, 1.3521],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 8
     },
     {
       name: "JAPAN / KOREA",
       timeZone: "Asia/Tokyo",
       center: [139.6917, 35.6895],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 9
     },
     {
       name: "AUSTRALIAN EASTERN",
       timeZone: "Australia/Sydney",
       center: [151.2093, -33.8688],
-      zoom: 4
+      zoom: 4,
+      utcOffset: 10
     },
     {
       name: "SOLOMON ISLANDS",
       timeZone: "Pacific/Guadalcanal",
       center: [159.9729, -9.4456],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 11
     },
     {
       name: "NEW ZEALAND",
       timeZone: "Pacific/Auckland",
       center: [174.7633, -36.8485],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 12
     },
     {
       name: "TONGA",
       timeZone: "Pacific/Tongatapu",
       center: [-175.1982, -21.1394],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 13
     },
     {
       name: "LINE ISLANDS",
       timeZone: "Pacific/Kiritimati",
       center: [-157.3768, 1.8721],
-      zoom: 5
+      zoom: 5,
+      utcOffset: 14
     },
     {
       name: "BAKER ISLAND",
       timeZone: "Etc/GMT+12",
       center: [-176.4769, 0.1936],
-      zoom: 5
+      zoom: 5,
+      utcOffset: -12
     },
     {
       name: "SAMOA",
       timeZone: "Pacific/Pago_Pago",
       center: [-170.1322, -14.2756],
-      zoom: 5
+      zoom: 5,
+      utcOffset: -11
     }
   ];
 
@@ -291,14 +355,18 @@
     timezoneGrid.innerHTML = "";
 
     timeZones.forEach((zone, index) => {
+      const zoneId = `tz-zone-${index}`;
+      const zoneColor = TIMEZONE_COLORS[index] || "#0ea5e9";
       const card = document.createElement("button");
 
       card.type = "button";
       card.className = `timezone-card tz-color-${index}`;
+      card.dataset.zoneId = zoneId;
       card.dataset.tz = zone.timeZone;
       card.dataset.lng = zone.center[0];
       card.dataset.lat = zone.center[1];
       card.dataset.zoom = zone.zoom;
+      card.dataset.color = zoneColor;
 
       card.innerHTML = `
         <div class="tz-label timezone-card-name">${zone.name}</div>
@@ -308,6 +376,10 @@
       `;
 
       card.addEventListener("click", () => {
+        selectedTimeZoneId = zoneId;
+        setActiveTimeZoneCard(zoneId);
+        highlightTimeZoneBand(zoneId);
+
         flyToLocation(zone.center[0], zone.center[1], zone.zoom);
         setMarker(zone.center[0], zone.center[1]);
 
@@ -361,6 +433,122 @@
 
       element.textContent = formatTime(timeZone);
     });
+  }
+
+  function setActiveTimeZoneCard(zoneId) {
+    const cards = document.querySelectorAll(".timezone-card");
+    cards.forEach((card) => {
+      card.classList.toggle("is-active", card.dataset.zoneId === zoneId);
+    });
+  }
+
+  function ensureTimeZoneBandLayer() {
+    if (!map || !map.isStyleLoaded()) return;
+    if (map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
+
+    map.addSource(TIMEZONE_BANDS_SOURCE_ID, {
+      type: "geojson",
+      data: buildTimeZoneBandGeoJson()
+    });
+
+    map.addLayer({
+      id: TIMEZONE_BANDS_FILL_LAYER_ID,
+      type: "fill",
+      source: TIMEZONE_BANDS_SOURCE_ID,
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "fill-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
+        "fill-opacity": 0.28
+      }
+    });
+
+    map.addLayer({
+      id: TIMEZONE_BANDS_LINE_LAYER_ID,
+      type: "line",
+      source: TIMEZONE_BANDS_SOURCE_ID,
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "line-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
+        "line-width": 1.25,
+        "line-opacity": 0.9
+      }
+    });
+
+    if (selectedTimeZoneId) {
+      highlightTimeZoneBand(selectedTimeZoneId);
+    }
+  }
+
+  function highlightTimeZoneBand(zoneId) {
+    if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
+
+    const filter = ["==", ["get", "zoneId"], zoneId];
+    map.setFilter(TIMEZONE_BANDS_FILL_LAYER_ID, filter);
+    map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
+    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
+    map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
+  }
+
+  function buildTimeZoneBandGeoJson() {
+    const features = timeZones.flatMap((zone, index) => {
+      const zoneId = `tz-zone-${index}`;
+      const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
+      const geometries = buildUtcBandGeometries(zone.utcOffset);
+
+      return geometries.map((geometry) => ({
+        type: "Feature",
+        properties: {
+          zoneId,
+          fillColor
+        },
+        geometry
+      }));
+    });
+
+    return {
+      type: "FeatureCollection",
+      features
+    };
+  }
+
+  function buildUtcBandGeometries(utcOffset) {
+    const bandHalfWidth = 7.5;
+    const centerLongitude = utcOffset * 15;
+    const west = centerLongitude - bandHalfWidth;
+    const east = centerLongitude + bandHalfWidth;
+
+    if (west < -180) {
+      return [
+        makeBandGeometry(west + 360, 180),
+        makeBandGeometry(-180, east)
+      ];
+    }
+
+    if (east > 180) {
+      return [
+        makeBandGeometry(west, 180),
+        makeBandGeometry(-180, east - 360)
+      ];
+    }
+
+    return [makeBandGeometry(west, east)];
+  }
+
+  function makeBandGeometry(west, east) {
+    return {
+      type: "Polygon",
+      coordinates: [[
+        [west, -85],
+        [east, -85],
+        [east, 85],
+        [west, 85],
+        [west, -85]
+      ]]
+    };
   }
 
   /* =====================================================
