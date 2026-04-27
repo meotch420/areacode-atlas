@@ -17,6 +17,9 @@
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
   const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
   const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
+  const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
+  const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
+  const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
 
   let map;
   let activeMarker = null;
@@ -381,7 +384,8 @@
         highlightTimeZoneBand(zoneId);
 
         flyToLocation(zone.center[0], zone.center[1], zone.zoom);
-        setMarker(zone.center[0], zone.center[1]);
+        clearMarker();
+        clearCountryOutline();
 
         setInfoPanel({
           city: "---",
@@ -902,7 +906,7 @@
 
     if (!form || !input) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       const rawValue = input.value.trim();
@@ -913,11 +917,11 @@
         return;
       }
 
-      searchCode(rawValue);
+      await searchCode(rawValue);
     });
   }
 
-  function searchCode(rawValue) {
+  async function searchCode(rawValue) {
     const startsWithPlus = rawValue.startsWith("+");
     const digits = cleanDigits(rawValue);
 
@@ -931,7 +935,7 @@
     const countryMatch = COUNTRY_CODE_INDEX.get(digits);
 
     if (startsWithPlus && countryMatch) {
-      showCountryCodeResult(countryMatch);
+      await showCountryCodeResult(countryMatch);
       return;
     }
 
@@ -941,7 +945,7 @@
     }
 
     if (countryMatch) {
-      showCountryCodeResult(countryMatch);
+      await showCountryCodeResult(countryMatch);
       return;
     }
 
@@ -970,6 +974,7 @@
     });
 
     setStatus("");
+    clearCountryOutline();
 
     if (Number.isFinite(record.lng) && Number.isFinite(record.lat)) {
       flyToLocation(record.lng, record.lat, record.zoom || 8);
@@ -979,7 +984,7 @@
     }
   }
 
-  function showCountryCodeResult(record) {
+  async function showCountryCodeResult(record) {
     setInfoPanel({
       city: "---",
       region: record.region || "---",
@@ -994,8 +999,10 @@
 
     if (Number.isFinite(record.lng) && Number.isFinite(record.lat)) {
       flyToLocation(record.lng, record.lat, record.zoom || 4);
-      setMarker(record.lng, record.lat);
     }
+
+    clearMarker();
+    await outlineCountry(record.country);
   }
 
   /* =====================================================
@@ -1026,6 +1033,110 @@
     })
       .setLngLat([lng, lat])
       .addTo(map);
+  }
+
+  function clearMarker() {
+    if (!activeMarker) return;
+    activeMarker.remove();
+    activeMarker = null;
+  }
+
+  async function outlineCountry(countryName) {
+    if (!map || !map.isStyleLoaded() || !countryName || countryName === "---") {
+      clearCountryOutline();
+      return;
+    }
+
+    const outlineGeometry = await fetchCountryOutlineGeometry(countryName);
+
+    if (!outlineGeometry) {
+      clearCountryOutline();
+      setStatus(`Found ${countryName}, but could not draw the country outline.`);
+      return;
+    }
+
+    const geojson = {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          properties: {},
+          geometry: outlineGeometry
+        }
+      ]
+    };
+
+    if (!map.getSource(COUNTRY_OUTLINE_SOURCE_ID)) {
+      map.addSource(COUNTRY_OUTLINE_SOURCE_ID, {
+        type: "geojson",
+        data: geojson
+      });
+
+      map.addLayer({
+        id: COUNTRY_OUTLINE_FILL_LAYER_ID,
+        type: "fill",
+        source: COUNTRY_OUTLINE_SOURCE_ID,
+        paint: {
+          "fill-color": "#22d3ee",
+          "fill-opacity": 0.06
+        }
+      });
+
+      map.addLayer({
+        id: COUNTRY_OUTLINE_LINE_LAYER_ID,
+        type: "line",
+        source: COUNTRY_OUTLINE_SOURCE_ID,
+        paint: {
+          "line-color": "#22d3ee",
+          "line-width": 2.5,
+          "line-opacity": 0.95
+        }
+      });
+      return;
+    }
+
+    map.getSource(COUNTRY_OUTLINE_SOURCE_ID).setData(geojson);
+    map.setLayoutProperty(COUNTRY_OUTLINE_FILL_LAYER_ID, "visibility", "visible");
+    map.setLayoutProperty(COUNTRY_OUTLINE_LINE_LAYER_ID, "visibility", "visible");
+  }
+
+  function clearCountryOutline() {
+    if (!map || !map.getSource(COUNTRY_OUTLINE_SOURCE_ID)) return;
+    map.setLayoutProperty(COUNTRY_OUTLINE_FILL_LAYER_ID, "visibility", "none");
+    map.setLayoutProperty(COUNTRY_OUTLINE_LINE_LAYER_ID, "visibility", "none");
+  }
+
+  async function fetchCountryOutlineGeometry(countryName) {
+    try {
+      const endpoint =
+        `https://api.maptiler.com/geocoding/${encodeURIComponent(countryName)}.json` +
+        `?types=country&limit=1&key=${MAPTILER_KEY}`;
+      const response = await fetch(endpoint);
+      if (!response.ok) return null;
+
+      const data = await response.json();
+      const feature = data?.features?.[0];
+      const bbox = feature?.bbox;
+
+      if (!Array.isArray(bbox) || bbox.length !== 4) return null;
+
+      const [west, south, east, north] = bbox.map(Number);
+      if (![west, south, east, north].every(Number.isFinite)) return null;
+
+      return {
+        type: "Polygon",
+        coordinates: [[
+          [west, south],
+          [east, south],
+          [east, north],
+          [west, north],
+          [west, south]
+        ]]
+      };
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 
   /* =====================================================
