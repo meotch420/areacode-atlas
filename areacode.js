@@ -220,7 +220,17 @@
     "#047857",
     "#0369a1",
     "#334155",
-    "#64748b"
+    "#64748b",
+    "#0f766e",
+    "#22c55e",
+    "#a3e635",
+    "#facc15",
+    "#fb7185",
+    "#f472b6",
+    "#a78bfa",
+    "#818cf8",
+    "#38bdf8",
+    "#2dd4bf"
   ];
 
   const timeZones = [
@@ -372,6 +382,13 @@
       utcOffset: 5.5
     },
     {
+      name: "NEPAL",
+      timeZone: "Asia/Kathmandu",
+      center: [85.324, 27.7172],
+      zoom: 5,
+      utcOffset: 5.75
+    },
+    {
       name: "BANGLADESH",
       timeZone: "Asia/Dhaka",
       center: [90.4125, 23.8103],
@@ -398,6 +415,13 @@
       center: [103.8198, 1.3521],
       zoom: 5,
       utcOffset: 8
+    },
+    {
+      name: "AUSTRALIAN WESTERN CENTRAL",
+      timeZone: "Australia/Eucla",
+      center: [128.8763, -31.6769],
+      zoom: 5,
+      utcOffset: 8.75
     },
     {
       name: "JAPAN / KOREA",
@@ -440,6 +464,13 @@
       center: [174.7633, -36.8485],
       zoom: 5,
       utcOffset: 12
+    },
+    {
+      name: "CHATHAM ISLANDS",
+      timeZone: "Pacific/Chatham",
+      center: [-176.5597, -43.9556],
+      zoom: 5,
+      utcOffset: 12.75
     },
     {
       name: "TONGA",

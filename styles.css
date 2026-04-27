@@ -294,6 +294,46 @@ header p {
   background: linear-gradient(135deg, #64748b, #1e293b);
 }
 
+.tz-color-28 {
+  background: linear-gradient(135deg, #0f766e, #134e4a);
+}
+
+.tz-color-29 {
+  background: linear-gradient(135deg, #22c55e, #166534);
+}
+
+.tz-color-30 {
+  background: linear-gradient(135deg, #a3e635, #4d7c0f);
+}
+
+.tz-color-31 {
+  background: linear-gradient(135deg, #facc15, #a16207);
+}
+
+.tz-color-32 {
+  background: linear-gradient(135deg, #fb7185, #9f1239);
+}
+
+.tz-color-33 {
+  background: linear-gradient(135deg, #f472b6, #9d174d);
+}
+
+.tz-color-34 {
+  background: linear-gradient(135deg, #a78bfa, #5b21b6);
+}
+
+.tz-color-35 {
+  background: linear-gradient(135deg, #818cf8, #3730a3);
+}
+
+.tz-color-36 {
+  background: linear-gradient(135deg, #38bdf8, #075985);
+}
+
+.tz-color-37 {
+  background: linear-gradient(135deg, #2dd4bf, #115e59);
+}
+
 .timezone-card[data-tz="Asia/Jerusalem"] {
   background: linear-gradient(135deg, #5340c9, #3f2f9a);
 }
