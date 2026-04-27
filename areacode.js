@@ -118,7 +118,7 @@
   }
 
   /* =====================================================
-     TIME ZONE CARDS - 28 BOXES
+     TIME ZONE CARDS
   ===================================================== */
 
   const TIMEZONE_COLORS = [
@@ -166,6 +166,13 @@
       center: [-149.9003, 61.2181],
       zoom: 3.5,
       utcOffset: -9
+    },
+    {
+      name: "MARQUESAS",
+      timeZone: "Pacific/Marquesas",
+      center: [-139.0368, -9.8],
+      zoom: 4,
+      utcOffset: -9.5
     },
     {
       name: "PACIFIC",
@@ -259,11 +266,25 @@
       utcOffset: 2
     },
     {
+      name: "IRAN",
+      timeZone: "Asia/Tehran",
+      center: [51.389, 35.6892],
+      zoom: 5,
+      utcOffset: 3.5
+    },
+    {
       name: "GULF",
       timeZone: "Asia/Dubai",
       center: [55.2708, 25.2048],
       zoom: 5,
       utcOffset: 4
+    },
+    {
+      name: "AFGHANISTAN",
+      timeZone: "Asia/Kabul",
+      center: [69.2075, 34.5553],
+      zoom: 5,
+      utcOffset: 4.5
     },
     {
       name: "PAKISTAN",
@@ -273,11 +294,25 @@
       utcOffset: 5
     },
     {
+      name: "INDIA / SRI LANKA",
+      timeZone: "Asia/Kolkata",
+      center: [77.209, 28.6139],
+      zoom: 4,
+      utcOffset: 5.5
+    },
+    {
       name: "BANGLADESH",
       timeZone: "Asia/Dhaka",
       center: [90.4125, 23.8103],
       zoom: 5,
       utcOffset: 6
+    },
+    {
+      name: "MYANMAR",
+      timeZone: "Asia/Yangon",
+      center: [96.1951, 16.8661],
+      zoom: 5,
+      utcOffset: 6.5
     },
     {
       name: "INDOCHINA",
@@ -301,11 +336,25 @@
       utcOffset: 9
     },
     {
+      name: "AUSTRALIAN CENTRAL",
+      timeZone: "Australia/Adelaide",
+      center: [138.6007, -34.9285],
+      zoom: 5,
+      utcOffset: 9.5
+    },
+    {
       name: "AUSTRALIAN EASTERN",
       timeZone: "Australia/Sydney",
       center: [151.2093, -33.8688],
       zoom: 4,
       utcOffset: 10
+    },
+    {
+      name: "LORD HOWE",
+      timeZone: "Australia/Lord_Howe",
+      center: [159.082, -31.5509],
+      zoom: 5,
+      utcOffset: 10.5
     },
     {
       name: "SOLOMON ISLANDS",
