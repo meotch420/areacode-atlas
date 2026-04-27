@@ -20,7 +20,8 @@
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
-  const TIMEZONE_CARD_MAX_ZOOM = 3.2;
+  const TIMEZONE_BAND_VIEW_ZOOM = 1.45;
+  const TIMEZONE_BAND_VIEW_LAT = -4;
   const DEFAULT_COUNTRY_VIEW = {
     name: "United States",
     countryCode: "+1",
@@ -535,11 +536,7 @@
         setActiveTimeZoneCard(zoneId);
         highlightTimeZoneBand(zoneId);
 
-        flyToLocation(
-          zone.center[0],
-          zone.center[1],
-          Math.min(zone.zoom, TIMEZONE_CARD_MAX_ZOOM)
-        );
+        focusTimeZoneBand(zone);
         clearMarker();
         clearCountryOutline();
 
@@ -651,6 +648,25 @@
     map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
     map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
+  }
+
+  function focusTimeZoneBand(zone) {
+    if (!map || !zone) return;
+
+    const centerLongitude = normalizeLongitude(zone.utcOffset * 15);
+
+    map.flyTo({
+      center: [centerLongitude, TIMEZONE_BAND_VIEW_LAT],
+      zoom: TIMEZONE_BAND_VIEW_ZOOM,
+      speed: 1.2,
+      curve: 1.4,
+      essential: true
+    });
+  }
+
+  function normalizeLongitude(longitude) {
+    if (!Number.isFinite(longitude)) return 0;
+    return ((((longitude + 180) % 360) + 360) % 360) - 180;
   }
 
   function buildTimeZoneBandGeoJson() {
