@@ -25,7 +25,7 @@
     name: "United States",
     countryCode: "+1",
     center: [-98.5795, 39.8283],
-    zoom: 3
+    zoom: 2.2
   };
 
   let map;
@@ -181,19 +181,11 @@
       DEFAULT_COUNTRY_VIEW.zoom
     );
 
-    setInfoPanel({
-      city: "---",
-      region: "North America",
-      state: "---",
-      country: DEFAULT_COUNTRY_VIEW.name,
-      countryCode: DEFAULT_COUNTRY_VIEW.countryCode,
-      timeZone: "Multiple",
-      timezone: "Multiple"
-    });
+    clearInfoPanel();
 
     setStatus("");
     clearMarker();
-    await outlineCountry(DEFAULT_COUNTRY_VIEW.name);
+    clearCountryOutline();
   }
 
   /* =====================================================
