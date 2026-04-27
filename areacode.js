@@ -162,7 +162,7 @@
       zoom: 4
     },
     {
-      name: "BRASÍLIA",
+      name: "BRAZIL",
       timeZone: "America/Sao_Paulo",
       center: [-47.8825, -15.7942],
       zoom: 4
