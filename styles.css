@@ -345,13 +345,14 @@ header p {
 .info-panel,
 .area-info,
 .area-info-panel {
-  height: 122px;
+  min-height: 122px;
+  height: auto;
   padding: 8px 10px;
   border: 1px solid #334155;
   border-radius: 8px;
   background: #020617;
   color: #ffffff;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .info-panel h2,

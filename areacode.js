@@ -602,6 +602,51 @@
     });
   }
 
+  function clearActiveTimeZoneCard() {
+    selectedTimeZoneId = null;
+    setActiveTimeZoneCard(null);
+  }
+
+  function findZoneIdByTimezone(timezone) {
+    if (!timezone || timezone === "---" || /^multiple$/i.test(timezone)) {
+      return null;
+    }
+
+    const normalized = String(timezone).trim().toLowerCase();
+    const exactIndex = timeZones.findIndex(
+      (zone) => zone.timeZone.toLowerCase() === normalized
+    );
+
+    if (exactIndex >= 0) {
+      return `tz-zone-${exactIndex}`;
+    }
+
+    const partialIndex = timeZones.findIndex((zone) => {
+      const zoneValue = zone.timeZone.toLowerCase();
+      return zoneValue.includes(normalized) || normalized.includes(zoneValue);
+    });
+
+    if (partialIndex >= 0) {
+      return `tz-zone-${partialIndex}`;
+    }
+
+    return null;
+  }
+
+  function applyTimezoneSelection(timezone) {
+    const matchedZoneId = findZoneIdByTimezone(timezone);
+
+    if (!matchedZoneId) {
+      clearActiveTimeZoneCard();
+      hideTimeZoneBand();
+      return;
+    }
+
+    selectedTimeZoneId = matchedZoneId;
+    setActiveTimeZoneCard(matchedZoneId);
+    highlightTimeZoneBand(matchedZoneId);
+  }
+
   function ensureTimeZoneBandLayer() {
     if (!map || !map.isStyleLoaded()) return;
     if (map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
@@ -651,6 +696,12 @@
     map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
     map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
+  }
+
+  function hideTimeZoneBand() {
+    if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
+    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
+    map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "none");
   }
 
   function buildTimeZoneBandGeoJson() {
@@ -1131,6 +1182,7 @@
 
     setStatus("");
     clearCountryOutline();
+    applyTimezoneSelection(record.timezone);
 
     if (Number.isFinite(record.lng) && Number.isFinite(record.lat)) {
       flyToLocation(record.lng, record.lat, record.zoom || 8);
@@ -1152,6 +1204,7 @@
     });
 
     setStatus("");
+    applyTimezoneSelection(record.timezone);
 
     if (Number.isFinite(record.lng) && Number.isFinite(record.lat)) {
       flyToLocation(record.lng, record.lat, record.zoom || 4);
