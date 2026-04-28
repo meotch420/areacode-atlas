@@ -21,6 +21,8 @@
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
   const TIMEZONE_CARD_MAX_ZOOM = 3.2;
+  const TIMEZONE_GLOBE_FOCUS_ZOOM = 1.7;
+  const TIMEZONE_GLOBE_FOCUS_LAT = -10;
   const DEFAULT_COUNTRY_VIEW = {
     name: "United States",
     countryCode: "+1",
@@ -535,11 +537,7 @@
         setActiveTimeZoneCard(zoneId);
         highlightTimeZoneBand(zoneId);
 
-        flyToLocation(
-          zone.center[0],
-          zone.center[1],
-          Math.min(zone.zoom, TIMEZONE_CARD_MAX_ZOOM)
-        );
+        focusTimeZoneBandOnGlobe(zone);
         clearMarker();
         clearCountryOutline();
 
@@ -558,6 +556,15 @@
 
       timezoneGrid.appendChild(card);
     });
+  }
+
+  function focusTimeZoneBandOnGlobe(zone) {
+    if (!zone) return;
+
+    const safeZoom = Math.min(TIMEZONE_GLOBE_FOCUS_ZOOM, TIMEZONE_CARD_MAX_ZOOM);
+    const centerLongitude = Number(zone.utcOffset) * 15;
+
+    flyToLocation(centerLongitude, TIMEZONE_GLOBE_FOCUS_LAT, safeZoom);
   }
 
   function startTimezoneClocks() {
