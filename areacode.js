@@ -635,7 +635,6 @@
       `;
 
       card.addEventListener("click", () => {
-        const mainTimeZoneName = getMainTimeZoneName(zone);
         const hemisphere = getHemisphereByZone(zone);
         selectedTimeZoneId = zoneId;
         setActiveTimeZoneCard(zoneId);
@@ -648,11 +647,11 @@
 
         setInfoPanel({
           city: "---",
-          region: hemisphere,
+          region: hemisphere || "---",
           state: "---",
           country: "---",
           countryCode: "---",
-          timeZone: `${mainTimeZoneName} (${formatUtcOffset(zone.utcOffset)})`,
+          timeZone: zone.timeZone,
           timezone: zone.timeZone,
           mode: "timezone"
         });
@@ -934,7 +933,7 @@
     countryCodeRow.classList.toggle("is-hidden", mode === "timezone");
     timeZoneRow.classList.toggle("is-hidden", false);
     regionRow.querySelector("span").textContent =
-      mode === "timezone" ? "Region (Hemisphere)" : "State / Region";
+      mode === "timezone" ? "Hemisphere" : "State / Region";
   }
 
   function clearInfoPanel() {
