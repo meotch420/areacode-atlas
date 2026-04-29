@@ -507,6 +507,105 @@
     }
   ];
 
+  const MAIN_TIME_ZONE_NAME_BY_ID = {
+    "Pacific/Honolulu": "Hawaii-Aleutian Time",
+    "America/Anchorage": "Alaska Time",
+    "Pacific/Marquesas": "Marquesas Time",
+    "America/Los_Angeles": "Pacific Time",
+    "America/Denver": "Mountain Time",
+    "America/Chicago": "Central Time",
+    "America/New_York": "Eastern Time",
+    "America/Halifax": "Atlantic Time",
+    "America/St_Johns": "Newfoundland Time",
+    "America/Sao_Paulo": "Argentina / Brazil Time",
+    "Atlantic/South_Georgia": "Fernando de Noronha Time",
+    "Atlantic/Azores": "Azores / Cape Verde Time",
+    "Etc/GMT": "Greenwich Mean Time / Western European Time",
+    "Europe/London": "Greenwich Mean Time / Western European Time",
+    "Europe/Berlin": "Central European Time / West Africa Time",
+    "Asia/Jerusalem": "Eastern European Time / Israel Time / South Africa Time",
+    "Asia/Tehran": "Iran Time",
+    "Asia/Dubai": "Gulf / Samara Time",
+    "Asia/Kabul": "Afghanistan Time",
+    "Asia/Karachi": "Pakistan / Yekaterinburg Time",
+    "Asia/Kolkata": "India / Sri Lanka Time",
+    "Asia/Kathmandu": "Nepal Time",
+    "Asia/Dhaka": "Bangladesh / Omsk Time",
+    "Asia/Yangon": "Myanmar / Cocos Time",
+    "Asia/Bangkok": "Indochina / Western Indonesia Time",
+    "Asia/Singapore": "China / Singapore / Western Australia Time",
+    "Australia/Eucla": "Australian Central Western Time",
+    "Asia/Tokyo": "Japan / Korea Time",
+    "Australia/Adelaide": "Australian Central Time",
+    "Australia/Sydney": "Australian Eastern Time / Vladivostok Time",
+    "Australia/Lord_Howe": "Lord Howe Time",
+    "Pacific/Guadalcanal": "Solomon / New Caledonia / Magadan Time",
+    "Pacific/Auckland": "New Zealand / Fiji / Kamchatka Time",
+    "Pacific/Chatham": "Chatham Islands Time",
+    "Pacific/Tongatapu": "Tonga / Samoa / Phoenix Islands Time",
+    "Pacific/Kiritimati": "Line Islands Time",
+    "Etc/GMT+12": "Baker Island Time",
+    "Pacific/Pago_Pago": "Samoa Time"
+  };
+
+  const HEMISPHERE_BY_OFFSET = {
+    "-12": "Northern / Southern Hemisphere",
+    "-11": "Southern Hemisphere",
+    "-10": "Northern / Southern Hemisphere",
+    "-9.5": "Southern Hemisphere",
+    "-9": "Northern Hemisphere",
+    "-8": "Northern Hemisphere",
+    "-7": "Northern Hemisphere",
+    "-6": "Northern / Southern Hemisphere",
+    "-5": "Northern / Southern Hemisphere",
+    "-4": "Northern / Southern Hemisphere",
+    "-3.5": "Northern Hemisphere",
+    "-3": "Southern Hemisphere",
+    "-2": "Southern Hemisphere",
+    "-1": "Northern Hemisphere",
+    "0": "Northern / Southern Hemisphere",
+    "1": "Northern / Southern Hemisphere",
+    "2": "Northern / Southern Hemisphere",
+    "3": "Northern / Southern Hemisphere",
+    "3.5": "Northern Hemisphere",
+    "4": "Northern / Southern Hemisphere",
+    "4.5": "Northern Hemisphere",
+    "5": "Northern / Southern Hemisphere",
+    "5.5": "Northern / Southern Hemisphere",
+    "5.75": "Northern Hemisphere",
+    "6": "Northern Hemisphere",
+    "6.5": "Northern / Southern Hemisphere",
+    "7": "Northern / Southern Hemisphere",
+    "8": "Northern / Southern Hemisphere",
+    "8.75": "Southern Hemisphere",
+    "9": "Northern / Southern Hemisphere",
+    "9.5": "Southern Hemisphere",
+    "10": "Northern / Southern Hemisphere",
+    "10.5": "Southern Hemisphere",
+    "11": "Northern / Southern Hemisphere",
+    "12": "Northern / Southern Hemisphere",
+    "12.75": "Southern Hemisphere",
+    "13": "Southern Hemisphere",
+    "14": "Northern / Southern Hemisphere"
+  };
+
+  function getMainTimeZoneName(zone) {
+    return MAIN_TIME_ZONE_NAME_BY_ID[zone.timeZone] || `${zone.name} Time`;
+  }
+
+  function getHemisphereByZone(zone) {
+    return HEMISPHERE_BY_OFFSET[String(zone.utcOffset)] || "Northern / Southern Hemisphere";
+  }
+
+  function formatUtcOffset(offset) {
+    const sign = offset >= 0 ? "+" : "-";
+    const absoluteValue = Math.abs(offset);
+    const hours = Math.floor(absoluteValue);
+    const minutes = Math.round((absoluteValue - hours) * 60);
+
+    return `UTC${sign}${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+  }
+
   function buildTimeZoneCards() {
     const timezoneGrid = document.getElementById("timezoneGrid");
 
@@ -536,6 +635,8 @@
       `;
 
       card.addEventListener("click", () => {
+        const mainTimeZoneName = getMainTimeZoneName(zone);
+        const hemisphere = getHemisphereByZone(zone);
         selectedTimeZoneId = zoneId;
         setActiveTimeZoneCard(zoneId);
         showTimeZoneLines();
@@ -547,12 +648,13 @@
 
         setInfoPanel({
           city: "---",
-          region: "---",
+          region: hemisphere,
           state: "---",
-          country: zone.name,
+          country: "---",
           countryCode: "---",
-          timeZone: zone.timeZone,
-          timezone: zone.timeZone
+          timeZone: `${mainTimeZoneName} (${formatUtcOffset(zone.utcOffset)})`,
+          timezone: zone.timeZone,
+          mode: "timezone"
         });
 
         setStatus("");
@@ -806,7 +908,8 @@
     country = "---",
     countryCode = "---",
     timeZone = "---",
-    timezone = "---"
+    timezone = "---",
+    mode = "default"
   }) {
     setText("infoCity", city || "---");
 
@@ -818,6 +921,20 @@
 
     setText("infoTimeZone", timeZone || timezone || "---");
     setText("infoTimezone", timezone || timeZone || "---");
+    setInfoPanelMode(mode);
+  }
+
+  function setInfoPanelMode(mode) {
+    const countryCodeRow = document.getElementById("infoCountryCodeRow");
+    const timeZoneRow = document.getElementById("infoTimeZoneRow");
+    const regionRow = document.getElementById("infoRegionRow");
+
+    if (!countryCodeRow || !timeZoneRow || !regionRow) return;
+
+    countryCodeRow.classList.toggle("is-hidden", mode === "timezone");
+    timeZoneRow.classList.toggle("is-hidden", false);
+    regionRow.querySelector("span").textContent =
+      mode === "timezone" ? "Region (Hemisphere)" : "State / Region";
   }
 
   function clearInfoPanel() {
@@ -828,7 +945,8 @@
       country: "---",
       countryCode: "---",
       timeZone: "---",
-      timezone: "---"
+      timezone: "---",
+      mode: "default"
     });
   }
 
@@ -1214,7 +1332,8 @@
       country: record.country,
       countryCode: record.countryCode,
       timeZone: record.timezone,
-      timezone: record.timezone
+      timezone: record.timezone,
+      mode: "default"
     });
 
     setStatus("");
@@ -1238,7 +1357,8 @@
       country: record.country,
       countryCode: `+${record.code}`,
       timeZone: record.timezone,
-      timezone: record.timezone
+      timezone: record.timezone,
+      mode: "default"
     });
 
     setStatus("");
