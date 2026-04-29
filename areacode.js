@@ -1119,6 +1119,16 @@
   const COUNTRY_CODE_INDEX = new Map(
     COUNTRY_CODES.map((item) => [item.code, item])
   );
+  const COUNTRY_CODES_BY_LENGTH = [...COUNTRY_CODE_INDEX.keys()].sort(
+    (a, b) => b.length - a.length
+  );
+  const COUNTRY_AREA_REGION_OVERRIDES = new Map([
+    ["972:2", "Jerusalem area"],
+    ["972:3", "Tel Aviv area"],
+    ["44:20", "London"],
+    ["1:212", "New York City"],
+    ["1:416", "Toronto"]
+  ]);
 
   /* =====================================================
      AREA CODE DATA
@@ -1283,6 +1293,7 @@
   async function searchCode(rawValue) {
     const startsWithPlus = rawValue.startsWith("+");
     const digits = cleanDigits(rawValue);
+    const countryRegionMatch = parseCountryRegionMatch(rawValue);
 
     if (!digits) {
       clearInfoPanel();
@@ -1295,6 +1306,11 @@
 
     if (startsWithPlus && countryMatch) {
       await showCountryCodeResult(countryMatch);
+      return;
+    }
+
+    if (countryRegionMatch) {
+      await showCountryAreaRegionResult(countryRegionMatch);
       return;
     }
 
@@ -1370,6 +1386,84 @@
 
     clearMarker();
     await outlineCountry(record.country);
+  }
+
+  async function showCountryAreaRegionResult(record) {
+    setInfoPanel({
+      city: record.regionName,
+      region: record.regionName,
+      state: record.regionName,
+      country: record.country.country,
+      countryCode: `+${record.country.code}`,
+      timeZone: record.country.timezone,
+      timezone: record.country.timezone,
+      mode: "default"
+    });
+
+    setStatus("");
+    showTimeZoneLines();
+    applyTimezoneSelection(record.country.timezone);
+
+    if (Number.isFinite(record.country.lng) && Number.isFinite(record.country.lat)) {
+      flyToLocation(record.country.lng, record.country.lat, record.country.zoom || 5);
+    }
+
+    clearMarker();
+    await outlineCountry(record.country.country);
+  }
+
+  function parseCountryRegionMatch(rawValue) {
+    const tokens = rawValue
+      .split(/[\s-]+/)
+      .map((token) => cleanDigits(token))
+      .filter(Boolean);
+
+    if (tokens.length < 2) return null;
+
+    const normalized = rawValue.startsWith("+") ? tokens : [tokens.join("")];
+
+    for (const candidate of normalized) {
+      for (const code of COUNTRY_CODES_BY_LENGTH) {
+        if (!candidate.startsWith(code)) continue;
+        const remainder = candidate.slice(code.length);
+        if (!remainder) continue;
+
+        const regionName = getCountryAreaRegionName(code, remainder);
+        if (!regionName) continue;
+
+        const country = COUNTRY_CODE_INDEX.get(code);
+        if (!country) continue;
+
+        return { country, regionName, regionCode: remainder };
+      }
+    }
+
+    const [countryToken, regionToken] = tokens;
+    const regionName = getCountryAreaRegionName(countryToken, regionToken);
+    const country = COUNTRY_CODE_INDEX.get(countryToken);
+
+    if (regionName && country) {
+      return { country, regionName, regionCode: regionToken };
+    }
+
+    return null;
+  }
+
+  function getCountryAreaRegionName(countryCode, regionCode) {
+    const override = COUNTRY_AREA_REGION_OVERRIDES.get(`${countryCode}:${regionCode}`);
+    if (override) return override;
+
+    if (countryCode === "1") {
+      const areaRecord = areaCodeIndex.get(regionCode);
+      if (areaRecord?.city && areaRecord?.state && areaRecord.city !== "---" && areaRecord.state !== "---") {
+        return `${areaRecord.city}, ${areaRecord.state}`;
+      }
+      if (areaRecord?.city && areaRecord.city !== "---") {
+        return areaRecord.city;
+      }
+    }
+
+    return null;
   }
 
   /* =====================================================
