@@ -508,8 +508,46 @@
   ];
 
 
+  function getCurrentUtcOffsetHours(timeZone, fallbackOffset) {
+    try {
+      const formatter = new Intl.DateTimeFormat("en-US", {
+        timeZone,
+        timeZoneName: "shortOffset"
+      });
+      const zonePart = formatter
+        .formatToParts(new Date())
+        .find((part) => part.type === "timeZoneName")?.value;
+
+      if (!zonePart) return fallbackOffset;
+      if (zonePart === "GMT" || zonePart === "UTC") return 0;
+
+      const match = zonePart.match(/^GMT([+-])(\d{1,2})(?::?(\d{2}))?$/i);
+      if (!match) return fallbackOffset;
+
+      const sign = match[1] === "-" ? -1 : 1;
+      const hours = Number(match[2]);
+      const minutes = Number(match[3] || 0);
+
+      return sign * (hours + minutes / 60);
+    } catch (error) {
+      return fallbackOffset;
+    }
+  }
+
+  function getZoneUtcOffset(zone) {
+    if (typeof zone.currentUtcOffset === "number") return zone.currentUtcOffset;
+    if (typeof zone.utcOffset === "number") return zone.utcOffset;
+    return 0;
+  }
+
+  timeZones.forEach((zone) => {
+    zone.currentUtcOffset = getCurrentUtcOffsetHours(zone.timeZone, zone.utcOffset);
+  });
+
   timeZones.sort((a, b) => {
-    if (a.utcOffset !== b.utcOffset) return a.utcOffset - b.utcOffset;
+    const aOffset = getZoneUtcOffset(a);
+    const bOffset = getZoneUtcOffset(b);
+    if (aOffset !== bOffset) return aOffset - bOffset;
     return a.name.localeCompare(b.name);
   });
 
@@ -600,7 +638,7 @@
   }
 
   function getHemisphereByZone(zone) {
-    return HEMISPHERE_BY_OFFSET[String(zone.utcOffset)] || "Northern / Southern Hemisphere";
+    return HEMISPHERE_BY_OFFSET[String(getZoneUtcOffset(zone))] || "Northern / Southern Hemisphere";
   }
 
   function formatUtcOffset(offset) {
@@ -673,7 +711,7 @@
     if (!zone) return;
 
     const initialGlobeZoom = DEFAULT_COUNTRY_VIEW.zoom;
-    const centerLongitude = Number(zone.utcOffset) * 15;
+    const centerLongitude = Number(getZoneUtcOffset(zone)) * 15;
 
     flyToLocation(centerLongitude, TIMEZONE_GLOBE_FOCUS_LAT, initialGlobeZoom);
   }
@@ -848,7 +886,7 @@
     const features = timeZones.flatMap((zone, index) => {
       const zoneId = `tz-zone-${index}`;
       const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
-      const geometries = buildUtcBandGeometries(zone.utcOffset);
+      const geometries = buildUtcBandGeometries(getZoneUtcOffset(zone));
 
       return geometries.map((geometry) => ({
         type: "Feature",
