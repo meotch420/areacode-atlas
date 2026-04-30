@@ -717,9 +717,11 @@
     if (!zone) return;
 
     const initialGlobeZoom = DEFAULT_COUNTRY_VIEW.zoom;
-    const centerLongitude = Number(getZoneUtcOffset(zone)) * 15;
+    const fallbackLongitude = Number(getZoneUtcOffset(zone)) * 15;
+    const centerLongitude = Number(zone?.center?.[0] ?? fallbackLongitude);
+    const centerLatitude = Number(zone?.center?.[1] ?? TIMEZONE_GLOBE_FOCUS_LAT);
 
-    flyToLocation(centerLongitude, TIMEZONE_GLOBE_FOCUS_LAT, initialGlobeZoom);
+    flyToLocation(centerLongitude, centerLatitude, initialGlobeZoom);
   }
 
   function startTimezoneClocks() {
