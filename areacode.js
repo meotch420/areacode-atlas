@@ -352,6 +352,13 @@
       utcOffset: 2
     },
     {
+      name: "ARABIA",
+      timeZone: "Asia/Riyadh",
+      center: [46.6753, 24.7136],
+      zoom: 5,
+      utcOffset: 3
+    },
+    {
       name: "IRAN",
       timeZone: "Asia/Tehran",
       center: [51.389, 35.6892],
