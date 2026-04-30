@@ -551,7 +551,18 @@
     zone.currentUtcOffset = getCurrentUtcOffsetHours(zone.timeZone, zone.utcOffset);
   });
 
+  const TIMEZONE_ORDER_PRIORITY = {
+    HAWAII: -100,
+    ARABIA: 10,
+    ISRAEL: 11
+  };
+
   timeZones.sort((a, b) => {
+    const aPriority = TIMEZONE_ORDER_PRIORITY[a.name] ?? 0;
+    const bPriority = TIMEZONE_ORDER_PRIORITY[b.name] ?? 0;
+
+    if (aPriority !== bPriority) return aPriority - bPriority;
+
     const aOffset = getZoneUtcOffset(a);
     const bOffset = getZoneUtcOffset(b);
     if (aOffset !== bOffset) return aOffset - bOffset;
@@ -894,7 +905,7 @@
     const features = timeZones.flatMap((zone, index) => {
       const zoneId = `tz-zone-${index}`;
       const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
-      const geometries = buildUtcBandGeometries(getZoneUtcOffset(zone));
+      const geometries = buildZoneBandGeometries(zone);
 
       return geometries.map((geometry) => ({
         type: "Feature",
@@ -912,9 +923,10 @@
     };
   }
 
-  function buildUtcBandGeometries(utcOffset) {
+  function buildZoneBandGeometries(zone) {
     const bandHalfWidth = 7.5;
-    const centerLongitude = utcOffset * 15;
+    const fallbackLongitude = getZoneUtcOffset(zone) * 15;
+    const centerLongitude = Number(zone?.center?.[0] ?? fallbackLongitude);
     const west = centerLongitude - bandHalfWidth;
     const east = centerLongitude + bandHalfWidth;
 
