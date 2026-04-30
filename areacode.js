@@ -281,14 +281,16 @@
       timeZone: "America/Chicago",
       center: [-87.6298, 41.8781],
       zoom: 4,
-      utcOffset: -6
+      utcOffset: -6,
+      bandBounds: { west: -95, east: -81 }
     },
     {
       name: "EASTERN",
       timeZone: "America/New_York",
       center: [-74.006, 40.7128],
       zoom: 4,
-      utcOffset: -5
+      utcOffset: -5,
+      bandBounds: { west: -81, east: -66 }
     },
     {
       name: "ATLANTIC",
@@ -961,6 +963,15 @@
   function getTimeZoneBandBounds(zone) {
     const geoJsonBounds = getBoundsFromTimezoneLayout(zone);
     if (geoJsonBounds) return geoJsonBounds;
+
+    const customWest = Number(zone?.bandBounds?.west);
+    const customEast = Number(zone?.bandBounds?.east);
+    if (Number.isFinite(customWest) && Number.isFinite(customEast)) {
+      return {
+        west: normalizeLongitude(customWest),
+        east: normalizeLongitude(customEast)
+      };
+    }
 
     const zoneOffset = getZoneUtcOffset(zone);
 
