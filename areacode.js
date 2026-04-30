@@ -547,27 +547,14 @@
     return 0;
   }
 
-  timeZones.forEach((zone) => {
+  timeZones.forEach((zone, index) => {
     zone.currentUtcOffset = getCurrentUtcOffsetHours(zone.timeZone, zone.utcOffset);
+    zone.displayOrder = index;
   });
 
-  const TIMEZONE_ORDER_PRIORITY = {
-    HAWAII: -100,
-    ARABIA: 10,
-    ISRAEL: 11
-  };
-
-  timeZones.sort((a, b) => {
-    const aPriority = TIMEZONE_ORDER_PRIORITY[a.name] ?? 0;
-    const bPriority = TIMEZONE_ORDER_PRIORITY[b.name] ?? 0;
-
-    if (aPriority !== bPriority) return aPriority - bPriority;
-
-    const aOffset = getZoneUtcOffset(a);
-    const bOffset = getZoneUtcOffset(b);
-    if (aOffset !== bOffset) return aOffset - bOffset;
-    return a.name.localeCompare(b.name);
-  });
+  // Keep timezone cards in a stable, explicit sequence (Hawaii first).
+  // Do not re-order cards based on DST or current UTC offsets.
+  timeZones.sort((a, b) => a.displayOrder - b.displayOrder);
 
   const MAIN_TIME_ZONE_NAME_BY_ID = {
     "Pacific/Honolulu": "Hawaii-Aleutian Time",
