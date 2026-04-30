@@ -507,6 +507,12 @@
     },
   ];
 
+
+  timeZones.sort((a, b) => {
+    if (a.utcOffset !== b.utcOffset) return a.utcOffset - b.utcOffset;
+    return a.name.localeCompare(b.name);
+  });
+
   const MAIN_TIME_ZONE_NAME_BY_ID = {
     "Pacific/Honolulu": "Hawaii-Aleutian Time",
     "America/Anchorage": "Alaska Time",
