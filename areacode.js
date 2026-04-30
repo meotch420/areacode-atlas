@@ -943,13 +943,30 @@
       return null;
     }
 
-    // Keep each timezone band aligned to canonical meridian boundaries
-    // (UTC offset * 15°) with ±7.5° width around the center meridian.
-    const centerMeridian = zoneOffset * 15;
+    // Anchor each band to the configured timezone focus longitude so
+    // card selection and globe highlight line up visually.
+    // Fall back to canonical UTC meridians when a center is unavailable.
+    const configuredLongitude = Array.isArray(zone.center) ? Number(zone.center[0]) : NaN;
+    const centerMeridian = Number.isFinite(configuredLongitude)
+      ? normalizeLongitude(configuredLongitude)
+      : zoneOffset * 15;
     const west = centerMeridian - 7.5;
     const east = centerMeridian + 7.5;
 
     return { west, east };
+  }
+
+
+  function normalizeLongitude(longitude) {
+    if (!Number.isFinite(longitude)) return longitude;
+
+    let normalized = ((longitude + 180) % 360 + 360) % 360 - 180;
+
+    if (normalized === -180) {
+      normalized = 180;
+    }
+
+    return normalized;
   }
 
   function makeBandGeometry(west, east) {
