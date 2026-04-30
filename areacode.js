@@ -286,7 +286,11 @@
       timeZone: "America/New_York",
       center: [-74.006, 40.7128],
       zoom: 4,
-      utcOffset: -5
+      utcOffset: -5,
+      bandBounds: {
+        west: -90,
+        east: -66
+      }
     },
     {
       name: "ATLANTIC",
@@ -917,7 +921,11 @@
 
     if (!bounds) return [];
 
-    const { west, east } = bounds;
+    let { west, east } = bounds;
+
+    if (west >= east) {
+      east = west + 0.1;
+    }
 
     if (west < -180) {
       return [
@@ -937,6 +945,16 @@
   }
 
   function getTimeZoneBandBounds(zone) {
+    const customWest = Number(zone?.bandBounds?.west);
+    const customEast = Number(zone?.bandBounds?.east);
+
+    if (Number.isFinite(customWest) && Number.isFinite(customEast)) {
+      return {
+        west: normalizeLongitude(customWest),
+        east: normalizeLongitude(customEast)
+      };
+    }
+
     const zoneOffset = getZoneUtcOffset(zone);
 
     if (!Number.isFinite(zoneOffset)) {
