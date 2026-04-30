@@ -247,18 +247,18 @@
       utcOffset: -10
     },
     {
-      name: "ALASKA",
-      timeZone: "America/Anchorage",
-      center: [-149.9003, 61.2181],
-      zoom: 3.5,
-      utcOffset: -9
-    },
-    {
       name: "MARQUESAS",
       timeZone: "Pacific/Marquesas",
       center: [-139.0368, -9.8],
       zoom: 4,
       utcOffset: -9.5
+    },
+    {
+      name: "ALASKA",
+      timeZone: "America/Anchorage",
+      center: [-149.9003, 61.2181],
+      zoom: 3.5,
+      utcOffset: -9
     },
     {
       name: "PACIFIC",
@@ -504,7 +504,7 @@
       center: [-170.1322, -14.2756],
       zoom: 5,
       utcOffset: -11
-    }
+    },
   ];
 
   const MAIN_TIME_ZONE_NAME_BY_ID = {
