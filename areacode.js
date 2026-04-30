@@ -575,6 +575,7 @@
     "Europe/London": "Greenwich Mean Time / Western European Time",
     "Europe/Berlin": "Central European Time / West Africa Time",
     "Asia/Jerusalem": "Eastern European Time / Israel Time / South Africa Time",
+    "Asia/Riyadh": "Arabia Time",
     "Asia/Tehran": "Iran Time",
     "Asia/Dubai": "Gulf / Samara Time",
     "Asia/Kabul": "Afghanistan Time",
