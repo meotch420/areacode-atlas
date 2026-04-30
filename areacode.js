@@ -666,10 +666,10 @@
   function focusTimeZoneBandOnGlobe(zone) {
     if (!zone) return;
 
-    const safeZoom = Math.min(TIMEZONE_GLOBE_FOCUS_ZOOM, TIMEZONE_CARD_MAX_ZOOM);
+    const initialGlobeZoom = DEFAULT_COUNTRY_VIEW.zoom;
     const centerLongitude = Number(zone.utcOffset) * 15;
 
-    flyToLocation(centerLongitude, TIMEZONE_GLOBE_FOCUS_LAT, safeZoom);
+    flyToLocation(centerLongitude, TIMEZONE_GLOBE_FOCUS_LAT, initialGlobeZoom);
   }
 
   function startTimezoneClocks() {
