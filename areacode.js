@@ -938,31 +938,16 @@
 
   function getTimeZoneBandBounds(zone) {
     const zoneOffset = getZoneUtcOffset(zone);
-    const uniqueOffsets = [...new Set(timeZones.map(getZoneUtcOffset))]
-      .sort((a, b) => a - b);
-    const offsetIndex = uniqueOffsets.findIndex((offset) => offset === zoneOffset);
 
-    if (offsetIndex < 0) return null;
-
-    const prevOffset = uniqueOffsets[
-      (offsetIndex - 1 + uniqueOffsets.length) % uniqueOffsets.length
-    ];
-    const nextOffset = uniqueOffsets[(offsetIndex + 1) % uniqueOffsets.length];
-
-    const prevMeridian = prevOffset * 15;
-    const zoneMeridian = zoneOffset * 15;
-    const nextMeridian = nextOffset * 15;
-
-    let west = (prevMeridian + zoneMeridian) / 2;
-    let east = (zoneMeridian + nextMeridian) / 2;
-
-    if (offsetIndex === 0) {
-      west = (prevMeridian - 360 + zoneMeridian) / 2;
+    if (!Number.isFinite(zoneOffset)) {
+      return null;
     }
 
-    if (offsetIndex === uniqueOffsets.length - 1) {
-      east = (zoneMeridian + nextMeridian + 360) / 2;
-    }
+    // Keep each timezone band aligned to canonical meridian boundaries
+    // (UTC offset * 15°) with ±7.5° width around the center meridian.
+    const centerMeridian = zoneOffset * 15;
+    const west = centerMeridian - 7.5;
+    const east = centerMeridian + 7.5;
 
     return { west, east };
   }
