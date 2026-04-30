@@ -1,1 +1,21 @@
-
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "tzid": "America/Chicago", "name": "CENTRAL" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-95, -85], [-81, -85], [-81, 85], [-95, 85], [-95, -85]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "tzid": "America/New_York", "name": "EASTERN" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-81, -85], [-66, -85], [-66, 85], [-81, 85], [-81, -85]]]
+      }
+    }
+  ]
+}

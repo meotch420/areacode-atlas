@@ -18,6 +18,8 @@
   const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
   const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
   const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-bands-grid";
+  const TIMEZONE_LAYOUT_GEOJSON_PATH = "./timezones.geojson";
+  let timezoneLayoutGeoJson = null;
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
@@ -864,6 +866,26 @@
     if (selectedTimeZoneId) {
       highlightTimeZoneBand(selectedTimeZoneId);
     }
+
+    loadTimezoneLayoutGeoJson();
+  }
+
+  async function loadTimezoneLayoutGeoJson() {
+    if (timezoneLayoutGeoJson) return timezoneLayoutGeoJson;
+
+    try {
+      const response = await fetch(TIMEZONE_LAYOUT_GEOJSON_PATH, { cache: "no-store" });
+      if (!response.ok) return null;
+      const payload = await response.json();
+      if (payload?.type !== "FeatureCollection" || !Array.isArray(payload.features)) {
+        return null;
+      }
+      timezoneLayoutGeoJson = payload;
+      updateTimeZoneBandSourceData();
+      return timezoneLayoutGeoJson;
+    } catch (_) {
+      return null;
+    }
   }
 
   function highlightTimeZoneBand(zoneId) {
@@ -937,23 +959,44 @@
   }
 
   function getTimeZoneBandBounds(zone) {
+    const geoJsonBounds = getBoundsFromTimezoneLayout(zone);
+    if (geoJsonBounds) return geoJsonBounds;
+
     const zoneOffset = getZoneUtcOffset(zone);
 
     if (!Number.isFinite(zoneOffset)) {
       return null;
     }
 
-    // Anchor each band to the configured timezone focus longitude so
-    // card selection and globe highlight line up visually.
-    // Fall back to canonical UTC meridians when a center is unavailable.
-    const configuredLongitude = Array.isArray(zone.center) ? Number(zone.center[0]) : NaN;
-    const centerMeridian = Number.isFinite(configuredLongitude)
-      ? normalizeLongitude(configuredLongitude)
-      : zoneOffset * 15;
+    // Use canonical UTC meridians derived from offset, not a label/city
+    // center point, so each highlighted band stays in its true zone.
+    const centerMeridian = zoneOffset * 15;
     const west = centerMeridian - 7.5;
     const east = centerMeridian + 7.5;
 
     return { west, east };
+  }
+
+  function getBoundsFromTimezoneLayout(zone) {
+    if (!timezoneLayoutGeoJson?.features?.length || !zone?.timeZone) return null;
+
+    const feature = timezoneLayoutGeoJson.features.find(
+      (item) => item?.properties?.tzid === zone.timeZone
+    );
+
+    const ring = feature?.geometry?.coordinates?.[0];
+    if (!Array.isArray(ring)) return null;
+
+    const longitudes = ring
+      .map((point) => Number(point?.[0]))
+      .filter((value) => Number.isFinite(value));
+
+    if (!longitudes.length) return null;
+
+    return {
+      west: Math.min(...longitudes),
+      east: Math.max(...longitudes)
+    };
   }
 
 
