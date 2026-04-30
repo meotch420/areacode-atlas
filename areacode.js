@@ -247,18 +247,18 @@
       utcOffset: -10
     },
     {
-      name: "MARQUESAS",
-      timeZone: "Pacific/Marquesas",
-      center: [-139.0368, -9.8],
-      zoom: 4,
-      utcOffset: -9.5
-    },
-    {
       name: "ALASKA",
       timeZone: "America/Anchorage",
       center: [-149.9003, 61.2181],
       zoom: 3.5,
       utcOffset: -9
+    },
+    {
+      name: "MARQUESAS",
+      timeZone: "Pacific/Marquesas",
+      center: [-139.0368, -9.8],
+      zoom: 4,
+      utcOffset: -9.5
     },
     {
       name: "PACIFIC",
