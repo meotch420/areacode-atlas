@@ -14,6 +14,7 @@
 
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
+  const TIMEZONE_LAYOUT_GEOJSON_URL = "geo.json";
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
   const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
   const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
@@ -35,6 +36,7 @@
   let activeMarker = null;
   let areaCodeIndex = new Map();
   let selectedTimeZoneId = null;
+  let timeZoneLayoutByTz = new Map();
 
   /* =====================================================
      AUTO REFRESH PAGE EVERY 1 HOUR
@@ -48,7 +50,7 @@
      START APP
   ===================================================== */
 
-  function startApp() {
+  async function startApp() {
     const mapContainer = document.getElementById("map");
 
     if (!mapContainer) {
@@ -62,6 +64,7 @@
     }
 
     setStatus("");
+    await loadTimeZoneLayoutGeoJson();
     createMap();
     buildTimeZoneCards();
     startTimezoneClocks();
@@ -815,6 +818,37 @@
     highlightTimeZoneBand(matchedZoneId);
   }
 
+
+  async function loadTimeZoneLayoutGeoJson() {
+    try {
+      const response = await fetch(TIMEZONE_LAYOUT_GEOJSON_URL, { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error(`Failed loading ${TIMEZONE_LAYOUT_GEOJSON_URL}: ${response.status}`);
+      }
+
+      const geoJson = await response.json();
+      const features = Array.isArray(geoJson?.features) ? geoJson.features : [];
+
+      timeZoneLayoutByTz = new Map();
+
+      features.forEach((feature) => {
+        const timeZone = String(feature?.properties?.timeZone || "").trim();
+        const geometryType = feature?.geometry?.type;
+        const isPolygon = geometryType === "Polygon" || geometryType === "MultiPolygon";
+
+        if (!timeZone || !isPolygon) return;
+
+        const existing = timeZoneLayoutByTz.get(timeZone) || [];
+        existing.push(feature.geometry);
+        timeZoneLayoutByTz.set(timeZone, existing);
+      });
+    } catch (error) {
+      console.warn("Timezone layout geo.json unavailable; using generated bands.", error);
+      timeZoneLayoutByTz = new Map();
+    }
+  }
+
   function ensureTimeZoneBandLayer() {
     if (!map || !map.isStyleLoaded()) return;
     if (map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
@@ -917,6 +951,12 @@
   }
 
   function buildZoneBandGeometries(zone) {
+    const geoJsonGeometries = getTimeZoneLayoutGeometries(zone);
+
+    if (geoJsonGeometries.length) {
+      return geoJsonGeometries;
+    }
+
     const bounds = getTimeZoneBandBounds(zone);
 
     if (!bounds) return [];
@@ -942,6 +982,19 @@
     }
 
     return [makeBandGeometry(west, east)];
+  }
+
+
+  function getTimeZoneLayoutGeometries(zone) {
+    if (!zone?.timeZone) return [];
+
+    const geometries = timeZoneLayoutByTz.get(zone.timeZone);
+
+    if (!Array.isArray(geometries) || !geometries.length) {
+      return [];
+    }
+
+    return geometries.map((geometry) => JSON.parse(JSON.stringify(geometry)));
   }
 
   function getTimeZoneBandBounds(zone) {
