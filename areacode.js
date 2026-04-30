@@ -352,6 +352,13 @@
       utcOffset: 2
     },
     {
+      name: "ARABIA",
+      timeZone: "Asia/Riyadh",
+      center: [46.6753, 24.7136],
+      zoom: 5,
+      utcOffset: 3
+    },
+    {
       name: "IRAN",
       timeZone: "Asia/Tehran",
       center: [51.389, 35.6892],
@@ -530,6 +537,7 @@
     "Europe/London": "Greenwich Mean Time / Western European Time",
     "Europe/Berlin": "Central European Time / West Africa Time",
     "Asia/Jerusalem": "Eastern European Time / Israel Time / South Africa Time",
+    "Asia/Riyadh": "Arabia Time",
     "Asia/Tehran": "Iran Time",
     "Asia/Dubai": "Gulf / Samara Time",
     "Asia/Kabul": "Afghanistan Time",
@@ -845,10 +853,12 @@
   }
 
   function buildTimeZoneBandGeoJson() {
+    const utcOffsets = [...new Set(timeZones.map((zone) => Number(zone.utcOffset)))].sort((a, b) => a - b);
+
     const features = timeZones.flatMap((zone, index) => {
       const zoneId = `tz-zone-${index}`;
       const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
-      const geometries = buildUtcBandGeometries(zone.utcOffset);
+      const geometries = buildUtcBandGeometries(Number(zone.utcOffset), utcOffsets);
 
       return geometries.map((geometry) => ({
         type: "Feature",
@@ -866,25 +876,16 @@
     };
   }
 
-  function buildUtcBandGeometries(utcOffset) {
-    const bandHalfWidth = 7.5;
-    const centerLongitude = utcOffset * 15;
-    const west = centerLongitude - bandHalfWidth;
-    const east = centerLongitude + bandHalfWidth;
+  function buildUtcBandGeometries(utcOffset, utcOffsets) {
+    const index = utcOffsets.indexOf(utcOffset);
 
-    if (west < -180) {
-      return [
-        makeBandGeometry(west + 360, 180),
-        makeBandGeometry(-180, east)
-      ];
-    }
+    if (index < 0) return [];
 
-    if (east > 180) {
-      return [
-        makeBandGeometry(west, 180),
-        makeBandGeometry(-180, east - 360)
-      ];
-    }
+    const current = utcOffset * 15;
+    const previous = index > 0 ? utcOffsets[index - 1] * 15 : null;
+    const next = index < utcOffsets.length - 1 ? utcOffsets[index + 1] * 15 : null;
+    const west = previous === null ? -180 : (previous + current) / 2;
+    const east = next === null ? 180 : (current + next) / 2;
 
     return [makeBandGeometry(west, east)];
   }
