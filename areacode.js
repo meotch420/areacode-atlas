@@ -14,7 +14,10 @@
 
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
-  const TIMEZONE_LAYOUT_GEOJSON_URL = "geo.json";
+  const TIMEZONE_LAYOUT_GEOJSON_URLS = [
+    "geo.json",
+    "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
+  ];
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
   const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
   const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-bands-line-casing";
@@ -838,33 +841,49 @@
 
 
   async function loadTimeZoneLayoutGeoJson() {
-    try {
-      const response = await fetch(TIMEZONE_LAYOUT_GEOJSON_URL, { cache: "no-store" });
+    const urls = Array.isArray(TIMEZONE_LAYOUT_GEOJSON_URLS)
+      ? TIMEZONE_LAYOUT_GEOJSON_URLS
+      : [TIMEZONE_LAYOUT_GEOJSON_URLS];
 
-      if (!response.ok) {
-        throw new Error(`Failed loading ${TIMEZONE_LAYOUT_GEOJSON_URL}: ${response.status}`);
+    for (const url of urls) {
+      try {
+        const response = await fetch(url, { cache: "no-store" });
+
+        if (!response.ok) {
+          throw new Error(`Failed loading ${url}: ${response.status}`);
+        }
+
+        const geoJson = await response.json();
+        const features = Array.isArray(geoJson?.features) ? geoJson.features : [];
+        const nextLayout = new Map();
+
+        features.forEach((feature) => {
+          const rawTimeZone = feature?.properties?.timeZone
+            || feature?.properties?.tzid
+            || feature?.properties?.timezone
+            || feature?.properties?.name;
+          const timeZone = String(rawTimeZone || "").trim();
+          const geometryType = feature?.geometry?.type;
+          const isPolygon = geometryType === "Polygon" || geometryType === "MultiPolygon";
+
+          if (!timeZone || !isPolygon) return;
+
+          const existing = nextLayout.get(timeZone) || [];
+          existing.push(feature.geometry);
+          nextLayout.set(timeZone, existing);
+        });
+
+        if (nextLayout.size) {
+          timeZoneLayoutByTz = nextLayout;
+          return;
+        }
+      } catch (error) {
+        console.warn(`Timezone layout source unavailable (${url}).`, error);
       }
-
-      const geoJson = await response.json();
-      const features = Array.isArray(geoJson?.features) ? geoJson.features : [];
-
-      timeZoneLayoutByTz = new Map();
-
-      features.forEach((feature) => {
-        const timeZone = String(feature?.properties?.timeZone || "").trim();
-        const geometryType = feature?.geometry?.type;
-        const isPolygon = geometryType === "Polygon" || geometryType === "MultiPolygon";
-
-        if (!timeZone || !isPolygon) return;
-
-        const existing = timeZoneLayoutByTz.get(timeZone) || [];
-        existing.push(feature.geometry);
-        timeZoneLayoutByTz.set(timeZone, existing);
-      });
-    } catch (error) {
-      console.warn("Timezone layout geo.json unavailable; using generated bands.", error);
-      timeZoneLayoutByTz = new Map();
     }
+
+    console.warn("No timezone layout source loaded; using generated straight bands.");
+    timeZoneLayoutByTz = new Map();
   }
 
   function ensureTimeZoneBandLayer() {
@@ -895,8 +914,8 @@
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
         visibility: "none",
-        "line-cap": "round",
-        "line-join": "round"
+        "line-cap": "butt",
+        "line-join": "miter"
       },
       paint: {
         "line-color": "#0b1020",
@@ -904,11 +923,11 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          1, 1.7,
-          3, 2.4,
-          6, 3.2
+          1, 1.4,
+          3, 1.8,
+          6, 2.4
         ],
-        "line-opacity": 0.68
+        "line-opacity": 0.95
       }
     });
 
@@ -918,8 +937,8 @@
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
         visibility: "none",
-        "line-cap": "round",
-        "line-join": "round"
+        "line-cap": "butt",
+        "line-join": "miter"
       },
       paint: {
         "line-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
@@ -927,11 +946,11 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          1, 0.9,
-          3, 1.45,
-          6, 2
+          1, 0.8,
+          3, 1.1,
+          6, 1.6
         ],
-        "line-opacity": 0.98
+        "line-opacity": 1
       }
     });
 
@@ -948,12 +967,12 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          1, 0.65,
-          3, 0.9,
-          6, 1.3
+          1, 0.75,
+          3, 0.95,
+          6, 1.2
         ],
-        "line-dasharray": [2.2, 2.8],
-        "line-opacity": 0.32
+        "line-dasharray": [1, 0],
+        "line-opacity": 0.9
       }
     });
 
@@ -1047,9 +1066,6 @@
 
   function getTimeZoneLayoutGeometries(zone) {
     if (!zone?.timeZone) return [];
-    if (zone.timeZone === "America/Chicago" || zone.timeZone === "America/New_York") {
-      return [];
-    }
 
     const geometries = timeZoneLayoutByTz.get(zone.timeZone);
 
