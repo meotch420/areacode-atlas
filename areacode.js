@@ -14,7 +14,6 @@
 
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
-  // Conflict resolution: prefer full-globe local timezone JSON sources only.
   const TIMEZONE_LAYOUT_GEOJSON_URLS = ["timezones.geojson", "geo.json"];
   const MIN_TIMEZONE_LAYOUT_FEATURES = 24;
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
