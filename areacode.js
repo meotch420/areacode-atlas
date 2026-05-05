@@ -14,8 +14,10 @@
 
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
-  const TIMEZONE_LAYOUT_GEOJSON_URLS = ["timezones.geojson", "geo.json"];
-  const MIN_TIMEZONE_LAYOUT_FEATURES = 24;
+  const TIMEZONE_LAYOUT_GEOJSON_URLS = [
+    "geo.json",
+    "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
+  ];
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
   const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
   const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-bands-line-casing";
@@ -871,13 +873,10 @@
           nextLayout.set(timeZone, existing);
         });
 
-        if (nextLayout.size >= MIN_TIMEZONE_LAYOUT_FEATURES) {
+        if (nextLayout.size) {
           timeZoneLayoutByTz = nextLayout;
           return;
         }
-        console.warn(
-          `Timezone layout source ignored (${url}) because it only has ${nextLayout.size} timezone entries.`
-        );
       } catch (error) {
         console.warn(`Timezone layout source unavailable (${url}).`, error);
       }
