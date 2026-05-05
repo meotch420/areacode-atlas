@@ -17,6 +17,7 @@
   const TIMEZONE_LAYOUT_GEOJSON_URL = "geo.json";
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
   const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
+  const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-bands-line-casing";
   const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
   const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-bands-grid";
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
@@ -872,16 +873,48 @@
     });
 
     map.addLayer({
+      id: TIMEZONE_BANDS_LINE_CASING_LAYER_ID,
+      type: "line",
+      source: TIMEZONE_BANDS_SOURCE_ID,
+      layout: {
+        visibility: "none",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      paint: {
+        "line-color": "#0b1020",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          1, 1.7,
+          3, 2.4,
+          6, 3.2
+        ],
+        "line-opacity": 0.68
+      }
+    });
+
+    map.addLayer({
       id: TIMEZONE_BANDS_LINE_LAYER_ID,
       type: "line",
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
-        visibility: "none"
+        visibility: "none",
+        "line-cap": "round",
+        "line-join": "round"
       },
       paint: {
         "line-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
-        "line-width": 1.25,
-        "line-opacity": 0.9
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          1, 0.9,
+          3, 1.45,
+          6, 2
+        ],
+        "line-opacity": 0.98
       }
     });
 
@@ -893,9 +926,17 @@
         visibility: "none"
       },
       paint: {
-        "line-color": "#7c4a2e",
-        "line-width": 1.05,
-        "line-opacity": 0.45
+        "line-color": "#f8fafc",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          1, 0.65,
+          3, 0.9,
+          6, 1.3
+        ],
+        "line-dasharray": [2.2, 2.8],
+        "line-opacity": 0.32
       }
     });
 
@@ -911,8 +952,10 @@
 
     const filter = ["==", ["get", "zoneId"], zoneId];
     map.setFilter(TIMEZONE_BANDS_FILL_LAYER_ID, filter);
+    map.setFilter(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, filter);
     map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
     map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
+    map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
   }
 
@@ -924,6 +967,7 @@
   function hideTimeZoneBand() {
     if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
     map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
+    map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "none");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "none");
     map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "none");
   }
