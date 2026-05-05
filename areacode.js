@@ -895,8 +895,8 @@
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
         visibility: "none",
-        "line-cap": "round",
-        "line-join": "round"
+        "line-cap": "butt",
+        "line-join": "miter"
       },
       paint: {
         "line-color": "#0b1020",
@@ -904,11 +904,11 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          1, 1.7,
-          3, 2.4,
-          6, 3.2
+          1, 1.4,
+          3, 1.8,
+          6, 2.4
         ],
-        "line-opacity": 0.68
+        "line-opacity": 0.95
       }
     });
 
@@ -918,8 +918,8 @@
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
         visibility: "none",
-        "line-cap": "round",
-        "line-join": "round"
+        "line-cap": "butt",
+        "line-join": "miter"
       },
       paint: {
         "line-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
@@ -927,11 +927,11 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          1, 0.9,
-          3, 1.45,
-          6, 2
+          1, 0.8,
+          3, 1.1,
+          6, 1.6
         ],
-        "line-opacity": 0.98
+        "line-opacity": 1
       }
     });
 
@@ -948,12 +948,12 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          1, 0.65,
-          3, 0.9,
-          6, 1.3
+          1, 0.75,
+          3, 0.95,
+          6, 1.2
         ],
-        "line-dasharray": [2.2, 2.8],
-        "line-opacity": 0.32
+        "line-dasharray": [1, 0],
+        "line-opacity": 0.9
       }
     });
 
