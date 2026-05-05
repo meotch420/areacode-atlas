@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "timeZone": "America/Chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-102, -85],
+          [-82, -85],
+          [-82, 85],
+          [-102, 85],
+          [-102, -85]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "timeZone": "America/New_York" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-82, -85],
+          [-66, -85],
+          [-66, 85],
+          [-82, 85],
+          [-82, -85]
+        ]]
+      }
+    }
+  ]
+}
