@@ -819,6 +819,23 @@
     highlightTimeZoneBand(matchedZoneId);
   }
 
+  function formatTimezoneDisplayValue(timezoneValue) {
+    if (!timezoneValue || timezoneValue === "---") {
+      return "---";
+    }
+
+    const normalized = String(timezoneValue).trim().toLowerCase();
+    const matchedZone = timeZones.find(
+      (zone) => zone.timeZone.toLowerCase() === normalized
+    );
+
+    if (matchedZone?.name) {
+      return matchedZone.name;
+    }
+
+    return timezoneValue;
+  }
+
 
   async function loadTimeZoneLayoutGeoJson() {
     try {
@@ -951,10 +968,9 @@
     showTimeZoneLines();
 
     const filter = ["==", ["get", "zoneId"], zoneId];
-    map.setFilter(TIMEZONE_BANDS_FILL_LAYER_ID, filter);
     map.setFilter(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, filter);
     map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
-    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
+    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
   }
@@ -1031,6 +1047,9 @@
 
   function getTimeZoneLayoutGeometries(zone) {
     if (!zone?.timeZone) return [];
+    if (zone.timeZone === "America/Chicago" || zone.timeZone === "America/New_York") {
+      return [];
+    }
 
     const geometries = timeZoneLayoutByTz.get(zone.timeZone);
 
@@ -1119,8 +1138,12 @@
     setText("infoCountry", country || "---");
     setText("infoCountryCode", countryCode || "---");
 
-    setText("infoTimeZone", timeZone || timezone || "---");
-    setText("infoTimezone", timezone || timeZone || "---");
+    const timezoneDisplay = formatTimezoneDisplayValue(
+      timeZone || timezone || "---"
+    );
+
+    setText("infoTimeZone", timezoneDisplay);
+    setText("infoTimezone", timezoneDisplay);
     setInfoPanelMode(mode);
   }
 
