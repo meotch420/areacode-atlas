@@ -1030,12 +1030,9 @@
   }
 
   function buildZoneBandGeometries(zone) {
-    const geoJsonGeometries = getTimeZoneLayoutGeometries(zone);
-
-    if (geoJsonGeometries.length) {
-      return geoJsonGeometries;
-    }
-
+    // Use deterministic meridian-aligned bands for every timezone card.
+    // Raw IANA polygon boundaries can wrap around the globe and create
+    // distorted boxes/lines in globe projection for broad zones.
     const bounds = getTimeZoneBandBounds(zone);
 
     if (!bounds) return [];
