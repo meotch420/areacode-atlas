@@ -14,6 +14,7 @@ body {
 body {
   min-height: 1300px;
   overflow-x: hidden;
+  line-height: 1.45;
 }
 
 /* =========================
@@ -81,7 +82,7 @@ header p {
 }
 
 .search button {
-  height: 40px;
+  min-height: 42px;
   padding: 0 14px;
   border: none;
   border-radius: 6px;
@@ -470,6 +471,65 @@ header p {
   font-size: 0.95rem;
 }
 
+
+
+/* =========================
+   SEO + FAQ CONTENT
+========================= */
+
+.seo-content,
+.faq-section {
+  width: min(1100px, calc(100% - 32px));
+  margin: 32px auto;
+  padding: 24px;
+  border-radius: 18px;
+  background: rgba(8, 18, 34, 0.88);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+  color: #e5edf7;
+}
+
+.seo-content h2,
+.faq-section h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.seo-card,
+.faq-item {
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.seo-card h3,
+.faq-item h3 {
+  margin: 0 0 10px;
+  font-size: 1.08rem;
+  color: #ffffff;
+}
+
+.seo-card p,
+.faq-item p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+.faq-item + .faq-item {
+  margin-top: 14px;
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -508,16 +568,42 @@ header p {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .search {
+    align-items: stretch;
+  }
+
   .search input {
-    width: calc(100% - 92px);
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    font-size: 1rem;
   }
 
   .search button {
-    width: 84px;
+    width: 92px;
+    font-size: 1rem;
   }
 
   #map {
     height: 620px;
+  }
+}
+
+@media (max-width: 850px) {
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seo-content,
+  .faq-section {
+    width: min(100% - 20px, 1100px);
+    margin: 20px auto;
+    padding: 18px;
+  }
+
+  .seo-card,
+  .faq-item {
+    padding: 15px;
   }
 }
 
@@ -529,15 +615,45 @@ header p {
   .timezone-grid,
   .time-zone-grid,
   #timezoneGrid {
-    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   #map {
-    height: 560px;
+    width: calc(100% - 16px);
+    height: 500px;
+    border-radius: 10px;
   }
 
   .map-section {
-    min-height: 700px;
+    min-height: 620px;
     padding: 12px 0 0;
+  }
+
+  .timezone-wrap {
+    max-height: 300px;
+    height: auto;
+    overflow-y: auto;
+    padding-right: 0;
+  }
+
+  .timezone-card {
+    min-height: 64px;
+  }
+
+  .info-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 4px 0;
+  }
+
+  .info-row strong {
+    text-align: left;
+  }
+
+  .ad-space,
+  .ads-section,
+  .bottom-ad-space {
+    min-height: 180px;
+    padding: 20px 14px 40px;
   }
 }
