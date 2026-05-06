@@ -40,9 +40,9 @@ header h1 {
   line-height: 1.2;
   font-weight: 800;
   color: #ffffff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 header p {
