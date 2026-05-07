@@ -1135,7 +1135,9 @@
   ===================================================== */
 
   function setInfoPanel({
+    city = "-",
     areaCode = "-",
+    countryCode = "-",
     region = "-",
     state = "-",
     country = "-",
@@ -1144,10 +1146,10 @@
     timezone = "-",
     mode = "default"
   }) {
+    setText("infoCity", city || "-");
     setText("infoCountry", country || "-");
     setText("infoRegion", region || state || "-");
-    setText("infoAreaCode", areaCode || "-");
-    setText("infoLocalTime", localTime || "-");
+    setText("infoCountryCode", countryCode || areaCode || "-");
 
     const timezoneDisplay = formatTimezoneDisplayValue(
       timeZone || timezone || "---"
@@ -1157,21 +1159,16 @@
     setInfoPanelMode(mode);
   }
 
-  function setInfoPanelMode(mode) {
-    const regionRow = document.getElementById("infoRegionRow");
-
-    if (!regionRow) return;
-
-    regionRow.querySelector("span").textContent = "Region";
-  }
+  function setInfoPanelMode(mode) {}
 
   function clearInfoPanel() {
     setInfoPanel({
+      city: "-",
       areaCode: "-",
+      countryCode: "---",
       region: "-",
       state: "-",
       country: "-",
-      localTime: "-",
       timeZone: "---",
       timezone: "---",
       mode: "default"
@@ -1570,11 +1567,11 @@
 
   function showAreaCodeResult(record) {
     setInfoPanel({
-      areaCode: record.areaCode,
+      city: record.city || "---",
+      countryCode: "+1",
       region: record.state,
       state: record.state,
       country: record.country,
-      localTime: formatTime(record.timezone),
       timeZone: record.timezone,
       timezone: record.timezone,
       mode: "default"
@@ -1595,11 +1592,11 @@
 
   async function showCountryCodeResult(record) {
     setInfoPanel({
-      areaCode: `+${record.code}`,
+      city: "---",
+      countryCode: `+${record.code}`,
       region: record.region || "---",
       state: record.region || "---",
       country: record.country,
-      localTime: formatTime(record.timezone),
       timeZone: record.timezone,
       timezone: record.timezone,
       mode: "default"
@@ -1619,11 +1616,11 @@
 
   async function showCountryAreaRegionResult(record) {
     setInfoPanel({
-      areaCode: `${record.country.code}-${record.regionCode}`,
+      city: "---",
+      countryCode: `+${record.country.code}`,
       region: record.regionName,
       state: record.regionName,
       country: record.country.country,
-      localTime: formatTime(record.country.timezone),
       timeZone: record.country.timezone,
       timezone: record.country.timezone,
       mode: "default"
