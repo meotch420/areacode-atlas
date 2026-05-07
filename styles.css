@@ -344,8 +344,8 @@ header p {
 .area-info-panel {
   min-height: 122px;
   height: auto;
-  padding: 8px 10px;
-  border: 1px solid #60a5fa;
+  padding: 8px 10px 6px;
+  border: 1px solid #2f5f95;
   border-radius: 8px;
   background: #0b1833;
   box-shadow: 0 0 22px rgba(59, 130, 246, 0.2);
@@ -365,12 +365,12 @@ header p {
 
 .info-row {
   display: grid;
-  grid-template-columns: 92px 1fr;
+  grid-template-columns: 1fr auto;
   gap: 8px;
   align-items: center;
-  min-height: 28px;
-  border-bottom: 1px solid #1e293b;
-  font-size: 0.86rem;
+  min-height: 26px;
+  border-bottom: 1px solid #153152;
+  font-size: 1.7vh;
 }
 
 .tz-utc {
