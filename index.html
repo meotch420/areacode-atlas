@@ -11,6 +11,11 @@
     content="Search area codes and country calling codes with AreaCode Atlas. Find cities, states, regions, time zones, and locations on an interactive map."
   />
 
+  <meta property="og:title" content="Area Code Lookup | Country Codes, Time Zones & Interactive Map" />
+  <meta property="og:description" content="Search area codes and country calling codes with AreaCode Atlas. Find cities, states, regions, time zones, and locations on an interactive map." />
+  <meta property="og:type" content="website" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+
   <link
     rel="stylesheet"
     href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css"
@@ -24,13 +29,6 @@
     <div class="top-left">
       <header>
         <h1>Area Code Lookup<br>Country Calling Code Time Zone Locator</h1>
-        <p class="seo-intro" hidden aria-hidden="true">
-          AreaCode Atlas helps you search area codes, country calling codes, cities,
-          states, regions, and time zones on an interactive world map. Use it for
-          area code lookup, country code lookup, finding city by area code, finding
-          state by area code, phone area code map exploration, international calling
-          code lookup, and time zone by area code.
-        </p>
       </header>
 
       <form class="search" id="searchForm">
@@ -85,7 +83,7 @@
   </main>
 
   <section class="ad-space">
-    <div class="ad-placeholder seo-content">
+    <div id="seoFaqSection" class="seo-content">
       <h2>Area Code Lookup, Country Codes, and Time Zones</h2>
       <p class="seo-lead">
         Explore area codes, country calling codes, and time zones from one interactive map.
@@ -118,6 +116,22 @@
       </dl>
     </div>
   </section>
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "AreaCode Atlas",
+      "url": "https://areacode-atlas.com/",
+      "description": "Area code lookup and country calling code finder with interactive map and time zone data.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://areacode-atlas.com/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
 
   <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
   <script src="areacode.js"></script>

@@ -469,7 +469,7 @@ header p {
   text-align: center;
   border-top: 1px solid #1e293b;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -479,8 +479,20 @@ header p {
 }
 
 .seo-content {
+  display: block;
+  width: min(1100px, 100%);
   max-width: 1100px;
   text-align: left;
+  color: #e2e8f0;
+}
+
+#seoFaqSection h2,
+#seoFaqSection h3 {
+  color: #ffffff;
+}
+
+#seoFaqSection p,
+#seoFaqSection dd {
   color: #dbeafe;
 }
 
