@@ -777,6 +777,17 @@
     cards.forEach((card) => {
       card.classList.toggle("is-active", card.dataset.zoneId === zoneId);
     });
+
+    if (!zoneId) return;
+
+    const activeCard = document.querySelector(
+      `.timezone-card[data-zone-id="${zoneId}"]`
+    );
+    activeCard?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest"
+    });
   }
 
   function clearActiveTimeZoneCard() {
@@ -790,8 +801,30 @@
     }
 
     const normalized = String(timezone).trim().toLowerCase();
+    const normalizedNoSpace = normalized.replace(/\s+/g, "");
+
+    const manualMatch = [
+      { pattern: "israel", zone: "Asia/Jerusalem" },
+      { pattern: "central europe", zone: "Europe/Berlin" },
+      { pattern: "london", zone: "Europe/London" },
+      { pattern: "greenwich", zone: "Etc/GMT" },
+      { pattern: "azores", zone: "Atlantic/Azores" },
+      { pattern: "brazil", zone: "America/Sao_Paulo" },
+      { pattern: "newfoundland", zone: "America/St_Johns" }
+    ].find((entry) => normalized.includes(entry.pattern));
+
+    if (manualMatch) {
+      const manualIndex = timeZones.findIndex(
+        (zone) => zone.timeZone === manualMatch.zone
+      );
+      if (manualIndex >= 0) return `tz-zone-${manualIndex}`;
+    }
+
     const exactIndex = timeZones.findIndex(
-      (zone) => zone.timeZone.toLowerCase() === normalized
+      (zone) =>
+        zone.timeZone.toLowerCase() === normalized
+        || zone.name.toLowerCase() === normalized
+        || zone.timeZone.toLowerCase().replace(/\s+/g, "") === normalizedNoSpace
     );
 
     if (exactIndex >= 0) {
@@ -805,6 +838,20 @@
 
     if (partialIndex >= 0) {
       return `tz-zone-${partialIndex}`;
+    }
+
+    const offsetMatch = normalized.match(/utc\s*([+-])\s*(\d{1,2})(?::?(\d{2}))?/i);
+    if (offsetMatch) {
+      const sign = offsetMatch[1] === "-" ? -1 : 1;
+      const hours = Number(offsetMatch[2]) || 0;
+      const minutes = Number(offsetMatch[3]) || 0;
+      const offsetValue = sign * (hours + minutes / 60);
+      const zoneByOffsetIndex = timeZones.findIndex(
+        (zone) => Math.abs(getZoneUtcOffset(zone) - offsetValue) < 0.01
+      );
+      if (zoneByOffsetIndex >= 0) {
+        return `tz-zone-${zoneByOffsetIndex}`;
+      }
     }
 
     return null;
