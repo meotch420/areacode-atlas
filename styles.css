@@ -478,6 +478,46 @@ header p {
   font-size: 0.95rem;
 }
 
+.seo-content {
+  max-width: 1100px;
+  text-align: left;
+  color: #dbeafe;
+}
+
+.seo-lead {
+  margin: 8px 0 18px;
+}
+
+.seo-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.seo-card {
+  border: 1px solid #334155;
+  background: #0b1833;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.seo-card h3 {
+  margin: 0 0 8px;
+  color: #93c5fd;
+}
+
+.faq-list dt {
+  margin-top: 10px;
+  font-weight: 700;
+  color: #bfdbfe;
+}
+
+.faq-list dd {
+  margin: 4px 0 0;
+  color: #cbd5e1;
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
