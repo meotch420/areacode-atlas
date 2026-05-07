@@ -35,7 +35,7 @@
     center: [-98.5795, 39.8283],
     zoom: 2.2
   };
-  const AREA_CODE_SEARCH_ZOOM = 2.8;
+  const AREA_CODE_SEARCH_ZOOM = 3.2;
 
   let map;
   let activeMarker = null;
