@@ -111,7 +111,7 @@ header p {
 }
 
 .timezone-wrap {
-  height: 122px;
+  height: 78px;
   overflow-y: auto;
   padding-right: 4px;
 }
@@ -560,7 +560,7 @@ header p {
   }
 
   .timezone-wrap {
-    height: 122px;
+    height: 78px;
   }
 }
 
