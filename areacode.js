@@ -287,7 +287,12 @@
       timeZone: "America/Chicago",
       center: [-87.6298, 41.8781],
       zoom: 4,
-      utcOffset: -6
+      utcOffset: -6,
+      useBandFallback: true,
+      bandBounds: {
+        west: -97.5,
+        east: -82.5
+      }
     },
     {
       name: "EASTERN",
@@ -295,9 +300,10 @@
       center: [-74.006, 40.7128],
       zoom: 4,
       utcOffset: -5,
+      useBandFallback: true,
       bandBounds: {
-        west: -90,
-        east: -66
+        west: -82.5,
+        east: -67.5
       }
     },
     {
@@ -1074,7 +1080,7 @@
 
 
   function getTimeZoneLayoutGeometries(zone) {
-    if (!zone?.timeZone) return [];
+    if (!zone?.timeZone || zone?.useBandFallback) return [];
 
     const geometries = timeZoneLayoutByTz.get(zone.timeZone);
 
