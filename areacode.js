@@ -35,6 +35,7 @@
     center: [-98.5795, 39.8283],
     zoom: 2.2
   };
+  const AREA_CODE_SEARCH_ZOOM = 4.2;
 
   let map;
   let activeMarker = null;
@@ -1583,7 +1584,7 @@
     applyTimezoneSelection(record.timezone);
 
     if (Number.isFinite(record.lng) && Number.isFinite(record.lat)) {
-      flyToLocation(record.lng, record.lat, record.zoom || 8);
+      flyToLocation(record.lng, record.lat, AREA_CODE_SEARCH_ZOOM);
       setMarker(record.lng, record.lat);
     } else {
       setStatus(`${record.areaCode} found, but no map coordinates are in area_code_data.json.`);
