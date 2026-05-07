@@ -689,10 +689,11 @@
       card.dataset.color = zoneColor;
 
       card.innerHTML = `
-        <div class="tz-label timezone-card-name">${zone.name}</div>
+        <div class="tz-label timezone-card-name">${index + 1}. ${zone.name}</div>
         <div class="tz-time timezone-card-time" data-timezone="${zone.timeZone}">
           ${formatTime(zone.timeZone)}
         </div>
+        <div class="tz-utc">${formatUtcOffset(getZoneUtcOffset(zone))}</div>
       `;
 
       card.addEventListener("click", () => {
@@ -707,11 +708,11 @@
         clearCountryOutline();
 
         setInfoPanel({
-          city: "---",
-          region: hemisphere || "---",
-          state: "---",
-          country: "---",
-          countryCode: "---",
+          areaCode: "-",
+          region: hemisphere || "-",
+          state: "-",
+          country: "-",
+          localTime: formatTime(zone.timeZone),
           timeZone: zone.timeZone,
           timezone: zone.timeZone,
           mode: "timezone"
@@ -747,7 +748,7 @@
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-        hour12: false
+        hour12: true
       })
         .format(new Date())
         .replace(/^24:/, "00:");
@@ -1134,52 +1135,43 @@
   ===================================================== */
 
   function setInfoPanel({
-    city = "---",
-    region = "---",
-    state = "---",
-    country = "---",
-    countryCode = "---",
-    timeZone = "---",
-    timezone = "---",
+    areaCode = "-",
+    region = "-",
+    state = "-",
+    country = "-",
+    localTime = "-",
+    timeZone = "-",
+    timezone = "-",
     mode = "default"
   }) {
-    setText("infoCity", city || "---");
-
-    setText("infoRegion", region || state || "---");
-    setText("infoState", state || region || "---");
-
-    setText("infoCountry", country || "---");
-    setText("infoCountryCode", countryCode || "---");
+    setText("infoCountry", country || "-");
+    setText("infoRegion", region || state || "-");
+    setText("infoAreaCode", areaCode || "-");
+    setText("infoLocalTime", localTime || "-");
 
     const timezoneDisplay = formatTimezoneDisplayValue(
       timeZone || timezone || "---"
     );
 
     setText("infoTimeZone", timezoneDisplay);
-    setText("infoTimezone", timezoneDisplay);
     setInfoPanelMode(mode);
   }
 
   function setInfoPanelMode(mode) {
-    const countryCodeRow = document.getElementById("infoCountryCodeRow");
-    const timeZoneRow = document.getElementById("infoTimeZoneRow");
     const regionRow = document.getElementById("infoRegionRow");
 
-    if (!countryCodeRow || !timeZoneRow || !regionRow) return;
+    if (!regionRow) return;
 
-    countryCodeRow.classList.toggle("is-hidden", mode === "timezone");
-    timeZoneRow.classList.toggle("is-hidden", false);
-    regionRow.querySelector("span").textContent =
-      mode === "timezone" ? "Hemisphere" : "State / Region";
+    regionRow.querySelector("span").textContent = "Region";
   }
 
   function clearInfoPanel() {
     setInfoPanel({
-      city: "---",
-      region: "---",
-      state: "---",
-      country: "---",
-      countryCode: "---",
+      areaCode: "-",
+      region: "-",
+      state: "-",
+      country: "-",
+      localTime: "-",
       timeZone: "---",
       timezone: "---",
       mode: "default"
@@ -1578,11 +1570,11 @@
 
   function showAreaCodeResult(record) {
     setInfoPanel({
-      city: record.city,
+      areaCode: record.areaCode,
       region: record.state,
       state: record.state,
       country: record.country,
-      countryCode: record.countryCode,
+      localTime: formatTime(record.timezone),
       timeZone: record.timezone,
       timezone: record.timezone,
       mode: "default"
@@ -1603,11 +1595,11 @@
 
   async function showCountryCodeResult(record) {
     setInfoPanel({
-      city: "---",
+      areaCode: `+${record.code}`,
       region: record.region || "---",
       state: record.region || "---",
       country: record.country,
-      countryCode: `+${record.code}`,
+      localTime: formatTime(record.timezone),
       timeZone: record.timezone,
       timezone: record.timezone,
       mode: "default"
@@ -1627,11 +1619,11 @@
 
   async function showCountryAreaRegionResult(record) {
     setInfoPanel({
-      city: record.regionName,
+      areaCode: `${record.country.code}-${record.regionCode}`,
       region: record.regionName,
       state: record.regionName,
       country: record.country.country,
-      countryCode: `+${record.country.code}`,
+      localTime: formatTime(record.country.timezone),
       timeZone: record.country.timezone,
       timezone: record.country.timezone,
       mode: "default"
