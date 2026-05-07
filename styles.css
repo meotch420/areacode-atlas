@@ -456,6 +456,21 @@ header p {
 }
 
 /* =========================
+   SEO + FAQ SECTION
+========================= */
+
+
+.seo-section {
+  padding: 28px 20px;
+  background: #020617;
+  border-top: 1px solid #1e293b;
+}
+
+.seo-section .seo-content {
+  margin: 0 auto;
+}
+
+/* =========================
    AD SPACE
 ========================= */
 
@@ -471,6 +486,10 @@ header p {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.ad-placeholder {
+  width: 100%;
 }
 
 .ad-space p {
