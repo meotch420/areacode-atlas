@@ -689,7 +689,7 @@
       card.dataset.color = zoneColor;
 
       card.innerHTML = `
-        <div class="tz-label timezone-card-name">${index + 1}. ${zone.name}</div>
+        <div class="tz-label timezone-card-name">${zone.name}</div>
         <div class="tz-time timezone-card-time" data-timezone="${zone.timeZone}">
           ${formatTime(zone.timeZone)}
         </div>
