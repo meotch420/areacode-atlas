@@ -1032,9 +1032,16 @@
   }
 
   function buildZoneBandGeometries(zone) {
-    // Use deterministic meridian-aligned bands for every timezone card.
-    // Raw IANA polygon boundaries can wrap around the globe and create
-    // distorted boxes/lines in globe projection for broad zones.
+    // Prefer real timezone boundaries from the loaded IANA dataset so
+    // highlighted zone lines follow their actual curved/split shapes.
+    const layoutGeometries = getTimeZoneLayoutGeometries(zone);
+
+    if (layoutGeometries.length) {
+      return layoutGeometries;
+    }
+
+    // Fall back to meridian-aligned bands only when timezone geometry
+    // is unavailable.
     const bounds = getTimeZoneBandBounds(zone);
 
     if (!bounds) return [];
