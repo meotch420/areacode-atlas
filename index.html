@@ -24,7 +24,7 @@
     <div class="top-left">
       <header>
         <h1>Area Code Lookup<br>Country Calling Code Time Zone Locator</h1>
-        <p class="seo-intro" hidden aria-hidden="true">
+        <p class="seo-intro">
           AreaCode Atlas helps you search area codes, country calling codes, cities,
           states, regions, and time zones on an interactive world map. Use it for
           area code lookup, country code lookup, finding city by area code, finding
@@ -54,23 +54,23 @@
       <h2>Area Information</h2>
 
       <div class="info-row">
-        <span>City</span>
-        <strong id="infoCity">---</strong>
-      </div>
-
-      <div class="info-row">
-        <span>State / Region</span>
+        <span>Region</span>
         <strong id="infoRegion">---</strong>
       </div>
 
       <div class="info-row">
-        <span>Country</span>
-        <strong id="infoCountry">---</strong>
+        <span>Area Code</span>
+        <strong id="infoAreaCode">---</strong>
       </div>
 
       <div class="info-row">
         <span>Time Zone</span>
         <strong id="infoTimeZone">---</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Local Time</span>
+        <strong id="infoLocalTime">---</strong>
       </div>
 
       <div class="info-row">
@@ -120,6 +120,46 @@
   </section>
 
   <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is an area code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An area code is a regional prefix used in NANP phone numbers to identify a local service area."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a country calling code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A country calling code is the international dialing prefix used before a national number."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I find the time zone for an area code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Search the area code to view its mapped region, time zone, and live local time details."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I search international country codes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Enter country prefixes like +44 or +972 to view country and time zone details."
+          }
+        }
+      ]
+    }
+  </script>
   <script src="areacode.js"></script>
 </body>
 </html>

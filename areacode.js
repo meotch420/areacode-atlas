@@ -1146,10 +1146,10 @@
     timezone = "-",
     mode = "default"
   }) {
-    setText("infoCity", city || "-");
-    setText("infoCountry", country || "-");
     setText("infoRegion", region || state || "-");
+    setText("infoAreaCode", areaCode || "-");
     setText("infoCountryCode", countryCode || areaCode || "-");
+    setText("infoLocalTime", localTime || "-");
 
     const timezoneDisplay = formatTimezoneDisplayValue(
       timeZone || timezone || "---"
@@ -1568,10 +1568,12 @@
   function showAreaCodeResult(record) {
     setInfoPanel({
       city: record.city || "---",
+      areaCode: record.areaCode || "---",
       countryCode: "+1",
       region: record.state,
       state: record.state,
       country: record.country,
+      localTime: formatTime(record.timezone),
       timeZone: record.timezone,
       timezone: record.timezone,
       mode: "default"
@@ -1593,10 +1595,12 @@
   async function showCountryCodeResult(record) {
     setInfoPanel({
       city: "---",
+      areaCode: "---",
       countryCode: `+${record.code}`,
       region: record.region || "---",
       state: record.region || "---",
       country: record.country,
+      localTime: record.timezone === "Multiple" ? "---" : formatTime(record.timezone),
       timeZone: record.timezone,
       timezone: record.timezone,
       mode: "default"
@@ -1617,10 +1621,12 @@
   async function showCountryAreaRegionResult(record) {
     setInfoPanel({
       city: "---",
+      areaCode: record.regionCode || "---",
       countryCode: `+${record.country.code}`,
       region: record.regionName,
       state: record.regionName,
       country: record.country.country,
+      localTime: record.country.timezone === "Multiple" ? "---" : formatTime(record.country.timezone),
       timeZone: record.country.timezone,
       timezone: record.country.timezone,
       mode: "default"
