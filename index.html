@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-site-verification" content="AckQtOd3tchXofUEFiiydMsB1hCQWhpBwoNesFtp4YI" />
+  <meta name="google-site-verification" content="AckQtOd3tchXofUEFiiydMsB1hCQWhpBwoNesFtp4YI" />
 
   <title>Area Code Lookup | Country Codes, Time Zones & Interactive Map</title>
   <meta
@@ -11,12 +11,18 @@
     content="Search area codes and country calling codes with AreaCode Atlas. Find cities, states, regions, time zones, and locations on an interactive map."
   />
 
-  <link
-    rel="stylesheet"
-    href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css"
-  />
-
   <link rel="stylesheet" href="styles.css" />
+  
+  <style>
+    /* Ensure the map container has dimensions so the 3D canvas can fill it */
+    #map {
+        width: 100%;
+        height: 500px; /* Adjust this height as needed for your layout */
+        background-color: #0d1117; /* Dark background to match space/globe theme */
+        overflow: hidden;
+        position: relative;
+    }
+  </style>
 </head>
 
 <body>
@@ -118,7 +124,79 @@
     </div>
   </section>
 
-  <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  
   <script src="areacode.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mapContainer = document.getElementById('map');
+        
+        // 1. Scene, Camera, and Renderer Setup
+        const scene = new THREE.Scene();
+        
+        // Calculate aspect ratio based on the div container, not the window
+        const camera = new THREE.PerspectiveCamera(45, mapContainer.clientWidth / mapContainer.clientHeight, 0.1, 1000);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(mapContainer.clientWidth, mapContainer.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Append the canvas to the #map div
+        mapContainer.appendChild(renderer.domElement);
+
+        // 2. Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 3, 5);
+        scene.add(directionalLight);
+
+        // 3. Globe Geometry and Material
+        const geometry = new THREE.SphereGeometry(5, 64, 64);
+        const textureLoader = new THREE.TextureLoader();
+        
+        // --- REPLACE THIS URL WITH YOUR FULL EQUIRECTANGULAR MAP IMAGE PATH ---
+        const mapTexture = textureLoader.load('YOUR_IMAGE_PATH_HERE.png'); 
+        
+        const material = new THREE.MeshStandardMaterial({ 
+            map: mapTexture,
+            roughness: 0.6,
+            metalness: 0.1
+        });
+        
+        const globe = new THREE.Mesh(geometry, material);
+        scene.add(globe);
+
+        // 4. Camera Positioning & Controls
+        camera.position.z = 15;
+        
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; 
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 6;  
+        controls.maxDistance = 30; 
+
+        // 5. Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            globe.rotation.y += 0.001; // Auto-rotate
+            controls.update(); 
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+
+        // 6. Handle Window Resizing specifically for the container div
+        window.addEventListener('resize', () => {
+            if (!mapContainer) return;
+            camera.aspect = mapContainer.clientWidth / mapContainer.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(mapContainer.clientWidth, mapContainer.clientHeight);
+        });
+    });
+  </script>
 </body>
 </html>
