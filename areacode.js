@@ -15,7 +15,7 @@
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
   const TIMEZONE_LAYOUT_GEOJSON_URLS = [
-    "geo.json",
+    "timezones.geojson",
     "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
   ];
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
@@ -858,6 +858,11 @@
         const geoJson = await response.json();
         const features = Array.isArray(geoJson?.features) ? geoJson.features : [];
         const nextLayout = new Map();
+
+        // Ignore tiny/placeholder files (for example hand-drawn boxes).
+        if (features.length < 10) {
+          continue;
+        }
 
         features.forEach((feature) => {
           const rawTimeZone = feature?.properties?.timeZone
