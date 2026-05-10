@@ -1070,6 +1070,102 @@
   }
 
 
+
+  function getPolygonRingBounds(ring) {
+    let west = Infinity;
+    let east = -Infinity;
+    let south = Infinity;
+    let north = -Infinity;
+
+    ring.forEach(([lng, lat]) => {
+      if (!Number.isFinite(lng) || !Number.isFinite(lat)) return;
+      west = Math.min(west, lng);
+      east = Math.max(east, lng);
+      south = Math.min(south, lat);
+      north = Math.max(north, lat);
+    });
+
+    if (!Number.isFinite(west) || !Number.isFinite(east) || !Number.isFinite(south) || !Number.isFinite(north)) {
+      return null;
+    }
+
+    return { west, east, south, north };
+  }
+
+  function getBoundsCenter(bounds) {
+    if (!bounds) return null;
+
+    return [
+      (bounds.west + bounds.east) / 2,
+      (bounds.south + bounds.north) / 2
+    ];
+  }
+
+  function scoreGeometryByZoneCenter(geometry, zoneCenter) {
+    if (!zoneCenter || !Array.isArray(zoneCenter) || zoneCenter.length < 2) {
+      return Number.POSITIVE_INFINITY;
+    }
+
+    if (geometry?.type === "Polygon") {
+      const bounds = getPolygonRingBounds(geometry.coordinates?.[0] || []);
+      const center = getBoundsCenter(bounds);
+
+      if (!center) return Number.POSITIVE_INFINITY;
+
+      return Math.hypot(center[0] - zoneCenter[0], center[1] - zoneCenter[1]);
+    }
+
+    if (geometry?.type === "MultiPolygon") {
+      let best = Number.POSITIVE_INFINITY;
+
+      (geometry.coordinates || []).forEach((polygon) => {
+        const bounds = getPolygonRingBounds(polygon?.[0] || []);
+        const center = getBoundsCenter(bounds);
+
+        if (!center) return;
+
+        const score = Math.hypot(center[0] - zoneCenter[0], center[1] - zoneCenter[1]);
+        if (score < best) {
+          best = score;
+        }
+      });
+
+      return best;
+    }
+
+    return Number.POSITIVE_INFINITY;
+  }
+
+  function normalizeGeometryForZone(geometry, zone) {
+    if (!geometry) return null;
+
+    if (geometry.type === "Polygon") {
+      return geometry;
+    }
+
+    if (geometry.type !== "MultiPolygon") {
+      return null;
+    }
+
+    const zoneCenter = Array.isArray(zone?.center) ? zone.center : null;
+    let bestPolygon = null;
+    let bestScore = Number.POSITIVE_INFINITY;
+
+    (geometry.coordinates || []).forEach((polygonCoords) => {
+      const polygonGeometry = {
+        type: "Polygon",
+        coordinates: polygonCoords
+      };
+      const score = scoreGeometryByZoneCenter(polygonGeometry, zoneCenter);
+
+      if (score < bestScore) {
+        bestScore = score;
+        bestPolygon = polygonGeometry;
+      }
+    });
+
+    return bestPolygon;
+  }
   function getTimeZoneLayoutGeometries(zone) {
     if (!zone?.timeZone) return [];
 
@@ -1079,7 +1175,9 @@
       return [];
     }
 
-    return geometries.map((geometry) => JSON.parse(JSON.stringify(geometry)));
+    return geometries
+      .map((geometry) => normalizeGeometryForZone(JSON.parse(JSON.stringify(geometry)), zone))
+      .filter(Boolean);
   }
 
   function getTimeZoneBandBounds(zone) {
