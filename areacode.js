@@ -15,6 +15,7 @@
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
   const TIMEZONE_LAYOUT_GEOJSON_URLS = [
+    "data/timezones.geojson",
     "geo.json",
     "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
   ];
@@ -23,6 +24,7 @@
   const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-bands-line-casing";
   const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
   const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-bands-grid";
+  const TIMEZONE_BOUNDARY_LINES_LAYER_ID = "timezone-lines";
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
@@ -117,7 +119,6 @@
     setTimeout(removeExtraZoomControls, 1500);
     setTimeout(removeExtraZoomControls, 3000);
   }
-
   function removeExtraZoomControls() {
     const mapEl = document.getElementById("map");
 
@@ -898,6 +899,25 @@
     });
 
     map.addLayer({
+      id: TIMEZONE_BOUNDARY_LINES_LAYER_ID,
+      type: "line",
+      source: TIMEZONE_BANDS_SOURCE_ID,
+      paint: {
+        "line-color": "#d94b4b",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0, 0.5,
+          2, 0.8,
+          4, 1.2,
+          6, 1.8
+        ],
+        "line-opacity": 0.85
+      }
+    });
+
+    map.addLayer({
       id: TIMEZONE_BANDS_FILL_LAYER_ID,
       type: "fill",
       source: TIMEZONE_BANDS_SOURCE_ID,
@@ -1032,9 +1052,12 @@
   }
 
   function buildZoneBandGeometries(zone) {
-    // Use deterministic meridian-aligned bands for every timezone card.
-    // Raw IANA polygon boundaries can wrap around the globe and create
-    // distorted boxes/lines in globe projection for broad zones.
+    const layoutGeometries = getTimeZoneLayoutGeometries(zone);
+
+    if (layoutGeometries.length) {
+      return layoutGeometries;
+    }
+
     const bounds = getTimeZoneBandBounds(zone);
 
     if (!bounds) return [];
