@@ -108,6 +108,7 @@
     setupGlobeOnlyWheelZoom();
 
     map.on("load", async () => {
+      addTimeZoneBoundaryLines();
       ensureTimeZoneBandLayer();
       removeExtraZoomControls();
       await focusDefaultCountryOnLoad();
@@ -117,6 +118,45 @@
     setTimeout(removeExtraZoomControls, 1500);
     setTimeout(removeExtraZoomControls, 3000);
   }
+  function addTimeZoneBoundaryLines() {
+    if (!map || map.getSource("timezone-boundaries")) return;
+
+    map.addSource("timezone-boundaries", {
+      type: "geojson",
+      data: "data/timezones.geojson"
+    });
+
+    const firstSymbolLayer = map
+      .getStyle()
+      ?.layers?.find((layer) => layer.type === "symbol")?.id;
+
+    map.addLayer(
+      {
+        id: "timezone-lines",
+        type: "line",
+        source: "timezone-boundaries",
+        paint: {
+          "line-color": "#d94b4b",
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            0,
+            0.5,
+            2,
+            0.8,
+            4,
+            1.2,
+            6,
+            1.8
+          ],
+          "line-opacity": 0.85
+        }
+      },
+      firstSymbolLayer
+    );
+  }
+
 
   function removeExtraZoomControls() {
     const mapEl = document.getElementById("map");

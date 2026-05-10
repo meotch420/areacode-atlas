@@ -1,0 +1,23 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "tzid": "Etc/UTC"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-180, -90],
+            [-180, 90],
+            [180, 90],
+            [180, -90],
+            [-180, -90]
+          ]
+        ]
+      }
+    }
+  ]
+}
