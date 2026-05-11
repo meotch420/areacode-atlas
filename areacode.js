@@ -14,15 +14,11 @@
 
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
-  const TIMEZONE_LAYOUT_GEOJSON_URLS = [
-    "geo.json",
-    "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
-  ];
-  const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
-  const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
-  const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-bands-line-casing";
-  const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
-  const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-bands-grid";
+  const TIMEZONE_BOUNDARIES_DATA_URL = "data/timezones-now.geojson";
+  const TIMEZONE_BOUNDARIES_SOURCE_ID = "timezone-boundaries";
+  const TIMEZONE_FILLS_LAYER_ID = "timezone-fills";
+  const TIMEZONE_LINES_LAYER_ID = "timezone-lines";
+  const TIMEZONE_HIGHLIGHT_LAYER_ID = "timezone-highlight";
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
@@ -41,7 +37,6 @@
   let activeMarker = null;
   let areaCodeIndex = new Map();
   let selectedTimeZoneId = null;
-  let timeZoneLayoutByTz = new Map();
 
   /* =====================================================
      AUTO REFRESH PAGE EVERY 1 HOUR
@@ -69,7 +64,6 @@
     }
 
     setStatus("");
-    await loadTimeZoneLayoutGeoJson();
     createMap();
     buildTimeZoneCards();
     startTimezoneClocks();
@@ -108,7 +102,7 @@
     setupGlobeOnlyWheelZoom();
 
     map.on("load", async () => {
-      ensureTimeZoneBandLayer();
+      ensureTimezoneBoundaryLayers();
       removeExtraZoomControls();
       await focusDefaultCountryOnLoad();
     });
@@ -198,7 +192,7 @@
     clearMarker();
     clearCountryOutline();
     clearActiveTimeZoneCard();
-    hideTimeZoneBand();
+    clearTimezoneHighlight();
   }
 
   /* =====================================================
@@ -701,8 +695,7 @@
         const hemisphere = getHemisphereByZone(zone);
         selectedTimeZoneId = zoneId;
         setActiveTimeZoneCard(zoneId);
-        showTimeZoneLines();
-        highlightTimeZoneBand(zoneId);
+        highlightTimezone(zone.timeZone);
 
         focusTimeZoneBandOnGlobe(zone);
         clearMarker();
@@ -815,13 +808,19 @@
 
     if (!matchedZoneId) {
       clearActiveTimeZoneCard();
-      hideTimeZoneBand();
+      clearTimezoneHighlight();
       return;
     }
 
     selectedTimeZoneId = matchedZoneId;
     setActiveTimeZoneCard(matchedZoneId);
-    highlightTimeZoneBand(matchedZoneId);
+
+    const zoneIndex = Number(String(matchedZoneId).replace("tz-zone-", ""));
+    const zone = Number.isInteger(zoneIndex) ? timeZones[zoneIndex] : null;
+
+    if (zone?.timeZone) {
+      highlightTimezone(zone.timeZone);
+    }
   }
 
   function formatTimezoneDisplayValue(timezoneValue) {
@@ -842,193 +841,77 @@
   }
 
 
-  async function loadTimeZoneLayoutGeoJson() {
-    const urls = Array.isArray(TIMEZONE_LAYOUT_GEOJSON_URLS)
-      ? TIMEZONE_LAYOUT_GEOJSON_URLS
-      : [TIMEZONE_LAYOUT_GEOJSON_URLS];
-
-    for (const url of urls) {
-      try {
-        const response = await fetch(url, { cache: "no-store" });
-
-        if (!response.ok) {
-          throw new Error(`Failed loading ${url}: ${response.status}`);
-        }
-
-        const geoJson = await response.json();
-        const features = Array.isArray(geoJson?.features) ? geoJson.features : [];
-        const nextLayout = new Map();
-
-        features.forEach((feature) => {
-          const rawTimeZone = feature?.properties?.timeZone
-            || feature?.properties?.tzid
-            || feature?.properties?.timezone
-            || feature?.properties?.name;
-          const timeZone = String(rawTimeZone || "").trim();
-          const geometryType = feature?.geometry?.type;
-          const isPolygon = geometryType === "Polygon" || geometryType === "MultiPolygon";
-
-          if (!timeZone || !isPolygon) return;
-
-          const existing = nextLayout.get(timeZone) || [];
-          existing.push(feature.geometry);
-          nextLayout.set(timeZone, existing);
-        });
-
-        if (nextLayout.size) {
-          timeZoneLayoutByTz = nextLayout;
-          return;
-        }
-      } catch (error) {
-        console.warn(`Timezone layout source unavailable (${url}).`, error);
-      }
-    }
-
-    console.warn("No timezone layout source loaded; using generated straight bands.");
-    timeZoneLayoutByTz = new Map();
-  }
-
-  function ensureTimeZoneBandLayer() {
+  function ensureTimezoneBoundaryLayers() {
     if (!map || !map.isStyleLoaded()) return;
-    if (map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
+    if (map.getSource(TIMEZONE_BOUNDARIES_SOURCE_ID)) return;
 
-    map.addSource(TIMEZONE_BANDS_SOURCE_ID, {
+    map.addSource(TIMEZONE_BOUNDARIES_SOURCE_ID, {
       type: "geojson",
-      data: buildTimeZoneBandGeoJson()
+      data: TIMEZONE_BOUNDARIES_DATA_URL
     });
 
     map.addLayer({
-      id: TIMEZONE_BANDS_FILL_LAYER_ID,
+      id: TIMEZONE_FILLS_LAYER_ID,
       type: "fill",
-      source: TIMEZONE_BANDS_SOURCE_ID,
-      layout: {
-        visibility: "none"
-      },
+      source: TIMEZONE_BOUNDARIES_SOURCE_ID,
       paint: {
-        "fill-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
-        "fill-opacity": 0.28
+        "fill-color": ["match", ["get", "tzid"], "America/Los_Angeles", "#8e7cc3", "America/Denver", "#6fa8dc", "America/Chicago", "#93c47d", "America/New_York", "#f1c232", "America/Halifax", "#e06666", "America/St_Johns", "#dd7e6b", "Asia/Jerusalem", "#f6b26b", "#999999"],
+        "fill-opacity": 0.18
       }
     });
 
     map.addLayer({
-      id: TIMEZONE_BANDS_LINE_CASING_LAYER_ID,
+      id: TIMEZONE_LINES_LAYER_ID,
       type: "line",
-      source: TIMEZONE_BANDS_SOURCE_ID,
-      layout: {
-        visibility: "none",
-        "line-cap": "butt",
-        "line-join": "miter"
-      },
+      source: TIMEZONE_BOUNDARIES_SOURCE_ID,
       paint: {
-        "line-color": "#0b1020",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          1, 1.4,
-          3, 1.8,
-          6, 2.4
-        ],
-        "line-opacity": 0.95
+        "line-color": "#ffffff",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 0, 0.4, 3, 0.8, 5, 1.2],
+        "line-opacity": 0.75
       }
     });
 
     map.addLayer({
-      id: TIMEZONE_BANDS_LINE_LAYER_ID,
-      type: "line",
-      source: TIMEZONE_BANDS_SOURCE_ID,
-      layout: {
-        visibility: "none",
-        "line-cap": "butt",
-        "line-join": "miter"
-      },
+      id: TIMEZONE_HIGHLIGHT_LAYER_ID,
+      type: "fill",
+      source: TIMEZONE_BOUNDARIES_SOURCE_ID,
+      filter: ["==", ["get", "tzid"], ""],
       paint: {
-        "line-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          1, 0.8,
-          3, 1.1,
-          6, 1.6
-        ],
-        "line-opacity": 1
+        "fill-color": "#ffd966",
+        "fill-opacity": 0.45
       }
     });
 
-    map.addLayer({
-      id: TIMEZONE_BANDS_GRID_LAYER_ID,
-      type: "line",
-      source: TIMEZONE_BANDS_SOURCE_ID,
-      layout: {
-        visibility: "none"
-      },
-      paint: {
-        "line-color": "#f8fafc",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          1, 0.75,
-          3, 0.95,
-          6, 1.2
-        ],
-        "line-dasharray": [1, 0],
-        "line-opacity": 0.9
-      }
+    map.on("click", TIMEZONE_FILLS_LAYER_ID, (e) => {
+      const feature = e.features && e.features[0];
+      if (!feature) return;
+      const tzid = feature.properties?.tzid;
+      if (!tzid) return;
+      highlightTimezone(tzid);
+      activateTimezoneCardByTzid(tzid);
+      new maptilersdk.Popup().setLngLat(e.lngLat).setHTML(`<strong>${tzid}</strong>`).addTo(map);
     });
 
-    if (selectedTimeZoneId) {
-      highlightTimeZoneBand(selectedTimeZoneId);
-    }
+    map.on("mouseenter", TIMEZONE_FILLS_LAYER_ID, () => { map.getCanvas().style.cursor = "pointer"; });
+    map.on("mouseleave", TIMEZONE_FILLS_LAYER_ID, () => { map.getCanvas().style.cursor = ""; });
   }
 
-  function highlightTimeZoneBand(zoneId) {
-    if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
-
-    showTimeZoneLines();
-
-    const filter = ["==", ["get", "zoneId"], zoneId];
-    map.setFilter(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, filter);
-    map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
-    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
-    map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "visible");
-    map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
+  function highlightTimezone(tzid) {
+    if (!map || !map.getLayer(TIMEZONE_HIGHLIGHT_LAYER_ID)) return;
+    map.setFilter(TIMEZONE_HIGHLIGHT_LAYER_ID, ["==", ["get", "tzid"], tzid || ""]);
   }
 
-  function showTimeZoneLines() {
-    if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
-    map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "visible");
+  function clearTimezoneHighlight() {
+    highlightTimezone("");
   }
 
-  function hideTimeZoneBand() {
-    if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
-    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
-    map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "none");
-    map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "none");
-    map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "none");
-  }
-
-  function buildTimeZoneBandGeoJson() {
-    const features = timeZones.flatMap((zone, index) => {
-      const zoneId = `tz-zone-${index}`;
-      const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
-      const geometries = buildZoneBandGeometries(zone);
-
-      return geometries.map((geometry) => ({
-        type: "Feature",
-        properties: {
-          zoneId,
-          fillColor
-        },
-        geometry
-      }));
-    });
-
-    return {
-      type: "FeatureCollection",
-      features
-    };
+  function activateTimezoneCardByTzid(tzid) {
+    const index = timeZones.findIndex((zone) => zone.timeZone === tzid);
+    if (index < 0) return;
+    const zoneId = `tz-zone-${index}`;
+    selectedTimeZoneId = zoneId;
+    setActiveTimeZoneCard(zoneId);
+    focusTimeZoneBandOnGlobe(timeZones[index]);
   }
 
   function buildZoneBandGeometries(zone) {
@@ -1509,7 +1392,7 @@
         clearInfoPanel();
         setStatus("");
         clearActiveTimeZoneCard();
-        hideTimeZoneBand();
+        clearTimezoneHighlight();
         return;
       }
 
@@ -1558,7 +1441,7 @@
 
     clearInfoPanel();
     clearActiveTimeZoneCard();
-    hideTimeZoneBand();
+    clearTimezoneHighlight();
     setStatus(`No match found for ${rawValue}.`);
   }
 
