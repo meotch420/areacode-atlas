@@ -19,10 +19,10 @@
     "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
   ];
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
-  const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
-  const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-bands-line-casing";
-  const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
-  const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-bands-grid";
+  const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-land-fill";
+  const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-land-highlight-casing";
+  const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-land-highlight-line";
+  const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-land-lines";
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
@@ -205,46 +205,46 @@
      TIME ZONE CARDS
   ===================================================== */
 
-  const TIMEZONE_COLORS = [
-    "#cbd5e1",
-    "#d946ef",
-    "#7c3aed",
-    "#ef4444",
-    "#f59e0b",
-    "#22c55e",
-    "#3b82f6",
-    "#f97316",
-    "#ea580c",
-    "#d97706",
-    "#ca8a04",
-    "#65a30d",
-    "#16a34a",
-    "#2563eb",
-    "#0d9488",
-    "#0ea5a4",
-    "#0284c7",
-    "#1d4ed8",
-    "#4338ca",
-    "#6d28d9",
-    "#be185d",
-    "#dc2626",
-    "#b45309",
-    "#4d7c0f",
-    "#047857",
-    "#0369a1",
-    "#334155",
-    "#64748b",
-    "#0f766e",
-    "#22c55e",
-    "#a3e635",
-    "#facc15",
-    "#fb7185",
-    "#f472b6",
-    "#a78bfa",
-    "#818cf8",
-    "#38bdf8",
-    "#2dd4bf"
-  ];
+  const TIMEZONE_COLORS = {
+    "UTC-12": "#7B2CBF",
+    "UTC-11": "#9D4EDD",
+    "UTC-10": "#3A86FF",
+    "UTC-09:30": "#00B4D8",
+    "UTC-09": "#0077B6",
+    "UTC-08": "#06D6A0",
+    "UTC-07": "#70E000",
+    "UTC-06": "#FFD166",
+    "UTC-05": "#F77F00",
+    "UTC-04": "#EF476F",
+    "UTC-03:30": "#D62828",
+    "UTC-03": "#A4133C",
+    "UTC-02": "#7209B7",
+    "UTC-01": "#4361EE",
+    "UTC+00": "#4CC9F0",
+    "UTC+01": "#2A9D8F",
+    "UTC+02": "#90BE6D",
+    "UTC+03": "#F9C74F",
+    "UTC+03:30": "#F8961E",
+    "UTC+04": "#F3722C",
+    "UTC+04:30": "#E76F51",
+    "UTC+05": "#D00000",
+    "UTC+05:30": "#B5179E",
+    "UTC+05:45": "#7209B7",
+    "UTC+06": "#560BAD",
+    "UTC+06:30": "#480CA8",
+    "UTC+07": "#3F37C9",
+    "UTC+08": "#4895EF",
+    "UTC+08:45": "#4CC9F0",
+    "UTC+09": "#00B4D8",
+    "UTC+09:30": "#06D6A0",
+    "UTC+10": "#52B788",
+    "UTC+10:30": "#95D5B2",
+    "UTC+11": "#B7E4C7",
+    "UTC+12": "#FFE066",
+    "UTC+12:45": "#FAA307",
+    "UTC+13": "#F48C06",
+    "UTC+14": "#DC2F02"
+  };
 
   const timeZones = [
     {
@@ -668,6 +668,25 @@
     return `UTC${sign}${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
   }
 
+  function getTimezoneUtcLabel(zone) {
+    return formatUtcOffset(getZoneUtcOffset(zone));
+  }
+
+  function getTimezoneColor(zone) {
+    return TIMEZONE_COLORS[getTimezoneUtcLabel(zone)] || "#cccccc";
+  }
+
+  function getTimezoneColorMatchExpression() {
+    const expression = ["match", ["coalesce", ["get", "utc"], ["get", "offset"], ""]];
+
+    Object.entries(TIMEZONE_COLORS).forEach(([utc, color]) => {
+      expression.push(utc, color);
+    });
+
+    expression.push("#cccccc");
+    return expression;
+  }
+
   function buildTimeZoneCards() {
     const timezoneGrid = document.getElementById("timezoneGrid");
 
@@ -677,7 +696,7 @@
 
     timeZones.forEach((zone, index) => {
       const zoneId = `tz-zone-${index}`;
-      const zoneColor = TIMEZONE_COLORS[index] || "#0ea5e9";
+      const zoneColor = getTimezoneColor(zone);
       const card = document.createElement("button");
 
       card.type = "button";
@@ -694,7 +713,7 @@
         <div class="tz-time timezone-card-time" data-timezone="${zone.timeZone}">
           ${formatTime(zone.timeZone)}
         </div>
-        <div class="tz-utc">${formatUtcOffset(getZoneUtcOffset(zone))}</div>
+        <div class="tz-utc">${getTimezoneUtcLabel(zone)}</div>
       `;
 
       card.addEventListener("click", () => {
@@ -884,7 +903,7 @@
       }
     }
 
-    console.warn("No timezone layout source loaded; using generated straight bands.");
+    console.warn("No timezone layout source loaded; timezone land fill disabled.");
     timeZoneLayoutByTz = new Map();
   }
 
@@ -902,11 +921,11 @@
       type: "fill",
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
-        visibility: "none"
+        visibility: "visible"
       },
       paint: {
-        "fill-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
-        "fill-opacity": 0.28
+        "fill-color": getTimezoneColorMatchExpression(),
+        "fill-opacity": 0.65
       }
     });
 
@@ -961,20 +980,12 @@
       type: "line",
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
-        visibility: "none"
+        visibility: "visible"
       },
       paint: {
-        "line-color": "#f8fafc",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          1, 0.75,
-          3, 0.95,
-          6, 1.2
-        ],
-        "line-dasharray": [1, 0],
-        "line-opacity": 0.9
+        "line-color": "#ffffff",
+        "line-width": 0.8,
+        "line-opacity": 0.75
       }
     });
 
@@ -991,34 +1002,35 @@
     const filter = ["==", ["get", "zoneId"], zoneId];
     map.setFilter(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, filter);
     map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
-    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
+    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
   }
 
   function showTimeZoneLines() {
     if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
-    map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "visible");
   }
 
   function hideTimeZoneBand() {
     if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
-    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
+    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "none");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "none");
-    map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "none");
+    map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "visible");
   }
 
   function buildTimeZoneBandGeoJson() {
     const features = timeZones.flatMap((zone, index) => {
       const zoneId = `tz-zone-${index}`;
-      const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
-      const geometries = buildZoneBandGeometries(zone);
+      const fillColor = getTimezoneColor(zone);
+      const geometries = getTimeZoneLayoutGeometries(zone);
 
       return geometries.map((geometry) => ({
         type: "Feature",
         properties: {
           zoneId,
+          utc: getTimezoneUtcLabel(zone),
+          offset: getTimezoneUtcLabel(zone),
           fillColor
         },
         geometry
