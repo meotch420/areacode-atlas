@@ -883,7 +883,7 @@
       type: "fill",
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
-        visibility: "none"
+        visibility: "visible"
       },
       paint: {
         "fill-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
@@ -910,7 +910,7 @@
           3, 1.8,
           6, 2.4
         ],
-        "line-opacity": 0.95
+        "line-opacity": 0.855
       }
     });
 
@@ -942,10 +942,10 @@
       type: "line",
       source: TIMEZONE_BANDS_SOURCE_ID,
       layout: {
-        visibility: "none"
+        visibility: "visible"
       },
       paint: {
-        "line-color": "#f8fafc",
+        "line-color": "#ef4444",
         "line-width": [
           "interpolate",
           ["linear"],
@@ -955,7 +955,7 @@
           6, 1.2
         ],
         "line-dasharray": [1, 0],
-        "line-opacity": 0.9
+        "line-opacity": 0.85
       }
     });
 
@@ -1758,7 +1758,7 @@
         paint: {
           "line-color": "#22d3ee",
           "line-width": 2.5,
-          "line-opacity": 0.95
+          "line-opacity": 0.855
         }
       });
       return;
