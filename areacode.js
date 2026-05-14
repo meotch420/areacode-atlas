@@ -27,13 +27,9 @@
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
   const TIMEZONE_CARD_MAX_ZOOM = 3.2;
-  const TIMEZONE_GLOBE_FOCUS_ZOOM = 1.7;
-  const TIMEZONE_GLOBE_FOCUS_LAT = -10;
-  const DEFAULT_COUNTRY_VIEW = {
-    name: "United States",
-    countryCode: "+1",
-    center: [-98.5795, 39.8283],
-    zoom: 2.2
+  const DEFAULT_MAP_VIEW = {
+    center: [0, 20],
+    zoom: 1.35
   };
   const AREA_CODE_SEARCH_ZOOM = 4.2;
 
@@ -88,29 +84,33 @@
   ===================================================== */
 
   function createMap() {
+    console.log("Initializing AreaCode Atlas map...");
     maptilersdk.config.apiKey = MAPTILER_KEY;
 
     map = new maptilersdk.Map({
       container: "map",
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
-      center: DEFAULT_COUNTRY_VIEW.center,
-      zoom: DEFAULT_COUNTRY_VIEW.zoom,
+      style: maptilersdk.MapStyle.STREETS,
+      center: DEFAULT_MAP_VIEW.center,
+      zoom: DEFAULT_MAP_VIEW.zoom,
       minZoom: 1,
-      maxZoom: 18,
-      projection: "globe",
-      navigationControl: false,
-      geolocateControl: false,
-      terrainControl: false,
+      maxZoom: 8,
+      renderWorldCopies: false,
+      maxBounds: [[-180, -85], [180, 85]],
       attributionControl: true
     });
 
+    window.areaCodeAtlasMap = map;
     map.addControl(new maptilersdk.NavigationControl(), "top-right");
-    setupGlobeOnlyWheelZoom();
 
     map.on("load", async () => {
+      console.log("Map loaded successfully.");
       ensureTimeZoneBandLayer();
       removeExtraZoomControls();
       await focusDefaultCountryOnLoad();
+    });
+
+    map.on("error", (event) => {
+      console.error("MapTiler map error:", event?.error || event);
     });
 
     setTimeout(removeExtraZoomControls, 500);
@@ -137,59 +137,11 @@
   }
 
 
-  function setupGlobeOnlyWheelZoom() {
-    if (!map) return;
-
-    const mapEl = document.getElementById("map");
-
-    if (!mapEl) return;
-
-    map.scrollZoom.disable();
-
-    mapEl.addEventListener(
-      "wheel",
-      (event) => {
-        if (!isPointerOverGlobe(event.clientX, event.clientY)) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const currentZoom = map.getZoom();
-        const zoomDirection = event.deltaY < 0 ? 1 : -1;
-        const nextZoom = Math.min(18, Math.max(1, currentZoom + zoomDirection * 0.25));
-
-        map.easeTo({
-          zoom: nextZoom,
-          duration: 150,
-          essential: true
-        });
-      },
-      { passive: false }
-    );
-  }
-
-  function isPointerOverGlobe(clientX, clientY) {
-    const mapEl = document.getElementById("map");
-
-    if (!mapEl) return false;
-
-    const rect = mapEl.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const radius = Math.min(rect.width, rect.height) / 2;
-    const distance = Math.hypot(x - centerX, y - centerY);
-
-    return distance <= radius;
-  }
-
   async function focusDefaultCountryOnLoad() {
     flyToLocation(
-      DEFAULT_COUNTRY_VIEW.center[0],
-      DEFAULT_COUNTRY_VIEW.center[1],
-      DEFAULT_COUNTRY_VIEW.zoom
+      DEFAULT_MAP_VIEW.center[0],
+      DEFAULT_MAP_VIEW.center[1],
+      DEFAULT_MAP_VIEW.zoom
     );
 
     clearInfoPanel();
@@ -729,12 +681,11 @@
   function focusTimeZoneBandOnGlobe(zone) {
     if (!zone) return;
 
-    const initialGlobeZoom = DEFAULT_COUNTRY_VIEW.zoom;
     const fallbackLongitude = Number(getZoneUtcOffset(zone)) * 15;
     const centerLongitude = Number(zone?.center?.[0] ?? fallbackLongitude);
-    const centerLatitude = Number(zone?.center?.[1] ?? TIMEZONE_GLOBE_FOCUS_LAT);
+    const centerLatitude = Number(zone?.center?.[1] ?? DEFAULT_MAP_VIEW.center[1]);
 
-    flyToLocation(centerLongitude, centerLatitude, initialGlobeZoom);
+    flyToLocation(centerLongitude, centerLatitude, DEFAULT_MAP_VIEW.zoom);
   }
 
   function startTimezoneClocks() {
