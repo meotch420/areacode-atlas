@@ -65,11 +65,11 @@
     }
 
     setStatus("");
-    createMap();
     buildTimeZoneCards();
     startTimezoneClocks();
     setupSearch();
     loadAreaCodeData();
+    createMap();
 
     loadTimeZoneLayoutGeoJson().then(() => {
       if (!map) return;
@@ -94,19 +94,24 @@
     console.log("Initializing AreaCode Atlas map...");
     maptilersdk.config.apiKey = MAPTILER_KEY;
 
-    const preferredStyle = `https://api.maptiler.com/maps/streets/style.json?key=${MAPTILER_KEY}`;
+    const preferredStyle = `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`;
 
-    map = new maptilersdk.Map({
-      container: "map",
-      style: preferredStyle,
-      center: DEFAULT_MAP_VIEW.center,
-      zoom: DEFAULT_MAP_VIEW.zoom,
-      minZoom: 1,
-      maxZoom: 8,
-      renderWorldCopies: false,
-      maxBounds: [[-180, -85], [180, 85]],
-      attributionControl: true
-    });
+    try {
+      map = new maptilersdk.Map({
+        container: "map",
+        style: preferredStyle,
+        center: DEFAULT_MAP_VIEW.center,
+        zoom: DEFAULT_MAP_VIEW.zoom,
+        minZoom: 1,
+        maxZoom: 8,
+        renderWorldCopies: false,
+        maxBounds: [[-180, -85], [180, 85]],
+        attributionControl: true
+      });
+    } catch (error) {
+      console.error("Map initialization failed:", error);
+      return;
+    }
 
     window.areaCodeAtlasMap = map;
     map.addControl(new maptilersdk.NavigationControl(), "top-right");
