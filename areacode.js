@@ -15,8 +15,9 @@
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
   const TIMEZONE_LAYOUT_GEOJSON_URLS = [
-    "geo.json",
-    "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
+    "timezones-with-oceans-now.geojson",
+    "timezones.geojson",
+    "geo.json"
   ];
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
   const TIMEZONE_BANDS_FILL_LAYER_ID = "timezone-bands-fill";
@@ -1032,9 +1033,14 @@
   }
 
   function buildZoneBandGeometries(zone) {
-    // Use deterministic meridian-aligned bands for every timezone card.
-    // Raw IANA polygon boundaries can wrap around the globe and create
-    // distorted boxes/lines in globe projection for broad zones.
+    const layoutGeometries = getTimeZoneLayoutGeometries(zone);
+
+    if (layoutGeometries.length) {
+      return layoutGeometries;
+    }
+
+    // Fallback to deterministic meridian-aligned bands only when
+    // timezone boundary polygons are unavailable.
     const bounds = getTimeZoneBandBounds(zone);
 
     if (!bounds) return [];
