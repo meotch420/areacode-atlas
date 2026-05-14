@@ -29,6 +29,14 @@
   const TIMEZONE_CARD_MAX_ZOOM = 3.2;
   const TIMEZONE_GLOBE_FOCUS_ZOOM = 1.7;
   const TIMEZONE_GLOBE_FOCUS_LAT = -10;
+  const WORLD_MAX_BOUNDS = [
+    [-180, -85],
+    [180, 85]
+  ];
+  const WORLD_FIT_BOUNDS = [
+    [-180, -60],
+    [180, 80]
+  ];
   const DEFAULT_COUNTRY_VIEW = {
     name: "United States",
     countryCode: "+1",
@@ -93,11 +101,13 @@
     map = new maptilersdk.Map({
       container: "map",
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
-      center: DEFAULT_COUNTRY_VIEW.center,
-      zoom: DEFAULT_COUNTRY_VIEW.zoom,
+      center: [0, 20],
+      zoom: 1.4,
       minZoom: 1,
       maxZoom: 18,
-      projection: "globe",
+      projection: "mercator",
+      renderWorldCopies: false,
+      maxBounds: WORLD_MAX_BOUNDS,
       navigationControl: false,
       geolocateControl: false,
       terrainControl: false,
@@ -105,7 +115,7 @@
     });
 
     map.addControl(new maptilersdk.NavigationControl(), "top-right");
-    setupGlobeOnlyWheelZoom();
+    setupMapWheelZoom();
 
     map.on("load", async () => {
       ensureTimeZoneBandLayer();
@@ -137,60 +147,16 @@
   }
 
 
-  function setupGlobeOnlyWheelZoom() {
+  function setupMapWheelZoom() {
     if (!map) return;
-
-    const mapEl = document.getElementById("map");
-
-    if (!mapEl) return;
-
-    map.scrollZoom.disable();
-
-    mapEl.addEventListener(
-      "wheel",
-      (event) => {
-        if (!isPointerOverGlobe(event.clientX, event.clientY)) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const currentZoom = map.getZoom();
-        const zoomDirection = event.deltaY < 0 ? 1 : -1;
-        const nextZoom = Math.min(18, Math.max(1, currentZoom + zoomDirection * 0.25));
-
-        map.easeTo({
-          zoom: nextZoom,
-          duration: 150,
-          essential: true
-        });
-      },
-      { passive: false }
-    );
-  }
-
-  function isPointerOverGlobe(clientX, clientY) {
-    const mapEl = document.getElementById("map");
-
-    if (!mapEl) return false;
-
-    const rect = mapEl.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const radius = Math.min(rect.width, rect.height) / 2;
-    const distance = Math.hypot(x - centerX, y - centerY);
-
-    return distance <= radius;
+    map.scrollZoom.enable();
   }
 
   async function focusDefaultCountryOnLoad() {
-    flyToLocation(
-      DEFAULT_COUNTRY_VIEW.center[0],
-      DEFAULT_COUNTRY_VIEW.center[1],
-      DEFAULT_COUNTRY_VIEW.zoom
-    );
+    map.fitBounds(WORLD_FIT_BOUNDS, {
+      padding: 20,
+      duration: 0
+    });
 
     clearInfoPanel();
 
