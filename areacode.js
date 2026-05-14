@@ -65,12 +65,19 @@
     }
 
     setStatus("");
-    await loadTimeZoneLayoutGeoJson();
     createMap();
     buildTimeZoneCards();
     startTimezoneClocks();
     setupSearch();
     loadAreaCodeData();
+
+    loadTimeZoneLayoutGeoJson().then(() => {
+      if (!map) return;
+      const source = map.getSource(TIMEZONE_BANDS_SOURCE_ID);
+      if (source) {
+        source.setData(buildTimeZoneBandGeoJson());
+      }
+    });
   }
 
   if (document.readyState === "loading") {
@@ -795,6 +802,18 @@
   }
 
 
+  async function fetchWithTimeout(url, timeoutMs = 3500) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      return await fetch(url, { cache: "no-store", signal: controller.signal });
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+
   async function loadTimeZoneLayoutGeoJson() {
     const urls = Array.isArray(TIMEZONE_LAYOUT_GEOJSON_URLS)
       ? TIMEZONE_LAYOUT_GEOJSON_URLS
@@ -802,7 +821,7 @@
 
     for (const url of urls) {
       try {
-        const response = await fetch(url, { cache: "no-store" });
+        const response = await fetchWithTimeout(url);
 
         if (!response.ok) {
           throw new Error(`Failed loading ${url}: ${response.status}`);
