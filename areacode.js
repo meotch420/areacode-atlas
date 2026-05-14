@@ -87,9 +87,11 @@
     console.log("Initializing AreaCode Atlas map...");
     maptilersdk.config.apiKey = MAPTILER_KEY;
 
+    const preferredStyle = `https://api.maptiler.com/maps/streets/style.json?key=${MAPTILER_KEY}`;
+
     map = new maptilersdk.Map({
       container: "map",
-      style: maptilersdk.MapStyle.STREETS,
+      style: preferredStyle,
       center: DEFAULT_MAP_VIEW.center,
       zoom: DEFAULT_MAP_VIEW.zoom,
       minZoom: 1,
