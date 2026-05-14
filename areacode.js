@@ -102,10 +102,6 @@
         style: preferredStyle,
         center: DEFAULT_MAP_VIEW.center,
         zoom: DEFAULT_MAP_VIEW.zoom,
-        minZoom: 1,
-        maxZoom: 8,
-        renderWorldCopies: false,
-        maxBounds: [[-180, -85], [180, 85]],
         attributionControl: true
       });
     } catch (error) {
@@ -118,6 +114,14 @@
 
     map.on("load", async () => {
       console.log("Map loaded successfully.");
+
+      if (typeof map.setMinZoom === "function") map.setMinZoom(1);
+      if (typeof map.setMaxZoom === "function") map.setMaxZoom(8);
+      if (typeof map.setRenderWorldCopies === "function") map.setRenderWorldCopies(false);
+      if (typeof map.setMaxBounds === "function") {
+        map.setMaxBounds([[-180, -85], [180, 85]]);
+      }
+
       ensureTimeZoneBandLayer();
       removeExtraZoomControls();
       await focusDefaultCountryOnLoad();
