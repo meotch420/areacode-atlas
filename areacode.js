@@ -102,11 +102,26 @@
         style: preferredStyle,
         center: DEFAULT_MAP_VIEW.center,
         zoom: DEFAULT_MAP_VIEW.zoom,
+        minZoom: 1,
+        maxZoom: 8,
+        renderWorldCopies: false,
+        maxBounds: [[-180, -85], [180, 85]],
         attributionControl: true
       });
     } catch (error) {
-      console.error("Map initialization failed:", error);
-      return;
+      console.error("Map initialization with one-world options failed, retrying basic setup:", error);
+      try {
+        map = new maptilersdk.Map({
+          container: "map",
+          style: preferredStyle,
+          center: DEFAULT_MAP_VIEW.center,
+          zoom: DEFAULT_MAP_VIEW.zoom,
+          attributionControl: true
+        });
+      } catch (fallbackError) {
+        console.error("Map initialization failed:", fallbackError);
+        return;
+      }
     }
 
     window.areaCodeAtlasMap = map;
@@ -118,8 +133,9 @@
       if (typeof map.setMinZoom === "function") map.setMinZoom(1);
       if (typeof map.setMaxZoom === "function") map.setMaxZoom(8);
       if (typeof map.setRenderWorldCopies === "function") map.setRenderWorldCopies(false);
-      if (typeof map.setMaxBounds === "function") {
-        map.setMaxBounds([[-180, -85], [180, 85]]);
+      if (typeof map.setMaxBounds === "function") map.setMaxBounds([[-180, -85], [180, 85]]);
+      if (typeof map.fitBounds === "function") {
+        map.fitBounds([[-179.9, -58], [179.9, 78]], { padding: 20, duration: 0 });
       }
 
       ensureTimeZoneBandLayer();
