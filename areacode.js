@@ -33,7 +33,7 @@
     name: "United States",
     countryCode: "+1",
     center: [0, 15],
-    zoom: 0.75
+    zoom: 0.25
   };
   const AREA_CODE_SEARCH_ZOOM = 4.2;
 
