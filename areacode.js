@@ -32,8 +32,8 @@
   const DEFAULT_COUNTRY_VIEW = {
     name: "United States",
     countryCode: "+1",
-    center: [0, 15],
-    zoom: -0.5
+    center: [0, 20],
+    zoom: 1
   };
   const AREA_CODE_SEARCH_ZOOM = 4.2;
 
@@ -95,7 +95,7 @@
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
       center: DEFAULT_COUNTRY_VIEW.center,
       zoom: DEFAULT_COUNTRY_VIEW.zoom,
-      minZoom: -0.5,
+      minZoom: 0,
       maxZoom: 18,
       projection: "mercator",
       renderWorldCopies: false,
@@ -164,13 +164,10 @@
 
 
   async function focusDefaultCountryOnLoad() {
-    map.fitBounds(
-      [[-180, -85], [180, 85]],
-      {
-        padding: 0,
-        duration: 0
-      }
-    );
+    map.jumpTo({
+      center: DEFAULT_COUNTRY_VIEW.center,
+      zoom: DEFAULT_COUNTRY_VIEW.zoom
+    });
 
     clearInfoPanel();
 
