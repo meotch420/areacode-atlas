@@ -33,7 +33,7 @@
     name: "United States",
     countryCode: "+1",
     center: [0, 15],
-    zoom: 0.25
+    zoom: -0.5
   };
   const AREA_CODE_SEARCH_ZOOM = 4.2;
 
@@ -95,7 +95,7 @@
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
       center: DEFAULT_COUNTRY_VIEW.center,
       zoom: DEFAULT_COUNTRY_VIEW.zoom,
-      minZoom: 0,
+      minZoom: -0.5,
       maxZoom: 18,
       projection: "mercator",
       renderWorldCopies: false,
