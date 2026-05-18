@@ -27,13 +27,12 @@
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
   const TIMEZONE_CARD_MAX_ZOOM = 3.2;
-  const TIMEZONE_GLOBE_FOCUS_ZOOM = 1.7;
-  const TIMEZONE_GLOBE_FOCUS_LAT = -10;
+  const TIMEZONE_MAP_FOCUS_LAT = -10;
   const DEFAULT_COUNTRY_VIEW = {
     name: "United States",
     countryCode: "+1",
-    center: [-98.5795, 39.8283],
-    zoom: 2.2
+    center: [0, 15],
+    zoom: 1.3
   };
   const AREA_CODE_SEARCH_ZOOM = 4.2;
 
@@ -97,7 +96,8 @@
       zoom: DEFAULT_COUNTRY_VIEW.zoom,
       minZoom: 1,
       maxZoom: 18,
-      projection: "globe",
+      projection: "mercator",
+      renderWorldCopies: false,
       navigationControl: false,
       geolocateControl: false,
       terrainControl: false,
@@ -105,7 +105,6 @@
     });
 
     map.addControl(new maptilersdk.NavigationControl(), "top-right");
-    setupGlobeOnlyWheelZoom();
 
     map.on("load", async () => {
       ensureTimeZoneBandLayer();
@@ -137,59 +136,13 @@
   }
 
 
-  function setupGlobeOnlyWheelZoom() {
-    if (!map) return;
-
-    const mapEl = document.getElementById("map");
-
-    if (!mapEl) return;
-
-    map.scrollZoom.disable();
-
-    mapEl.addEventListener(
-      "wheel",
-      (event) => {
-        if (!isPointerOverGlobe(event.clientX, event.clientY)) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const currentZoom = map.getZoom();
-        const zoomDirection = event.deltaY < 0 ? 1 : -1;
-        const nextZoom = Math.min(18, Math.max(1, currentZoom + zoomDirection * 0.25));
-
-        map.easeTo({
-          zoom: nextZoom,
-          duration: 150,
-          essential: true
-        });
-      },
-      { passive: false }
-    );
-  }
-
-  function isPointerOverGlobe(clientX, clientY) {
-    const mapEl = document.getElementById("map");
-
-    if (!mapEl) return false;
-
-    const rect = mapEl.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const radius = Math.min(rect.width, rect.height) / 2;
-    const distance = Math.hypot(x - centerX, y - centerY);
-
-    return distance <= radius;
-  }
-
   async function focusDefaultCountryOnLoad() {
-    flyToLocation(
-      DEFAULT_COUNTRY_VIEW.center[0],
-      DEFAULT_COUNTRY_VIEW.center[1],
-      DEFAULT_COUNTRY_VIEW.zoom
+    map.fitBounds(
+      [[-170, -55], [170, 78]],
+      {
+        padding: 24,
+        duration: 0
+      }
     );
 
     clearInfoPanel();
@@ -704,7 +657,7 @@
         showTimeZoneLines();
         highlightTimeZoneBand(zoneId);
 
-        focusTimeZoneBandOnGlobe(zone);
+        focusTimeZoneBandOnMap(zone);
         clearMarker();
         clearCountryOutline();
 
@@ -726,15 +679,15 @@
     });
   }
 
-  function focusTimeZoneBandOnGlobe(zone) {
+  function focusTimeZoneBandOnMap(zone) {
     if (!zone) return;
 
-    const initialGlobeZoom = DEFAULT_COUNTRY_VIEW.zoom;
+    const initialMapZoom = DEFAULT_COUNTRY_VIEW.zoom;
     const fallbackLongitude = Number(getZoneUtcOffset(zone)) * 15;
     const centerLongitude = Number(zone?.center?.[0] ?? fallbackLongitude);
-    const centerLatitude = Number(zone?.center?.[1] ?? TIMEZONE_GLOBE_FOCUS_LAT);
+    const centerLatitude = Number(zone?.center?.[1] ?? TIMEZONE_MAP_FOCUS_LAT);
 
-    flyToLocation(centerLongitude, centerLatitude, initialGlobeZoom);
+    flyToLocation(centerLongitude, centerLatitude, initialMapZoom);
   }
 
   function startTimezoneClocks() {
@@ -1033,8 +986,8 @@
 
   function buildZoneBandGeometries(zone) {
     // Use deterministic meridian-aligned bands for every timezone card.
-    // Raw IANA polygon boundaries can wrap around the globe and create
-    // distorted boxes/lines in globe projection for broad zones.
+    // Raw IANA polygon boundaries can wrap around the map edges and create
+    // distorted boxes/lines for broad zones.
     const bounds = getTimeZoneBandBounds(zone);
 
     if (!bounds) return [];
@@ -1093,7 +1046,7 @@
     }
 
     // Anchor each band to the configured timezone focus longitude so
-    // card selection and globe highlight line up visually.
+    // card selection and map highlight line up visually.
     // Fall back to canonical UTC meridians when a center is unavailable.
     const configuredLongitude = Array.isArray(zone.center) ? Number(zone.center[0]) : NaN;
     const centerMeridian = Number.isFinite(configuredLongitude)
