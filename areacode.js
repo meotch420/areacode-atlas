@@ -95,7 +95,7 @@
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
       center: DEFAULT_COUNTRY_VIEW.center,
       zoom: DEFAULT_COUNTRY_VIEW.zoom,
-      minZoom: 1,
+      minZoom: 0.5,
       maxZoom: 18,
       projection: "mercator",
       renderWorldCopies: false,
@@ -165,9 +165,9 @@
 
   async function focusDefaultCountryOnLoad() {
     map.fitBounds(
-      [[-170, -55], [170, 78]],
+      [[-180, -85], [180, 85]],
       {
-        padding: 24,
+        padding: 8,
         duration: 0
       }
     );
