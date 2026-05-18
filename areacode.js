@@ -14,6 +14,7 @@
 
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
+  const TIMEZONE_REFERENCE_MAP_URL = "https://upload.wikimedia.org/wikipedia/commons/8/88/World_Time_Zones_Map.png";
   const TIMEZONE_LAYOUT_GEOJSON_URLS = [
     "geo.json",
     "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
@@ -107,6 +108,7 @@
     map.addControl(new maptilersdk.NavigationControl(), "top-right");
 
     map.on("load", async () => {
+      addReferenceWorldMapLayer();
       ensureTimeZoneBandLayer();
       removeExtraZoomControls();
       await focusDefaultCountryOnLoad();
@@ -115,6 +117,31 @@
     setTimeout(removeExtraZoomControls, 500);
     setTimeout(removeExtraZoomControls, 1500);
     setTimeout(removeExtraZoomControls, 3000);
+  }
+
+  function addReferenceWorldMapLayer() {
+    if (!map || !map.isStyleLoaded()) return;
+    if (map.getSource("timezone-reference-map")) return;
+
+    map.addSource("timezone-reference-map", {
+      type: "image",
+      url: TIMEZONE_REFERENCE_MAP_URL,
+      coordinates: [
+        [-180, 85],
+        [180, 85],
+        [180, -85],
+        [-180, -85]
+      ]
+    });
+
+    map.addLayer({
+      id: "timezone-reference-map-layer",
+      type: "raster",
+      source: "timezone-reference-map",
+      paint: {
+        "raster-opacity": 1
+      }
+    });
   }
 
   function removeExtraZoomControls() {
