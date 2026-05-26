@@ -557,13 +557,28 @@ header p {
 .faq-area {
   display: flex;
   align-items: flex-start;
-  gap: 24px;
+  gap: 28px;
+}
+
+.faq-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
 }
 
 .faq-logo {
-  width: 120px;
+  width: 180px;
   height: auto;
-  flex: 0 0 auto;
+  display: block;
+}
+
+.faq-brand-text {
+  font-size: 3.2rem;
+  line-height: 1;
+  font-weight: 700;
+  color: #4b5563;
+  text-transform: lowercase;
 }
 
 .faq-content {
@@ -636,6 +651,10 @@ header p {
   .faq-area {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .faq-brand-text {
+    font-size: 2.4rem;
   }
 
   .top-section {
