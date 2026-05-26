@@ -23,6 +23,10 @@
   const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-bands-line-casing";
   const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
   const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-bands-grid";
+  const FLAT_TIMEZONE_SOURCE_ID = "flat-timezone-source";
+  const FLAT_TIMEZONE_FILL_LAYER_ID = "flat-timezone-fill";
+  const FLAT_TIMEZONE_LINE_LAYER_ID = "flat-timezone-line";
+  const FLAT_TIMEZONE_HIGHLIGHT_LAYER_ID = "flat-timezone-highlight";
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
@@ -38,6 +42,7 @@
   const AREA_CODE_SEARCH_ZOOM = 4.2;
 
   let map;
+  let flatMap;
   let activeMarker = null;
   let areaCodeIndex = new Map();
   let selectedTimeZoneId = null;
@@ -57,9 +62,10 @@
 
   async function startApp() {
     const mapContainer = document.getElementById("map");
+    const flatMapContainer = document.getElementById("flatMap");
 
-    if (!mapContainer) {
-      console.error("Map container #map not found.");
+    if (!mapContainer || !flatMapContainer) {
+      console.error("Map container #map or #flatMap not found.");
       return;
     }
 
@@ -70,6 +76,7 @@
 
     setStatus("");
     await loadTimeZoneLayoutGeoJson();
+    createFlatMap();
     createMap();
     buildTimeZoneCards();
     startTimezoneClocks();
@@ -116,6 +123,25 @@
     setTimeout(removeExtraZoomControls, 500);
     setTimeout(removeExtraZoomControls, 1500);
     setTimeout(removeExtraZoomControls, 3000);
+  }
+
+  function createFlatMap() {
+    maptilersdk.config.apiKey = MAPTILER_KEY;
+    flatMap = new maptilersdk.Map({
+      container: "flatMap",
+      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
+      center: [0, 15],
+      zoom: 0.8,
+      minZoom: 0.8,
+      maxZoom: 5,
+      projection: "mercator",
+      navigationControl: false
+    });
+
+    flatMap.addControl(new maptilersdk.NavigationControl(), "top-right");
+    flatMap.on("load", () => {
+      ensureFlatTimeZoneLayer();
+    });
   }
 
   function removeExtraZoomControls() {
@@ -199,6 +225,7 @@
     clearCountryOutline();
     clearActiveTimeZoneCard();
     hideTimeZoneBand();
+    highlightFlatTimeZone(null);
   }
 
   /* =====================================================
@@ -703,6 +730,7 @@
         setActiveTimeZoneCard(zoneId);
         showTimeZoneLines();
         highlightTimeZoneBand(zoneId);
+        highlightFlatTimeZone(zoneId);
 
         focusTimeZoneBandOnGlobe(zone);
         clearMarker();
@@ -822,6 +850,7 @@
     selectedTimeZoneId = matchedZoneId;
     setActiveTimeZoneCard(matchedZoneId);
     highlightTimeZoneBand(matchedZoneId);
+    highlightFlatTimeZone(matchedZoneId);
   }
 
   function formatTimezoneDisplayValue(timezoneValue) {
@@ -1007,6 +1036,54 @@
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "none");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "none");
     map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "none");
+  }
+
+  function ensureFlatTimeZoneLayer() {
+    if (!flatMap || !flatMap.isStyleLoaded()) return;
+    if (flatMap.getSource(FLAT_TIMEZONE_SOURCE_ID)) return;
+
+    flatMap.addSource(FLAT_TIMEZONE_SOURCE_ID, {
+      type: "geojson",
+      data: buildTimeZoneBandGeoJson()
+    });
+
+    flatMap.addLayer({
+      id: FLAT_TIMEZONE_FILL_LAYER_ID,
+      type: "fill",
+      source: FLAT_TIMEZONE_SOURCE_ID,
+      paint: {
+        "fill-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
+        "fill-opacity": 0.45
+      }
+    });
+
+    flatMap.addLayer({
+      id: FLAT_TIMEZONE_LINE_LAYER_ID,
+      type: "line",
+      source: FLAT_TIMEZONE_SOURCE_ID,
+      paint: {
+        "line-color": "#0f172a",
+        "line-width": 0.6,
+        "line-opacity": 0.8
+      }
+    });
+
+    flatMap.addLayer({
+      id: FLAT_TIMEZONE_HIGHLIGHT_LAYER_ID,
+      type: "line",
+      source: FLAT_TIMEZONE_SOURCE_ID,
+      filter: ["==", ["get", "zoneId"], ""],
+      paint: {
+        "line-color": "#ffffff",
+        "line-width": 2.4,
+        "line-opacity": 1
+      }
+    });
+  }
+
+  function highlightFlatTimeZone(zoneId) {
+    if (!flatMap || !flatMap.getSource(FLAT_TIMEZONE_SOURCE_ID)) return;
+    flatMap.setFilter(FLAT_TIMEZONE_HIGHLIGHT_LAYER_ID, ["==", ["get", "zoneId"], zoneId || ""]);
   }
 
   function buildTimeZoneBandGeoJson() {
