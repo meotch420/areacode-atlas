@@ -97,12 +97,13 @@
 
     map = new maptilersdk.Map({
       container: "map",
-      style: `https://api.maptiler.com/maps/basic-v2/style.json?key=${MAPTILER_KEY}`,
+      style: `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`,
       center: [10, 15],
       zoom: 1.5,
       minZoom: 1,
       maxZoom: 18,
       projection: "mercator",
+      renderWorldCopies: false,
       navigationControl: false,
       geolocateControl: false,
       terrainControl: false,
@@ -113,6 +114,7 @@
     setupGlobeOnlyWheelZoom();
 
     map.on("load", async () => {
+      applyFlatWorldMapTheme();
       ensureWorldLandLayer();
       ensureTimeZoneBandLayer();
       setupTimezoneBandInteractions();
@@ -1097,13 +1099,39 @@
       id: WORLD_LAND_FILL_LAYER_ID,
       type: "fill",
       source: WORLD_LAND_SOURCE_ID,
-      paint: { "fill-color": "#dbe7f3", "fill-opacity": 0.9 }
+      paint: { "fill-color": "#e2e8f0", "fill-opacity": 0.9 }
     });
     map.addLayer({
       id: WORLD_LAND_LINE_LAYER_ID,
       type: "line",
       source: WORLD_LAND_SOURCE_ID,
       paint: { "line-color": "#6b7f96", "line-width": 0.8, "line-opacity": 0.75 }
+    });
+  }
+
+  function applyFlatWorldMapTheme() {
+    if (!map || !map.isStyleLoaded()) return;
+
+    const style = map.getStyle();
+    const layers = Array.isArray(style?.layers) ? style.layers : [];
+
+    layers.forEach((layer) => {
+      if (layer?.type === "symbol") {
+        map.setLayoutProperty(layer.id, "visibility", "none");
+      }
+    });
+
+    ["water", "ocean", "sea", "background"].forEach((token) => {
+      layers
+        .filter((layer) => layer.id.toLowerCase().includes(token))
+        .forEach((layer) => {
+          if (layer.type === "fill") {
+            map.setPaintProperty(layer.id, "fill-color", "#071a2f");
+          }
+          if (layer.type === "background") {
+            map.setPaintProperty(layer.id, "background-color", "#061528");
+          }
+        });
     });
   }
 
