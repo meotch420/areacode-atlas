@@ -1,13 +1,23 @@
 <svg width="1468" height="526" viewBox="0 0 1468 526" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Innova logo</title>
-  <desc id="desc">Innova wordmark with teal butterfly icon</desc>
-  <g transform="translate(18 20)" stroke="#12957F" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M250 244C220 112 98 52 36 118C-24 184 26 300 176 318"/>
-    <path d="M250 244C280 112 402 52 464 118C524 184 474 300 324 318"/>
-    <path d="M250 244C218 368 96 422 56 358C18 296 92 230 206 246"/>
-    <path d="M250 244C282 368 404 422 444 358C482 296 408 230 294 246"/>
-    <path d="M232 8C248 -8 268 -8 284 8C296 22 300 44 300 66C300 86 286 98 266 98H252C232 98 218 86 218 66C218 44 220 22 232 8Z" fill="#12957F" stroke="none"/>
-    <path d="M250 244L250 370"/>
+  <desc id="desc">Innova logo with four-petal butterfly icon and wordmark</desc>
+
+  <g transform="translate(14 10)" fill="none" stroke="#12957F" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
+    <!-- top-left petal -->
+    <path d="M250 250C220 150 146 82 74 92C8 104 -18 178 16 236C52 298 134 320 218 314"/>
+    <!-- top-right petal -->
+    <path d="M250 250C280 150 354 82 426 92C492 104 518 178 484 236C448 298 366 320 282 314"/>
+    <!-- bottom-left petal -->
+    <path d="M250 250C218 344 150 414 90 404C34 394 16 330 48 286C84 238 154 224 218 246"/>
+    <!-- bottom-right petal -->
+    <path d="M250 250C282 344 350 414 410 404C466 394 484 330 452 286C416 238 346 224 282 246"/>
+
+    <!-- center ribbon stem -->
+    <path d="M256 146C232 214 220 280 206 336"/>
+
+    <!-- top droplet -->
+    <path d="M232 6C246 -10 270 -10 284 6C300 24 304 52 304 74C304 94 290 108 270 108H246C226 108 212 94 212 74C212 52 216 24 232 6Z" fill="#12957F" stroke="none"/>
   </g>
+
   <text x="560" y="382" fill="#4B5563" font-size="280" font-family="Arial, Helvetica, sans-serif" font-weight="700">Innova</text>
 </svg>
