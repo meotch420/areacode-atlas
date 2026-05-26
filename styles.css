@@ -112,8 +112,12 @@ header p {
 
 .timezone-wrap {
   height: 78px;
+  min-height: 78px;
   overflow-y: auto;
   padding-right: 4px;
+  position: relative;
+  resize: vertical;
+  border-radius: 6px;
 }
 
 .timezone-grid,
@@ -176,6 +180,29 @@ header p {
 .timezone-card[data-light="true"] {
   color: #061320;
   text-shadow: none;
+}
+
+.timezone-resize-handle {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(148, 163, 184, 0.55);
+  color: #cbd5e1;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: linear-gradient(
+    180deg,
+    rgba(2, 6, 23, 0.1) 0%,
+    rgba(2, 6, 23, 0.9) 100%
+  );
+  cursor: ns-resize;
+  user-select: none;
+  z-index: 2;
 }
 
 /* =========================
