@@ -36,6 +36,8 @@
     zoom: 2.2
   };
   const AREA_CODE_SEARCH_ZOOM = 4.2;
+  const TIMEZONE_WRAP_MIN_HEIGHT = 78;
+  const TIMEZONE_WRAP_HEIGHT_STORAGE_KEY = "areaCodeAtlasTimezoneWrapHeight";
 
   let map;
   let activeMarker = null;
@@ -72,6 +74,7 @@
     await loadTimeZoneLayoutGeoJson();
     createMap();
     buildTimeZoneCards();
+    initTimezoneResizer();
     startTimezoneClocks();
     setupSearch();
     loadAreaCodeData();
@@ -116,6 +119,69 @@
     setTimeout(removeExtraZoomControls, 500);
     setTimeout(removeExtraZoomControls, 1500);
     setTimeout(removeExtraZoomControls, 3000);
+  }
+
+  function initTimezoneResizer() {
+    const timezoneWrap = document.getElementById("timezoneWrap");
+    const resizeHandle = document.getElementById("timezoneResizeHandle");
+
+    if (!timezoneWrap || !resizeHandle) return;
+
+    let manualDragInProgress = false;
+    let dragStartY = 0;
+    let dragStartHeight = 0;
+
+    const savedHeight = Number(localStorage.getItem(TIMEZONE_WRAP_HEIGHT_STORAGE_KEY));
+    if (Number.isFinite(savedHeight) && savedHeight >= TIMEZONE_WRAP_MIN_HEIGHT) {
+      timezoneWrap.style.height = `${savedHeight}px`;
+    }
+    timezoneWrap.style.minHeight = `${TIMEZONE_WRAP_MIN_HEIGHT}px`;
+
+    const observer = new ResizeObserver(() => {
+      if (manualDragInProgress) return;
+      const currentHeight = Math.max(
+        TIMEZONE_WRAP_MIN_HEIGHT,
+        Math.round(timezoneWrap.getBoundingClientRect().height)
+      );
+      localStorage.setItem(TIMEZONE_WRAP_HEIGHT_STORAGE_KEY, String(currentHeight));
+    });
+    observer.observe(timezoneWrap);
+
+    const onPointerMove = (event) => {
+      if (!manualDragInProgress) return;
+      const nextHeight = Math.max(
+        TIMEZONE_WRAP_MIN_HEIGHT,
+        dragStartHeight + (event.clientY - dragStartY)
+      );
+      timezoneWrap.style.height = `${Math.round(nextHeight)}px`;
+    };
+
+    const onPointerUp = () => {
+      if (!manualDragInProgress) return;
+      manualDragInProgress = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+
+      const finalHeight = Math.max(
+        TIMEZONE_WRAP_MIN_HEIGHT,
+        Math.round(timezoneWrap.getBoundingClientRect().height)
+      );
+      timezoneWrap.style.height = `${finalHeight}px`;
+      localStorage.setItem(TIMEZONE_WRAP_HEIGHT_STORAGE_KEY, String(finalHeight));
+    };
+
+    resizeHandle.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      manualDragInProgress = true;
+      dragStartY = event.clientY;
+      dragStartHeight = timezoneWrap.getBoundingClientRect().height;
+      document.body.style.cursor = "ns-resize";
+      document.body.style.userSelect = "none";
+      window.addEventListener("pointermove", onPointerMove);
+      window.addEventListener("pointerup", onPointerUp);
+    });
   }
 
   function removeExtraZoomControls() {
