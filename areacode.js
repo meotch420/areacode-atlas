@@ -35,13 +35,18 @@
     center: [-98.5795, 39.8283],
     zoom: 2.2
   };
-  const AREA_CODE_SEARCH_ZOOM = 4.2;
+  const AREA_CODE_SEARCH_ZOOM = 5.6;
+  const USA_VIEW_BOUNDS = [[-126, 24], [-66, 50]];
+  const USA_TIMEZONE_SOURCE_ID = "usa-timezone-source";
+  const USA_TIMEZONE_FILL_LAYER_ID = "usa-timezone-fill";
+  const USA_TIMEZONE_LINE_LAYER_ID = "usa-timezone-line";
 
   let map;
   let activeMarker = null;
   let areaCodeIndex = new Map();
   let selectedTimeZoneId = null;
   let timeZoneLayoutByTz = new Map();
+  let usaTimezoneGeoJson = null;
 
   /* =====================================================
      AUTO REFRESH PAGE EVERY 1 HOUR
@@ -1357,6 +1362,63 @@
     ["1:416", "Toronto"]
   ]);
 
+
+
+  function switchToUSAMap() {
+    if (!map) return;
+    map.setProjection({ name: "mercator" });
+    ensureUsaTimezoneLayer();
+    map.fitBounds(USA_VIEW_BOUNDS, { padding: 30, duration: 0, essential: true });
+  }
+
+  function switchToGlobeMap() {
+    if (!map) return;
+    hideUsaTimezoneLayer();
+    map.setProjection({ name: "globe" });
+  }
+
+  function ensureUsaTimezoneLayer() {
+    if (!map || !map.isStyleLoaded()) return;
+    if (!usaTimezoneGeoJson) usaTimezoneGeoJson = buildUsaTimezoneGeoJson();
+    if (!usaTimezoneGeoJson) return;
+    if (!map.getSource(USA_TIMEZONE_SOURCE_ID)) {
+      map.addSource(USA_TIMEZONE_SOURCE_ID, { type: "geojson", data: usaTimezoneGeoJson });
+      map.addLayer({ id: USA_TIMEZONE_FILL_LAYER_ID, type: "fill", source: USA_TIMEZONE_SOURCE_ID, paint: {
+        "fill-color": ["match", ["get", "tzGroup"], "Pacific", "#f97316", "Mountain", "#22c55e", "Central", "#facc15", "Eastern", "#ef4444", "#334155"],
+        "fill-opacity": 0.58
+      }});
+      map.addLayer({ id: USA_TIMEZONE_LINE_LAYER_ID, type: "line", source: USA_TIMEZONE_SOURCE_ID, paint: {"line-color":"#0f172a","line-width":1.2,"line-opacity":0.85}});
+    }
+    map.setLayoutProperty(USA_TIMEZONE_FILL_LAYER_ID, "visibility", "visible");
+    map.setLayoutProperty(USA_TIMEZONE_LINE_LAYER_ID, "visibility", "visible");
+  }
+
+  function hideUsaTimezoneLayer() {
+    if (!map) return;
+    if (map.getLayer(USA_TIMEZONE_FILL_LAYER_ID)) map.setLayoutProperty(USA_TIMEZONE_FILL_LAYER_ID, "visibility", "none");
+    if (map.getLayer(USA_TIMEZONE_LINE_LAYER_ID)) map.setLayoutProperty(USA_TIMEZONE_LINE_LAYER_ID, "visibility", "none");
+  }
+
+  function buildUsaTimezoneGeoJson() {
+    if (!timeZoneLayoutByTz.size) return null;
+    const features = [];
+    for (const f of timeZoneLayoutByTz.values()) {
+      const tzid = String(f?.properties?.tzid || "");
+      if (!tzid.startsWith("America/")) continue;
+      const grp = usaTimezoneGroupFromTz(tzid);
+      if (!grp) continue;
+      features.push({ type: "Feature", properties: { tzid, tzGroup: grp }, geometry: f.geometry });
+    }
+    return { type: "FeatureCollection", features };
+  }
+
+  function usaTimezoneGroupFromTz(tz) {
+    if (/Los_Angeles|Juneau|Sitka|Yakutat|Metlakatla|Anchorage/.test(tz)) return "Pacific";
+    if (/Denver|Boise|Phoenix/.test(tz)) return "Mountain";
+    if (/Chicago|Winnipeg|Mexico_City/.test(tz)) return "Central";
+    if (/New_York|Detroit|Toronto|Indiana|Kentucky|Nassau/.test(tz)) return "Eastern";
+    return null;
+  }
   /* =====================================================
      AREA CODE DATA
   ===================================================== */
@@ -1567,9 +1629,12 @@
   ===================================================== */
 
   function showAreaCodeResult(record) {
+    switchToUSAMap();
+
     setInfoPanel({
       city: record.city || "---",
-      countryCode: "+1",
+      areaCode: record.areaCode || "---",
+      countryCode: `+1 (${record.areaCode || "---"})`,
       region: record.state,
       state: record.state,
       country: record.country,
@@ -1603,6 +1668,8 @@
       mode: "default"
     });
 
+    switchToGlobeMap();
+
     setStatus("");
     showTimeZoneLines();
     applyTimezoneSelection(record.timezone);
@@ -1626,6 +1693,8 @@
       timezone: record.country.timezone,
       mode: "default"
     });
+
+    switchToGlobeMap();
 
     setStatus("");
     showTimeZoneLines();
