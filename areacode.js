@@ -24,9 +24,6 @@
   const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
   const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-bands-grid";
   const TIMEZONE_BANDS_HOVER_LAYER_ID = "timezone-bands-hover";
-  const WORLD_LAND_SOURCE_ID = "world-land-source";
-  const WORLD_LAND_FILL_LAYER_ID = "world-land-fill";
-  const WORLD_LAND_LINE_LAYER_ID = "world-land-line";
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
@@ -97,7 +94,7 @@
 
     map = new maptilersdk.Map({
       container: "map",
-      style: `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`,
+      style: `https://api.maptiler.com/maps/basic-v2/style.json?key=${MAPTILER_KEY}`,
       center: [10, 15],
       zoom: 1.5,
       minZoom: 1,
@@ -115,7 +112,6 @@
 
     map.on("load", async () => {
       applyFlatWorldMapTheme();
-      ensureWorldLandLayer();
       ensureTimeZoneBandLayer();
       setupTimezoneBandInteractions();
       removeExtraZoomControls();
@@ -1089,26 +1085,6 @@
     return buildZoneBandGeometries(zone);
   }
 
-  function ensureWorldLandLayer() {
-    if (!map || !map.isStyleLoaded() || map.getSource(WORLD_LAND_SOURCE_ID)) return;
-    map.addSource(WORLD_LAND_SOURCE_ID, {
-      type: "geojson",
-      data: "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson"
-    });
-    map.addLayer({
-      id: WORLD_LAND_FILL_LAYER_ID,
-      type: "fill",
-      source: WORLD_LAND_SOURCE_ID,
-      paint: { "fill-color": "#e2e8f0", "fill-opacity": 0.9 }
-    });
-    map.addLayer({
-      id: WORLD_LAND_LINE_LAYER_ID,
-      type: "line",
-      source: WORLD_LAND_SOURCE_ID,
-      paint: { "line-color": "#6b7f96", "line-width": 0.8, "line-opacity": 0.75 }
-    });
-  }
-
   function applyFlatWorldMapTheme() {
     if (!map || !map.isStyleLoaded()) return;
 
@@ -1116,23 +1092,46 @@
     const layers = Array.isArray(style?.layers) ? style.layers : [];
 
     layers.forEach((layer) => {
-      if (layer?.type === "symbol") {
+      if (layer?.type === "symbol" && /poi|transit|road-number|aeroway|mountain|park/i.test(layer.id)) {
         map.setLayoutProperty(layer.id, "visibility", "none");
       }
     });
 
-    ["water", "ocean", "sea", "background"].forEach((token) => {
+    ["water", "ocean", "sea"].forEach((token) => {
       layers
         .filter((layer) => layer.id.toLowerCase().includes(token))
         .forEach((layer) => {
           if (layer.type === "fill") {
-            map.setPaintProperty(layer.id, "fill-color", "#071a2f");
+            map.setPaintProperty(layer.id, "fill-color", "#061b35");
           }
-          if (layer.type === "background") {
-            map.setPaintProperty(layer.id, "background-color", "#061528");
+          if (layer.type === "line") {
+            map.setPaintProperty(layer.id, "line-color", "#0d3158");
           }
         });
     });
+
+    layers
+      .filter((layer) => layer.id.toLowerCase().includes("land"))
+      .forEach((layer) => {
+        if (layer.type === "fill") {
+          map.setPaintProperty(layer.id, "fill-color", "#dbe7f3");
+        }
+      });
+
+    layers
+      .filter((layer) => layer.id.toLowerCase().includes("boundary") || layer.id.toLowerCase().includes("border"))
+      .forEach((layer) => {
+        if (layer.type === "line") {
+          map.setPaintProperty(layer.id, "line-color", "#6f8299");
+          map.setPaintProperty(layer.id, "line-opacity", 0.75);
+        }
+      });
+
+    if (layers.find((layer) => layer.type === "background")) {
+      layers
+        .filter((layer) => layer.type === "background")
+        .forEach((layer) => map.setPaintProperty(layer.id, "background-color", "#041326"));
+    }
   }
 
   function setupTimezoneBandInteractions() {
