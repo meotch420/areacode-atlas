@@ -534,14 +534,26 @@ header p {
   margin: 8px 0 18px;
 }
 
+.seo-lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 26px;
+  border-top: 1px solid #1e293b;
+  padding-top: 14px;
+}
+
+.seo-faq {
+  min-width: 0;
+}
+
 .seo-logo-block {
   display: flex;
   justify-content: flex-end;
-  margin: 10px 0 18px;
 }
 
 .seo-logo {
-  width: min(520px, 48vw);
+  width: min(620px, 50vw);
   max-width: 100%;
   height: auto;
   object-fit: contain;
@@ -605,12 +617,17 @@ header p {
 }
 
 @media (max-width: 900px) {
+  .seo-lower {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
   .seo-logo-block {
     justify-content: center;
   }
 
   .seo-logo {
-    width: min(420px, 88vw);
+    width: min(560px, 92vw);
   }
 
   .top-section {

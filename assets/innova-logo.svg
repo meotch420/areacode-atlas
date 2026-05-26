@@ -1,11 +1,13 @@
-<svg width="360" height="120" viewBox="0 0 360 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="1468" height="526" viewBox="0 0 1468 526" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Innova logo</title>
-  <desc id="desc">Stylized clover icon with Innova wordmark</desc>
-  <g transform="translate(8 10)">
-    <path d="M40 54C16 56 2 36 9 20C16 4 38 2 52 16C62 26 66 44 60 58C52 76 42 92 44 104" stroke="#12957F" stroke-width="12" stroke-linecap="round"/>
-    <path d="M52 16C66 2 88 4 95 20C102 36 88 56 64 54" stroke="#12957F" stroke-width="12" stroke-linecap="round"/>
-    <path d="M44 104C42 92 32 76 24 58" stroke="#12957F" stroke-width="12" stroke-linecap="round"/>
-    <circle cx="52" cy="6" r="6" fill="#12957F"/>
+  <desc id="desc">Innova wordmark with teal butterfly icon</desc>
+  <g transform="translate(18 20)" stroke="#12957F" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M250 244C220 112 98 52 36 118C-24 184 26 300 176 318"/>
+    <path d="M250 244C280 112 402 52 464 118C524 184 474 300 324 318"/>
+    <path d="M250 244C218 368 96 422 56 358C18 296 92 230 206 246"/>
+    <path d="M250 244C282 368 404 422 444 358C482 296 408 230 294 246"/>
+    <path d="M232 8C248 -8 268 -8 284 8C296 22 300 44 300 66C300 86 286 98 266 98H252C232 98 218 86 218 66C218 44 220 22 232 8Z" fill="#12957F" stroke="none"/>
+    <path d="M250 244L250 370"/>
   </g>
-  <text x="120" y="80" fill="#4B5563" font-size="76" font-family="Arial, Helvetica, sans-serif" font-weight="700">Innova</text>
+  <text x="560" y="382" fill="#4B5563" font-size="280" font-family="Arial, Helvetica, sans-serif" font-weight="700">Innova</text>
 </svg>
