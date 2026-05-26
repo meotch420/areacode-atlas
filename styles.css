@@ -261,6 +261,12 @@ header p {
   background: linear-gradient(135deg, #16a34a, #14532d);
 }
 
+.pin-info-popup {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #0f172a;
+}
+
 .tz-color-13 {
   background: linear-gradient(135deg, #059669, #064e3b);
 }
