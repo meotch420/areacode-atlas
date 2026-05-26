@@ -557,7 +557,7 @@ header p {
 .faq-area {
   display: flex;
   align-items: flex-start;
-  gap: 28px;
+  gap: 20px;
 }
 
 .faq-brand {
@@ -565,11 +565,13 @@ header p {
   align-items: center;
   gap: 12px;
   flex: 0 0 auto;
+  margin-left: -56px;
 }
 
 .faq-logo {
   width: 180px;
-  height: auto;
+  height: 240px;
+  object-fit: fill;
   display: block;
 }
 
@@ -651,6 +653,10 @@ header p {
   .faq-area {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .faq-brand {
+    margin-left: 0;
   }
 
   .faq-brand-text {
