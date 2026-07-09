@@ -77,7 +77,7 @@
       </div>
 
       <div class="info-row">
-        <span>Country Code</span>
+        <span>Local time</span>
         <strong id="infoCountryCode">---</strong>
       </div>
     </aside>
@@ -130,5 +130,94 @@
 
   <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
   <script src="areacode.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      function formatLocalTime(timeZone) {
+        try {
+          return new Intl.DateTimeFormat("en-US", {
+            timeZone,
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+          })
+            .format(new Date())
+            .replace(/^24:/, "00:");
+        } catch (error) {
+          return "---";
+        }
+      }
+
+      function getPanelTimeZone() {
+        const activeCard = document.querySelector(".timezone-card.is-active");
+        if (activeCard?.dataset?.tz) {
+          return activeCard.dataset.tz;
+        }
+
+        const timezoneValue = document.getElementById("infoTimeZone")?.textContent.trim();
+        if (!timezoneValue || timezoneValue === "---" || /^multiple$/i.test(timezoneValue)) {
+          return "";
+        }
+
+        if (timezoneValue.includes("/")) {
+          return timezoneValue;
+        }
+
+        const matchingCard = Array.from(document.querySelectorAll(".timezone-card")).find((card) => {
+          const cardName = card.querySelector(".timezone-card-name")?.textContent.trim();
+          return cardName?.toLowerCase() === timezoneValue.toLowerCase();
+        });
+
+        return matchingCard?.dataset?.tz || "";
+      }
+
+      function updateInfoPanelLocalTime() {
+        const localTimeValue = document.getElementById("infoCountryCode");
+        if (!localTimeValue) return;
+
+        const timeZone = getPanelTimeZone();
+        if (!timeZone) {
+          localTimeValue.removeAttribute("data-timezone");
+          localTimeValue.textContent = "---";
+          return;
+        }
+
+        localTimeValue.setAttribute("data-timezone", timeZone);
+        localTimeValue.textContent = formatLocalTime(timeZone);
+      }
+
+      function startInfoPanelLocalTime() {
+        const timezoneValue = document.getElementById("infoTimeZone");
+        const timezoneGrid = document.getElementById("timezoneGrid");
+
+        if (timezoneValue) {
+          new MutationObserver(updateInfoPanelLocalTime).observe(timezoneValue, {
+            childList: true,
+            characterData: true,
+            subtree: true
+          });
+        }
+
+        if (timezoneGrid) {
+          new MutationObserver(updateInfoPanelLocalTime).observe(timezoneGrid, {
+            attributes: true,
+            subtree: true,
+            attributeFilter: ["class"]
+          });
+        }
+
+        updateInfoPanelLocalTime();
+        setInterval(updateInfoPanelLocalTime, 1000);
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", startInfoPanelLocalTime);
+      } else {
+        startInfoPanelLocalTime();
+      }
+    })();
+  </script>
 </body>
 </html>
