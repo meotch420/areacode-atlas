@@ -40,10 +40,57 @@
   const TIMEZONE_WRAP_HEIGHT_STORAGE_KEY = "areaCodeAtlasTimezoneWrapHeight";
 
   let map;
+  let usaMap;
   let activeMarker = null;
+  let usaMarker = null;
   let areaCodeIndex = new Map();
   let selectedTimeZoneId = null;
   let timeZoneLayoutByTz = new Map();
+
+
+  const US_TIMEZONE_COLORS = {
+    Pacific: "#f97316",
+    Mountain: "#22c55e",
+    Central: "#facc15",
+    Eastern: "#ef4444"
+  };
+
+  const US_STATE_TIMEZONE_GROUP = {
+    WA:"Pacific",OR:"Pacific",CA:"Pacific",NV:"Pacific",ID:"Mountain",MT:"Mountain",WY:"Mountain",UT:"Mountain",AZ:"Mountain",CO:"Mountain",NM:"Mountain",ND:"Central",SD:"Central",NE:"Central",KS:"Central",OK:"Central",TX:"Central",MN:"Central",IA:"Central",MO:"Central",AR:"Central",LA:"Central",WI:"Central",IL:"Central",MS:"Central",AL:"Central",MI:"Eastern",IN:"Eastern",OH:"Eastern",KY:"Eastern",TN:"Central",GA:"Eastern",FL:"Eastern",SC:"Eastern",NC:"Eastern",VA:"Eastern",WV:"Eastern",PA:"Eastern",NY:"Eastern",VT:"Eastern",NH:"Eastern",ME:"Eastern",MA:"Eastern",RI:"Eastern",CT:"Eastern",NJ:"Eastern",DE:"Eastern",MD:"Eastern",DC:"Eastern",AK:"Pacific",HI:"Pacific"
+  };
+
+  function createUsaMap() {
+    const container = document.getElementById("usaMap");
+    if (!container) return;
+    usaMap = new maptilersdk.Map({
+      container: "usaMap",
+      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
+      center: [-98.5, 39.5],
+      zoom: 3.3,
+      minZoom: 2.5,
+      maxZoom: 10,
+      projection: "mercator"
+    });
+    usaMap.on("load", () => addUsaTimezoneStates());
+  }
+
+  async function addUsaTimezoneStates() {
+    if (!usaMap) return;
+    const url = "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json";
+    const resp = await fetch(url);
+    const geo = await resp.json();
+    geo.features.forEach((f) => {
+      const abbr = f.properties.postal || f.properties.code || "";
+      const tz = US_STATE_TIMEZONE_GROUP[abbr] || "Eastern";
+      f.properties.tzGroup = tz;
+    });
+    usaMap.addSource("us-states", { type: "geojson", data: geo });
+    usaMap.addLayer({
+      id: "us-states-fill", type: "fill", source: "us-states",
+      paint: { "fill-color": ["match", ["get", "tzGroup"], "Pacific", US_TIMEZONE_COLORS.Pacific, "Mountain", US_TIMEZONE_COLORS.Mountain, "Central", US_TIMEZONE_COLORS.Central, "Eastern", US_TIMEZONE_COLORS.Eastern, "#64748b"], "fill-opacity": 0.65 }
+    });
+    usaMap.addLayer({ id: "us-states-line", type: "line", source: "us-states", paint: { "line-color": "#0f172a", "line-width": 1.2 }});
+  }
 
   /* =====================================================
      START APP
@@ -64,6 +111,7 @@
 
     setStatus("");
     await loadTimeZoneLayoutGeoJson();
+    createUsaMap();
     createMap();
     buildTimeZoneCards();
     initTimezoneResizer();
@@ -264,6 +312,10 @@
   ===================================================== */
 
   const TIMEZONE_COLORS = [
+    "#f97316",
+    "#22c55e",
+    "#facc15",
+    "#ef4444",
     "#cbd5e1",
     "#d946ef",
     "#7c3aed",
@@ -1631,7 +1683,7 @@
       region: record.state,
       state: record.state,
       country: record.country,
-      timeZone: record.timezone,
+      timeZone: Array.isArray(record.timezones)?record.timezones.join(", "):record.timezone,
       timezone: record.timezone,
       mode: "default"
     });
@@ -1656,7 +1708,7 @@
       region: record.region || "---",
       state: record.region || "---",
       country: record.country,
-      timeZone: record.timezone,
+      timeZone: Array.isArray(record.timezones)?record.timezones.join(", "):record.timezone,
       timezone: record.timezone,
       mode: "default"
     });

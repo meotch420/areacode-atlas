@@ -635,3 +635,23 @@ header p {
     padding: 12px 0 0;
   }
 }
+
+
+.usa-map-section {
+  padding: 10px 12px 4px;
+  background: #020617;
+}
+
+.usa-map-section h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+#usaMap {
+  width: 100%;
+  height: 320px;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+}
+
+.us-legend { display:none; }
