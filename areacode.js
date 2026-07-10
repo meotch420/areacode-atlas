@@ -23,6 +23,7 @@
   const TIMEZONE_BANDS_LINE_CASING_LAYER_ID = "timezone-bands-line-casing";
   const TIMEZONE_BANDS_LINE_LAYER_ID = "timezone-bands-line";
   const TIMEZONE_BANDS_GRID_LAYER_ID = "timezone-bands-grid";
+  const TIMEZONE_BANDS_HOVER_LAYER_ID = "timezone-bands-hover";
   const COUNTRY_OUTLINE_SOURCE_ID = "country-outline-source";
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
@@ -43,6 +44,7 @@
   let activeMarker = null;
   let areaCodeIndex = new Map();
   let selectedTimeZoneId = null;
+  let hoveredTimeZoneId = null;
   let timeZoneLayoutByTz = new Map();
 
   /* =====================================================
@@ -87,12 +89,13 @@
 
     map = new maptilersdk.Map({
       container: "map",
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
-      center: DEFAULT_COUNTRY_VIEW.center,
-      zoom: DEFAULT_COUNTRY_VIEW.zoom,
+      style: `https://api.maptiler.com/maps/basic-v2/style.json?key=${MAPTILER_KEY}`,
+      center: [10, 15],
+      zoom: 1.5,
       minZoom: 1,
       maxZoom: 18,
-      projection: "globe",
+      projection: "mercator",
+      renderWorldCopies: false,
       navigationControl: false,
       geolocateControl: false,
       terrainControl: false,
@@ -103,9 +106,11 @@
     setupGlobeOnlyWheelZoom();
 
     map.on("load", async () => {
+      applyFlatWorldMapTheme();
       ensureTimeZoneBandLayer();
+      setupTimezoneBandInteractions();
       removeExtraZoomControls();
-      await focusDefaultCountryOnLoad();
+      await focusWorldOnLoad();
     });
 
     setTimeout(removeExtraZoomControls, 500);
@@ -243,12 +248,8 @@
     return distance <= radius;
   }
 
-  async function focusDefaultCountryOnLoad() {
-    flyToLocation(
-      DEFAULT_COUNTRY_VIEW.center[0],
-      DEFAULT_COUNTRY_VIEW.center[1],
-      DEFAULT_COUNTRY_VIEW.zoom
-    );
+  async function focusWorldOnLoad() {
+    map.fitBounds([[-170, -58], [190, 82]], { padding: 20, duration: 0 });
 
     clearInfoPanel();
 
@@ -964,7 +965,18 @@
       },
       paint: {
         "fill-color": ["coalesce", ["get", "fillColor"], "#0ea5e9"],
-        "fill-opacity": 0.28
+        "fill-opacity": 0.32
+      }
+    });
+    map.addLayer({
+      id: TIMEZONE_BANDS_HOVER_LAYER_ID,
+      type: "line",
+      source: TIMEZONE_BANDS_SOURCE_ID,
+      layout: { visibility: "none" },
+      paint: {
+        "line-color": "#ffffff",
+        "line-width": 2.2,
+        "line-opacity": 0.9
       }
     });
 
@@ -1045,11 +1057,13 @@
     if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
 
     showTimeZoneLines();
+    selectedTimeZoneId = zoneId;
 
     const filter = ["==", ["get", "zoneId"], zoneId];
+    map.setFilter(TIMEZONE_BANDS_FILL_LAYER_ID, filter);
     map.setFilter(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, filter);
     map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
-    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
+    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
   }
@@ -1065,13 +1079,16 @@
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "none");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "none");
     map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "none");
+    if (map.getLayer(TIMEZONE_BANDS_HOVER_LAYER_ID)) {
+      map.setLayoutProperty(TIMEZONE_BANDS_HOVER_LAYER_ID, "visibility", "none");
+    }
   }
 
   function buildTimeZoneBandGeoJson() {
     const features = timeZones.flatMap((zone, index) => {
       const zoneId = `tz-zone-${index}`;
       const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
-      const geometries = buildZoneBandGeometries(zone);
+      const geometries = buildZoneGeometries(zone);
 
       return geometries.map((geometry) => ({
         type: "Feature",
@@ -1118,6 +1135,123 @@
     }
 
     return [makeBandGeometry(west, east)];
+  }
+
+  function buildZoneGeometries(zone) {
+    const layoutGeometries = getTimeZoneLayoutGeometries(zone);
+    if (layoutGeometries.length) return layoutGeometries;
+    return buildZoneBandGeometries(zone);
+  }
+
+  function applyFlatWorldMapTheme() {
+    if (!map || !map.isStyleLoaded()) return;
+
+    const style = map.getStyle();
+    const layers = Array.isArray(style?.layers) ? style.layers : [];
+
+    layers.forEach((layer) => {
+      if (layer?.type === "symbol" && /poi|transit|road-number|aeroway|mountain|park/i.test(layer.id)) {
+        map.setLayoutProperty(layer.id, "visibility", "none");
+      }
+    });
+
+    ["water", "ocean", "sea"].forEach((token) => {
+      layers
+        .filter((layer) => layer.id.toLowerCase().includes(token))
+        .forEach((layer) => {
+          if (layer.type === "fill") {
+            map.setPaintProperty(layer.id, "fill-color", "#061b35");
+          }
+          if (layer.type === "line") {
+            map.setPaintProperty(layer.id, "line-color", "#0d3158");
+          }
+        });
+    });
+
+    layers
+      .filter((layer) => layer.id.toLowerCase().includes("land"))
+      .forEach((layer) => {
+        if (layer.type === "fill") {
+          map.setPaintProperty(layer.id, "fill-color", "#dbe7f3");
+        }
+      });
+
+    layers
+      .filter((layer) => layer.id.toLowerCase().includes("boundary") || layer.id.toLowerCase().includes("border"))
+      .forEach((layer) => {
+        if (layer.type === "line") {
+          map.setPaintProperty(layer.id, "line-color", "#6f8299");
+          map.setPaintProperty(layer.id, "line-opacity", 0.75);
+        }
+      });
+
+    if (layers.find((layer) => layer.type === "background")) {
+      layers
+        .filter((layer) => layer.type === "background")
+        .forEach((layer) => map.setPaintProperty(layer.id, "background-color", "#041326"));
+    }
+  }
+
+  function setupTimezoneBandInteractions() {
+    map.on("mousemove", TIMEZONE_BANDS_FILL_LAYER_ID, (event) => {
+      const feature = event.features?.[0];
+      hoveredTimeZoneId = feature?.properties?.zoneId || null;
+      if (!hoveredTimeZoneId || hoveredTimeZoneId === selectedTimeZoneId) {
+        map.setLayoutProperty(TIMEZONE_BANDS_HOVER_LAYER_ID, "visibility", "none");
+        return;
+      }
+      map.setFilter(TIMEZONE_BANDS_HOVER_LAYER_ID, ["==", ["get", "zoneId"], hoveredTimeZoneId]);
+      map.setLayoutProperty(TIMEZONE_BANDS_HOVER_LAYER_ID, "visibility", "visible");
+    });
+    map.on("mouseleave", TIMEZONE_BANDS_FILL_LAYER_ID, () => {
+      hoveredTimeZoneId = null;
+      if (map.getLayer(TIMEZONE_BANDS_HOVER_LAYER_ID)) {
+        map.setLayoutProperty(TIMEZONE_BANDS_HOVER_LAYER_ID, "visibility", "none");
+      }
+    });
+    map.on("click", TIMEZONE_BANDS_FILL_LAYER_ID, async (event) => {
+      const feature = event.features?.[0];
+      if (feature?.properties?.zoneId) {
+        const zone = timeZones.find((z, i) => `tz-zone-${i}` === feature.properties.zoneId);
+        if (zone) {
+          applyTimezoneSelection(zone.timeZone);
+          await updateInfoFromMapClick(event.lngLat.lng, event.lngLat.lat, zone.timeZone);
+        }
+      }
+    });
+    map.on("click", async (event) => {
+      await updateInfoFromMapClick(event.lngLat.lng, event.lngLat.lat, null);
+    });
+  }
+
+  async function updateInfoFromMapClick(lng, lat, fallbackTimeZone) {
+    const tzFeature = map.queryRenderedFeatures(map.project([lng, lat]), { layers: [TIMEZONE_BANDS_FILL_LAYER_ID] })[0];
+    const zoneId = tzFeature?.properties?.zoneId;
+    const zone = zoneId ? timeZones.find((z, i) => `tz-zone-${i}` === zoneId) : null;
+    const tz = zone?.timeZone || fallbackTimeZone || "---";
+    const localTime = tz !== "---" ? new Date().toLocaleTimeString("en-US", { timeZone: tz, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true }) : "-";
+    const utcOffset = zone ? `UTC${zone.utcOffset >= 0 ? "+" : ""}${zone.utcOffset}` : "-";
+    const countryName = await reverseGeocodeCountry(lng, lat);
+    setInfoPanel({
+      city: `${lat.toFixed(2)}, ${lng.toFixed(2)}`,
+      region: utcOffset,
+      country: countryName || "-",
+      countryCode: "-",
+      timezone: tz,
+      localTime,
+      mode: "map"
+    });
+  }
+
+  async function reverseGeocodeCountry(lng, lat) {
+    try {
+      const url = `https://api.maptiler.com/geocoding/${lng},${lat}.json?types=country&limit=1&key=${MAPTILER_KEY}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return data?.features?.[0]?.place_name || "-";
+    } catch {
+      return "-";
+    }
   }
 
 
