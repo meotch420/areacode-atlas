@@ -437,12 +437,13 @@ header p {
 }
 
 #map {
-  width: calc(100% - 2px);
-  height: 720px;
+  width: 100%;
+  height: 72vh;
+  min-height: 520px;
   margin: 0 auto;
   border: 1px solid #1e3a5f;
   border-radius: 12px 12px 0 0;
-  background: #0c3450;
+  background: #7ec8f2;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
