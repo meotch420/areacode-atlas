@@ -256,7 +256,7 @@
     clearMarker();
     clearCountryOutline();
     clearActiveTimeZoneCard();
-    hideTimeZoneBand();
+    showTimeZoneFill();
   }
 
   /* =====================================================
@@ -345,7 +345,12 @@
       timeZone: "America/Chicago",
       center: [-87.6298, 41.8781],
       zoom: 4,
-      utcOffset: -6
+      utcOffset: -6,
+      useBandFallback: true,
+      bandBounds: {
+        west: -97.5,
+        east: -82.5
+      }
     },
     {
       name: "EASTERN",
@@ -353,9 +358,10 @@
       center: [-74.006, 40.7128],
       zoom: 4,
       utcOffset: -5,
+      useBandFallback: true,
       bandBounds: {
-        west: -90,
-        east: -66
+        west: -82.5,
+        east: -67.5
       }
     },
     {
@@ -1044,12 +1050,13 @@
   function highlightTimeZoneBand(zoneId) {
     if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
 
+    showTimeZoneFill();
     showTimeZoneLines();
 
     const filter = ["==", ["get", "zoneId"], zoneId];
     map.setFilter(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, filter);
     map.setFilter(TIMEZONE_BANDS_LINE_LAYER_ID, filter);
-    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "none");
+    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_CASING_LAYER_ID, "visibility", "visible");
     map.setLayoutProperty(TIMEZONE_BANDS_LINE_LAYER_ID, "visibility", "visible");
   }
@@ -1057,6 +1064,12 @@
   function showTimeZoneLines() {
     if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
     map.setLayoutProperty(TIMEZONE_BANDS_GRID_LAYER_ID, "visibility", "visible");
+  }
+
+  function showTimeZoneFill() {
+    if (!map || !map.getSource(TIMEZONE_BANDS_SOURCE_ID)) return;
+    map.setFilter(TIMEZONE_BANDS_FILL_LAYER_ID, null);
+    map.setLayoutProperty(TIMEZONE_BANDS_FILL_LAYER_ID, "visibility", "visible");
   }
 
   function hideTimeZoneBand() {
@@ -1090,9 +1103,12 @@
   }
 
   function buildZoneBandGeometries(zone) {
-    // Use deterministic meridian-aligned bands for every timezone card.
-    // Raw IANA polygon boundaries can wrap around the globe and create
-    // distorted boxes/lines in globe projection for broad zones.
+    const layoutGeometries = getTimeZoneLayoutGeometries(zone);
+    if (layoutGeometries.length) {
+      return layoutGeometries;
+    }
+
+    // Fallback: deterministic meridian-aligned bands for every timezone card.
     const bounds = getTimeZoneBandBounds(zone);
 
     if (!bounds) return [];
@@ -1122,7 +1138,7 @@
 
 
   function getTimeZoneLayoutGeometries(zone) {
-    if (!zone?.timeZone) return [];
+    if (!zone?.timeZone || zone?.useBandFallback) return [];
 
     const geometries = timeZoneLayoutByTz.get(zone.timeZone);
 
