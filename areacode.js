@@ -44,6 +44,7 @@
   let areaCodeIndex = new Map();
   let selectedTimeZoneId = null;
   let timeZoneLayoutByTz = new Map();
+  let offsetColorByMinutes = new Map();
 
   /* =====================================================
      START APP
@@ -617,6 +618,24 @@
     return 0;
   }
 
+
+  function getOffsetMinutes(zone) {
+    return Math.round(getZoneUtcOffset(zone) * 60);
+  }
+
+  function getZoneFillColor(zone, fallbackIndex) {
+    const offsetMinutes = getOffsetMinutes(zone);
+
+    if (offsetColorByMinutes.has(offsetMinutes)) {
+      return offsetColorByMinutes.get(offsetMinutes);
+    }
+
+    const fallbackColor = TIMEZONE_COLORS[fallbackIndex] || "#0ea5e9";
+    offsetColorByMinutes.set(offsetMinutes, fallbackColor);
+    return fallbackColor;
+  }
+
+
   timeZones.forEach((zone, index) => {
     zone.currentUtcOffset = getCurrentUtcOffsetHours(zone.timeZone, zone.utcOffset);
     zone.displayOrder = index;
@@ -739,7 +758,8 @@
       const card = document.createElement("button");
 
       card.type = "button";
-      card.className = `timezone-card tz-color-${index}`;
+      const colorIndex = TIMEZONE_COLORS.indexOf(getZoneFillColor(zone, index));
+      card.className = `timezone-card tz-color-${Math.max(0, colorIndex)}`;
       card.dataset.zoneId = zoneId;
       card.dataset.tz = zone.timeZone;
       card.dataset.lng = zone.center[0];
@@ -942,7 +962,7 @@
       }
     }
 
-    console.warn("No timezone layout source loaded; using generated straight bands.");
+    console.warn("No timezone layout source loaded; timezone overlays disabled to avoid synthetic bands.");
     timeZoneLayoutByTz = new Map();
   }
 
@@ -1070,7 +1090,7 @@
   function buildTimeZoneBandGeoJson() {
     const features = timeZones.flatMap((zone, index) => {
       const zoneId = `tz-zone-${index}`;
-      const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
+      const fillColor = getZoneFillColor(zone, index);
       const geometries = buildZoneBandGeometries(zone);
 
       return geometries.map((geometry) => ({
@@ -1090,34 +1110,14 @@
   }
 
   function buildZoneBandGeometries(zone) {
-    // Use deterministic meridian-aligned bands for every timezone card.
-    // Raw IANA polygon boundaries can wrap around the globe and create
-    // distorted boxes/lines in globe projection for broad zones.
-    const bounds = getTimeZoneBandBounds(zone);
+    const layoutGeometries = getTimeZoneLayoutGeometries(zone);
 
-    if (!bounds) return [];
-
-    let { west, east } = bounds;
-
-    if (west >= east) {
-      east = west + 0.1;
+    if (layoutGeometries.length) {
+      return layoutGeometries;
     }
 
-    if (west < -180) {
-      return [
-        makeBandGeometry(west + 360, 180),
-        makeBandGeometry(-180, east)
-      ];
-    }
-
-    if (east > 180) {
-      return [
-        makeBandGeometry(west, 180),
-        makeBandGeometry(-180, east - 360)
-      ];
-    }
-
-    return [makeBandGeometry(west, east)];
+    // Do not render synthetic bands when real IANA boundaries are unavailable.
+    return [];
   }
 
 
@@ -1133,61 +1133,9 @@
     return geometries.map((geometry) => JSON.parse(JSON.stringify(geometry)));
   }
 
-  function getTimeZoneBandBounds(zone) {
-    const customWest = Number(zone?.bandBounds?.west);
-    const customEast = Number(zone?.bandBounds?.east);
-
-    if (Number.isFinite(customWest) && Number.isFinite(customEast)) {
-      return {
-        west: normalizeLongitude(customWest),
-        east: normalizeLongitude(customEast)
-      };
-    }
-
-    const zoneOffset = getZoneUtcOffset(zone);
-
-    if (!Number.isFinite(zoneOffset)) {
-      return null;
-    }
-
-    // Anchor each band to the configured timezone focus longitude so
-    // card selection and globe highlight line up visually.
-    // Fall back to canonical UTC meridians when a center is unavailable.
-    const configuredLongitude = Array.isArray(zone.center) ? Number(zone.center[0]) : NaN;
-    const centerMeridian = Number.isFinite(configuredLongitude)
-      ? normalizeLongitude(configuredLongitude)
-      : zoneOffset * 15;
-    const west = centerMeridian - 7.5;
-    const east = centerMeridian + 7.5;
-
-    return { west, east };
-  }
 
 
-  function normalizeLongitude(longitude) {
-    if (!Number.isFinite(longitude)) return longitude;
 
-    let normalized = ((longitude + 180) % 360 + 360) % 360 - 180;
-
-    if (normalized === -180) {
-      normalized = 180;
-    }
-
-    return normalized;
-  }
-
-  function makeBandGeometry(west, east) {
-    return {
-      type: "Polygon",
-      coordinates: [[
-        [west, -85],
-        [east, -85],
-        [east, 85],
-        [west, 85],
-        [west, -85]
-      ]]
-    };
-  }
 
   /* =====================================================
      AREA INFORMATION PANEL
