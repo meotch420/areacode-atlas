@@ -15,7 +15,6 @@
   const MAPTILER_KEY = "TRZg1QKiYa41B03OE9Bz";
   const AREA_CODE_DATA_URL = "area_code_data.json";
   const TIMEZONE_LAYOUT_GEOJSON_URLS = [
-    "geo.json",
     "https://raw.githubusercontent.com/evansiroky/timezone-boundary-builder/master/dist/timezones.geojson"
   ];
   const TIMEZONE_BANDS_SOURCE_ID = "timezone-bands-source";
@@ -303,6 +302,7 @@
     "#38bdf8",
     "#2dd4bf"
   ];
+  let timeZoneOffsetColorByOffset = new Map();
 
   const timeZones = [
     {
@@ -621,10 +621,28 @@
     zone.currentUtcOffset = getCurrentUtcOffsetHours(zone.timeZone, zone.utcOffset);
     zone.displayOrder = index;
   });
+  assignOffsetColors();
 
   // Keep timezone cards in a stable, explicit sequence (Hawaii first).
   // Do not re-order cards based on DST or current UTC offsets.
   timeZones.sort((a, b) => a.displayOrder - b.displayOrder);
+
+  function assignOffsetColors() {
+    const uniqueOffsets = Array.from(
+      new Set(timeZones.map((zone) => getZoneUtcOffset(zone)))
+    ).sort((a, b) => a - b);
+
+    timeZoneOffsetColorByOffset = new Map(
+      uniqueOffsets.map((offset, index) => [
+        offset,
+        TIMEZONE_COLORS[index % TIMEZONE_COLORS.length] || "#0ea5e9"
+      ])
+    );
+  }
+
+  function getColorForZoneOffset(zone) {
+    return timeZoneOffsetColorByOffset.get(getZoneUtcOffset(zone)) || "#0ea5e9";
+  }
 
   const MAIN_TIME_ZONE_NAME_BY_ID = {
     "Pacific/Honolulu": "Hawaii-Aleutian Time",
@@ -735,7 +753,7 @@
 
     timeZones.forEach((zone, index) => {
       const zoneId = `tz-zone-${index}`;
-      const zoneColor = TIMEZONE_COLORS[index] || "#0ea5e9";
+      const zoneColor = getColorForZoneOffset(zone);
       const card = document.createElement("button");
 
       card.type = "button";
@@ -925,8 +943,9 @@
           const timeZone = String(rawTimeZone || "").trim();
           const geometryType = feature?.geometry?.type;
           const isPolygon = geometryType === "Polygon" || geometryType === "MultiPolygon";
+          const isOceanEtcZone = /^Etc\//i.test(timeZone);
 
-          if (!timeZone || !isPolygon) return;
+          if (!timeZone || !isPolygon || isOceanEtcZone) return;
 
           const existing = nextLayout.get(timeZone) || [];
           existing.push(feature.geometry);
@@ -942,7 +961,7 @@
       }
     }
 
-    console.warn("No timezone layout source loaded; using generated straight bands.");
+    console.warn("No timezone layout source loaded; timezone overlays disabled.");
     timeZoneLayoutByTz = new Map();
   }
 
@@ -1070,7 +1089,7 @@
   function buildTimeZoneBandGeoJson() {
     const features = timeZones.flatMap((zone, index) => {
       const zoneId = `tz-zone-${index}`;
-      const fillColor = TIMEZONE_COLORS[index] || "#0ea5e9";
+      const fillColor = getColorForZoneOffset(zone);
       const geometries = buildZoneBandGeometries(zone);
 
       return geometries.map((geometry) => ({
@@ -1090,34 +1109,7 @@
   }
 
   function buildZoneBandGeometries(zone) {
-    // Use deterministic meridian-aligned bands for every timezone card.
-    // Raw IANA polygon boundaries can wrap around the globe and create
-    // distorted boxes/lines in globe projection for broad zones.
-    const bounds = getTimeZoneBandBounds(zone);
-
-    if (!bounds) return [];
-
-    let { west, east } = bounds;
-
-    if (west >= east) {
-      east = west + 0.1;
-    }
-
-    if (west < -180) {
-      return [
-        makeBandGeometry(west + 360, 180),
-        makeBandGeometry(-180, east)
-      ];
-    }
-
-    if (east > 180) {
-      return [
-        makeBandGeometry(west, 180),
-        makeBandGeometry(-180, east - 360)
-      ];
-    }
-
-    return [makeBandGeometry(west, east)];
+    return getTimeZoneLayoutGeometries(zone);
   }
 
 
@@ -1133,61 +1125,6 @@
     return geometries.map((geometry) => JSON.parse(JSON.stringify(geometry)));
   }
 
-  function getTimeZoneBandBounds(zone) {
-    const customWest = Number(zone?.bandBounds?.west);
-    const customEast = Number(zone?.bandBounds?.east);
-
-    if (Number.isFinite(customWest) && Number.isFinite(customEast)) {
-      return {
-        west: normalizeLongitude(customWest),
-        east: normalizeLongitude(customEast)
-      };
-    }
-
-    const zoneOffset = getZoneUtcOffset(zone);
-
-    if (!Number.isFinite(zoneOffset)) {
-      return null;
-    }
-
-    // Anchor each band to the configured timezone focus longitude so
-    // card selection and globe highlight line up visually.
-    // Fall back to canonical UTC meridians when a center is unavailable.
-    const configuredLongitude = Array.isArray(zone.center) ? Number(zone.center[0]) : NaN;
-    const centerMeridian = Number.isFinite(configuredLongitude)
-      ? normalizeLongitude(configuredLongitude)
-      : zoneOffset * 15;
-    const west = centerMeridian - 7.5;
-    const east = centerMeridian + 7.5;
-
-    return { west, east };
-  }
-
-
-  function normalizeLongitude(longitude) {
-    if (!Number.isFinite(longitude)) return longitude;
-
-    let normalized = ((longitude + 180) % 360 + 360) % 360 - 180;
-
-    if (normalized === -180) {
-      normalized = 180;
-    }
-
-    return normalized;
-  }
-
-  function makeBandGeometry(west, east) {
-    return {
-      type: "Polygon",
-      coordinates: [[
-        [west, -85],
-        [east, -85],
-        [east, 85],
-        [west, 85],
-        [west, -85]
-      ]]
-    };
-  }
 
   /* =====================================================
      AREA INFORMATION PANEL
