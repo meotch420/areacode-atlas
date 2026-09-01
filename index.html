@@ -134,6 +134,17 @@
     (() => {
       "use strict";
 
+      const PANEL_TIME_ZONE_BY_LABEL = {
+        hawaii: "Pacific/Honolulu",
+        alaska: "America/Anchorage",
+        pacific: "America/Los_Angeles",
+        mountain: "America/Denver",
+        central: "America/Chicago",
+        eastern: "America/New_York",
+        atlantic: "America/Halifax",
+        newfoundland: "America/St_Johns"
+      };
+
       function formatLocalTime(timeZone) {
         try {
           return new Intl.DateTimeFormat("en-US", {
@@ -151,26 +162,29 @@
       }
 
       function getPanelTimeZone() {
-        const activeCard = document.querySelector(".timezone-card.is-active");
-        if (activeCard?.dataset?.tz) {
-          return activeCard.dataset.tz;
-        }
-
         const timezoneValue = document.getElementById("infoTimeZone")?.textContent.trim();
-        if (!timezoneValue || timezoneValue === "---" || /^multiple$/i.test(timezoneValue)) {
-          return "";
+        if (timezoneValue && timezoneValue !== "---" && !/^multiple$/i.test(timezoneValue)) {
+          if (timezoneValue.includes("/")) {
+            return timezoneValue;
+          }
+
+          const normalizedLabel = timezoneValue.toLowerCase();
+          if (PANEL_TIME_ZONE_BY_LABEL[normalizedLabel]) {
+            return PANEL_TIME_ZONE_BY_LABEL[normalizedLabel];
+          }
+
+          const matchingCard = Array.from(document.querySelectorAll(".timezone-card")).find((card) => {
+            const cardName = card.querySelector(".timezone-card-name")?.textContent.trim();
+            return cardName?.toLowerCase() === normalizedLabel;
+          });
+
+          if (matchingCard?.dataset?.tz) {
+            return matchingCard.dataset.tz;
+          }
         }
 
-        if (timezoneValue.includes("/")) {
-          return timezoneValue;
-        }
-
-        const matchingCard = Array.from(document.querySelectorAll(".timezone-card")).find((card) => {
-          const cardName = card.querySelector(".timezone-card-name")?.textContent.trim();
-          return cardName?.toLowerCase() === timezoneValue.toLowerCase();
-        });
-
-        return matchingCard?.dataset?.tz || "";
+        const activeCard = document.querySelector(".timezone-card.is-active");
+        return activeCard?.dataset?.tz || "";
       }
 
       function updateInfoPanelLocalTime() {
