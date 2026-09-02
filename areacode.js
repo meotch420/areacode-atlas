@@ -27,20 +27,20 @@
   const COUNTRY_OUTLINE_FILL_LAYER_ID = "country-outline-fill";
   const COUNTRY_OUTLINE_LINE_LAYER_ID = "country-outline-line";
   const TIMEZONE_CARD_MAX_ZOOM = 3.2;
-  const TIMEZONE_GLOBE_FOCUS_ZOOM = 1.7;
-  const TIMEZONE_GLOBE_FOCUS_LAT = -10;
   const DEFAULT_COUNTRY_VIEW = {
     name: "United States",
     countryCode: "+1",
     center: [-98.5795, 39.8283],
     zoom: 2.2
   };
+  const TIMEZONE_FOCUS_LAT = 0;
   const AREA_CODE_SEARCH_ZOOM = 4.2;
   const TIMEZONE_WRAP_MIN_HEIGHT = 78;
   const TIMEZONE_WRAP_HEIGHT_STORAGE_KEY = "areaCodeAtlasTimezoneWrapHeight";
 
   let map;
   let activeMarker = null;
+  let activeMarkerPopup = null;
   let areaCodeIndex = new Map();
   let selectedTimeZoneId = null;
   let timeZoneLayoutByTz = new Map();
@@ -92,7 +92,7 @@
       zoom: DEFAULT_COUNTRY_VIEW.zoom,
       minZoom: 1,
       maxZoom: 18,
-      projection: "globe",
+      projection: "mercator",
       navigationControl: false,
       geolocateControl: false,
       terrainControl: false,
@@ -100,7 +100,7 @@
     });
 
     map.addControl(new maptilersdk.NavigationControl(), "top-right");
-    setupGlobeOnlyWheelZoom();
+    addUsMapOverlays();
 
     map.on("load", async () => {
       ensureTimeZoneBandLayer();
@@ -195,52 +195,65 @@
   }
 
 
-  function setupGlobeOnlyWheelZoom() {
+  function addUsMapOverlays() {
     if (!map) return;
 
-    const mapEl = document.getElementById("map");
-
-    if (!mapEl) return;
-
-    map.scrollZoom.disable();
-
-    mapEl.addEventListener(
-      "wheel",
-      (event) => {
-        if (!isPointerOverGlobe(event.clientX, event.clientY)) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const currentZoom = map.getZoom();
-        const zoomDirection = event.deltaY < 0 ? 1 : -1;
-        const nextZoom = Math.min(18, Math.max(1, currentZoom + zoomDirection * 0.25));
-
-        map.easeTo({
-          zoom: nextZoom,
-          duration: 150,
-          essential: true
-        });
+    const overlays = [
+      {
+        id: "usa-main",
+        url: "https://www.time.gov/img/map-elements/united-states-map.svg",
+        coordinates: [
+          [-125.0, 50.0],
+          [-66.0, 50.0],
+          [-66.0, 24.0],
+          [-125.0, 24.0]
+        ]
       },
-      { passive: false }
-    );
-  }
+      {
+        id: "usa-alaska",
+        url: "https://www.time.gov/img/map-elements/alaska.svg",
+        coordinates: [
+          [-171.5, 71.5],
+          [-129.5, 71.5],
+          [-129.5, 51.0],
+          [-171.5, 51.0]
+        ]
+      },
+      {
+        id: "usa-hawaii",
+        url: "https://www.time.gov/img/map-elements/hawaii.svg",
+        coordinates: [
+          [-161.2, 23.5],
+          [-154.3, 23.5],
+          [-154.3, 18.5],
+          [-161.2, 18.5]
+        ]
+      }
+    ];
 
-  function isPointerOverGlobe(clientX, clientY) {
-    const mapEl = document.getElementById("map");
+    overlays.forEach((overlay) => {
+      const sourceId = `${overlay.id}-source`;
+      const layerId = `${overlay.id}-layer`;
 
-    if (!mapEl) return false;
+      if (!map.getSource(sourceId)) {
+        map.addSource(sourceId, {
+          type: "image",
+          url: overlay.url,
+          coordinates: overlay.coordinates
+        });
+      }
 
-    const rect = mapEl.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const radius = Math.min(rect.width, rect.height) / 2;
-    const distance = Math.hypot(x - centerX, y - centerY);
-
-    return distance <= radius;
+      if (!map.getLayer(layerId)) {
+        map.addLayer({
+          id: layerId,
+          type: "raster",
+          source: sourceId,
+          paint: {
+            "raster-opacity": 0.95
+          }
+        });
+      }
+    });
   }
 
   async function focusDefaultCountryOnLoad() {
@@ -790,7 +803,7 @@
     const initialGlobeZoom = DEFAULT_COUNTRY_VIEW.zoom;
     const fallbackLongitude = Number(getZoneUtcOffset(zone)) * 15;
     const centerLongitude = Number(zone?.center?.[0] ?? fallbackLongitude);
-    const centerLatitude = Number(zone?.center?.[1] ?? TIMEZONE_GLOBE_FOCUS_LAT);
+    const centerLatitude = Number(zone?.center?.[1] ?? TIMEZONE_FOCUS_LAT);
 
     flyToLocation(centerLongitude, centerLatitude, initialGlobeZoom);
   }
@@ -1625,7 +1638,7 @@
   ===================================================== */
 
   function showAreaCodeResult(record) {
-    setInfoPanel({
+    const panelData = {
       city: record.city || "---",
       countryCode: "+1",
       region: record.state,
@@ -1633,6 +1646,17 @@
       country: record.country,
       timeZone: record.timezone,
       timezone: record.timezone,
+      mode: "default"
+    };
+
+    setInfoPanel({
+      city: "---",
+      countryCode: "---",
+      region: "---",
+      state: "---",
+      country: "---",
+      timeZone: "---",
+      timezone: "---",
       mode: "default"
     });
 
@@ -1643,7 +1667,7 @@
 
     if (Number.isFinite(record.lng) && Number.isFinite(record.lat)) {
       flyToLocation(record.lng, record.lat, AREA_CODE_SEARCH_ZOOM);
-      setMarker(record.lng, record.lat);
+      setMarker(record.lng, record.lat, panelData);
     } else {
       setStatus(`${record.areaCode} found, but no map coordinates are in area_code_data.json.`);
     }
@@ -1767,7 +1791,7 @@
     });
   }
 
-  function setMarker(lng, lat) {
+  function setMarker(lng, lat, infoData = null) {
     if (!map) return;
 
     if (activeMarker) {
@@ -1779,9 +1803,39 @@
     })
       .setLngLat([lng, lat])
       .addTo(map);
+
+    if (infoData) {
+      const popupHtml = `
+        <div class="pin-info-popup">
+          <strong>${infoData.city || "---"}</strong><br>
+          ${infoData.region || "---"}<br>
+          ${infoData.country || "---"}<br>
+          ${formatTimezoneDisplayValue(infoData.timeZone || infoData.timezone || "---")}<br>
+          ${infoData.countryCode || "---"}
+        </div>
+      `;
+
+      activeMarkerPopup = new maptilersdk.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 18
+      }).setHTML(popupHtml);
+
+      const markerElement = activeMarker.getElement();
+      markerElement.addEventListener("mouseenter", () => {
+        activeMarkerPopup.setLngLat([lng, lat]).addTo(map);
+      });
+      markerElement.addEventListener("mouseleave", () => {
+        activeMarkerPopup.remove();
+      });
+    }
   }
 
   function clearMarker() {
+    if (activeMarkerPopup) {
+      activeMarkerPopup.remove();
+      activeMarkerPopup = null;
+    }
     if (!activeMarker) return;
     activeMarker.remove();
     activeMarker = null;
