@@ -635,22 +635,3 @@ header p {
     padding: 12px 0 0;
   }
 }
-
-/* Two modes within the existing Area Information panel. */
-.info-panel [hidden] { display: none !important; }
-.converter-tabs { display: flex; gap: 4px; margin-bottom: 10px; border-bottom: 1px solid #2f5f95; }
-.converter-tabs button, #converter-mode button { font: inherit; font-size: 14px; color: #dbeafe; background: #153152; border: 1px solid #2f5f95; border-radius: 5px; padding: 9px 10px; cursor: pointer; min-height: 40px; }
-.converter-tabs button { flex: 1; background: transparent; border-color: transparent; }
-.converter-tabs button[aria-selected="true"] { background: #1d4ed8; color: white; }
-.info-panel :focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
-#converter-mode { max-height: 560px; overflow-y: auto; padding: 2px; color-scheme: dark; }
-.converter-help, .converter-difference, #converter-message { font-size: 14px; line-height: 1.45; color: #bfdbfe; margin: 8px 0; }
-.converter-label { display: block; font-size: 14px; font-weight: bold; margin: 10px 0 6px; }
-#converter-mode input { width: 100%; min-width: 0; padding: 10px 8px; font: inherit; font-size: 16px; border: 1px solid #527bab; border-radius: 5px; background: #020617; color: white; }
-#converter-mode input[aria-invalid="true"] { border-color: #fbbf24; }
-.converter-date-row { display: flex; gap: 6px; }
-.converter-date-row input { flex: 1; }
-.converter-location { padding-bottom: 10px; border-bottom: 1px solid #2f5f95; }
-.converter-time { font-size: 16px; font-weight: bold; line-height: 1.5; margin: 8px 0; }
-.converter-actions { display: flex; gap: 8px; }
-#converter-add { margin-top: 12px; width: 100%; }
