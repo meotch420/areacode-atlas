@@ -2009,10 +2009,10 @@ function compactWall(instant, zone) {
     tabs.innerHTML = '<button type="button" role="tab" id="cc-area-tab" aria-controls="cc-area" aria-selected="true">Area Information</button><button type="button" role="tab" id="cc-tool-tab" aria-controls="cc-tool" aria-selected="false" tabindex="-1">Time Zone Converter</button>';
     const tool = document.createElement('div'); tool.id = 'cc-tool'; tool.hidden = true;
     tool.setAttribute('role','tabpanel'); tool.setAttribute('aria-labelledby','cc-tool-tab');
-    tool.innerHTML = `<div class="cc-location"><label for="cc-from">From</label><div class="cc-search"><input id="cc-from" type="text" value="Los Angeles, California" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cc-from-options"><div id="cc-from-options" class="cc-options" role="listbox" aria-label="From locations" hidden></div></div></div>
+    tool.innerHTML = `<div class="cc-location"><label for="cc-from">From</label><div class="cc-search"><input id="cc-from" type="text" value="" placeholder="Enter city or time zone" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cc-from-options"><div id="cc-from-options" class="cc-options" role="listbox" aria-label="From locations" hidden></div></div></div>
       <div class="cc-swap-row"><button id="cc-swap" type="button" aria-label="Swap locations" title="Swap locations">⇅</button></div>
-      <div class="cc-location"><label for="cc-to">To</label><div class="cc-search"><input id="cc-to" type="text" value="Tel Aviv, Israel" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cc-to-options"><div id="cc-to-options" class="cc-options" role="listbox" aria-label="To locations" hidden></div></div></div>
-      <div class="cc-time-row"><label for="cc-time">Time</label><input id="cc-time" type="time" value="15:00" step="60" aria-label="Time in From location"><span aria-hidden="true">→</span><div class="cc-answer" aria-live="polite"><strong id="cc-result">—</strong><span id="cc-day"></span></div></div>
+      <div class="cc-location"><label for="cc-to">To</label><div class="cc-search"><input id="cc-to" type="text" value="" placeholder="Enter city or time zone" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cc-to-options"><div id="cc-to-options" class="cc-options" role="listbox" aria-label="To locations" hidden></div></div></div>
+      <div class="cc-time-row"><label for="cc-time">Time</label><input id="cc-time" type="time" value="" autocomplete="off" step="60" aria-label="Time in From location"><span aria-hidden="true">→</span><div class="cc-answer" aria-live="polite"><strong id="cc-result">—</strong><span id="cc-day"></span></div></div>
       <div class="cc-date-row"><label for="cc-date">Date</label><button id="cc-today" type="button" aria-pressed="true">Today</button><button id="cc-calendar" type="button" aria-label="Choose date" title="Choose date">▦</button><button id="cc-now" type="button">Now</button><input id="cc-date" type="date" aria-label="Date in From location" hidden></div>
       <p id="cc-message" role="status" hidden></p>`;
     panel.append(tabs, area, tool);
@@ -2079,7 +2079,7 @@ function compactWall(instant, zone) {
     function render(){
       const from=resolve(el('from').value),to=resolve(el('to').value);
       el('swap').disabled=!from||!to;el('now').disabled=!from;
-      if(!from||!to){el('result').textContent='—';el('day').textContent='';message('Choose a matching city or time zone.');return;}
+      if(!from||!to){el('result').textContent='—';el('day').textContent='';message(el('from').value.trim()||el('to').value.trim()?'Choose a matching city or time zone.':'');return;}
       if(today)el('date').value=compactWall(Date.now(),from.zone).slice(0,10);
       if(live)el('time').value=compactWall(Date.now(),from.zone).slice(11);
       const wall=el('date').value+'T'+el('time').value,matches=compactInstants(wall,from.zone);
@@ -2104,6 +2104,16 @@ function compactWall(instant, zone) {
       });
       render();
     }).catch(()=>{message('Area-code locations could not load. Try a city or time zone.');});
+    function resetConverter() {
+      today=true; live=false;
+      ['from','to','time','date'].forEach(id=>{el(id).value='';});
+      el('date').hidden=true;
+      el('today').setAttribute('aria-pressed','true');
+      Object.values(fields).forEach(close);
+      render();
+    }
+    window.addEventListener('pageshow',resetConverter);
+    resetConverter();
     render();setInterval(()=>{if(!tool.hidden&&(live||today)&&document.activeElement!==el('time'))render();},30000);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setupCompactConverter);
