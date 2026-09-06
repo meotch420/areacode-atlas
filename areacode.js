@@ -1976,4 +1976,136 @@
       lat
     };
   }
+function compactWall(instant, zone) {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+      timeZone: zone, year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).formatToParts(instant).map(p => [p.type, p.value]));
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  }
+  function compactInstants(wall, zone) {
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(wall)) return [];
+    const guess = Date.parse(wall + 'Z');
+    if (!Number.isFinite(guess)) return [];
+    const matches = new Set();
+    for (let h = -36; h <= 36; h += 6) {
+      const sample = guess + h * 3600000;
+      const offset = Date.parse(compactWall(sample, zone) + 'Z') - sample;
+      const candidate = guess - offset;
+      if (compactWall(candidate, zone) === wall) matches.add(candidate);
+    }
+    return [...matches].sort((a,b) => a-b);
+  }
+  function setupCompactConverter() {
+    const panel = document.querySelector('.info-panel');
+    if (!panel || document.getElementById('cc-tool')) return;
+    const area = document.createElement('div');
+    area.id = 'cc-area'; area.setAttribute('role', 'tabpanel');
+    area.setAttribute('aria-labelledby', 'cc-area-tab');
+    while (panel.firstChild) area.append(panel.firstChild);
+    const tabs = document.createElement('div');
+    tabs.className = 'cc-tabs'; tabs.setAttribute('role','tablist');
+    tabs.setAttribute('aria-label','Information mode');
+    tabs.innerHTML = '<button type="button" role="tab" id="cc-area-tab" aria-controls="cc-area" aria-selected="true">Area Information</button><button type="button" role="tab" id="cc-tool-tab" aria-controls="cc-tool" aria-selected="false" tabindex="-1">Time Zone Converter</button>';
+    const tool = document.createElement('div'); tool.id = 'cc-tool'; tool.hidden = true;
+    tool.setAttribute('role','tabpanel'); tool.setAttribute('aria-labelledby','cc-tool-tab');
+    tool.innerHTML = `<div class="cc-location"><label for="cc-from">From</label><div class="cc-search"><input id="cc-from" type="text" value="Los Angeles, California" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cc-from-options"><div id="cc-from-options" class="cc-options" role="listbox" aria-label="From locations" hidden></div></div></div>
+      <div class="cc-swap-row"><button id="cc-swap" type="button" aria-label="Swap locations" title="Swap locations">⇅</button></div>
+      <div class="cc-location"><label for="cc-to">To</label><div class="cc-search"><input id="cc-to" type="text" value="Tel Aviv, Israel" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cc-to-options"><div id="cc-to-options" class="cc-options" role="listbox" aria-label="To locations" hidden></div></div></div>
+      <div class="cc-time-row"><label for="cc-time">Time</label><input id="cc-time" type="time" value="15:00" step="60" aria-label="Time in From location"><span aria-hidden="true">→</span><div class="cc-answer" aria-live="polite"><strong id="cc-result">—</strong><span id="cc-day"></span></div></div>
+      <div class="cc-date-row"><label for="cc-date">Date</label><button id="cc-today" type="button" aria-pressed="true">Today</button><button id="cc-calendar" type="button" aria-label="Choose date" title="Choose date">▦</button><button id="cc-now" type="button">Now</button><input id="cc-date" type="date" aria-label="Date in From location" hidden></div>
+      <p id="cc-message" role="status" hidden></p>`;
+    panel.append(tabs, area, tool);
+    const el = id => tool.querySelector('#cc-' + id);
+    const tabButtons = [...tabs.querySelectorAll('button')];
+    function activate(index) {
+      area.hidden = index !== 0; tool.hidden = index !== 1;
+      tabButtons.forEach((b,i) => { b.setAttribute('aria-selected',String(i===index)); b.tabIndex=i===index?0:-1; });
+      if (index) render();
+    }
+    tabButtons.forEach((b,i) => {
+      b.onclick=()=>activate(i);
+      b.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?1:1-i;activate(next);tabButtons[next].focus();}};
+    });
+    const catalog = [], seen = new Map();
+    const normalize = s => s.toLowerCase().replace(/[_-]/g,' ').replace(/\s+/g,' ').trim();
+    function add(label, zone, aliases=[]) {
+      try { new Intl.DateTimeFormat('en',{timeZone:zone}); } catch { return; }
+      const key=label+'|'+zone;
+      if(seen.has(key)){seen.get(key).aliases.push(...aliases);return;}
+      const item={label,zone,aliases};catalog.push(item);seen.set(key,item);
+    }
+    add('Los Angeles, California','America/Los_Angeles',['Los Angeles','California','Pacific','PST','PDT','PST/PDT']);
+    add('Tel Aviv, Israel','Asia/Jerusalem',['Tel Aviv','Israel']);
+    add('Kiryat Gat, Israel','Asia/Jerusalem',['Kiryat Gat']);
+    add('Cincinnati, Ohio','America/New_York',['Cincinnati','Ohio']);
+    add('London, United Kingdom','Europe/London',['London','UK']);
+    timeZones.forEach(t=>add(t.name+' — '+t.timeZone,t.timeZone,[t.name]));
+    COUNTRY_CODES.forEach(c=>add(c.country+' — '+c.timezone,c.timezone,[c.country,'+'+c.code]));
+    if(Intl.supportedValuesOf)Intl.supportedValuesOf('timeZone').forEach(zone=>add(zone.split('/').pop().replaceAll('_',' ')+' — '+zone,zone,[zone,zone.split('/').pop().replaceAll('_',' ')]));
+    function resolve(value) {
+      const q=normalize(value); if(!q)return null;
+      const exact=catalog.find(c=>normalize(c.label)===q); if(exact)return exact;
+      const matches=catalog.filter(c=>c.aliases.some(a=>normalize(a)===q));
+      if(matches.length && new Set(matches.map(c=>c.zone)).size===1)return matches[0];
+      if(value.includes('/'))try{const zone=new Intl.DateTimeFormat('en',{timeZone:value.trim()}).resolvedOptions().timeZone;return {label:zone,zone};}catch{}
+      return null;
+    }
+    let today=true, live=false;
+    const fields={from:{input:el('from'),list:el('from-options'),active:-1},to:{input:el('to'),list:el('to-options'),active:-1}};
+    function close(field){field.list.hidden=true;field.input.setAttribute('aria-expanded','false');field.input.removeAttribute('aria-activedescendant');field.active=-1;}
+    function choose(field,item){field.input.value=item.label;close(field);render();}
+    function suggest(field){
+      const q=normalize(field.input.value);
+      field.matches=q?catalog.filter(c=>normalize(c.label+' '+c.aliases.join(' ')).includes(q)).slice(0,8):catalog.slice(0,5);
+      field.list.replaceChildren();field.active=-1;field.input.removeAttribute('aria-activedescendant');
+      field.matches.forEach((item,index)=>{const option=document.createElement('div');option.id=field.list.id+'-'+index;option.setAttribute('role','option');option.setAttribute('aria-selected','false');option.textContent=item.label;option.addEventListener('pointerdown',e=>{e.preventDefault();choose(field,item);});field.list.append(option);});
+      field.list.hidden=!field.matches.length;field.input.setAttribute('aria-expanded',String(!field.list.hidden));
+    }
+    Object.values(fields).forEach(field=>{
+      field.input.addEventListener('input',()=>{suggest(field);render();});
+      field.input.addEventListener('focus',()=>suggest(field));
+      field.input.addEventListener('blur',()=>{close(field);const match=resolve(field.input.value);if(match)field.input.value=match.label;render();});
+      field.input.addEventListener('keydown',e=>{
+        if(e.key==='Escape'){close(field);return;}
+        if(e.key==='Enter'){e.preventDefault();if(!field.list.hidden&&field.active>=0)choose(field,field.matches[field.active]);else{const match=resolve(field.input.value);if(match)choose(field,match);}return;}
+        if(!['ArrowDown','ArrowUp'].includes(e.key))return;e.preventDefault();if(field.list.hidden)suggest(field);if(!field.matches.length)return;
+        field.active=(field.active+(e.key==='ArrowDown'?1:-1)+field.matches.length)%field.matches.length;
+        [...field.list.children].forEach((o,i)=>o.setAttribute('aria-selected',String(i===field.active)));
+        field.input.setAttribute('aria-activedescendant',field.list.children[field.active].id);field.list.children[field.active].scrollIntoView({block:'nearest'});
+      });
+    });
+    function message(text){el('message').textContent=text;el('message').hidden=!text;}
+    function render(){
+      const from=resolve(el('from').value),to=resolve(el('to').value);
+      el('swap').disabled=!from||!to;el('now').disabled=!from;
+      if(!from||!to){el('result').textContent='—';el('day').textContent='';message('Choose a matching city or time zone.');return;}
+      if(today)el('date').value=compactWall(Date.now(),from.zone).slice(0,10);
+      if(live)el('time').value=compactWall(Date.now(),from.zone).slice(11);
+      const wall=el('date').value+'T'+el('time').value,matches=compactInstants(wall,from.zone);
+      if(!matches.length){el('result').textContent='—';el('day').textContent='';message('Choose a valid time. Clocks may skip this time for daylight saving.');return;}
+      const instant=matches[0],target=compactWall(instant,to.zone);
+      const delta=Math.round((Date.parse(target.slice(0,10))-Date.parse(wall.slice(0,10)))/86400000);
+      el('result').textContent=new Intl.DateTimeFormat('en-US',{timeZone:to.zone,hour:'numeric',minute:'2-digit'}).format(instant);
+      el('day').textContent=delta===0?'Same day':delta===1?'Next day':delta===-1?'Previous day':`${Math.abs(delta)} days ${delta>0?'later':'earlier'}`;
+      el('day').title=new Intl.DateTimeFormat('en-US',{timeZone:to.zone,dateStyle:'full'}).format(instant);
+      message(matches.length>1?'Clocks repeat this time; the first occurrence is shown.':'');
+    }
+    el('time').addEventListener('input',()=>{live=false;render();});
+    el('date').addEventListener('input',()=>{today=false;live=false;el('today').setAttribute('aria-pressed','false');render();});
+    el('today').onclick=()=>{today=true;el('date').hidden=true;el('today').setAttribute('aria-pressed','true');render();};
+    el('calendar').onclick=()=>{el('date').hidden=!el('date').hidden;if(!el('date').hidden){el('date').focus();try{el('date').showPicker();}catch{}}};
+    el('now').onclick=()=>{live=true;el('today').click();};
+    el('swap').onclick=()=>{const value=el('from').value;el('from').value=el('to').value;el('to').value=value;Object.values(fields).forEach(close);render();};
+    fetch(AREA_CODE_DATA_URL).then(r=>{if(!r.ok)throw new Error('Unavailable');return r.json();}).then(data=>{
+      normalizeAreaCodeData(data).forEach(r=>{
+        const zone=data.area_codes?.[r.areaCode]?.tzid||timeZones.find(t=>t.name.toLowerCase()===r.timezone.toLowerCase())?.timeZone||r.timezone;
+        add(r.city+', '+r.state,zone,[r.areaCode,r.city,r.state]);
+      });
+      render();
+    }).catch(()=>{message('Area-code locations could not load. Try a city or time zone.');});
+    render();setInterval(()=>{if(!tool.hidden&&(live||today)&&document.activeElement!==el('time'))render();},30000);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setupCompactConverter);
+  else setupCompactConverter();
 })();

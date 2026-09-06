@@ -635,3 +635,32 @@ header p {
     padding: 12px 0 0;
   }
 }
+
+/* Compact converter occupies the existing information panel. */
+.info-panel { min-width: 0; }
+.info-panel [hidden] { display: none !important; }
+.cc-tabs { display: flex; gap: 3px; margin: -2px -4px 7px; border-bottom: 1px solid #2f5f95; }
+.cc-tabs button, #cc-tool button { font: inherit; font-size: 14px; border: 1px solid #42638b; border-radius: 5px; background: #153152; color: #eef5ff; cursor: pointer; padding: 4px 8px; min-height: 30px; }
+.cc-tabs button { flex: 1; padding: 7px 3px; border: 0; background: transparent; font-size: 13px; }
+.cc-tabs [aria-selected="true"], #cc-today[aria-pressed="true"] { background: #245bc0; color: white; }
+#cc-tool { font-size: 14px; color-scheme: dark; }
+#cc-tool input { width: 100%; min-width: 0; box-sizing: border-box; font: inherit; font-size: 16px; color: #eef5ff; background: #020c21; border: 1px solid #42638b; border-radius: 5px; padding: 4px 6px; min-height: 30px; }
+.cc-location { display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 5px; align-items: center; }
+.cc-search { position: relative; min-width: 0; }
+.cc-options { position: absolute; top: 100%; left: 0; right: 0; background: #102746; border: 1px solid #527bab; border-radius: 5px; max-height: 220px; overflow-y: auto; z-index: 100; box-shadow: 0 6px 16px #0008; }
+.cc-options [role="option"] { padding: 9px 7px; cursor: pointer; overflow-wrap: anywhere; }
+.cc-options [role="option"]:hover,.cc-options [aria-selected="true"] { background: #245bc0; }
+.cc-swap-row { display: flex; justify-content: center; margin-left: 36px; }
+#cc-tool #cc-swap { background: transparent; color: #9fc5ff; border: 0; min-height: 22px; padding: 0 14px; font-size: 20px; }
+.cc-time-row { display: grid; grid-template-columns: 36px minmax(85px,108px) 12px minmax(0,1fr); gap: 4px; align-items: center; margin-top: 7px; }
+.cc-answer { display: flex; flex-direction: column; min-width: 0; }
+#cc-result { font-size: 17px; white-space: nowrap; }
+#cc-day { font-size: 12px; color: #b6cdea; }
+.cc-date-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 7px; }
+.cc-date-row label { width: 35px; }
+#cc-tool #cc-now { margin-left: auto; }
+#cc-date { flex-basis: 100%; }
+#cc-message { font-size: 13px; color: #fde68a; margin: 7px 0 0; }
+.info-panel :focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+#cc-tool button:disabled { opacity: .5; cursor: default; }
+@media(pointer:coarse) { #cc-tool button,#cc-tool input,#cc-tool #cc-swap,.cc-tabs button { min-height: 44px; } }
