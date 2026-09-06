@@ -1976,4 +1976,207 @@
       lat
     };
   }
+
+  // Share location data while keeping the converter independent of map loading.
+  function startConverter() {
+    const panel = document.querySelector(".info-panel");
+    if (!panel) return;
+    const area = document.createElement("div");
+    area.id = "area-mode";
+    area.setAttribute("role", "tabpanel");
+    area.setAttribute("aria-labelledby", "area-tab");
+    while (panel.firstChild) area.append(panel.firstChild);
+    const tabs = document.createElement("div");
+    tabs.className = "converter-tabs";
+    tabs.setAttribute("role", "tablist");
+    tabs.setAttribute("aria-label", "Information mode");
+    tabs.innerHTML = '<button type="button" role="tab" id="area-tab" aria-controls="area-mode" aria-selected="true">Area Information</button><button type="button" role="tab" id="converter-tab" aria-controls="converter-mode" aria-selected="false" tabindex="-1">Time Zone Converter</button>';
+    const view = document.createElement("div");
+    view.id = "converter-mode";
+    view.hidden = true;
+    view.setAttribute("role", "tabpanel");
+    view.setAttribute("aria-labelledby", "converter-tab");
+    view.innerHTML = '<p class="converter-help">Search a city, state, country, area code or time zone. Choose a matching location.</p><div id="converter-from"></div><label class="converter-label" for="converter-date">Your date and time</label><div class="converter-date-row"><input id="converter-date" type="datetime-local" step="60"><button type="button" id="converter-now">Now</button></div><p id="converter-message" role="status"></p><div id="converter-targets"></div><button type="button" id="converter-add">+ Add another location</button><datalist id="converter-locations"></datalist>';
+    panel.append(tabs, area, view);
+    const buttons = [...tabs.querySelectorAll("button")];
+    function activate(index) {
+      buttons.forEach((button, i) => {
+        button.setAttribute("aria-selected", String(i === index));
+        button.tabIndex = i === index ? 0 : -1;
+      });
+      area.hidden = index !== 0;
+      view.hidden = index !== 1;
+    }
+    buttons.forEach((button, i) => {
+      button.onclick = () => activate(i);
+      button.onkeydown = event => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === "Home" ? 0 : event.key === "End" ? 1 : 1 - i;
+        activate(next); buttons[next].focus();
+      };
+    });
+    const locations = [];
+    function addLocation(label, zone, aliases = []) {
+      try { new Intl.DateTimeFormat("en", { timeZone: zone }); } catch { return; }
+      locations.push({ label, zone, aliases });
+    }
+    addLocation("Kiryat Gat, Israel", "Asia/Jerusalem", ["Kiryat Gat"]);
+    addLocation("Tel Aviv, Israel", "Asia/Jerusalem", ["Tel Aviv"]);
+    addLocation("Cincinnati, Ohio", "America/New_York", ["Cincinnati", "Ohio"]);
+    addLocation("Los Angeles, California", "America/Los_Angeles", ["Los Angeles", "California", "Pacific", "PST", "PDT", "PST/PDT"]);
+    addLocation("London, United Kingdom", "Europe/London", ["London"]);
+    const aliases = { EASTERN: ["EST", "EDT", "EST/EDT"], CENTRAL: ["CST", "CDT", "CST/CDT"], MOUNTAIN: ["MST", "MDT", "MST/MDT"] };
+    timeZones.forEach(t => addLocation(t.name + " — " + t.timeZone, t.timeZone, [t.name, ...(aliases[t.name] || [])]));
+    COUNTRY_CODES.forEach(c => addLocation(c.country + " — " + c.timezone, c.timezone, [c.country, "+" + c.code]));
+    (Intl.supportedValuesOf ? Intl.supportedValuesOf("timeZone") : []).forEach(zone => addLocation(zone, zone, [zone.replaceAll("_", " ")]));
+    const list = view.querySelector("datalist");
+    function refreshOptions() {
+      list.replaceChildren();
+      locations.forEach(location => {
+        const option = document.createElement("option");
+        option.value = location.label;
+        option.label = location.aliases.join(" · ");
+        list.append(option);
+      });
+    }
+    refreshOptions();
+    const dateInput = view.querySelector("#converter-date");
+    const message = view.querySelector("#converter-message");
+    fetch(AREA_CODE_DATA_URL).then(r => {
+      if (!r.ok) throw new Error("Area codes unavailable");
+      return r.json();
+    }).then(data => {
+      normalizeAreaCodeData(data).forEach(r => {
+        const zone = data.area_codes?.[r.areaCode]?.tzid || timeZones.find(t => t.name.toLowerCase() === r.timezone.toLowerCase())?.timeZone || r.timezone;
+        addLocation(r.city + ", " + r.state + " (" + r.areaCode + ")", zone, [r.areaCode, r.city, r.state]);
+      });
+      refreshOptions();
+    }).catch(() => { message.textContent = "Area-code search is unavailable. City and time-zone search still work."; });
+    let instant = Date.now(), live = true, sequence = 0, invalidTime = false;
+    const from = { location: locations[0] };
+    const targets = [{ location: locations[3] }];
+    function resolve(value) {
+      const query = value.trim().toLowerCase();
+      const exact = locations.find(l => l.label.toLowerCase() === query);
+      if (exact) return exact;
+      const matches = locations.filter(l => l.aliases.some(a => a.toLowerCase() === query));
+      if (matches.length && new Set(matches.map(l => l.zone)).size === 1) return matches[0];
+      try {
+        const zone = new Intl.DateTimeFormat("en", { timeZone: value.trim() }).resolvedOptions().timeZone;
+        return { label: zone, zone };
+      } catch { return null; }
+    }
+    function makeRow(state, source) {
+      const row = document.createElement("div");
+      row.className = "converter-location";
+      const id = "converter-location-" + sequence++;
+      const label = document.createElement("label");
+      label.className = "converter-label"; label.htmlFor = id;
+      label.textContent = source ? "FROM · Your location" : "TO · Compare with";
+      const input = document.createElement("input");
+      input.id = id; input.type = "text"; input.setAttribute("list", "converter-locations");
+      input.autocomplete = "off"; input.placeholder = "City, area code or time zone";
+      input.value = state.location?.label || "";
+      const output = document.createElement("p"); output.className = "converter-time";
+      const difference = document.createElement("p"); difference.className = "converter-difference";
+      row.append(label, input, output, difference);
+      Object.assign(state, { row, input, output, difference });
+      input.addEventListener("input", () => { state.location = null; render(); });
+      input.addEventListener("change", () => {
+        state.location = resolve(input.value);
+        input.setAttribute("aria-invalid", String(!state.location));
+        if (state.location) input.value = state.location.label;
+        render();
+      });
+      if (!source) {
+        const actions = document.createElement("div"); actions.className = "converter-actions";
+        const swap = document.createElement("button");
+        swap.type = "button"; swap.textContent = "⇅ Swap";
+        swap.onclick = () => {
+          if (!from.location || !state.location || invalidTime) return;
+          [from.location, state.location] = [state.location, from.location];
+          from.input.value = from.location.label; state.input.value = state.location.label;
+          message.textContent = ""; render();
+        };
+        const remove = document.createElement("button");
+        remove.type = "button"; remove.textContent = "Remove";
+        remove.onclick = () => {
+          targets.splice(targets.indexOf(state), 1); row.remove();
+          view.querySelector("#converter-add").focus();
+        };
+        actions.append(swap, remove); row.append(actions);
+      }
+      return row;
+    }
+    view.querySelector("#converter-from").append(makeRow(from, true));
+    const targetContainer = view.querySelector("#converter-targets");
+    targets.forEach(t => targetContainer.append(makeRow(t, false)));
+    view.querySelector("#converter-add").onclick = () => {
+      const state = { location: null }; targets.push(state);
+      targetContainer.append(makeRow(state, false)); state.input.focus(); render();
+    };
+    function render() {
+      if (live) instant = Date.now();
+      const source = from.location;
+      dateInput.disabled = !source;
+      if (source && !invalidTime && document.activeElement !== dateInput) dateInput.value = converterWall(instant, source.zone);
+      [from, ...targets].forEach(state => {
+        if (invalidTime || !state.location || !source) {
+          state.output.textContent = invalidTime ? "Choose a valid date and time." : !state.location ? "Choose a matching location to see its time." : "Choose your FROM location.";
+          state.difference.textContent = ""; return;
+        }
+        state.output.textContent = new Intl.DateTimeFormat("en-US", {
+          timeZone: state.location.zone, weekday: "short", month: "short", day: "numeric",
+          hour: "numeric", minute: "2-digit", timeZoneName: "short"
+        }).format(instant);
+        if (state === from) return;
+        const minutes = Math.round((converterOffset(instant, state.location.zone) - converterOffset(instant, source.zone)) / 60000);
+        const amount = Math.abs(minutes);
+        const duration = [Math.floor(amount / 60) ? Math.floor(amount / 60) + "h" : "", amount % 60 ? amount % 60 + "m" : ""].filter(Boolean).join(" ");
+        state.difference.textContent = minutes === 0 ? "Same time as " + source.label : duration + (minutes < 0 ? " behind " : " ahead of ") + source.label;
+      });
+    }
+    dateInput.addEventListener("input", () => { live = false; });
+    dateInput.addEventListener("change", () => {
+      if (!from.location) return;
+      const candidates = converterInstants(dateInput.value, from.location.zone);
+      invalidTime = !candidates.length;
+      dateInput.setAttribute("aria-invalid", String(invalidTime));
+      if (invalidTime) {
+        message.textContent = "This local time does not exist or is incomplete. Choose another time, or press Now.";
+        render(); return;
+      }
+      instant = candidates[0]; live = false;
+      message.textContent = candidates.length > 1 ? "This time occurs twice when clocks go back. Using the first occurrence." : "Showing your selected time.";
+      render();
+    });
+    view.querySelector("#converter-now").onclick = () => {
+      live = true; invalidTime = false; dateInput.removeAttribute("aria-invalid");
+      message.textContent = "Showing current times."; render();
+    };
+    render(); setInterval(() => { if (live) render(); }, 1000);
+  }
+  function converterWall(instant, zone) {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
+      timeZone: zone, year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+    }).formatToParts(instant).map(p => [p.type, p.value]));
+    return parts.year + "-" + parts.month + "-" + parts.day + "T" + parts.hour + ":" + parts.minute;
+  }
+  function converterOffset(instant, zone) {
+    return Date.parse(converterWall(instant, zone) + "Z") - Math.floor(instant / 60000) * 60000;
+  }
+  function converterInstants(wall, zone) {
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(wall)) return [];
+    const guess = Date.parse(wall + "Z");
+    if (!Number.isFinite(guess)) return [];
+    const offsets = new Set();
+    for (let hour = -36; hour <= 36; hour += 6) offsets.add(converterOffset(guess + hour * 3600000, zone));
+    return [...offsets].map(offset => guess - offset)
+      .filter(time => converterWall(time, zone) === wall).sort((a, b) => a - b);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", startConverter);
+  else startConverter();
+
 })();
